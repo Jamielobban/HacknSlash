@@ -223,7 +223,7 @@ public class PlayerControl : MonoBehaviour
             {
                 RaycastHit hit;
 
-                if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+                if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
                 {
                     if (hit.distance < 0.5f)
                     {
@@ -476,7 +476,7 @@ public class PlayerControl : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
         {
             if (hit.distance > distanceFloor)
             {
@@ -560,7 +560,7 @@ public class PlayerControl : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
         {
             landHeight = hit.point.y;
 
@@ -728,7 +728,7 @@ public class PlayerControl : MonoBehaviour
                         {
                             RaycastHit hit;
 
-                            if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+                            if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
                             {
                                 if ((hit.distance > 0.5f))
                                 {
