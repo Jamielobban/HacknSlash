@@ -66,3 +66,18 @@ public class HealingArea : Item
         if(effect == null) effect = (GameObject)Resources.Load("Item Effects/Something",typeof(GameObject));
     }
 }
+
+
+//public class
+    //dodge --> movespeed
+    //crowbar
+    //gasoline
+    //teddy bear
+    //bleed
+    //Reduce all incoming damage by 5 (+5 per stack). Cannot be reduced below 1.
+    //Killing an enemy spawns a healing orb that heals for 8 plus an additional 2% (+2% per stack) of maximum health.
+    //2 seconds after getting hurt, heal for 20 plus an additional 5% (+5% per stack) of maximum health.
+    //Your attacks have a 10% (+10% per stack) chance to 'Critically Strike', dealing double damage.
+    //Killing an enemy ignites all enemies within 12m (+4m per stack) for 150% base damage. Additionally, enemies burn for 150% (+75% per stack) base damage.
+    //Increase damage to enemies within 13m by 20% (+20% per stack).
+    //Deal +75% (+75% per stack) damage to enemies above 90% health.
