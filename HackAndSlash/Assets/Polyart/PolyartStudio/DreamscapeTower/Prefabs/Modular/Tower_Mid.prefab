@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5068113668250441190}
   - component: {fileID: 4381752052163223}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower_Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,8 @@ Transform:
   m_GameObject: {fileID: 5556982532889562972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3318286724144855850}
   - {fileID: 3421376609160804515}
@@ -72,7 +73,7 @@ GameObject:
   - component: {fileID: 8500872388100802724}
   - component: {fileID: 6728065162599368077}
   - component: {fileID: 967061541280837601}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Mid_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +90,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5068113668250441190}
   m_RootOrder: 2
@@ -112,6 +114,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -155,7 +158,7 @@ GameObject:
   - component: {fileID: 7540918682413974264}
   - component: {fileID: 4663690314361916282}
   - component: {fileID: 6193123876674091371}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Mid_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,6 +175,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5068113668250441190}
   m_RootOrder: 0
@@ -195,6 +199,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -234,9 +239,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7090925272446525790}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4363007628951284605, guid: 998181ea915cb5c42a71b6f7e78a4cad, type: 3}
@@ -251,7 +264,7 @@ GameObject:
   - component: {fileID: 3421376609160804515}
   - component: {fileID: 4863192522961331617}
   - component: {fileID: 7361204691478450807}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Mid_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,6 +281,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5068113668250441190}
   m_RootOrder: 1
@@ -291,6 +305,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

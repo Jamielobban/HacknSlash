@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1927823486972418235}
   - component: {fileID: 6672960902631518154}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cliff_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8651375656946025337}
   - {fileID: 8705706893800263149}
@@ -73,7 +74,7 @@ GameObject:
   - component: {fileID: 6232738064333119219}
   - component: {fileID: 2372114962717090820}
   - component: {fileID: 3962670780253192041}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Cliff_05_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,6 +91,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1927823486972418235}
   m_RootOrder: 0
@@ -113,6 +115,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -151,9 +154,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266402599065250252}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5923146847484709942, guid: 9375c51403366154b8316fe39513d308, type: 3}
@@ -168,7 +179,7 @@ GameObject:
   - component: {fileID: 4784252062858338720}
   - component: {fileID: 2682670320887658097}
   - component: {fileID: 1409235156808132320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Cliff_05_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,6 +196,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1927823486972418235}
   m_RootOrder: 2
@@ -208,6 +220,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -249,7 +262,7 @@ GameObject:
   - component: {fileID: 8705706893800263149}
   - component: {fileID: 1389970120063467785}
   - component: {fileID: 7453870957657034019}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Cliff_05_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +279,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1927823486972418235}
   m_RootOrder: 1
@@ -289,6 +303,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

@@ -1438,12 +1438,35 @@ public class PlayerControl : MonoBehaviour
         // Smoothly rotate towards the target point.
         player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 10 * Time.deltaTime);
         //player.transform.LookAt(movementController.transform.position);
+        RaycastHit hit;
 
-        moveDir = (movementController.transform.position - this.transform.position).normalized;
-        movementController.transform.localPosition = new Vector3();
-        if (moveDir.magnitude != 0)
-            moveDirSaved = moveDir;
-        this.GetComponent<Rigidbody>().AddForce(moveDir * velocity * Time.deltaTime, ForceMode.Force);
+        if (Physics.Raycast(movementController.transform.position + new Vector3(0, 1f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        {
+            if(states == States.MOVE)
+            {        
+                Vector3 pos;
+
+                moveDir = (movementController.transform.position - this.transform.position).normalized;
+                if(moveDir.magnitude != 0)
+                    moveDirSaved = moveDir;
+
+                if(Mathf.Abs(hit.point.y - this.transform.position.y) < 2)
+                    movementController.transform.position = new Vector3(movementController.transform.position.x, hit.point.y, movementController.transform.position.z);
+                else
+                {
+                    int sdf = 0;
+
+                }
+
+                pos = (movementController.transform.position - this.transform.position).normalized;
+                movementController.transform.localPosition = new Vector3();
+
+                this.GetComponent<Rigidbody>().AddForce(pos * velocity * Time.deltaTime, ForceMode.Force);
+            }
+
+        }
+
+
     }
     void RotateCamera()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3955110125272853772}
   - component: {fileID: 1616990065878215574}
   - component: {fileID: 6659072348266020642}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RoofTIles_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4895097609184619588}
   m_RootOrder: 0
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -92,9 +94,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458977820002720459}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6729227466338016138, guid: 658731066a643df439664638a7a4e938, type: 3}
@@ -108,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4895097609184619588}
   - component: {fileID: 411233834007173941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower_Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +134,8 @@ Transform:
   m_GameObject: {fileID: 5234645098190370558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8842601840733943388}
   - {fileID: 7054656571633617858}
@@ -170,7 +181,7 @@ GameObject:
   - component: {fileID: 3003937924548961944}
   - component: {fileID: 5223618793460214794}
   - component: {fileID: 1879831869506965645}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RoofTIles_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,6 +198,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4895097609184619588}
   m_RootOrder: 2
@@ -210,6 +222,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -253,7 +266,7 @@ GameObject:
   - component: {fileID: 7054656571633617858}
   - component: {fileID: 5496777436477158143}
   - component: {fileID: 7505470593196441189}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RoofTIles_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,6 +283,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4895097609184619588}
   m_RootOrder: 1
@@ -293,6 +307,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

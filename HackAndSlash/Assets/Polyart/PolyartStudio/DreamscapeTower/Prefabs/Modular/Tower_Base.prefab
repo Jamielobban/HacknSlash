@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3445599755364973022}
   - component: {fileID: 7605213153030114991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,8 @@ Transform:
   m_GameObject: {fileID: 2637677904640861028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5154830124120713604}
   - {fileID: 8525359698358939575}
@@ -72,7 +73,7 @@ GameObject:
   - component: {fileID: 1434347955035443648}
   - component: {fileID: 5329488581121202871}
   - component: {fileID: 1019298062596624}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_BaseDoor_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +90,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3445599755364973022}
   m_RootOrder: 2
@@ -112,6 +114,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -156,7 +159,7 @@ GameObject:
   - component: {fileID: 1487053970589262301}
   - component: {fileID: 6984968157488512487}
   - component: {fileID: 1712201556523448696}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_BaseDoor_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,6 +176,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3445599755364973022}
   m_RootOrder: 0
@@ -196,6 +200,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -236,9 +241,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6509649519281425390}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7828029579443518946, guid: 54b1d90db77bf0e44ae2002357b8c4a7, type: 3}
@@ -253,7 +266,7 @@ GameObject:
   - component: {fileID: 8525359698358939575}
   - component: {fileID: 5205402406941597018}
   - component: {fileID: 3092983417256875221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_BaseDoor_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,6 +283,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3445599755364973022}
   m_RootOrder: 1
@@ -293,6 +307,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

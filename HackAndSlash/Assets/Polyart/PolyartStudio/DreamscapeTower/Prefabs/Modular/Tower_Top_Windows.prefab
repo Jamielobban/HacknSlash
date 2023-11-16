@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7604037286027612463}
   - component: {fileID: 3097197253457399557}
   - component: {fileID: 85309634495578283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Top_Windows_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3765629304140031344}
   m_RootOrder: 0
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -92,9 +94,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2887057403048487325}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 163465142614270325, guid: 48dfe55225f7924479dbcc2aa9fa64c1, type: 3}
@@ -108,7 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3765629304140031344}
   - component: {fileID: 8221369841854960129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower_Top_Windows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +134,8 @@ Transform:
   m_GameObject: {fileID: 4542411607214473162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8163112036299307955}
   - {fileID: 5085094675078986023}
@@ -170,7 +181,7 @@ GameObject:
   - component: {fileID: 5085094675078986023}
   - component: {fileID: 6524415989311628196}
   - component: {fileID: 6599148564311081492}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Top_Windows_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,6 +198,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3765629304140031344}
   m_RootOrder: 1
@@ -210,6 +222,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -253,7 +266,7 @@ GameObject:
   - component: {fileID: 5111240760048908979}
   - component: {fileID: 6866233956802666628}
   - component: {fileID: 4546227788512884917}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Tower_Top_Windows_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,6 +283,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3765629304140031344}
   m_RootOrder: 2
@@ -293,6 +307,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

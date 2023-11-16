@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1187710519968224912}
   - component: {fileID: 2881907385837162752}
   - component: {fileID: 4906979149547200943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RockMedium_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2426274338490567045}
   m_RootOrder: 2
@@ -51,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -91,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2426274338490567045}
   - component: {fileID: 7489983222700244724}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RockMedium_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,6 +110,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2733123543759881140}
   - {fileID: 228220523284541955}
@@ -154,7 +157,7 @@ GameObject:
   - component: {fileID: 8495200424123291399}
   - component: {fileID: 7280121834764101773}
   - component: {fileID: 8358579847955525437}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RockMedium_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +174,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2426274338490567045}
   m_RootOrder: 0
@@ -194,6 +198,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -232,9 +237,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4690509637354697533}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 331449560617370506, guid: 09e95023f0cef674d9e6cce0aabf0df4, type: 3}
@@ -249,7 +262,7 @@ GameObject:
   - component: {fileID: 228220523284541955}
   - component: {fileID: 5242645309233979843}
   - component: {fileID: 2582439542238995671}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_RockMedium_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +279,7 @@ Transform:
   m_LocalRotation: {x: 0.00000006717942, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2426274338490567045}
   m_RootOrder: 1
@@ -289,6 +303,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
