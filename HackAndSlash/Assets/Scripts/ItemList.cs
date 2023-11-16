@@ -8,12 +8,19 @@ public class ItemList
     public Item item;
     public string name;
     public int stacks;
+    public Sprite itemImage;
 
 
-    public ItemList(Item newItem, string newName, int newStacks)
+    public ItemList(Item newItem, string newName, int newStacks, Sprite newImage)
     {
         item = newItem;
         name = newName;
         stacks = newStacks;
+        itemImage = newImage;
+    }
+
+    public int GetStacks()
+    {
+        return stacks;
     }
 }

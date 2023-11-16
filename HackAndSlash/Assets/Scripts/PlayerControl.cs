@@ -158,8 +158,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
        
-        FireDamage item = new FireDamage();
-        items.Add(new ItemList(item, item.GiveName(), 2));
+        //HealingArea item = new HealingArea();
+        //items.Add(new ItemList(item, item.GiveName(), 1));
         StartCoroutine(CallItemUpdate()); 
         dashCount = 0;
         attackFinished = false;
@@ -171,6 +171,19 @@ public class PlayerControl : MonoBehaviour
         states = States.IDLE;
         moves = Moves.IDLE;
     }
+
+    public int GetStacks(Item item)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.item != null && i.item.GiveName() == item.GiveName())
+            {
+                i.GetStacks();
+            }
+        }
+        return 0; // Default value if the item is not found
+    }
+
     ListaAtaques GetAttacks(ComboAtaques combo)
     {
         for (int i = 0; i < ataques.Length; i++)
@@ -818,6 +831,7 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             landVFX.PlayDustVFX(this.transform.position);
+                            CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
@@ -898,6 +912,15 @@ public class PlayerControl : MonoBehaviour
             i.item.OnHit(this, enemy, i.stacks);
         }
     }
+
+    public void CallItemOnJump()
+    {
+        foreach (ItemList i in items)
+        {
+            i.item.OnJump(this, i.stacks);
+        }
+    }
+
     bool CheckAtaques()
     {
         if (attackFinished && (Time.time - comboFinishedTime) >= delayCombos)
