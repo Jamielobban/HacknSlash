@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6841105776301070417}
   - component: {fileID: 6703505348425117138}
   - component: {fileID: 7653561505888478174}
+  - component: {fileID: 2579693941362862985}
   m_Layer: 0
   m_Name: Healing Area Pickup
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 72
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2448819037441198026
 MeshFilter:
@@ -150,3 +151,15 @@ MonoBehaviour:
   inventory: {fileID: 0}
   currentstacks: 1
   playerControl: {fileID: 0}
+--- !u!114 &2579693941362862985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217206525754562089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4783b877473a24c8755a5ce05ff456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
