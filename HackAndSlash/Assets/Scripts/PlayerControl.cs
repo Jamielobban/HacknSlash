@@ -941,6 +941,18 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    public int GetItemStacks(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if(i.name == itemName)
+            {
+                return i.stacks;
+            }
+        }
+        return 0; 
+    }
+
     public void CallItemOnJump()
     {
         foreach (ItemList i in items)

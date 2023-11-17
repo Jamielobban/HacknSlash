@@ -9,8 +9,9 @@ public class EnemySkeletonSword : MonoBehaviour
 {
     public int health;
     public DamageNumber numberPrefab;
+    public DamageNumber burnDamageNumber;
+    public DamageNumber bleedNumberPrefab;
     public int stateMultiplier;
-    public Enemy1ScriptableObject scriptableObjectData;
 
     enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT };
 
@@ -334,6 +335,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
                     break;
                 case PlayerControl.HealthState.BURNED:
+                    Debug.Log("Im burning");
                     break;
                 case PlayerControl.HealthState.POSIONED:
                     break;
@@ -413,6 +415,23 @@ public class EnemySkeletonSword : MonoBehaviour
         }
 
     }
+    int ticksRemaining;
+    void Burn()
+    {
+        if (ticksRemaining > 0)
+        {
+            int damageToDeal = 5 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
+            this.health -= damageToDeal;
+            Debug.Log(damageToDeal);
+            DamageNumber burnNumber = burnDamageNumber.Spawn(this.transform.position, -damageToDeal);
+               // DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+            ticksRemaining--;
+            if(ticksRemaining == 0)
+            {
+                CancelInvoke("Burn");
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -442,6 +461,9 @@ public class EnemySkeletonSword : MonoBehaviour
                         Debug.Log("Ice applied");
                         break;
                     case PlayerControl.HealthState.BURNED:
+                        ticksRemaining = 2;
+                        InvokeRepeating("Burn", 0.5f, 1f);
+                        Debug.Log("Burning Applied");
                         break;
                     case PlayerControl.HealthState.POSIONED:
                         break;
