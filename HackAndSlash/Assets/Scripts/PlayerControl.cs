@@ -7,6 +7,9 @@ using MoreMountains.Feedbacks;
 using UnityEngine.VFX;
 using System.Linq;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using System;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -87,7 +90,7 @@ public class PlayerControl : MonoBehaviour
         public float delayRepeticionGolpes;
 
         //1 is light, 2 is heavy
-        public GameObject BlessingToSpawnHeavy;
+        //public GameObject BlessingToSpawnHeavy;
         //public GameObject BlessingToSpawnHeavy;
         //public GameObject BlessingToSpawnHeavy;
         //pickup
@@ -360,6 +363,32 @@ public class PlayerControl : MonoBehaviour
     {
         return listA.SequenceEqual(listB);
     }
+
+
+    //public void SpawnObjectWithDelay(float delay)
+    //{
+    //    Invoke("SpawnObject", delay); // Invoke the method after the specified delay
+    //}
+    //private void SpawnObject(Blessing blessing, int distance)
+    //{
+    //    Instantiate(blessing, player.transform.position + (player.transform.forward * distance), Quaternion.identity);
+    //}
+
+
+    public void SpawnObjectWithDelay(float delay, GameObject blessing, float distance, Action<GameObject> callback)
+    {
+        StartCoroutine(DelayedSpawn(delay, blessing,distance,callback));
+    }
+
+    private IEnumerator DelayedSpawn(float delay, GameObject blessing, float distance, Action<GameObject> callback)
+    {
+        yield return new WaitForSeconds(delay);
+
+        GameObject spawnedObject = Instantiate(blessing, player.transform.position + (player.transform.forward * distance), Quaternion.identity);
+        callback(spawnedObject);
+    }
+
+
     private IEnumerator DelayGolpe(float time, int golpe)
     {
 
@@ -380,19 +409,25 @@ public class PlayerControl : MonoBehaviour
                     {
                         hasApplied = true;
                         //i.spawnEffect(player.transform.position + (player.transform.forward * 2));
-                        GameObject effect = Instantiate(i.visualEffect, player.transform.position + (player.transform.forward * 2),Quaternion.identity);
-                        Collider effectCollider = effect.GetComponent<Collider>();
-                        effect.GetComponent<AttackCollider>().healthState = i.healthState;
-                        effect.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
-                        effect.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
-                        effect.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
+                        //GameObject effect = Instantiate(i.visualEffect, player.transform.position + (player.transform.forward * 2),Quaternion.identity);
+                        SpawnObjectWithDelay(i.visualEffect.GetComponent<AttackCollider>().spawnDelay, i.visualEffect, i.visualEffect.GetComponent<AttackCollider>().spawnDistance, (spawnedObject) =>
+                        {
+                            // Use the spawnedObject reference here
+                            //GameObject effect = spawnedObject;
+                            Collider effectCollider = spawnedObject.GetComponent<Collider>();
+                            spawnedObject.GetComponent<AttackCollider>().healthState = i.healthState;
+                            spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
+                            spawnedObject.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
+                            spawnedObject.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
 
-                        effect.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
+                            spawnedObject.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
 
-                        effect.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
-                        effect.tag = currentComboAttacks.attacks[golpe].colliderTag;
-                        effectCollider.enabled = true;
-                        StartCoroutine(DesactivarCollisionGolpeBlessing(1f, effectCollider));
+                            spawnedObject.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
+                            spawnedObject.tag = currentComboAttacks.attacks[golpe].colliderTag;
+                            effectCollider.enabled = true;
+                            StartCoroutine(DesactivarCollisionGolpeBlessing(1f, effectCollider));
+                        });
+                        
 
                     }
                 }
@@ -431,14 +466,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    public void SpawnObjectWithDelay(float delay)
-    {
-        Invoke("SpawnObject", delay); // Invoke the method after the specified delay
-    }
-    private void SpawnObject()
-    {
-        Instantiate(currentComboAttacks.attacks[currentComboAttack].BlessingToSpawnHeavy, transform.GetChild(0).position + new Vector3(0f, 0f, 5f), Quaternion.identity);
-    }
+    
     void PlayAttack()
     {
 
@@ -450,11 +478,11 @@ public class PlayerControl : MonoBehaviour
         //{
         //    BlessingFactory.Instance.SpawnHeavyAttackBlessing(this.transform.position, Quaternion.identity);
         //}
-        if (currentComboAttacks.attacks[currentComboAttack].BlessingToSpawnHeavy != null)
-        {
-            DynamicCameraControl.Instance.ChangeTopRigHeightAndReset(2f, 1f, 0.5f);
-            SpawnObjectWithDelay(0.5f);
-        }
+        //if (currentComboAttacks.attacks[currentComboAttack].BlessingToSpawnHeavy != null)
+        //{
+        //    DynamicCameraControl.Instance.ChangeTopRigHeightAndReset(2f, 1f, 0.5f);
+        //    SpawnObjectWithDelay(0.5f);
+        //}
         if (currentComboAttacks.attacks[currentComboAttack].collider != null && currentComboAttacks.combo != ComboAtaques.air2)
         {
 

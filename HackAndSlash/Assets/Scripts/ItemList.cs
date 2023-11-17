@@ -9,6 +9,7 @@ public class ItemList
     public string name;
     public int stacks;
     public Sprite itemImage;
+    //Dictionary<int, int> items;
 
 
     public ItemList(Item newItem, string newName, int newStacks, Sprite newImage)
@@ -23,4 +24,5 @@ public class ItemList
     {
         return stacks;
     }
+
 }

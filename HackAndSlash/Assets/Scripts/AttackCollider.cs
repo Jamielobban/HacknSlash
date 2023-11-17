@@ -13,6 +13,10 @@ public class AttackCollider : MonoBehaviour
     public string enemyHitAnim;
 
     public PlayerControl.HealthState healthState;
+
+    [SerializeField]
+    public float spawnDelay;
+    public float spawnDistance;
     // Start is called before the first frame update
     void Start()
     {

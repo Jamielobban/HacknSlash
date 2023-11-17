@@ -535,7 +535,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24614454}
-  m_LocalRotation: {x: 0.11372815, y: 0.000000028684154, z: -0.0000000032834995, w: 0.9935119}
+  m_LocalRotation: {x: 0.11372809, y: -0.0000000042736867, z: 4.892123e-10, w: 0.9935119}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2690,6 +2690,8 @@ MonoBehaviour:
   enemyStandUp: 0
   enemyHitAnim: 
   healthState: 0
+  spawnDelay: 0
+  spawnDistance: 0
 --- !u!4 &124592935
 Transform:
   m_ObjectHideFlags: 0
@@ -3784,8 +3786,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.1626352e+27, y: 1.8179267e+31, z: 2.8168747e+20,
-    w: 4.4643545e+30}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 3.6e-44, z: 4.7224e-41, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -4677,6 +4678,8 @@ MonoBehaviour:
   enemyStandUp: 0
   enemyHitAnim: 
   healthState: 0
+  spawnDelay: 0
+  spawnDistance: 0
 --- !u!1 &251413571
 GameObject:
   m_ObjectHideFlags: 0
@@ -5503,8 +5506,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282840810}
-  m_LocalRotation: {x: 0.11372816, y: 0.000000029623877, z: -0.00000000339107, w: 0.993512}
-  m_LocalPosition: {x: -49.248253, y: 38.8119, z: 97.17937}
+  m_LocalRotation: {x: 0.113728106, y: -0.0000000042736867, z: 4.8921234e-10, w: 0.993512}
+  m_LocalPosition: {x: -140.52826, y: 0.09189963, z: -25.220634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9724,7 +9727,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.32756e-40, z: 2.3509887e-38, w: 0}
+  m_BoundingSphereOverride: {x: 3.673418e-39, y: -0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -13211,7 +13214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645704132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -91.28, y: -38.72, z: -122.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15266,6 +15269,112 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84bceb238087a8a44942b5e1f09869dc, type: 3}
+--- !u!1 &781815241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781815245}
+  - component: {fileID: 781815244}
+  - component: {fileID: 781815243}
+  - component: {fileID: 781815242}
+  m_Layer: 7
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &781815242
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781815241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &781815243
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781815241}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &781815244
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781815241}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &781815245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781815241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.56, y: -0.27, z: 23.703333}
+  m_LocalScale: {x: 7.5584, y: 7.5584, z: 7.5584}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 106
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &787668670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22027,7 +22136,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.35
       delay: 0.35
       nextAttack: 1
@@ -22094,7 +22202,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.65
       delay: 0.65
       nextAttack: 1
@@ -22170,7 +22277,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   - combo: 2
     attacks:
@@ -22249,7 +22355,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.6
       delay: 0.6
       nextAttack: 0
@@ -22325,7 +22430,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 1
       delay: 1
       nextAttack: 1
@@ -22419,8 +22523,6 @@ MonoBehaviour:
       EnemyStandUp: 1
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 3833653141167548932, guid: 5cdc9519bc5e6394db6821c7da2a6bfa,
-        type: 3}
     blessing:
     - {fileID: 11400000, guid: 9c6bc84df8d73274e97e17b946c9b8ac, type: 2}
     - {fileID: 11400000, guid: 7da6daf8cc76fa84aa375d76b65f957f, type: 2}
@@ -22528,7 +22630,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   - combo: 3
     attacks:
@@ -22616,7 +22717,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 2
       delayRepeticionGolpes: 0.15
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   - combo: 4
     attacks:
@@ -22722,7 +22822,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   airCombo:
   - combo: 5
@@ -22793,7 +22892,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.35
       delay: 0.35
       nextAttack: 1
@@ -22860,7 +22958,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.35
       delay: 0.35
       nextAttack: 0
@@ -22927,7 +23024,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.4
       delay: 0.4
       nextAttack: 1
@@ -22994,7 +23090,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   - combo: 6
     attacks:
@@ -23064,7 +23159,6 @@ MonoBehaviour:
       EnemyStandUp: 1
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   runCombo:
   - combo: 7
@@ -23126,7 +23220,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.35
       delay: 0.35
       nextAttack: 0
@@ -23202,7 +23295,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.35
       delay: 0.35
       nextAttack: 0
@@ -23269,7 +23361,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.65
       delay: 0.65
       nextAttack: 1
@@ -23345,7 +23436,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   - combo: 8
     attacks:
@@ -23433,7 +23523,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.6
       delay: 0.6
       nextAttack: 0
@@ -23509,7 +23598,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 0.6
       delay: 0.6
       nextAttack: 0
@@ -23585,7 +23673,6 @@ MonoBehaviour:
       EnemyStandUp: 0
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     - ataque: 1
       delay: 1
       nextAttack: 1
@@ -23679,7 +23766,6 @@ MonoBehaviour:
       EnemyStandUp: 1
       repeticionGolpes: 0
       delayRepeticionGolpes: 0
-      BlessingToSpawnHeavy: {fileID: 0}
     blessing: []
   gravity: -2250
   jumpForce: 60
@@ -27728,7 +27814,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250495649}
-  m_LocalRotation: {x: 0.09077203, y: -0, z: -0, w: 0.9958717}
+  m_LocalRotation: {x: 0.09077197, y: -0, z: -0, w: 0.9958717}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -28204,6 +28290,8 @@ MonoBehaviour:
   enemyStandUp: 0
   enemyHitAnim: 
   healthState: 0
+  spawnDelay: 0
+  spawnDistance: 0
 --- !u!1 &1310461145
 GameObject:
   m_ObjectHideFlags: 0
@@ -33843,7 +33931,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 7.8176e-41, z: 2.3509887e-38, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 6e-44, z: 1.7e-44, w: 1.4433e-41}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -35034,7 +35122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684698348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -49.248253, y: 38.8119, z: 97.17937}
+  m_LocalPosition: {x: -140.52826, y: 0.09189963, z: -25.220634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36785,6 +36873,8 @@ MonoBehaviour:
   enemyStandUp: 0
   enemyHitAnim: 
   healthState: 0
+  spawnDelay: 0
+  spawnDistance: 0
 --- !u!1001 &1840692556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45222,7 +45312,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041147858}
-  m_LocalRotation: {x: 0.09077203, y: -0, z: -0, w: 0.9958717}
+  m_LocalRotation: {x: 0.09077197, y: -0, z: -0, w: 0.9958717}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

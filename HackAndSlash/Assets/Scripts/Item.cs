@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Item
 {
+    int idItem;
     public abstract string GiveName();
 
     public abstract Sprite GiveSprite();
@@ -108,15 +109,13 @@ public class HealingArea : Item
 
 
 //public class
-    //dodge --> movespeed
-    //crowbar
-    //gasoline
-    //teddy bear
-    //bleed
+    //crowbar --> 20% mes de daño a enemics que tenen 75% de vida, stack + 5%
+    //gasoline --> quan moren surt explosio, stack 1.1 x scale
+    //teddy bear --> 5% change to absorb, + 3% stack, logaritmic fins a 50%
+    //bleed --> 10% change to inflict bleed, 5% every stack
     //Reduce all incoming damage by 5 (+5 per stack). Cannot be reduced below 1.
     //Killing an enemy spawns a healing orb that heals for 8 plus an additional 2% (+2% per stack) of maximum health.
     //2 seconds after getting hurt, heal for 20 plus an additional 5% (+5% per stack) of maximum health.
     //Your attacks have a 10% (+10% per stack) chance to 'Critically Strike', dealing double damage.
-    //Killing an enemy ignites all enemies within 12m (+4m per stack) for 150% base damage. Additionally, enemies burn for 150% (+75% per stack) base damage.
     //Increase damage to enemies within 13m by 20% (+20% per stack).
-    //Deal +75% (+75% per stack) damage to enemies above 90% health.
+    //Leech seed
