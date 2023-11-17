@@ -100,8 +100,9 @@ public class PlayerControl : MonoBehaviour
     {
         public ComboAtaques combo;
         public Ataques[] attacks;
-        public Blessing[] blessing;
     }
+    public Blessing[] blessing;
+
     public ListaAtaques[] ataques;
     ListaAtaques currentComboAttacks;
     public ListaAtaques[] airCombo;
@@ -401,9 +402,9 @@ public class PlayerControl : MonoBehaviour
                 currentComboAttacks.attacks[golpe].effects.PlayFeedbacks();
             }
             bool hasApplied = false;
-            if (currentComboAttacks.blessing != null)
+            if (blessing != null)
             {
-                foreach (Blessing i in currentComboAttacks.blessing)
+                foreach (Blessing i in blessing)
                 {
                     if (AreListsEqual(i.passiveCombo, passiveCombo))
                     {
