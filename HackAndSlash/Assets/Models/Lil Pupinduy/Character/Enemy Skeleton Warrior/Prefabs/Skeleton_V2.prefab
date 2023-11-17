@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 8978170095362994638}
   - component: {fileID: 1030368581362420202}
   - component: {fileID: 8555376681676866231}
+  - component: {fileID: 6282354920179661908}
   m_Layer: 6
   m_Name: Skeleton_V2
   m_TagString: Enemy
@@ -1671,12 +1672,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f6da6d7e7b2c84688a92e0196f3e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 100
   numberPrefab: {fileID: 4976151793224397268, guid: d7ddc6e934e42e94ba1b474312ff4083,
     type: 3}
+  burnDamageNumber: {fileID: 0}
+  ampedNumberPrefab: {fileID: 0}
+  poisonNumberPrefab: {fileID: 0}
   stateMultiplier: 0
-  scriptableObjectData: {fileID: 0}
-  healthState: 0
+  healthState: 5
   hitWhiteEffects:
   - {fileID: 1258725013165278, guid: f00872eb3daf45d4cb44ebbbf9d203b7, type: 3}
   - {fileID: 1416824176164296, guid: dc1397204bb5ee84895af2b49dac2d49, type: 3}
@@ -1855,6 +1858,18 @@ MonoBehaviour:
   meshEffects:
   - {fileID: 3023065830812218815}
   - {fileID: 2072676322148163515}
+--- !u!114 &6282354920179661908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809778249656842921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64ba5f7a43d88541afda81cd4879c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2958064488589388476
 GameObject:
   m_ObjectHideFlags: 0

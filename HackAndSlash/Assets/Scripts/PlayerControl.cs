@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
     public int health;
     public List<ItemList> items = new List<ItemList>();
 
-    public enum HealthState { FROZEN, BURNED, POSIONED, WEAKENED, NORMAL };
+    public enum HealthState { FROZEN, BURNED, POSIONED, AMPED, WEAKENED, NORMAL };
 
     enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE };
 
@@ -1197,6 +1197,7 @@ public class PlayerControl : MonoBehaviour
                 states = States.ATTACK;
                 attacks = Attacks.GROUND;
                 currentComboAttacks = GetAttacks(ComboAtaques.HoldQuadrat);
+                passiveCombo.Add(PassiveCombo.HOLDQUADRATFLOOR);
                 PlayAttack();
                 controller.ResetBotonesAtaques();
                 return true;
@@ -1226,6 +1227,7 @@ public class PlayerControl : MonoBehaviour
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                 moveDirSaved = new Vector3();
                 states = States.ATTACK;
+                passiveCombo.Add(PassiveCombo.HOLDQUADRATFLOOR);
                 attacks = Attacks.GROUND;
                 currentComboAttacks = GetAttacks(ComboAtaques.combo5);
                 PlayAttack();
@@ -1257,7 +1259,7 @@ public class PlayerControl : MonoBehaviour
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                 moveDirSaved = new Vector3();
-
+                passiveCombo.Add(PassiveCombo.HOLDTRIANGLEFLOOR);
                 states = States.ATTACK;
                 attacks = Attacks.GROUND;
                 currentComboAttacks = GetAttacks(ComboAtaques.HoldTriangle);

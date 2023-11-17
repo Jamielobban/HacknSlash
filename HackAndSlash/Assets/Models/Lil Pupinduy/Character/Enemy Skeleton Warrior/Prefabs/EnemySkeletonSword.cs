@@ -1,6 +1,7 @@
 using DamageNumbersPro;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.VFX;
@@ -10,7 +11,8 @@ public class EnemySkeletonSword : MonoBehaviour
     public int health;
     public DamageNumber numberPrefab;
     public DamageNumber burnDamageNumber;
-    public DamageNumber bleedNumberPrefab;
+    public DamageNumber ampedNumberPrefab;
+    public DamageNumber poisonNumberPrefab;
     public int stateMultiplier;
 
     enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT };
@@ -335,9 +337,13 @@ public class EnemySkeletonSword : MonoBehaviour
 
                     break;
                 case PlayerControl.HealthState.BURNED:
-                    Debug.Log("Im burning");
+                    Debug.Log("Burning off");
                     break;
                 case PlayerControl.HealthState.POSIONED:
+                    Debug.Log("Poison off");
+                    break;
+                case PlayerControl.HealthState.AMPED:
+                    Debug.Log("Amp off");
                     break;
                 case PlayerControl.HealthState.NORMAL:
                     speedMultiplier = 1f;
@@ -415,23 +421,43 @@ public class EnemySkeletonSword : MonoBehaviour
         }
 
     }
-    int ticksRemaining;
+    int ticksRemainingBurn;
     void Burn()
     {
-        if (ticksRemaining > 0)
+        if (ticksRemainingBurn > 0)
         {
             int damageToDeal = 5 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
             this.health -= damageToDeal;
             Debug.Log(damageToDeal);
             DamageNumber burnNumber = burnDamageNumber.Spawn(this.transform.position, -damageToDeal);
-               // DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
-            ticksRemaining--;
-            if(ticksRemaining == 0)
+            // DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+            ticksRemainingBurn--;
+            if(ticksRemainingBurn == 0)
             {
                 CancelInvoke("Burn");
             }
         }
     }
+
+    int ticksRemainingPoison;
+    void Poison()
+    {
+        if (ticksRemainingPoison > 0)
+        {
+            //int damageToDeal = 1 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
+            //this.health -= damageToDeal;
+            //Debug.Log(damageToDeal);
+            DamageNumber burnNumber = burnDamageNumber.Spawn(this.transform.position, -1);
+            this.health -= 1;
+            // DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+            ticksRemainingPoison--;
+            if (ticksRemainingPoison == 0)
+            {
+                CancelInvoke("Poison");
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
 
@@ -461,11 +487,20 @@ public class EnemySkeletonSword : MonoBehaviour
                         Debug.Log("Ice applied");
                         break;
                     case PlayerControl.HealthState.BURNED:
-                        ticksRemaining = 2;
+                        ticksRemainingBurn = 2;
                         InvokeRepeating("Burn", 0.5f, 1f);
+                        //fire effect.setactive true;
                         Debug.Log("Burning Applied");
                         break;
                     case PlayerControl.HealthState.POSIONED:
+                        ticksRemainingPoison = 5;
+                        InvokeRepeating("Poison", 0.5f, 0.25f);
+                        Debug.Log("Poison Applied");
+                        break;
+                    case PlayerControl.HealthState.AMPED:
+                        StartCoroutine(this.gameObject.GetComponent<AmpExplosion>().AmpExplosionDelay(5, 10));
+                        Debug.Log("Amp applied");
+                        //electric effect.setactive true;
                         break;
                     case PlayerControl.HealthState.NORMAL:
                         speedMultiplier = 1f;
