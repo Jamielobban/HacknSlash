@@ -41,7 +41,6 @@ namespace DynamicMeshCutter
 
             for (int i = 0; i < createdMeshes.Length; i++)
             {
-                target.canCut = false;
                 if (createdMeshes[i].Vertices.Length < vertexCreationThreshold)
                     continue;
 
@@ -157,7 +156,6 @@ namespace DynamicMeshCutter
                 }
 
                 cData.CreatedObjects[i] = parent.gameObject;
-                nTarget.canCut = false;
                 cData.CreatedTargets[i] = nTarget;
             }
 
@@ -166,7 +164,6 @@ namespace DynamicMeshCutter
 
         static void CreateMesh(ref GameObject root, ref Transform parent, MeshTarget target, Mesh mesh, VirtualMesh vMesh, Material[] materials, int bt, bool forcePhysics = false)
         {
-
             parent = new GameObject($"{target.GameobjectRoot.name}").transform;
             parent.transform.rotation = target.transform.rotation;
             parent.transform.position = target.transform.position;
@@ -188,7 +185,7 @@ namespace DynamicMeshCutter
 
             root.transform.SetParent(parent, true);
             //root.transform.localScale = target.transform.localScale; //test this
-            target.canCut = false;
+
             if (target.CreateRigidbody[bt])
             {
                 var rb = parent.gameObject.AddComponent<Rigidbody>();

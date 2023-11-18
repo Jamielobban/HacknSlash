@@ -208,7 +208,6 @@ namespace DynamicMeshCutter
                 MeshCutting meshcutting = new MeshCutting();
                 VirtualMesh[] virtualMeshes = meshcutting.Cut(ref info);
                 info.CreatedMeshes = virtualMeshes;
-
                 if (virtualMeshes == null)
                     OnCut(false, info);
                 else
@@ -230,6 +229,7 @@ namespace DynamicMeshCutter
         protected virtual void CreateGameObjects(Info info)
         {
             MeshCreationData creationInfo = MeshCreation.CreateObjects(info, DefaultMaterial, VertexCreationThreshold);
+
             if (DestroyTargets)
             {
                 if (info.MeshTarget)
@@ -241,18 +241,12 @@ namespace DynamicMeshCutter
                         Destroy(info.MeshTarget.gameObject, 0);
                 }
             }
-            for (int i =0;i< creationInfo.CreatedObjects.Length; i++)
-            {
 
+            for(int i =0;i< creationInfo.CreatedObjects.Length; i++)
+            {
                 if(creationInfo.CreatedObjects[i] == null)
                 {
-
                     Debug.Log("Dynamic Mesh Cutter: Cut supressed creation of object due to VertexCreationThreshold. Make sure you handle NullReferenceExceptions!");
-                }
-                else
-                {
-                    Destroy(creationInfo.CreatedObjects[i], 4);
-
                 }
             }
 

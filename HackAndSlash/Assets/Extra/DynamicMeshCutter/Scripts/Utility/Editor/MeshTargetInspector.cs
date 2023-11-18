@@ -42,8 +42,6 @@ namespace DynamicMeshCutter
             _meshTarget.OverrideFaceMaterial = EditorGUILayout.ObjectField("Face Material", _meshTarget.OverrideFaceMaterial, typeof(Material), false) as Material;
             _meshTarget.SeparateMeshes = EditorGUILayout.Toggle("Seperate Meshes", _meshTarget.SeparateMeshes);
             _meshTarget.ApplyTranslation = EditorGUILayout.Toggle("Apply Translation", _meshTarget.ApplyTranslation);
-            _meshTarget.canCut = EditorGUILayout.Toggle("Can cut", _meshTarget.canCut);
-
             EditorGUILayout.EndVertical();
 
             string[] side = new string[2] { "Lower Sides", "Upper Sides" };

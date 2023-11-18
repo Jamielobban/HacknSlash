@@ -14,7 +14,7 @@ namespace DynamicMeshCutter
         public Material OverrideFaceMaterial;
         public bool SeparateMeshes;
         public bool ApplyTranslation = true;
-        public bool canCut = true;
+        
         //basic single
         public Behaviour[] DefaultBehaviour = new Behaviour[2] { Behaviour.Stone, Behaviour.Stone };
 
@@ -82,42 +82,8 @@ namespace DynamicMeshCutter
 
         protected virtual void Start()
         {
-            canCut = true;
-
-            if (Time.realtimeSinceStartup > 15)
-                StartCoroutine(noCut());
-
             if (DynamicRagdoll == null)
                 DynamicRagdoll = GetComponentInParent<DynamicRagdoll>();
-        }
-        bool fade = false;
-        float clip = 0;
-        float speed = 0.5f;
-        Material mat;
-        protected virtual void Update()
-        {
-            if(fade)
-            {
-                clip += Time.deltaTime * speed;
-
-
-                //Update 'Clip' property inside material
-                AmazingAssets.AdvancedDissolve.AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(mat, AmazingAssets.AdvancedDissolve.AdvancedDissolveProperties.Cutout.Standard.Property.Clip, clip);
-            }
-
-        }
-        
-            IEnumerator noCut()
-        {
-
-            yield return new WaitForSeconds(.1f);
-            mat = new Material(this.gameObject.GetComponent<MeshRenderer>().material);
-            this.gameObject.GetComponent<MeshRenderer>().material = mat;
-            this.gameObject.layer = 6;
-            canCut = false;
-            yield return new WaitForSeconds(0.5f);
-            fade = true;
-            Destroy(mat, 5);
         }
         public Material TryGetMaterial()
         {
