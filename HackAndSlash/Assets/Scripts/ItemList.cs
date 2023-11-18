@@ -9,20 +9,16 @@ public class ItemList
     public string name;
     public int stacks;
     public Sprite itemImage;
-    //Dictionary<int, int> items;
+    public string itemDescription;
+    public StatType statType;
 
-
-    public ItemList(Item newItem, string newName, int newStacks, Sprite newImage)
+    public ItemList(Item newItem, string newName, int newStacks, Sprite newImage, string newDescription, StatType newStatType)
     {
         item = newItem;
         name = newName;
         stacks = newStacks;
         itemImage = newImage;
+        itemDescription = newDescription;
+        statType = newStatType;
     }
-
-    public int GetStacks()
-    {
-        return stacks;
-    }
-
 }

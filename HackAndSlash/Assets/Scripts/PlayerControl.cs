@@ -163,6 +163,21 @@ public class PlayerControl : MonoBehaviour
 
     }
     public List<PassiveCombo> passiveCombo = new List<PassiveCombo>();
+
+    [Header("Combat Stats")]
+    [Space]
+    [SerializeField]
+    public float currentHealth;
+    [SerializeField]
+    public float maxHealth;
+    [SerializeField]
+    public float critChance;
+    public float maxCritChance = 100;
+    [SerializeField]
+    public float attackDamage;
+    [SerializeField]
+    public float healthRegen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -179,18 +194,6 @@ public class PlayerControl : MonoBehaviour
 
         states = States.IDLE;
         moves = Moves.IDLE;
-    }
-
-    public int GetStacks(Item item)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item != null && i.item.GiveName() == item.GiveName())
-            {
-                i.GetStacks();
-            }
-        }
-        return 0; // Default value if the item is not found
     }
 
     ListaAtaques GetAttacks(ComboAtaques combo)
@@ -951,7 +954,33 @@ public class PlayerControl : MonoBehaviour
         StartCoroutine(CallItemUpdate());
     }
 
-    public void CallItemOnHit(Enemy1 enemy)
+    public void CallItemOnKill(EnemySkeletonSword enemy)
+    {
+        foreach (ItemList i in items)
+        {
+            i.item.OnKill(this, enemy, i.stacks);
+        }
+    }
+    public void CallItemOnCrit(EnemySkeletonSword enemy)
+    {
+        foreach (ItemList i in items)
+        {
+            i.item.OnCrit(this, enemy, i.stacks);
+        }
+    }
+
+    public void CallItemOnPickup(StatType desiredStatType)
+    {
+        foreach (ItemList i in items)
+        {
+            if(i.statType == desiredStatType)
+            {
+                i.item.OnItemPickup(this, i.stacks,i.statType);
+            }
+        }
+    }
+
+    public void CallItemOnHit(EnemySkeletonSword enemy)
     {
         foreach (ItemList i in items)
         {
@@ -978,6 +1007,13 @@ public class PlayerControl : MonoBehaviour
             i.item.OnJump(this, i.stacks);
         }
     }
+    //public void CallItemOnPickup()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnItemPickup(this, i.stacks, i.statType);
+    //    }
+    //}
 
     bool CheckAtaques()
     {

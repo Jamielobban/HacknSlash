@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
             {
                 inventorymenu.SetActive(true);
                 //AddItem(new HealingItem(), 1);
-                Debug.Log("Hola");
+                //Debug.Log("Hola");
                 RefreshInventory();
             }
         }
@@ -85,6 +85,7 @@ public class Inventory : MonoBehaviour
                         panel.itemImage.sprite = i.item.GiveSprite();
                         panel.stacksText.gameObject.SetActive(true);
                         panel.stacksText.text = " " + i.stacks;
+                        //Debug.Log("refresh");
                         //Debug.Log(i.stacks);
                     }
                     else
@@ -102,6 +103,7 @@ public class Inventory : MonoBehaviour
     const int max = 99;
     public int AddItem(Item item, int amount)
     {
+        //Debug.Log("Added item");
         foreach (ItemSlotInfo i in items)
         {
             if (i.item != null)
@@ -142,7 +144,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        Debug.Log("None");
         if (inventorymenu.activeSelf) RefreshInventory();
         return amount;
     }

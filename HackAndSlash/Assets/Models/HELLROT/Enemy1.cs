@@ -660,10 +660,10 @@ public class Enemy1 : MonoBehaviour
                     SpawnBloodSplash(collisionPoint);
                     SpawnHitLine(collisionPoint);
                     AbilityPowerManager.instance.IncreaseCombo();
-                    if(other.transform.GetComponentInParent<PlayerControl>() != null)
-                    {
-                        other.transform.GetComponentInParent<PlayerControl>().CallItemOnHit(this);
-                    }
+                    //if(other.transform.GetComponentInParent<PlayerControl>() != null)
+                    //{
+                    //    other.transform.GetComponentInParent<PlayerControl>().CallItemOnHit(this);
+                    //}
                     DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
                 }
             }
