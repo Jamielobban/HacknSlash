@@ -15,7 +15,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public DamageNumber poisonNumberPrefab;
     public int stateMultiplier;
 
-    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT };
+    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH };
 
     public PlayerControl.HealthState healthState;
     enum Move { WALK, RUN };
@@ -64,6 +64,11 @@ public class EnemySkeletonSword : MonoBehaviour
     public GameObject[] meshEffects;
 
     int AnimSpeed = 1;
+
+    float hitTime;
+    float knockbackForce; 
+    Vector3 knockbackForceDir;
+    float hitTimeDown;
     // Start is called before the first frame update
     void Start()
     {
@@ -281,6 +286,15 @@ public class EnemySkeletonSword : MonoBehaviour
                 break;
             case States.HIT:
 
+                if((Time.time - hitTime) < 0.2f)
+                {
+                    float value = 1  - (Mathf.Pow(((Time.time-hitTime)/0.2f),2));
+                    rigidbody.AddForce(knockbackForceDir * (knockbackForce*(value)) * Time.deltaTime, ForceMode.Force);
+                }
+
+
+
+
                 switch (hit)
                 {
                     case Hits.UP:
@@ -323,8 +337,27 @@ public class EnemySkeletonSword : MonoBehaviour
                         break;
                 }
                 break;
-        }
+            case States.DEATH:
 
+                if ((Time.time - hitTime) < 0.5f)
+                {
+                    float value = 1 - (Mathf.Pow(((Time.time - hitTime) / 0.5f), 2));
+                    rigidbody.AddForce(knockbackForceDir * (knockbackForce * (value)) * Time.deltaTime, ForceMode.Force);
+
+                }
+                if ((Time.time - hitTime) < 2f)
+                {
+                    float value = (Mathf.Pow(((Time.time - hitTime) / 2f), 2));
+                    rigidbody.AddForce(-this.transform.up * (30000 * (value)) * Time.deltaTime, ForceMode.Force);
+
+                }
+
+                break;
+        }
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if ((Time.time - timeEffectApplied) >= delayTimer && healthState != PlayerControl.HealthState.NORMAL)
         {
             switch (healthState)
@@ -357,6 +390,10 @@ public class EnemySkeletonSword : MonoBehaviour
     }
     void Levantarse()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if (hit != Hits.LAND)
             return;
         anim.CrossFadeInFixedTime("Levantarse", 0.2f);
@@ -395,18 +432,32 @@ public class EnemySkeletonSword : MonoBehaviour
     }
     void DelayAire()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         anim.CrossFadeInFixedTime("Flotando", 0.2f);
         delayCaer = Time.time;
         hit = Hits.AIR;
     }
     void StandUp()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
+        if ((Time.time - hitTimeDown) < 0.9f)
+            return;
         anim.CrossFadeInFixedTime("StandUp", 0.2f);
         Invoke("ChangeToIdleHit", 0.4f);
 
     }
     void ChangeToIdleHit()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         hitCount--;
         if (hitCount == 0)
         {
@@ -424,6 +475,10 @@ public class EnemySkeletonSword : MonoBehaviour
     int ticksRemainingBurn;
     void Burn()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if (ticksRemainingBurn > 0)
         {
             int damageToDeal = 5 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
@@ -442,6 +497,10 @@ public class EnemySkeletonSword : MonoBehaviour
     int ticksRemainingPoison;
     void Poison()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if (ticksRemainingPoison > 0)
         {
             //int damageToDeal = 1 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
@@ -463,82 +522,83 @@ public class EnemySkeletonSword : MonoBehaviour
 
         if (other.GetComponent<AttackCollider>() != null && GetDamage)
         {
-            if (healthState == other.GetComponent<AttackCollider>().healthState)
+            if (state == States.DEATH)
             {
-                stateMultiplier++;
-                timeEffectApplied = Time.time;
-                if (stateMultiplier >= 1)
-                {
-                    delayTimer = 5;
-                }
+                return;
             }
-            else if (other.GetComponent<AttackCollider>().healthState != PlayerControl.HealthState.NORMAL)
+            health -= other.GetComponent<AttackCollider>().damage;
+            if(health <= 0)
             {
-                timeEffectApplied = Time.time;
-                stateMultiplier = 0;
-                healthState = other.GetComponent<AttackCollider>().healthState;
-                switch (healthState)
-                {
-                    case PlayerControl.HealthState.FROZEN:
-                        speedMultiplier = 0.5f;
-                        meshEffects[0].SetActive(true);
-                        meshEffects[1].SetActive(true);
-
-                        Debug.Log("Ice applied");
-                        break;
-                    case PlayerControl.HealthState.BURNED:
-                        ticksRemainingBurn = 2;
-                        InvokeRepeating("Burn", 0.5f, 1f);
-                        //fire effect.setactive true;
-                        Debug.Log("Burning Applied");
-                        break;
-                    case PlayerControl.HealthState.POSIONED:
-                        ticksRemainingPoison = 5;
-                        InvokeRepeating("Poison", 0.5f, 0.25f);
-                        Debug.Log("Poison Applied");
-                        break;
-                    case PlayerControl.HealthState.AMPED:
-                        StartCoroutine(this.gameObject.GetComponent<AmpExplosion>().AmpExplosionDelay(5, 10));
-                        Debug.Log("Amp applied");
-                        //electric effect.setactive true;
-                        break;
-                    case PlayerControl.HealthState.NORMAL:
-                        speedMultiplier = 1f;
-                        break;
-                    case PlayerControl.HealthState.WEAKENED:
-                        break;
-                }
-
-                delayTimer = 3;
-            }
-
-            agent.enabled = false;
-
-            if (other.CompareTag("GolpeVertical"))
-            {
-                fallStartTime = Time.time;
-
-                anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
-
+                Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
+                this.transform.LookAt(this.transform.position + ForceDirection);
+                hitTime = Time.time;
+                knockbackForce = 30000;
+                //rigidbody.AddForce(-ForceDirection * other.GetComponent<AttackCollider>().Knockback * Time.fixedDeltaTime, ForceMode.Impulse);
+                knockbackForceDir = -ForceDirection;
+                agent.enabled = false;
                 other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
-
+                state = States.DEATH;
                 collisionPoint = FindClosestPointOnCollider(other, transform.position);
                 SpawnWhiteSplash(collisionPoint);
                 SpawnBloodSplash(collisionPoint);
                 SpawnHitLine(collisionPoint);
                 //ComboManager.instance.IncreaseCombo();
                 AbilityPowerManager.instance.IncreaseCombo();
+                anim.CrossFadeInFixedTime("Death", 0.2f);
+                GetDamage = false;
 
-
-                rigidbody.AddForce(this.transform.up * JumpForce, ForceMode.Impulse);
-
-                Invoke("DelayAire", delayJumpHit);
-
-                state = States.HIT;
-                hit = Hits.UP;
-
+                return;
             }
-            else if (other.CompareTag("GolpeAire"))
+
+            if (healthState == other.GetComponent<AttackCollider>().healthState)
+                {
+                    stateMultiplier++;
+                    timeEffectApplied = Time.time;
+                    if (stateMultiplier >= 1)
+                    {
+                        delayTimer = 5;
+                    }
+                }
+                else if (other.GetComponent<AttackCollider>().healthState != PlayerControl.HealthState.NORMAL)
+                {
+                    timeEffectApplied = Time.time;
+                    stateMultiplier = 0;
+                    healthState = other.GetComponent<AttackCollider>().healthState;
+                    switch (healthState)
+                    {
+                        case PlayerControl.HealthState.FROZEN:
+                            speedMultiplier = 0.5f;
+                            meshEffects[0].SetActive(true);
+                            meshEffects[1].SetActive(true);
+
+                            Debug.Log("Ice applied");
+                            break;
+                        case PlayerControl.HealthState.BURNED:
+                            ticksRemainingBurn = 2;
+                            InvokeRepeating("Burn", 0.5f, 1f);
+                            //fire effect.setactive true;
+                            Debug.Log("Burning Applied");
+                            break;
+                        case PlayerControl.HealthState.POSIONED:
+                            ticksRemainingPoison = 5;
+                            InvokeRepeating("Poison", 0.5f, 0.25f);
+                            Debug.Log("Poison Applied");
+                            break;
+                        case PlayerControl.HealthState.AMPED:
+                            StartCoroutine(this.gameObject.GetComponent<AmpExplosion>().AmpExplosionDelay(5, 10));
+                            Debug.Log("Amp applied");
+                            //electric effect.setactive true;
+                            break;
+                        case PlayerControl.HealthState.NORMAL:
+                            speedMultiplier = 1f;
+                            break;
+                        case PlayerControl.HealthState.WEAKENED:
+                            break;
+                    }
+
+                    delayTimer = 3;
+                }
+            if (state == States.JUMP)
             {
                 delayCaer = Time.time;
 
@@ -558,67 +618,122 @@ public class EnemySkeletonSword : MonoBehaviour
                 state = States.HIT;
                 hit = Hits.AIR;
             }
-            else if (other.CompareTag("GolpeVerticalCircular"))
+            else
             {
-                rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
-                anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
-                fallStartTime = Time.time;
-                other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+    
 
+                agent.enabled = false;
 
-                collisionPoint = FindClosestPointOnCollider(other, transform.position);
-                SpawnWhiteSplash(collisionPoint);
-                SpawnBloodSplash(collisionPoint);
-                SpawnHitLine(collisionPoint);
-                //ComboManager.instance.IncreaseCombo();
-                AbilityPowerManager.instance.IncreaseCombo();
-                state = States.HIT;
-                hit = Hits.UP;
-                Invoke("DelayAire", delayJumpHit);
-            }
-            else if (other.GetComponent<AttackCollider>() != null)
-            {
-                hitCount++;
-
-                if (other.GetComponent<AttackCollider>().enemyStandUp)
+                if (other.CompareTag("GolpeVertical"))
                 {
-                    Invoke("StandUp", 1f);
+                    fallStartTime = Time.time;
+
+                    anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
+
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    //ComboManager.instance.IncreaseCombo();
+                    AbilityPowerManager.instance.IncreaseCombo();
+
+
+                    rigidbody.AddForce(this.transform.up * JumpForce, ForceMode.Impulse);
+
+                    Invoke("DelayAire", delayJumpHit);
+
+                    state = States.HIT;
+                    hit = Hits.UP;
+
                 }
-                else
+                else if (other.CompareTag("GolpeAire"))
                 {
-                    Invoke("ChangeToIdleHit", 0.5f);
+                    delayCaer = Time.time;
 
+                    rigidbody.AddForce(this.transform.up * ImpulsoGolpeAire * Time.fixedDeltaTime, ForceMode.Impulse);
+                    anim.CrossFadeInFixedTime("AirDamage", 0.2f);
+
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    //ComboManager.instance.IncreaseCombo();
+                    AbilityPowerManager.instance.IncreaseCombo();
+
+                    fallStartTime = Time.time;
+                    state = States.HIT;
+                    hit = Hits.AIR;
                 }
-
-                state = States.HIT;
-                hit = Hits.HIT1;
-
-                anim.CrossFadeInFixedTime(other.GetComponent<AttackCollider>().enemyHitAnim, 0.2f);
-
-                rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
-
-                other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+                else if (other.CompareTag("GolpeVerticalCircular"))
+                {
+                    rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
+                    anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
+                    fallStartTime = Time.time;
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
 
 
-                Vector3 player = new Vector3(GameObject.FindGameObjectWithTag("PlayerCenter").transform.position.x, 0, GameObject.FindGameObjectWithTag("PlayerCenter").transform.position.z);
-                Vector3 enemy = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    //ComboManager.instance.IncreaseCombo();
+                    AbilityPowerManager.instance.IncreaseCombo();
+                    state = States.HIT;
+                    hit = Hits.UP;
+                    Invoke("DelayAire", delayJumpHit);
+                }
+                else if (other.GetComponent<AttackCollider>() != null)
+                {
+                    hitCount++;
 
-                Vector3 ForceDirection = (player - (enemy)).normalized;
-                rigidbody.AddForce(-ForceDirection * other.GetComponent<AttackCollider>().Knockback * Time.fixedDeltaTime, ForceMode.Impulse);
+                    if (other.GetComponent<AttackCollider>().enemyStandUp)
+                    {
+                        Invoke("StandUp", 1f);
+                        hitTimeDown = Time.time;
+                    }
+                    else
+                    {
+                        Invoke("ChangeToIdleHit", 0.5f);
 
-                // Vector3 collisionPosition = (GameObject.FindGameObjectWithTag("PlayerCenter").transform.position - (this.transform.position + new Vector3(0f, 2f, 0f))).normalized;
-                collisionPoint = FindClosestPointOnCollider(other, transform.position);
-                SpawnWhiteSplash(collisionPoint);
-                SpawnBloodSplash(collisionPoint);
-                SpawnHitLine(collisionPoint);
-                AbilityPowerManager.instance.IncreaseCombo();
-                //if (other.transform.GetComponentInParent<PlayerControl>() != null)
-                //{
-                //    other.transform.GetComponentInParent<PlayerControl>().CallItemOnHit(this);
-                //}
-                DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+                    }
+                    
+                    state = States.HIT;
+                    hit = Hits.HIT1;
+
+                    anim.CrossFadeInFixedTime(other.GetComponent<AttackCollider>().enemyHitAnim, 0.2f);
+
+                    rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
+
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+
+
+                    //Vector3 player = new Vector3(GameObject.FindGameObjectWithTag("PlayerCenter").transform.position.x, 0, GameObject.FindGameObjectWithTag("PlayerCenter").transform.position.z);
+                    //Vector3 enemy = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+
+                    Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
+                    this.transform.LookAt(this.transform.position + ForceDirection);
+
+                    hitTime = Time.time;
+                    knockbackForce = other.GetComponent<AttackCollider>().Knockback;
+                    //rigidbody.AddForce(-ForceDirection * other.GetComponent<AttackCollider>().Knockback * Time.fixedDeltaTime, ForceMode.Impulse);
+                    knockbackForceDir = -ForceDirection;
+                    // Vector3 collisionPosition = (GameObject.FindGameObjectWithTag("PlayerCenter").transform.position - (this.transform.position + new Vector3(0f, 2f, 0f))).normalized;
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    AbilityPowerManager.instance.IncreaseCombo();
+                    //if (other.transform.GetComponentInParent<PlayerControl>() != null)
+                    //{
+                    //    other.transform.GetComponentInParent<PlayerControl>().CallItemOnHit(this);
+                    //}
+                    DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+                }
             }
-           
         }
 
     }

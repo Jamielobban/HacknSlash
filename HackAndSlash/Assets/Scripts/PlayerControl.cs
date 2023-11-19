@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour
         public bool EnemyStandUp;
         public int repeticionGolpes;
         public float delayRepeticionGolpes;
-
+        public int damage;
         //1 is light, 2 is heavy
         //public GameObject BlessingToSpawnHeavy;
         //public GameObject BlessingToSpawnHeavy;
@@ -240,6 +240,7 @@ public class PlayerControl : MonoBehaviour
 
             if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
             {
+                this.gameObject.layer = 8;
                 attacks = Attacks.FALL;
                 playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
 
@@ -258,6 +259,7 @@ public class PlayerControl : MonoBehaviour
 
                         playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
                         doubleJump = false;
+                        this.gameObject.layer = 3;
 
                         comboFinishedTime = Time.time;
                         attackFinished = true;
@@ -419,6 +421,7 @@ public class PlayerControl : MonoBehaviour
                             spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
                             spawnedObject.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
                             spawnedObject.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
+                            spawnedObject.GetComponent<AttackCollider>().damage = currentComboAttacks.attacks[golpe].damage;
 
                             spawnedObject.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
 
@@ -440,6 +443,7 @@ public class PlayerControl : MonoBehaviour
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
+                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = currentComboAttacks.attacks[golpe].damage;
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
                 currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;
@@ -818,6 +822,8 @@ public class PlayerControl : MonoBehaviour
 
                                 }
                             }
+                            this.gameObject.layer = 3;
+
                             delayDash = Time.time;
                             moveDirSaved = new Vector3();
 
@@ -1042,9 +1048,9 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    this.transform.position = pos;
+                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
+                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
+                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
 
                 }
@@ -1138,9 +1144,9 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    this.transform.position = pos;
+                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
+                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
+                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
 
                 }
@@ -1237,9 +1243,9 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    this.transform.position = pos;
+                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
+                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
+                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
 
                 }
@@ -1269,9 +1275,9 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    this.transform.position = pos;
+                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
+                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
+                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
 
                 }
@@ -1420,6 +1426,7 @@ public class PlayerControl : MonoBehaviour
             }
 
             playerAnim.speed = 2f;
+            this.gameObject.layer = 8;
 
             dashCount++;
             stopAttack = true;

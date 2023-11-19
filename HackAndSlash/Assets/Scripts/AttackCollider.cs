@@ -11,6 +11,7 @@ public class AttackCollider : MonoBehaviour
     public float KnockbackY;
     public bool enemyStandUp;
     public string enemyHitAnim;
+    public int damage;
 
     public PlayerControl.HealthState healthState;
 
