@@ -184,7 +184,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        attackDamage = 1;
         //HealingArea item = new HealingArea();
         //items.Add(new ItemList(item, item.GiveName(), 1));
         StartCoroutine(CallItemUpdate()); 
@@ -202,9 +202,9 @@ public class PlayerControl : MonoBehaviour
     {
         return isCrit;
     }
-    public float GetCritOrDamage()
+    public float GetCritOrDamage(float damage)
     {
-        float baseDamage = attackDamage;
+        float baseDamage = damage*attackDamage;
 
         bool isCrit = IsCriticalHit();
 
@@ -443,14 +443,15 @@ public class PlayerControl : MonoBehaviour
                             //GameObject effect = spawnedObject;
                             Collider effectCollider = spawnedObject.GetComponent<Collider>();
                             spawnedObject.GetComponent<AttackCollider>().healthState = i.healthState;
-                            spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
-                            spawnedObject.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
-                            spawnedObject.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
-                            spawnedObject.GetComponent<AttackCollider>().damage = currentComboAttacks.attacks[golpe].damage;
+                            spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = i.hit;
+                            spawnedObject.GetComponent<AttackCollider>().KnockbackY = i.knockback.y;
+                            spawnedObject.GetComponent<AttackCollider>().enemyStandUp = i.EnemyStandUp;
+                            spawnedObject.GetComponent<AttackCollider>().damage = i.damage;
 
-                            spawnedObject.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
+                            spawnedObject.GetComponent<AttackCollider>().Knockback = i.knockback.x;
 
-                            spawnedObject.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
+                            spawnedObject.GetComponent<AttackCollider>().SetFeedback(i.enemyFeedback);
+
                             spawnedObject.tag = currentComboAttacks.attacks[golpe].colliderTag;
                             effectCollider.enabled = true;
                             StartCoroutine(DesactivarCollisionGolpeBlessing(1f, effectCollider));
@@ -468,7 +469,12 @@ public class PlayerControl : MonoBehaviour
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
-                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = currentComboAttacks.attacks[golpe].damage;
+
+
+                
+
+                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = GetCritOrDamage(currentComboAttacks.attacks[golpe].damage);
+
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
                 currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;

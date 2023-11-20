@@ -82,7 +82,7 @@ public class CritItem : Item
     {
         if (statType == StatType.CritChance)
         {
-            player.critChance += CalculateStatIncrease(5, stacks, player.maxCritChance);
+            player.critChance += 5;
         }
     }
 }
@@ -100,12 +100,20 @@ public class AttackDamge : Item
 
     public override string GiveDescription()
     {
+
         return "Gain 3 attack damage per stack.";
     }
 
     public override Sprite GiveSprite()
     {
         return Resources.Load<Sprite>("Item Images/Damage");
+    }
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.Damage)
+        {
+            player.attackDamage += 0.2f + (stacks*0.05f);
+        }
     }
 }
 
@@ -134,7 +142,7 @@ public class Meat : Item
     {
         if (statType == StatType.Health)
         {
-            player.currentHealth += 5 + (1 * stacks);
+            player.maxHealth += 5 + (1 * stacks);
         }
     }
 }

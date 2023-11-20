@@ -542,16 +542,17 @@ public class EnemySkeletonSword : MonoBehaviour
                 return;
             }
             //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
-            int damageToTake = (int)player.GetComponent<PlayerControl>().GetCritOrDamage();
-            health -= damageToTake;
+            health -= (int)other.GetComponent<AttackCollider>().damage;
+
             if (player.GetComponent<PlayerControl>().ReturnIfCrit())
             {
-                DamageNumber damageNumber = critDamageNumberPrefab.Spawn(collisionPoint + new Vector3(0f,1.5f,0f), damageToTake);
+                DamageNumber damageNumber = critDamageNumberPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)other.GetComponent<AttackCollider>().damage);
             }
             else
             {
-                DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), damageToTake);
+                DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)other.GetComponent<AttackCollider>().damage);
             }
+
             //Debug.Log("Does this always hit");
             if (health <= 0)
             {
