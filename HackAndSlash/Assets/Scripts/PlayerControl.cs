@@ -177,6 +177,9 @@ public class PlayerControl : MonoBehaviour
     public float attackDamage;
     [SerializeField]
     public float healthRegen;
+    public float critDamageMultiplier;
+    public int slowForce;
+    public bool isCrit;
 
     // Start is called before the first frame update
     void Start()
@@ -195,7 +198,41 @@ public class PlayerControl : MonoBehaviour
         states = States.IDLE;
         moves = Moves.IDLE;
     }
+    public bool ReturnIfCrit()
+    {
+        return isCrit;
+    }
+    public float GetCritOrDamage()
+    {
+        float baseDamage = attackDamage;
 
+        bool isCrit = IsCriticalHit();
+
+        float finalDamage = CalculateDamage(baseDamage, isCrit);
+        // Debug.Log("Final Damage: " + finalDamage);
+
+        return finalDamage;
+    }
+
+    private bool IsCriticalHit()
+    {
+        float randomValue = UnityEngine.Random.Range(0f, 100f);
+        isCrit = randomValue <= critChance;
+
+
+        Debug.Log("Is Critical Hit: " + isCrit);
+
+        return isCrit;
+    }
+
+    private float CalculateDamage(float baseDamage, bool isCrit)
+    {
+        float finalDamage = isCrit ? baseDamage * (2f * critDamageMultiplier) : baseDamage;
+
+        //Debug.Log("Final Damage: " + finalDamage);
+
+        return finalDamage;
+    }
     ListaAtaques GetAttacks(ComboAtaques combo)
     {
         for (int i = 0; i < ataques.Length; i++)
@@ -366,27 +403,16 @@ public class PlayerControl : MonoBehaviour
         return listA.SequenceEqual(listB);
     }
 
-
-    //public void SpawnObjectWithDelay(float delay)
-    //{
-    //    Invoke("SpawnObject", delay); // Invoke the method after the specified delay
-    //}
-    //private void SpawnObject(Blessing blessing, int distance)
-    //{
-    //    Instantiate(blessing, player.transform.position + (player.transform.forward * distance), Quaternion.identity);
-    //}
-
-
-    public void SpawnObjectWithDelay(float delay, GameObject blessing, float distance, Action<GameObject> callback)
+    public void SpawnObjectWithDelay(float delay, GameObject blessing, float distance, float upDistance, Action<GameObject> callback)
     {
-        StartCoroutine(DelayedSpawn(delay, blessing,distance,callback));
+        StartCoroutine(DelayedSpawn(delay, blessing,distance, upDistance, callback));
     }
 
-    private IEnumerator DelayedSpawn(float delay, GameObject blessing, float distance, Action<GameObject> callback)
+    private IEnumerator DelayedSpawn(float delay, GameObject blessing, float distance, float upDistance, Action<GameObject> callback)
     {
         yield return new WaitForSeconds(delay);
 
-        GameObject spawnedObject = Instantiate(blessing, player.transform.position + (player.transform.forward * distance), Quaternion.identity);
+        GameObject spawnedObject = Instantiate(blessing, player.transform.position + (player.transform.forward * distance) + (player.transform.up * upDistance), Quaternion.identity);
         callback(spawnedObject);
     }
 
@@ -410,9 +436,8 @@ public class PlayerControl : MonoBehaviour
                     if (AreListsEqual(i.passiveCombo, passiveCombo))
                     {
                         hasApplied = true;
-                        //i.spawnEffect(player.transform.position + (player.transform.forward * 2));
-                        //GameObject effect = Instantiate(i.visualEffect, player.transform.position + (player.transform.forward * 2),Quaternion.identity);
-                        SpawnObjectWithDelay(i.visualEffect.GetComponent<AttackCollider>().spawnDelay, i.visualEffect, i.visualEffect.GetComponent<AttackCollider>().spawnDistance, (spawnedObject) =>
+                        SpawnObjectWithDelay(i.visualEffect.GetComponent<AttackCollider>().spawnDelay, i.visualEffect, i.visualEffect.GetComponent<AttackCollider>().spawnDistance,
+                            i.visualEffect.GetComponent<AttackCollider>().upDistance,(spawnedObject) =>
                         {
                             // Use the spawnedObject reference here
                             //GameObject effect = spawnedObject;
@@ -476,17 +501,6 @@ public class PlayerControl : MonoBehaviour
 
         playerAnim.speed = 1.5f;
         currentComboAttack++;
-
-        //if ((currentComboAttack == currentComboAttacks.attacks.Count() - 1) 
-        //    /*currentComboAttacks.attacks[currentComboAttack].effectToSpawn != null*/)
-        //{
-        //    BlessingFactory.Instance.SpawnHeavyAttackBlessing(this.transform.position, Quaternion.identity);
-        //}
-        //if (currentComboAttacks.attacks[currentComboAttack].BlessingToSpawnHeavy != null)
-        //{
-        //    DynamicCameraControl.Instance.ChangeTopRigHeightAndReset(2f, 1f, 0.5f);
-        //    SpawnObjectWithDelay(0.5f);
-        //}
         if (currentComboAttacks.attacks[currentComboAttack].collider != null && currentComboAttacks.combo != ComboAtaques.air2)
         {
 

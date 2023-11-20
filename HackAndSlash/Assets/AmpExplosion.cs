@@ -5,10 +5,23 @@ using UnityEngine;
 
 public class AmpExplosion : MonoBehaviour
 {
-    public IEnumerator AmpExplosionDelay(float delay,int damage)
+    public GameObject chargeAmp;
+    public GameObject chargeDamagePrefab;
+    public IEnumerator AmpExplosionDelay()
+    {
+        GameObject chargeAmpPrefab = Instantiate(chargeAmp, this.GetComponent<Transform>());
+        yield return new WaitForSeconds(4f);
+        Destroy(chargeAmpPrefab);
+        GameObject chargeObject = Instantiate(chargeDamagePrefab, this.GetComponent<Transform>());
+        StartCoroutine(DisableCollider(0.1f,chargeObject));
+        //DamageNumber ampExplosionNumber = this.gameObject.GetComponent<EnemySkeletonSword>().ampedNumberPrefab.Spawn(this.transform.position, -damage);
+    }
+
+    private IEnumerator DisableCollider(float delay, GameObject something)
     {
         yield return new WaitForSeconds(delay);
-        this.gameObject.GetComponent<EnemySkeletonSword>().health -= damage;
-        DamageNumber ampExplosionNumber = this.gameObject.GetComponent<EnemySkeletonSword>().ampedNumberPrefab.Spawn(this.transform.position, -damage);
+        something.GetComponent<SphereCollider>().enabled = false;
+        yield return new WaitForSeconds(2f);
+        Destroy(something);
     }
 }

@@ -11,8 +11,8 @@ public class EnemySkeletonSword : MonoBehaviour
     public int health;
     public DamageNumber numberPrefab;
     public DamageNumber burnDamageNumber;
-    public DamageNumber ampedNumberPrefab;
-    public DamageNumber poisonNumberPrefab;
+    //public DamageNumber ampedNumberPrefab;
+    public DamageNumber critDamageNumberPrefab;
     public int stateMultiplier;
 
     enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH };
@@ -517,6 +517,21 @@ public class EnemySkeletonSword : MonoBehaviour
         }
     }
 
+    void HandleEnemyHit(bool isCritical, Vector3 collisionPoint)
+    {
+        // Instantiate the appropriate DamageNumber prefab based on whether it's a crit or not
+        if (isCritical)
+        {
+            Instantiate(critDamageNumberPrefab, collisionPoint, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(numberPrefab, collisionPoint, Quaternion.identity);
+        }
+
+        // You can add additional logic here based on the enemy being hit
+        // For example, updating enemy health, playing sound effects, triggering animations, etc.
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -526,9 +541,22 @@ public class EnemySkeletonSword : MonoBehaviour
             {
                 return;
             }
-            health -= other.GetComponent<AttackCollider>().damage;
-            if(health <= 0)
+            //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
+            int damageToTake = (int)player.GetComponent<PlayerControl>().GetCritOrDamage();
+            health -= damageToTake;
+            if (player.GetComponent<PlayerControl>().ReturnIfCrit())
             {
+                DamageNumber damageNumber = critDamageNumberPrefab.Spawn(collisionPoint + new Vector3(0f,1.5f,0f), damageToTake);
+            }
+            else
+            {
+                DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), damageToTake);
+            }
+            //Debug.Log("Does this always hit");
+            if (health <= 0)
+            {
+                collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                //other.GetComponent<AttackCollider>().SubscribeToAttackResult();
                 Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
                 this.transform.LookAt(this.transform.position + ForceDirection);
                 hitTime = Time.time;
@@ -538,7 +566,6 @@ public class EnemySkeletonSword : MonoBehaviour
                 agent.enabled = false;
                 other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
                 state = States.DEATH;
-                collisionPoint = FindClosestPointOnCollider(other, transform.position);
                 SpawnWhiteSplash(collisionPoint);
                 SpawnBloodSplash(collisionPoint);
                 SpawnHitLine(collisionPoint);
@@ -585,7 +612,7 @@ public class EnemySkeletonSword : MonoBehaviour
                             Debug.Log("Poison Applied");
                             break;
                         case PlayerControl.HealthState.AMPED:
-                            StartCoroutine(this.gameObject.GetComponent<AmpExplosion>().AmpExplosionDelay(5, 10));
+                            StartCoroutine(this.gameObject.GetComponent<AmpExplosion>().AmpExplosionDelay());
                             Debug.Log("Amp applied");
                             //electric effect.setactive true;
                             break;
@@ -638,7 +665,7 @@ public class EnemySkeletonSword : MonoBehaviour
                     SpawnHitLine(collisionPoint);
                     //ComboManager.instance.IncreaseCombo();
                     AbilityPowerManager.instance.IncreaseCombo();
-
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
 
                     rigidbody.AddForce(this.transform.up * JumpForce, ForceMode.Impulse);
 
@@ -663,7 +690,7 @@ public class EnemySkeletonSword : MonoBehaviour
                     SpawnHitLine(collisionPoint);
                     //ComboManager.instance.IncreaseCombo();
                     AbilityPowerManager.instance.IncreaseCombo();
-
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
                     fallStartTime = Time.time;
                     state = States.HIT;
                     hit = Hits.AIR;
@@ -680,6 +707,7 @@ public class EnemySkeletonSword : MonoBehaviour
                     SpawnWhiteSplash(collisionPoint);
                     SpawnBloodSplash(collisionPoint);
                     SpawnHitLine(collisionPoint);
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
                     //ComboManager.instance.IncreaseCombo();
                     AbilityPowerManager.instance.IncreaseCombo();
                     state = States.HIT;
@@ -727,11 +755,12 @@ public class EnemySkeletonSword : MonoBehaviour
                     SpawnBloodSplash(collisionPoint);
                     SpawnHitLine(collisionPoint);
                     AbilityPowerManager.instance.IncreaseCombo();
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
                     //if (other.transform.GetComponentInParent<PlayerControl>() != null)
                     //{
                     //    other.transform.GetComponentInParent<PlayerControl>().CallItemOnHit(this);
                     //}
-                    DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
+                    //DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, GameObject.FindFirstObjectByType<PlayerControl>().attackDamage);
                 }
             }
         }

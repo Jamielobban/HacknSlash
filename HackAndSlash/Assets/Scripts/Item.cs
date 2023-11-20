@@ -40,25 +40,7 @@ public abstract class Item
 
     public virtual void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
-        //Debug.Log(statType);
-        //switch (statType)
-        //{
-        //    case StatType.Health:
-        //        player.currentHealth += 5 + (2*stacks);
-        //        break;
-        //    case StatType.MaxHealth:
-        //        player.maxHealth += 15 + (10 * stacks);
-        //        break;
-        //    case StatType.Damage:
-        //        player.attackDamage += 10 + (5 * stacks);
-        //        break;
-        //    case StatType.CritChance:
-        //        player.critChance += CalculateStatIncrease(5, stacks, player.maxCritChance);
-        //        break;
-        //    // Add more cases for other stats as needed
-        //    default:
-        //        break;
-        //}
+
     }
 
     public float CalculateStatIncrease(float baseIncrease, int stacks, float maxStat)
@@ -74,7 +56,6 @@ public enum StatType
     CritChance,
     Damage,
     None
-    // Add more stats as needed
 }
 public class CritItem : Item
 {
@@ -95,7 +76,7 @@ public class CritItem : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
+        return Resources.Load<Sprite>("Item Images/Glasses");
     }
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
@@ -124,13 +105,8 @@ public class AttackDamge : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
+        return Resources.Load<Sprite>("Item Images/Damage");
     }
-
-    //public override void OnCritPickup(PlayerControl player, int stacks)
-    //{
-    //    player.critChance += (5 + (5 * stacks)) / player.maxCritChance;
-    //}
 }
 
 public class Meat : Item
@@ -151,7 +127,7 @@ public class Meat : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
+        return Resources.Load<Sprite>("Item Images/Meat");
     }
 
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
@@ -181,7 +157,7 @@ public class MonsterTooth : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
+        return Resources.Load<Sprite>("Item Images/Tooth");
     }
 }
 

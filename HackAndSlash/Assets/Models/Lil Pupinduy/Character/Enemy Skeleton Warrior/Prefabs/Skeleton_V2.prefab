@@ -1675,9 +1675,10 @@ MonoBehaviour:
   health: 100
   numberPrefab: {fileID: 4976151793224397268, guid: d7ddc6e934e42e94ba1b474312ff4083,
     type: 3}
-  burnDamageNumber: {fileID: 0}
-  ampedNumberPrefab: {fileID: 0}
-  poisonNumberPrefab: {fileID: 0}
+  burnDamageNumber: {fileID: 1868461473012184349, guid: b36dc0de60ca81243a46f7241475b410,
+    type: 3}
+  critDamageNumberPrefab: {fileID: 4788049381315410319, guid: 599f686059ea2294ba83f84ef71ab033,
+    type: 3}
   stateMultiplier: 0
   healthState: 5
   hitWhiteEffects:
@@ -1870,6 +1871,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64ba5f7a43d88541afda81cd4879c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chargeAmp: {fileID: 3119155984457712203, guid: 32068d781b1d747449f7402e2d21d8bb,
+    type: 3}
+  chargeDamagePrefab: {fileID: 3065643516799012267, guid: 2f28b687f1a7eb8408430e524090ed30,
+    type: 3}
 --- !u!1 &2958064488589388476
 GameObject:
   m_ObjectHideFlags: 0
