@@ -284,7 +284,7 @@ public class PlayerControl : MonoBehaviour
 
             if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
             {
-                this.gameObject.layer = 8;
+                this.gameObject.layer = 10;
                 attacks = Attacks.FALL;
                 playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
 
@@ -590,6 +590,7 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.FALL;
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
                     playerAnim.CrossFadeInFixedTime("Fall", 0.2f);
+                this.gameObject.layer = 10;
 
                 return true;
 
@@ -605,6 +606,8 @@ public class PlayerControl : MonoBehaviour
             {
                 //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
                 doubleJump = false;
+                this.gameObject.layer = 3;
+
                 landFeedback.PlayFeedbacks();
                 return false;
             }
@@ -625,6 +628,8 @@ public class PlayerControl : MonoBehaviour
 
         if (controller.CheckIfJump())
         {
+            this.gameObject.layer = 10;
+
             this.GetComponent<Rigidbody>().drag = 5;
 
             if (states != States.JUMP)
@@ -673,6 +678,8 @@ public class PlayerControl : MonoBehaviour
 
             if ((hit.distance < 2 * ((gravity * (Time.time - fallStartTime)) / gravity) || hit.distance < 0.5f))
             {
+                this.gameObject.layer = 3;
+
                 timeLanding = Time.time;
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
                     playerAnim.CrossFadeInFixedTime("Land", 0.2f);

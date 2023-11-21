@@ -20,7 +20,7 @@ public class GetEnemies : MonoBehaviour
     {
         for(int i = 0; i < enemies.Count;i++)
         {
-            if(enemies[i] == null)
+            if(enemies[i] == null || enemies[i].tag != "Enemy")
             {
                 enemies.RemoveAt(i);
             }

@@ -5,9 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.VFX;
+using UnityEngine.UI;
 
 public class EnemySkeletonSword : MonoBehaviour
 {
+    public Slider vida;
+    public GameObject canvas;
+    public int maxHealth;
+
     public int health;
     public DamageNumber numberPrefab;
     public DamageNumber burnDamageNumber;
@@ -72,6 +77,8 @@ public class EnemySkeletonSword : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
+        vida.value = 1;
         speedMultiplier = 1;
         healthState = PlayerControl.HealthState.NORMAL;
         actionsDelay = Time.time;
@@ -458,6 +465,8 @@ public class EnemySkeletonSword : MonoBehaviour
         {
             return;
         }
+        rigidbody.isKinematic = true;
+
         hitCount--;
         if (hitCount == 0)
         {
@@ -532,17 +541,32 @@ public class EnemySkeletonSword : MonoBehaviour
         // You can add additional logic here based on the enemy being hit
         // For example, updating enemy health, playing sound effects, triggering animations, etc.
     }
+
+    void ChangeHealth(int value)
+    {
+            health += (int)value;
+            vida.value = (float)((float)health / (float)maxHealth);
+    }
+    int hits = 0;
+    void RestartHit()
+    {
+        hits = 0;
+    }
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.GetComponent<AttackCollider>() != null && GetDamage)
+        if (other.GetComponent<AttackCollider>() != null && GetDamage && hits == 0)
         {
+            hits++;
+            Invoke("RestartHit", 0.05f);
+
+            rigidbody.isKinematic = false;
             if (state == States.DEATH)
             {
                 return;
             }
             //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
-            health -= (int)other.GetComponent<AttackCollider>().damage;
+            ChangeHealth(-(int)other.GetComponent<AttackCollider>().damage);
 
             if (player.GetComponent<PlayerControl>().ReturnIfCrit())
             {
@@ -574,7 +598,9 @@ public class EnemySkeletonSword : MonoBehaviour
                 AbilityPowerManager.instance.IncreaseCombo();
                 anim.CrossFadeInFixedTime("Death", 0.2f);
                 GetDamage = false;
-
+                this.gameObject.layer = 9;
+                this.gameObject.tag = "Untagged";
+                canvas.SetActive(false);
                 return;
             }
 
