@@ -169,7 +169,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     public float currentHealth;
     [SerializeField]
-    public float maxHealth;
+    public float maxHealth = 100;
     [SerializeField]
     public float critChance;
     public float maxCritChance = 100;
@@ -184,6 +184,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth; 
         attackDamage = 1;
         //HealingArea item = new HealingArea();
         //items.Add(new ItemList(item, item.GiveName(), 1));

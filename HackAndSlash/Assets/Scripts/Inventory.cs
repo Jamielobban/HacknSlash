@@ -22,9 +22,12 @@ public class Inventory : MonoBehaviour
     [Space]
     public int inventorySize = 14;
 
+    public PlayerStats playerStats;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         for (int i = 0; i < inventorySize; i++)
         {
             items.Add(new ItemSlotInfo(null, 0));
@@ -51,10 +54,15 @@ public class Inventory : MonoBehaviour
                 RefreshInventory();
             }
         }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 2f, 0f));
+        }
     }
 
     public void RefreshInventory()
     {
+        playerStats.RefreshStats();
         existingPanels = itemPanelGrid.GetComponentsInChildren<ItemPanel>().ToList();
 
         if (existingPanels.Count < inventorySize)

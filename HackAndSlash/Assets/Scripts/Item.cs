@@ -55,6 +55,7 @@ public enum StatType
     MaxHealth,
     CritChance,
     Damage,
+    CritDamage,
     None
 }
 public class CritItem : Item
@@ -71,7 +72,7 @@ public class CritItem : Item
 
     public override string GiveDescription()
     {
-        return "Adds 5% crit change per stack. Crits deal double damage.";
+        return "Adds 5% crit chance per stack. Crits deal double damage.";
     }
 
     public override Sprite GiveSprite()
