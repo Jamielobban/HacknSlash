@@ -89,6 +89,9 @@ public class PlayerControl : MonoBehaviour
         public int repeticionGolpes;
         public float delayRepeticionGolpes;
         public int damage;
+
+        public GameObject slash;
+
         //1 is light, 2 is heavy
         //public GameObject BlessingToSpawnHeavy;
         //public GameObject BlessingToSpawnHeavy;
@@ -163,6 +166,9 @@ public class PlayerControl : MonoBehaviour
 
     }
     public List<PassiveCombo> passiveCombo = new List<PassiveCombo>();
+
+    public MMFeedbacks jumpFeedback;
+    public MMFeedbacks landFeedback;
 
     [Header("Combat Stats")]
     [Space]
@@ -417,6 +423,15 @@ public class PlayerControl : MonoBehaviour
         callback(spawnedObject);
     }
 
+    private IEnumerator Slash(float time, GameObject slashSave, GameObject slash)
+    {
+        yield return new WaitForSeconds(time);
+
+        slash.transform.parent = slashSave.transform;
+        slash.transform.localPosition = Vector3.zero;
+        slash.transform.localEulerAngles = Vector3.zero;
+        slash.SetActive(false);
+    }
 
     private IEnumerator DelayGolpe(float time, int golpe)
     {
@@ -429,6 +444,13 @@ public class PlayerControl : MonoBehaviour
             {
                 currentComboAttacks.attacks[golpe].effects.PlayFeedbacks();
             }
+
+
+            currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).gameObject.SetActive(true);
+            StartCoroutine(Slash(2, currentComboAttacks.attacks[golpe].slash, currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).gameObject));
+            currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+
+
             bool hasApplied = false;
             if (blessing != null)
             {
@@ -583,7 +605,7 @@ public class PlayerControl : MonoBehaviour
             {
                 //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
                 doubleJump = false;
-
+                landFeedback.PlayFeedbacks();
                 return false;
             }
 
@@ -630,6 +652,8 @@ public class PlayerControl : MonoBehaviour
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.5f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
+                jumpFeedback.PlayFeedbacks();
+
                 return true;
 
             }
@@ -656,6 +680,8 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.LAND;
                 doubleJump = false;
                 moveDirSaved = new Vector3();
+                landFeedback.PlayFeedbacks();
+
                 return true;
             }
 
