@@ -478,7 +478,10 @@ public class PlayerControl : MonoBehaviour
                             spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = i.hit;
                             spawnedObject.GetComponent<AttackCollider>().KnockbackY = i.knockback.y;
                             spawnedObject.GetComponent<AttackCollider>().enemyStandUp = i.EnemyStandUp;
-                            spawnedObject.GetComponent<AttackCollider>().damage = i.damage;
+
+
+                            spawnedObject.GetComponent<AttackCollider>().damage = GetCritOrDamage(i.damage);
+
 
                             spawnedObject.GetComponent<AttackCollider>().Knockback = i.knockback.x;
 
