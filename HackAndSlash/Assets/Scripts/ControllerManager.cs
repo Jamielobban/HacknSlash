@@ -35,6 +35,7 @@ public class ControllerManager : MonoBehaviour
     InputAction.CallbackContext Triangle;
     InputAction.CallbackContext R2;
     InputAction.CallbackContext L2;
+    InputAction.CallbackContext Tab;
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +63,10 @@ public class ControllerManager : MonoBehaviour
     {
         return true;
     }
-
+    public InputAction.CallbackContext GetTabButton()
+    {
+        return Tab;
+    }
     public void GetLeftJoystick(InputAction.CallbackContext context)
     {
         leftStick = context.ReadValue<Vector2>();
@@ -74,6 +78,10 @@ public class ControllerManager : MonoBehaviour
     public void GetR2(InputAction.CallbackContext context)
     {
         R2 = context;
+    }
+    public void GetTab(InputAction.CallbackContext context)
+    {
+        Tab = context;
     }
     public void GetL2(InputAction.CallbackContext context)
     {

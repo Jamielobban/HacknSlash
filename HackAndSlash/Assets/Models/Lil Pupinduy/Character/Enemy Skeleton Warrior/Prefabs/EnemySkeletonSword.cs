@@ -74,9 +74,13 @@ public class EnemySkeletonSword : MonoBehaviour
     float knockbackForce; 
     Vector3 knockbackForceDir;
     float hitTimeDown;
+
+    DeathEnemies challenge;
+
     // Start is called before the first frame update
     void Start()
     {
+        challenge = GameObject.FindObjectOfType<DeathEnemies>();
         health = maxHealth;
         vida.value = 1;
         speedMultiplier = 1;
@@ -592,6 +596,7 @@ public class EnemySkeletonSword : MonoBehaviour
             //Debug.Log("Does this always hit");
             if (health <= 0)
             {
+                challenge.SetEnemieDeath(other.GetComponent<AttackCollider>().attack);
                 collisionPoint = FindClosestPointOnCollider(other, transform.position);
                 //other.GetComponent<AttackCollider>().SubscribeToAttackResult();
                 Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
@@ -764,7 +769,7 @@ public class EnemySkeletonSword : MonoBehaviour
                     }
                     else
                     {
-                        Invoke("ChangeToIdleHit", 0.5f);
+                        Invoke("ChangeToIdleHit", 0.8f);
 
                     }
                     

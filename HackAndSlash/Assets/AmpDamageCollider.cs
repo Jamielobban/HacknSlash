@@ -10,7 +10,7 @@ public class AmpDamageCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hello");
-        if(other.gameObject.CompareTag("Enemy"))
+        if(other.CompareTag("Enemy"))
         {
             Debug.Log("Enemy inside me");
             other.GetComponent<EnemySkeletonSword>().health -= ampDamage;

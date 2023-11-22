@@ -8,7 +8,6 @@ using UnityEngine.VFX;
 using System.Linq;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 using System;
 
 public class PlayerControl : MonoBehaviour
@@ -473,6 +472,8 @@ public class PlayerControl : MonoBehaviour
                             // Use the spawnedObject reference here
                             //GameObject effect = spawnedObject;
                             Collider effectCollider = spawnedObject.GetComponent<Collider>();
+                            currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().attack = passiveCombo.Last();
+
                             spawnedObject.GetComponent<AttackCollider>().healthState = i.healthState;
                             spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = i.hit;
                             spawnedObject.GetComponent<AttackCollider>().KnockbackY = i.knockback.y;
@@ -494,6 +495,7 @@ public class PlayerControl : MonoBehaviour
             }
             if (!hasApplied)
             {
+                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().attack = passiveCombo.Last();
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().healthState = HealthState.NORMAL;
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
@@ -699,7 +701,7 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.LAND;
                 doubleJump = false;
                 moveDirSaved = new Vector3();
-                //landFeedback.PlayFeedbacks();
+                landFeedback.PlayFeedbacks();
 
                 return true;
             }

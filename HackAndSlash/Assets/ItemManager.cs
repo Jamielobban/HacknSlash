@@ -52,8 +52,15 @@ public class ItemManager : MonoBehaviour
         Vector3 playerForward = GameObject.FindObjectOfType<PlayerControl>().transform.GetChild(0).transform.forward;
         Vector3 randomDirection = Quaternion.Euler(0, Random.Range(-45, 45), 0) * playerForward;
         Vector3 targetPosition = initialPosition + randomDirection * Random.Range(5f, 10f);
-        // Use DoTween to animate the item from the initial to the target position
-        randomItem.transform.DOJump(targetPosition, 2.0f, 1, 2.0f)
+        RaycastHit hit;
+
+        if (Physics.Raycast(targetPosition, new Vector3(0,-1,0), out hit, 200, 1 << 7))
+        {
+            targetPosition = new Vector3(targetPosition.x, hit.point.y + 2, targetPosition.z);
+        }
+
+            // Use DoTween to animate the item from the initial to the target position
+            randomItem.transform.DOJump(targetPosition, 2.0f, 1, 2.0f)
              .SetEase(Ease.OutQuart)
              .OnComplete(() =>
              {

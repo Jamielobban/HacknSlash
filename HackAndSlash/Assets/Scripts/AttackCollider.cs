@@ -21,6 +21,9 @@ public class AttackCollider : MonoBehaviour
     public float upDistance;
 
     public bool isCrit;
+
+    public PlayerControl.PassiveCombo attack;
+
     // Start is called before the first frame update
     void Start()
     {

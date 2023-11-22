@@ -23,11 +23,13 @@ public class Inventory : MonoBehaviour
     public int inventorySize = 14;
 
     public PlayerStats playerStats;
+    ControllerManager controller;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
+
         for (int i = 0; i < inventorySize; i++)
         {
             items.Add(new ItemSlotInfo(null, 0));
@@ -39,24 +41,30 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (controller.GetTabButton().action != null)
         {
-            if (inventorymenu.activeSelf)
+            if (controller.GetTabButton().action.WasPressedThisFrame())
             {
-                inventorymenu.SetActive(false);
+                if (inventorymenu.activeSelf)
+                {
+                    inventorymenu.SetActive(false);
 
-            }
-            else
-            {
-                inventorymenu.SetActive(true);
-                //AddItem(new HealingItem(), 1);
-                //Debug.Log("Hola");
-                RefreshInventory();
+                }
+                else
+                {
+                    inventorymenu.SetActive(true);
+                    //AddItem(new HealingItem(), 1);
+                    //Debug.Log("Hola");
+                    RefreshInventory();
+                }
             }
         }
         if(Input.GetKeyDown(KeyCode.K))
         {
-            ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 2f, 0f));
+
+                ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
+
+            
         }
     }
 
