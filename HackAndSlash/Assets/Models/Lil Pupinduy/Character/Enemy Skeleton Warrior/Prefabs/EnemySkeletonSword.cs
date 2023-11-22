@@ -93,6 +93,10 @@ public class EnemySkeletonSword : MonoBehaviour
     }
     void StartWalk()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if (state == States.HIT)
             return;
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
@@ -109,6 +113,10 @@ public class EnemySkeletonSword : MonoBehaviour
     }
     void StartRun()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         if (state == States.HIT)
             return;
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
@@ -126,6 +134,10 @@ public class EnemySkeletonSword : MonoBehaviour
     }
     void ChangeToMove()
     {
+        if (state == States.DEATH)
+        {
+            return;
+        }
         int random = (int)Random.RandomRange(0, 5);
 
         if (random < 3)

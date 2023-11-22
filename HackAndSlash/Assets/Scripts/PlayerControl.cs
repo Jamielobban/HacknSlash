@@ -168,7 +168,15 @@ public class PlayerControl : MonoBehaviour
     public List<PassiveCombo> passiveCombo = new List<PassiveCombo>();
 
     public MMFeedbacks jumpFeedback;
+    public MMFeedbacks doubleJumpFeedback;
+
     public MMFeedbacks landFeedback;
+    public MMFeedbacks walkFeedback;
+    public MMFeedbacks runFeedback;
+    public MMFeedbacks runStartFeedback;
+
+    public MMFeedbacks dashFeedback;
+    public MMFeedbacks idleFeedback;
 
     [Header("Combat Stats")]
     [Space]
@@ -608,7 +616,9 @@ public class PlayerControl : MonoBehaviour
                 doubleJump = false;
                 this.gameObject.layer = 3;
 
-                landFeedback.PlayFeedbacks();
+                if(states == States.JUMP)
+                    landFeedback.PlayFeedbacks();
+
                 return false;
             }
 
@@ -642,6 +652,8 @@ public class PlayerControl : MonoBehaviour
                 playerAnim.CrossFadeInFixedTime("Jump", 0.1f);
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce, ForceMode.Impulse);
+                jumpFeedback.PlayFeedbacks();
+
                 return true;
 
             }
@@ -657,7 +669,7 @@ public class PlayerControl : MonoBehaviour
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.5f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
-                jumpFeedback.PlayFeedbacks();
+                doubleJumpFeedback.PlayFeedbacks();
 
                 return true;
 
@@ -687,7 +699,7 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.LAND;
                 doubleJump = false;
                 moveDirSaved = new Vector3();
-                landFeedback.PlayFeedbacks();
+                //landFeedback.PlayFeedbacks();
 
                 return true;
             }
@@ -1482,6 +1494,8 @@ public class PlayerControl : MonoBehaviour
             playerAnim.speed = 2f;
             this.gameObject.layer = 8;
 
+            dashFeedback.PlayFeedbacks();
+
             dashCount++;
             stopAttack = true;
             if (controller.LeftStickValue().magnitude < 0.2f)
@@ -1515,6 +1529,40 @@ public class PlayerControl : MonoBehaviour
         }
         return false;
     }
+    private IEnumerator WalkFeedbak(float time)
+    {
+
+        yield return new WaitForSeconds(time);
+        if (states == States.MOVE && moves == Moves.WALK)
+        {
+            walkFeedback.PlayFeedbacks();
+            StartCoroutine(WalkFeedbak(0.3f));
+        }
+    }
+    private IEnumerator RunFeedback(float time)
+    {
+
+        yield return new WaitForSeconds(time);
+
+        if(states == States.MOVE && moves == Moves.RUN)
+        {
+            runFeedback.PlayFeedbacks();
+            StartCoroutine(RunFeedback(0.2f));
+        }
+
+    }
+    void StartRun()
+    {
+        if(states == States.MOVE && moves == Moves.RUN)
+        runStartFeedback.PlayFeedbacks();
+
+    }
+    void EndRun()
+    {
+        if ((states == States.MOVE && moves == Moves.WALK)|| states == States.IDLE)
+            idleFeedback.PlayFeedbacks();
+
+    }
     void CheckMove()
     {
         if (controller.StartMove() && states != States.MOVE)
@@ -1523,14 +1571,24 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.RightTriggerPressed())
             {
+                Invoke("StartRun", 0.25f);
+
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
+                StartCoroutine(RunFeedback(0.1f));
+                StartCoroutine(RunFeedback(0));
 
             }
             else
             {
+                Invoke("EndRun", 0.25f);
+
+
                 moves = Moves.WALK;
                 playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+                StartCoroutine(WalkFeedbak(0.2f));
+                StartCoroutine(WalkFeedbak(0));
+
 
             }
         }
@@ -1538,14 +1596,21 @@ public class PlayerControl : MonoBehaviour
         {
             if (controller.RightTriggerPressed() && moves == Moves.WALK)
             {
+                Invoke("StartRun", 0.25f);
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
+                StartCoroutine(RunFeedback(0.1f));
+                StartCoroutine(RunFeedback(0));
 
             }
             else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
             {
+                Invoke("EndRun", 0.25f);
+
                 moves = Moves.WALK;
                 playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+                StartCoroutine(WalkFeedbak(0.2f));
+                StartCoroutine(WalkFeedbak(0));
 
             }
         }
@@ -1556,6 +1621,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.StartMove() && states != States.IDLE)
         {
+            Invoke("EndRun", 0.25f);
             states = States.IDLE;
             moves = Moves.IDLE;
             playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
