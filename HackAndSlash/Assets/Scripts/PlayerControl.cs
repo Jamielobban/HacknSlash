@@ -489,7 +489,7 @@ public class PlayerControl : MonoBehaviour
 
                             spawnedObject.tag = currentComboAttacks.attacks[golpe].colliderTag;
                             effectCollider.enabled = true;
-                            StartCoroutine(DesactivarCollisionGolpeBlessing(1f, effectCollider));
+                            StartCoroutine(DesactivarCollisionGolpeBlessing(0.05f, effectCollider));
                         });
                         
 

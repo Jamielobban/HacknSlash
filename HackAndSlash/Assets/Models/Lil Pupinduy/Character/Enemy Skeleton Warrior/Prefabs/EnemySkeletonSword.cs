@@ -51,7 +51,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public AnimationCurve flyCurve;
     public float speedFlotando;
     public float ImpulsoGolpeAire;
-    int hitCount;
+    public int hitCount;
     bool GetDamage;
 
     float flyTimer;
@@ -76,6 +76,7 @@ public class EnemySkeletonSword : MonoBehaviour
     float hitTimeDown;
 
     DeathEnemies challenge;
+    public float seeDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -160,6 +161,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
     void ChangeToIdle()
     {
+        agent.destination = this.transform.position;
         attackDelay = 0.25f;
 
         attackTimer = Time.time;
@@ -171,14 +173,15 @@ public class EnemySkeletonSword : MonoBehaviour
         anim.CrossFadeInFixedTime("idle", 0.2f);
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        //if (state != States.MOVE)
-        //    agent.speed = 0;
 
-        anim.speed = AnimSpeed * speedMultiplier;
+
+            //if (state != States.MOVE)
+            //    agent.speed = 0;
+
+            anim.speed = AnimSpeed * speedMultiplier;
 
         switch (state)
         {
@@ -196,7 +199,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 if (agent.enabled == true)
                 {
                     agent.destination = player.transform.position;
-                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    if (Vector3.Distance(player.transform.position, this.transform.position) <= agent.stoppingDistance || Vector3.Distance(player.transform.position,this.transform.position) > seeDistance)
                     {
                         ChangeToIdle();
                     }
@@ -209,8 +212,13 @@ public class EnemySkeletonSword : MonoBehaviour
                 }
                 break;
             case States.IDLE:
+                if (Vector3.Distance(player.transform.position, this.transform.position) > seeDistance)
+                {
+                    break;
+                }
 
-                var targetRotation = Quaternion.LookRotation(player.transform.position - this.transform.position);
+
+                    var targetRotation = Quaternion.LookRotation(player.transform.position - this.transform.position);
                 this.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 3 * Time.deltaTime);
 
 
@@ -309,9 +317,9 @@ public class EnemySkeletonSword : MonoBehaviour
                 break;
             case States.HIT:
 
-                if((Time.time - hitTime) < 0.2f)
+                if((Time.time - hitTime) < 0.8f)
                 {
-                    float value = 1  - (Mathf.Pow(((Time.time-hitTime)/0.2f),2));
+                    float value = 1  - (Mathf.Pow(((Time.time-hitTime)/0.8f),2));
                     rigidbody.AddForce(knockbackForceDir * (knockbackForce*(value)) * Time.deltaTime, ForceMode.Force);
                 }
 
@@ -330,7 +338,7 @@ public class EnemySkeletonSword : MonoBehaviour
                         if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out rayhit, 200, 1 << 7))
                         {
 
-                            if (rayhit.distance < 0.5f)
+                            if (rayhit.distance < 2 * ((gravity * (Time.time - fallStartTime)) / gravity) || rayhit.distance < 0.5f)
                             {
                                 floor = rayhit.point.y;
                                 anim.CrossFadeInFixedTime("GolpeSuelo", 0.2f);
@@ -346,7 +354,15 @@ public class EnemySkeletonSword : MonoBehaviour
 
                         break;
                     case Hits.HIT1:
+                        RaycastHit rayhit2;
 
+                        if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out rayhit2, 200, 1 << 7))
+                        {
+                            if (rayhit2.distance > 0.25f)
+                            {
+                                rigidbody.AddForce(new Vector3(0,-10000,0) * Time.fixedDeltaTime, ForceMode.Force);
+                            }
+                        }
                         break;
                     case Hits.AIR:
                         rigidbody.AddForce(this.transform.up * speedFlotando * curve.Evaluate((Time.time - delayCaer)), ForceMode.Force);
@@ -459,6 +475,8 @@ public class EnemySkeletonSword : MonoBehaviour
         {
             return;
         }
+        fallStartTime = Time.time;
+
         anim.CrossFadeInFixedTime("Flotando", 0.2f);
         delayCaer = Time.time;
         hit = Hits.AIR;
@@ -470,23 +488,30 @@ public class EnemySkeletonSword : MonoBehaviour
             return;
         }
         if ((Time.time - hitTimeDown) < 0.9f)
+        {
+        hitCount--;
+
             return;
+
+        }
         anim.CrossFadeInFixedTime("StandUp", 0.2f);
+
         Invoke("ChangeToIdleHit", 0.4f);
 
     }
+
     void ChangeToIdleHit()
     {
         if (state == States.DEATH)
         {
             return;
         }
-        rigidbody.isKinematic = true;
 
         hitCount--;
-        if (hitCount == 0)
+        if (hitCount == 0 && hit == Hits.HIT1)
         {
             attackDelay = 0.5f;
+            rigidbody.isKinematic = true;
 
             GetDamage = true;
             attackTimer = Time.time;
@@ -567,6 +592,7 @@ public class EnemySkeletonSword : MonoBehaviour
     void RestartHit()
     {
         hits = 0;
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -632,6 +658,33 @@ public class EnemySkeletonSword : MonoBehaviour
                 }
                 else if (other.GetComponent<AttackCollider>().healthState != PlayerControl.HealthState.NORMAL)
                 {
+                    switch (healthState)
+                    {
+                        case PlayerControl.HealthState.FROZEN:
+                            speedMultiplier = 1f;
+                            agent.speed *= 2f;
+                            meshEffects[0].SetActive(false);
+                            meshEffects[1].SetActive(false);
+
+                            break;
+                        case PlayerControl.HealthState.BURNED:
+                            Debug.Log("Burning off");
+                            break;
+                        case PlayerControl.HealthState.POSIONED:
+                            Debug.Log("Poison off");
+                            break;
+                        case PlayerControl.HealthState.AMPED:
+                            Debug.Log("Amp off");
+                            break;
+                        case PlayerControl.HealthState.NORMAL:
+                            speedMultiplier = 1f;
+                            break;
+                        case PlayerControl.HealthState.WEAKENED:
+                            break;
+                    }
+                    healthState = PlayerControl.HealthState.NORMAL;
+                    stateMultiplier = 0;
+
                     timeEffectApplied = Time.time;
                     stateMultiplier = 0;
                     healthState = other.GetComponent<AttackCollider>().healthState;
@@ -760,7 +813,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 }
                 else if (other.GetComponent<AttackCollider>() != null)
                 {
-                    hitCount++;
+                        hitCount++;
 
                     if (other.GetComponent<AttackCollider>().enemyStandUp)
                     {
@@ -768,7 +821,8 @@ public class EnemySkeletonSword : MonoBehaviour
                         hitTimeDown = Time.time;
                     }
                     else
-                    {
+                    {                    
+
                         Invoke("ChangeToIdleHit", 0.8f);
 
                     }
@@ -791,6 +845,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
                     hitTime = Time.time;
                     knockbackForce = other.GetComponent<AttackCollider>().Knockback;
+                    knockbackForce /= 5;
                     //rigidbody.AddForce(-ForceDirection * other.GetComponent<AttackCollider>().Knockback * Time.fixedDeltaTime, ForceMode.Impulse);
                     knockbackForceDir = -ForceDirection;
                     // Vector3 collisionPosition = (GameObject.FindGameObjectWithTag("PlayerCenter").transform.position - (this.transform.position + new Vector3(0f, 2f, 0f))).normalized;
