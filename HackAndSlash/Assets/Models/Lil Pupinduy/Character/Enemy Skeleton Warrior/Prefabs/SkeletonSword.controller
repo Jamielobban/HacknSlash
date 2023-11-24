@@ -63,6 +63,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4142632009432632195}
     m_Position: {x: 880, y: -190, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4579336018430417873}
+    m_Position: {x: 219.63757, y: -289.4376, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -119,8 +122,33 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4151081468701231442, guid: aa8c4e3fe81fe0846857c9d324f94884,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 00aa02251098cf64f83642b85f359d53, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-4579336018430417873
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Reborn
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 8a621235f63eff44d886688c1d9d97dd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -538,8 +566,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -7935346524452279045, guid: aa8c4e3fe81fe0846857c9d324f94884,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 9a825d82c9513af47bca40ea961f8f72, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

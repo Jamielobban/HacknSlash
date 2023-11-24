@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text critDamMultiText;
     public TMP_Text attackDamageText;
     public TMP_Text healthRegenText;
-    public TMP_Text healthText;
+    public GameObject healthText;
     private PlayerControl playerStats;
 
     ControllerManager controller;
@@ -35,12 +35,12 @@ public class PlayerStats : MonoBehaviour
                 if (playerStatsMenu.activeSelf)
                 {
                     playerStatsMenu.SetActive(false);
-                    healthText.gameObject.SetActive(false);
+                    healthText.SetActive(false);
                 }
                 else
                 {
                     playerStatsMenu.SetActive(true);
-                    healthText.gameObject.SetActive(true);
+                    healthText.SetActive(true);
                     RefreshStats();
                 }
             }
@@ -53,6 +53,5 @@ public class PlayerStats : MonoBehaviour
         critDamMultiText.text = "Crit Damage:" + playerStats.critDamageMultiplier.ToString();
         attackDamageText.text = "Attack Damage:" + playerStats.attackDamage.ToString();
         healthRegenText.text = "Health Regen:" + playerStats.healthRegen.ToString();
-        healthText.text = playerStats.currentHealth.ToString() + "/" + playerStats.maxHealth.ToString();
     }
 }

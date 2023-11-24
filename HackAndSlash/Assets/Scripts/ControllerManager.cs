@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MoreMountains.Feedbacks;
 
 public class ControllerManager : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class ControllerManager : MonoBehaviour
     InputAction.CallbackContext R2;
     InputAction.CallbackContext L2;
     InputAction.CallbackContext Tab;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -217,7 +221,7 @@ public class ControllerManager : MonoBehaviour
                 trianguloHold = true;
 
             }
-            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.25f)
+            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.35f)
             {
                 ResetBotonesAtaques();
 
@@ -226,7 +230,7 @@ public class ControllerManager : MonoBehaviour
 
             }
 
-            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.25f && trianguloHold)
+            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.35f && trianguloHold)
             {
                 ResetBotonesAtaques();
 
@@ -270,8 +274,9 @@ public class ControllerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(X.action != null)
+
+
+        if (X.action != null)
         {
             if (X.action.WasReleasedThisFrame() && !canJump)
             {

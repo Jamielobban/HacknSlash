@@ -9,15 +9,21 @@ using System.Linq;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using System;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
-    public int health;
+    public TextMeshProUGUI currentHealthText;
+    public TextMeshProUGUI maxHealthText;
+    public UnityEngine.UI.Slider healthSlider;
+
+    public Animator cameraAAnims;
     public List<ItemList> items = new List<ItemList>();
 
     public enum HealthState { FROZEN, BURNED, POSIONED, AMPED, WEAKENED, NORMAL };
 
-    enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE };
+    enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE, HIT, DEATH };
 
     enum Attacks { GROUND, AIR, RUN, FALL,LAND };
 
@@ -177,6 +183,11 @@ public class PlayerControl : MonoBehaviour
     public MMFeedbacks dashFeedback;
     public MMFeedbacks idleFeedback;
 
+    public MMFeedbacks hitFeedback;
+
+    float hitTime;
+    float deathTime;
+
     [Header("Combat Stats")]
     [Space]
     [SerializeField]
@@ -211,6 +222,12 @@ public class PlayerControl : MonoBehaviour
 
         states = States.IDLE;
         moves = Moves.IDLE;
+    }
+    public void SetHealth()
+    {
+        currentHealthText.text = currentHealth.ToString();
+        maxHealthText.text = maxHealth.ToString();
+        healthSlider.value = currentHealth / maxHealth;
     }
     public bool ReturnIfCrit()
     {
@@ -724,6 +741,7 @@ public class PlayerControl : MonoBehaviour
             return;
 
         RotateCamera();
+
         switch (states)
         {
             case States.IDLE:
@@ -1018,6 +1036,31 @@ public class PlayerControl : MonoBehaviour
                     CheckMove();
                 }
                 break;
+            case States.HIT:
+                if ((Time.time - hitTime) > 0.25f)
+                {
+                    if (CheckIfDash())
+                    {
+                        dashDown = false;
+
+                        break;
+                    }
+                }
+                if ((Time.time-hitTime) > 0.5f)
+                {
+                    CheckIfReturnIdle();
+                    CheckIfStartMove();
+                }
+
+                break;
+            case States.DEATH:
+                if((Time.time-deathTime) >2)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+
+                break;
+
         }
     }
 
@@ -1408,6 +1451,9 @@ public class PlayerControl : MonoBehaviour
     }
     void CheckNextAttack()
     {
+
+        if (currentComboAttacks.attacks.Length <= currentComboAttack || currentComboAttack < 0)
+            return;
         switch (GetCurrentAttackCombo())
         {
             case ComboAtaques.Quadrat:
@@ -1675,7 +1721,7 @@ public class PlayerControl : MonoBehaviour
     }
     void RotateCamera()
     {
-        if (controller.RightStickValue().magnitude > 0.2f)
+        if (controller.RightStickValue().magnitude > 0.2f && states != States.DEATH)
         {
 
             camera.transform.Rotate(new Vector3(0, controller.RightStickValue().x, 0) * Time.deltaTime * CameraRotatSpeed);
@@ -1683,7 +1729,29 @@ public class PlayerControl : MonoBehaviour
 
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if((other.GetComponent<EnemyAttack>() != null && states != States.HIT) && states != States.DEATH)
+        {
+            currentHealth -= other.GetComponent<EnemyAttack>().damage;
+                SetHealth();
+            if(currentHealth<= 0)
+            {
+                states = States.DEATH;
+                deathTime = Time.time;
+                playerAnim.CrossFadeInFixedTime("Death", 0.2f);
 
+                cameraAAnims.CrossFadeInFixedTime("Death",0.2f);
+            }
+            else
+            {
+                states = States.HIT;
+                hitTime = Time.time;
+                playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
+                hitFeedback.PlayFeedbacks();
+            }
 
+        }
+    }
 }
 

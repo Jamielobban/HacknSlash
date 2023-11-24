@@ -144,6 +144,7 @@ public class Meat : Item
         if (statType == StatType.Health)
         {
             player.maxHealth += 5 + (1 * stacks);
+            player.SetHealth();
         }
     }
 }
@@ -280,7 +281,7 @@ public class HealingItem : Item
 
     public override void Update(PlayerControl player, int stacks)
     {
-        player.health += 3 + (2 * stacks);
+        player.maxHealth += 3 + (2 * stacks);
     }
 }
 

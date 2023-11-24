@@ -20,7 +20,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public DamageNumber critDamageNumberPrefab;
     public int stateMultiplier;
 
-    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH };
+    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH,SPAWN };
 
     public PlayerControl.HealthState healthState;
     enum Move { WALK, RUN };
@@ -81,6 +81,7 @@ public class EnemySkeletonSword : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         challenge = GameObject.FindObjectOfType<DeathEnemies>();
         health = maxHealth;
         vida.value = 1;
@@ -93,8 +94,10 @@ public class EnemySkeletonSword : MonoBehaviour
         delay = false;
         player = GameObject.FindObjectOfType<PlayerControl>().gameObject;
         anim = this.GetComponent<Animator>();
-        ChangeToMove();
         agent = this.GetComponent<NavMeshAgent>();
+        agent.enabled = false;
+        state = States.SPAWN;
+        Reborn();
     }
     void StartWalk()
     {
@@ -161,16 +164,20 @@ public class EnemySkeletonSword : MonoBehaviour
 
     void ChangeToIdle()
     {
-        agent.destination = this.transform.position;
-        attackDelay = 0.25f;
+        if(hit == Hits.LAND || state != States.HIT)
+        {
+            agent.destination = this.transform.position;
+            attackDelay = 0.25f;
 
-        attackTimer = Time.time;
-        GetDamage = true;
+            attackTimer = Time.time;
+            GetDamage = true;
 
-        agent.enabled = true;
+                agent.enabled = true;
 
-        state = States.IDLE;
-        anim.CrossFadeInFixedTime("idle", 0.2f);
+            state = States.IDLE;
+            anim.CrossFadeInFixedTime("idle", 0.2f);
+        }
+
     }
 
     // Update is called once per frame
@@ -181,7 +188,7 @@ public class EnemySkeletonSword : MonoBehaviour
             //if (state != States.MOVE)
             //    agent.speed = 0;
 
-            anim.speed = AnimSpeed * speedMultiplier;
+        anim.speed = AnimSpeed * speedMultiplier;
 
         switch (state)
         {
@@ -268,7 +275,7 @@ public class EnemySkeletonSword : MonoBehaviour
                         if ((Time.time - attackTimer) > 1f)
                         {
                             ChangeToIdle();
-                            attackDelay = Random.RandomRange(1, 3);
+                            attackDelay = Random.RandomRange(0.5f, 2);
 
                         }
 
@@ -278,7 +285,7 @@ public class EnemySkeletonSword : MonoBehaviour
                         if ((Time.time - attackTimer) > 1f)
                         {
                             ChangeToIdle();
-                            attackDelay = Random.RandomRange(1, 3);
+                            attackDelay = Random.Range(0.5f, 2);
 
                         }
                         break;
@@ -390,7 +397,11 @@ public class EnemySkeletonSword : MonoBehaviour
                     rigidbody.AddForce(-this.transform.up * (30000 * (value)) * Time.deltaTime, ForceMode.Force);
 
                 }
-
+                if ((Time.time - hitTime) > 20f)
+                {
+                    state = States.SPAWN;
+                    Reborn();
+                }
                 break;
         }
         if (state == States.DEATH)
@@ -427,8 +438,31 @@ public class EnemySkeletonSword : MonoBehaviour
             stateMultiplier = 0;
         }
     }
+    void Alive()
+    {
+        this.gameObject.layer = 6;
+        this.gameObject.tag = "Enemy";
+        canvas.SetActive(true);
+        ChangeHealth(maxHealth);
+        hitCount = 0;
+        attackDelay = 0.25f;
+        rigidbody.isKinematic = true;
+
+        GetDamage = true;
+        attackTimer = Time.time;
+
+        agent.enabled = true;
+        state = States.IDLE;
+        anim.CrossFadeInFixedTime("idle", 0.2f);
+    }
+    void Reborn()
+    {
+        anim.CrossFadeInFixedTime("Reborn", 0.2f);
+        Invoke("Alive",4.5f);
+    }
     void Levantarse()
     {
+
         if (state == States.DEATH)
         {
             return;
@@ -489,7 +523,7 @@ public class EnemySkeletonSword : MonoBehaviour
         }
         if ((Time.time - hitTimeDown) < 0.9f)
         {
-        hitCount--;
+            hitCount--;
 
             return;
 
@@ -510,7 +544,7 @@ public class EnemySkeletonSword : MonoBehaviour
         hitCount--;
         if (hitCount == 0 && hit == Hits.HIT1)
         {
-            attackDelay = 0.5f;
+            attackDelay = 0.25f;
             rigidbody.isKinematic = true;
 
             GetDamage = true;
@@ -585,8 +619,18 @@ public class EnemySkeletonSword : MonoBehaviour
 
     void ChangeHealth(int value)
     {
+        
             health += (int)value;
-            vida.value = (float)((float)health / (float)maxHealth);
+        if(health <0)
+        {
+            health = 0;
+        }
+        else if(health > maxHealth)
+        {
+            health = maxHealth;
+
+        }
+        vida.value = (float)((float)health / (float)maxHealth);
     }
     int hits = 0;
     void RestartHit()
