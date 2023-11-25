@@ -216,7 +216,7 @@ public class PlayerControl : MonoBehaviour
         dashCount = 0;
         attackFinished = false;
         attackFinished = false;
-        controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
+        controller = GameObject.FindObjectOfType<ControllerManager>();
         currentComboAttack = -1;
         playerAnim = player.GetComponent<Animator>();
 
@@ -489,7 +489,7 @@ public class PlayerControl : MonoBehaviour
                             // Use the spawnedObject reference here
                             //GameObject effect = spawnedObject;
                             Collider effectCollider = spawnedObject.GetComponent<Collider>();
-                            currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().attack = passiveCombo.Last();
+                            spawnedObject.GetComponent<AttackCollider>().attack = passiveCombo.Last();
 
                             spawnedObject.GetComponent<AttackCollider>().healthState = i.healthState;
                             spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = i.hit;
@@ -1203,8 +1203,10 @@ public class PlayerControl : MonoBehaviour
                         {
                             currentComboAttack = GetAttacks(ComboAtaques.run1).attacks.Length - 1;
                         }
-                        passiveCombo.Add(PassiveCombo.QUADRATRUN);
-
+                        if (currentComboAttack == -1)
+                            passiveCombo.Add(PassiveCombo.QUADRATRUN);
+                        else
+                            passiveCombo.Add(PassiveCombo.QUADRATFLOOR);
                         attacks = Attacks.RUN;
                         currentComboAttacks = GetAttacks(ComboAtaques.run1);
                         PlayAttack();
@@ -1300,7 +1302,10 @@ public class PlayerControl : MonoBehaviour
                             currentComboAttack = GetAttacks(ComboAtaques.run2).attacks.Length - 1;
 
                         }
-                        passiveCombo.Add(PassiveCombo.TRIANGLERUN);
+                        if(currentComboAttack == -1)
+                            passiveCombo.Add(PassiveCombo.TRIANGLERUN);
+                        else
+                            passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
 
                         attacks = Attacks.RUN;
 

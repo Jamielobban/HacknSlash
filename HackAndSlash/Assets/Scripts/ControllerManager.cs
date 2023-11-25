@@ -37,6 +37,7 @@ public class ControllerManager : MonoBehaviour
     InputAction.CallbackContext R2;
     InputAction.CallbackContext L2;
     InputAction.CallbackContext Tab;
+    InputAction.CallbackContext interact;
 
 
 
@@ -71,6 +72,10 @@ public class ControllerManager : MonoBehaviour
     {
         return Tab;
     }
+    public InputAction.CallbackContext GetInteractButton()
+    {
+        return interact;
+    }
     public void GetLeftJoystick(InputAction.CallbackContext context)
     {
         leftStick = context.ReadValue<Vector2>();
@@ -83,6 +88,11 @@ public class ControllerManager : MonoBehaviour
     {
         R2 = context;
     }
+    public void GetInteract(InputAction.CallbackContext context)
+    {
+        interact = context;
+    }
+
     public void GetTab(InputAction.CallbackContext context)
     {
         Tab = context;
