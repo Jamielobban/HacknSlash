@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.VFX;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
+using UnityEngine.Audio;
 
 public class EnemySkeletonSword : MonoBehaviour
 {
@@ -86,6 +87,8 @@ public class EnemySkeletonSword : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] attackClip;
     public AudioClip[] walkClip;
+    public AudioClip[] burrowing;
+    public AudioClip dying;
     // Start is called before the first frame update
     void Start()
     {
@@ -119,9 +122,7 @@ public class EnemySkeletonSword : MonoBehaviour
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
         {
             Debug.Log("start walk");
-            //lastRoutine = StartCoroutine(moveAudio(0.5f, walkClip[0]));
-            //lastRoutine = StartCoroutine(PlayMoveAudio(0.5F));
-            //AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)], 0.2f);
+            StartCoroutine(moveAudio(0.55f, walkClip[Random.Range(0, walkClip.Length)]));
             move = Move.WALK;
             state = States.MOVE;
             anim.CrossFadeInFixedTime("walk", 0.2f);
@@ -133,13 +134,7 @@ public class EnemySkeletonSword : MonoBehaviour
         }
     }
     private Coroutine lastRoutine;
-    private IEnumerator PlayMoveAudio(float delay)
-    {
-        AudioManager.instance.PlayAudio(audioSource, walkClip[1]);
-        //AudioManager.instance.PlayAudio(audioSource, walkClip[Random.Range(0, walkClip.Length)]);
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(PlayMoveAudio(delay));
-    }
+    
     void StartRun()
     {
         if (state == States.DEATH)
@@ -151,9 +146,7 @@ public class EnemySkeletonSword : MonoBehaviour
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
         {
             Debug.Log("start run");
-            //lastRoutine = StartCoroutine(moveAudio(0.5f, walkClip[0]));
-            //lastRoutine = StartCoroutine(PlayMoveAudio(1F));
-            //AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)], 0.05f);
+            StartCoroutine(moveAudio(0.35f, walkClip[Random.Range(0,walkClip.Length)]));
             move = Move.RUN;
             state = States.MOVE;
             anim.CrossFadeInFixedTime("run", 0.2f);
@@ -191,7 +184,10 @@ public class EnemySkeletonSword : MonoBehaviour
         yield return new WaitForSeconds(delayInSeconds);
         audioSource.clip = audioToPlay;
         audioSource.Play();
-        StartCoroutine(moveAudio(delayInSeconds, audioToPlay));
+        if(state == States.MOVE)
+        {
+            StartCoroutine(moveAudio(delayInSeconds, walkClip[Random.Range(0, walkClip.Length)]));
+        }
     }
 
     void ChangeToIdle()
@@ -468,6 +464,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
                     break;
                 case PlayerControl.HealthState.BURNED:
+                    meshEffects[2].SetActive(false);
                     Debug.Log("Burning off");
                     break;
                 case PlayerControl.HealthState.POSIONED:
@@ -506,6 +503,7 @@ public class EnemySkeletonSword : MonoBehaviour
     void Reborn()
     {
         anim.CrossFadeInFixedTime("Reborn", 0.2f);
+        AudioManager.instance.PlayAudio(audioSource, burrowing[Random.Range(0, burrowing.Length)]);
         Invoke("Alive",4.5f);
     }
     void Levantarse()
@@ -615,7 +613,7 @@ public class EnemySkeletonSword : MonoBehaviour
         {
             int damageToDeal = 5 + (1 * GameObject.FindObjectOfType<PlayerControl>().GetItemStacks("Fire Damage Item"));
             this.health -= damageToDeal;
-            Debug.Log(damageToDeal);
+            //Debug.Log(damageToDeal);
             DamageNumber burnNumber = burnDamageNumber.Spawn(this.transform.position, -damageToDeal);
             Instantiate(burnAudio, this.transform.position, Quaternion.identity);
             //this.GetComponent<MMF_Player>().PlayFeedbacks();
@@ -727,6 +725,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 knockbackForceDir = -ForceDirection;
                 agent.enabled = false;
                 other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+                AudioManager.instance.PlayAudio(audioSource, dying);
                 state = States.DEATH;
                 SpawnWhiteSplash(collisionPoint);
                 SpawnBloodSplash(collisionPoint);
@@ -762,6 +761,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
                             break;
                         case PlayerControl.HealthState.BURNED:
+                            meshEffects[2].SetActive(false);
                             Debug.Log("Burning off");
                             break;
                         case PlayerControl.HealthState.POSIONED:
@@ -792,6 +792,7 @@ public class EnemySkeletonSword : MonoBehaviour
                             Debug.Log("Ice applied");
                             break;
                         case PlayerControl.HealthState.BURNED:
+                            meshEffects[2].SetActive(true);
                             ticksRemainingBurn = 2;
                             InvokeRepeating("Burn", 0.5f, 1f);
                             //fire effect.setactive true;

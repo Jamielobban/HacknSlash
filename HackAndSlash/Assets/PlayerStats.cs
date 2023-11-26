@@ -11,9 +11,12 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text critDamMultiText;
     public TMP_Text attackDamageText;
     public TMP_Text healthRegenText;
+    public TMP_Text levelText;
+    public GameObject levelObject;
     public GameObject healthText;
+    public GameObject BUTTONmapping;
     private PlayerControl playerStats;
-
+    private AbilityPowerManager ap;
     ControllerManager controller;
 
     //public GameObject itemPanelGrid;
@@ -21,7 +24,7 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
-
+        ap = FindObjectOfType<AbilityPowerManager>();
         playerStats = FindObjectOfType<PlayerControl>();
     }
 
@@ -36,14 +39,23 @@ public class PlayerStats : MonoBehaviour
                 {
                     playerStatsMenu.SetActive(false);
                     healthText.SetActive(false);
+                    levelObject.SetActive(false);
+                    BUTTONmapping.SetActive(false);
                 }
                 else
                 {
                     playerStatsMenu.SetActive(true);
                     healthText.SetActive(true);
+                    BUTTONmapping.SetActive(true);
+                    levelObject.SetActive(true);
                     RefreshStats();
                 }
             }
+        }
+
+        if (playerStatsMenu.activeSelf)
+        {
+            RefreshStats();
         }
     }
 
@@ -53,5 +65,6 @@ public class PlayerStats : MonoBehaviour
         critDamMultiText.text = "Crit Damage:" + playerStats.critDamageMultiplier.ToString();
         attackDamageText.text = "Attack Damage:" + playerStats.attackDamage.ToString();
         healthRegenText.text = "Health Regen:" + playerStats.healthRegen.ToString();
+        levelText.text = $"{ap.slider1.value:F2}/{ap.slider1.maxValue:F0}";
     }
 }
