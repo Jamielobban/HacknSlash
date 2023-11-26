@@ -14,6 +14,7 @@ public class ItemPickup : MonoBehaviour
     public Inventory inventory;
     public int currentstacks;
     public PlayerControl playerControl;
+    public GameObject audioClip;
     //public GameObject itemPopup;
     //public Image canvasImage;
     //public TMP_Text itemDescriptionText;
@@ -44,6 +45,7 @@ public class ItemPickup : MonoBehaviour
             player.CallItemOnPickup(item.GetAssociatedStatType());
             ItemPopupManager.Instance.ShowItemTooltip(item.GiveSprite(), item.GiveDescription());
             currentstacks = 0;
+            Instantiate(audioClip,this.transform.position,Quaternion.identity);
             Destroy(this.gameObject);
 
         }

@@ -184,6 +184,8 @@ public class PlayerControl : MonoBehaviour
     public MMFeedbacks idleFeedback;
 
     public MMFeedbacks hitFeedback;
+    public MMFeedbacks critFeedback;
+    public MMFeedbacks playerHurt;
 
     float hitTime;
     float deathTime;
@@ -249,6 +251,10 @@ public class PlayerControl : MonoBehaviour
     {
         float randomValue = UnityEngine.Random.Range(0f, 100f);
         isCrit = randomValue <= critChance;
+        if(isCrit)
+        {
+            critFeedback.PlayFeedbacks();
+        }
 
 
         Debug.Log("Is Critical Hit: " + isCrit);
@@ -1587,23 +1593,24 @@ public class PlayerControl : MonoBehaviour
     }
     private IEnumerator WalkFeedbak(float time)
     {
-
+        
         yield return new WaitForSeconds(time);
+        walkFeedback.StopFeedbacks();
         if (states == States.MOVE && moves == Moves.WALK)
         {
             walkFeedback.PlayFeedbacks();
-            StartCoroutine(WalkFeedbak(0.3f));
+            StartCoroutine(WalkFeedbak(0.42f));
         }
     }
     private IEnumerator RunFeedback(float time)
     {
 
         yield return new WaitForSeconds(time);
-
-        if(states == States.MOVE && moves == Moves.RUN)
+        runFeedback.StopFeedbacks();
+        if (states == States.MOVE && moves == Moves.RUN)
         {
             runFeedback.PlayFeedbacks();
-            StartCoroutine(RunFeedback(0.2f));
+            StartCoroutine(RunFeedback(0.3f));
         }
 
     }
@@ -1631,8 +1638,8 @@ public class PlayerControl : MonoBehaviour
 
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
-                StartCoroutine(RunFeedback(0.1f));
-                StartCoroutine(RunFeedback(0));
+                StartCoroutine(RunFeedback(0.3f));
+                //StartCoroutine(RunFeedback(0));
 
             }
             else
@@ -1642,8 +1649,8 @@ public class PlayerControl : MonoBehaviour
 
                 moves = Moves.WALK;
                 playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-                StartCoroutine(WalkFeedbak(0.2f));
-                StartCoroutine(WalkFeedbak(0));
+                StartCoroutine(WalkFeedbak(0.42f));
+                //StartCoroutine(WalkFeedbak(0));
 
 
             }
@@ -1655,8 +1662,8 @@ public class PlayerControl : MonoBehaviour
                 Invoke("StartRun", 0.25f);
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
-                StartCoroutine(RunFeedback(0.1f));
-                StartCoroutine(RunFeedback(0));
+                StartCoroutine(RunFeedback(0.3f));
+                //StartCoroutine(RunFeedback(0));
 
             }
             else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
@@ -1665,8 +1672,8 @@ public class PlayerControl : MonoBehaviour
 
                 moves = Moves.WALK;
                 playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-                StartCoroutine(WalkFeedbak(0.2f));
-                StartCoroutine(WalkFeedbak(0));
+                StartCoroutine(WalkFeedbak(0.42f));
+                //StartCoroutine(WalkFeedbak(0));
 
             }
         }

@@ -8,7 +8,7 @@ public class BounceEffect : MonoBehaviour
     private void Start()
     {
         Bounce();  
-        Rotate();
+        //Rotate();
         
     }
     private void Update()

@@ -6,13 +6,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.VFX;
 using UnityEngine.UI;
+using MoreMountains.Feedbacks;
 
 public class EnemySkeletonSword : MonoBehaviour
 {
     public Slider vida;
     public GameObject canvas;
     public int maxHealth;
-
+    public GameObject burnAudio;
     public int health;
     public DamageNumber numberPrefab;
     public DamageNumber burnDamageNumber;
@@ -20,6 +21,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public DamageNumber critDamageNumberPrefab;
     public int stateMultiplier;
 
+    public bool isWALKING;
     enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH,SPAWN };
 
     public PlayerControl.HealthState healthState;
@@ -78,10 +80,17 @@ public class EnemySkeletonSword : MonoBehaviour
     DeathEnemies challenge;
     public float seeDistance;
 
+
+    //public MMFeedbacks attackFeedback;
+    
+    public AudioSource audioSource;
+    public AudioClip[] attackClip;
+    public AudioClip[] walkClip;
     // Start is called before the first frame update
     void Start()
     {
-
+        isWALKING = false;
+        audioSource = GetComponent<AudioSource>();
         challenge = GameObject.FindObjectOfType<DeathEnemies>();
         health = maxHealth;
         vida.value = 1;
@@ -109,6 +118,10 @@ public class EnemySkeletonSword : MonoBehaviour
             return;
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
         {
+            Debug.Log("start walk");
+            //lastRoutine = StartCoroutine(moveAudio(0.5f, walkClip[0]));
+            //lastRoutine = StartCoroutine(PlayMoveAudio(0.5F));
+            //AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)], 0.2f);
             move = Move.WALK;
             state = States.MOVE;
             anim.CrossFadeInFixedTime("walk", 0.2f);
@@ -118,6 +131,14 @@ public class EnemySkeletonSword : MonoBehaviour
         {
             ChangeToIdle();
         }
+    }
+    private Coroutine lastRoutine;
+    private IEnumerator PlayMoveAudio(float delay)
+    {
+        AudioManager.instance.PlayAudio(audioSource, walkClip[1]);
+        //AudioManager.instance.PlayAudio(audioSource, walkClip[Random.Range(0, walkClip.Length)]);
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(PlayMoveAudio(delay));
     }
     void StartRun()
     {
@@ -129,6 +150,10 @@ public class EnemySkeletonSword : MonoBehaviour
             return;
         if (Vector3.Distance(this.transform.position, player.transform.position) > agent.stoppingDistance)
         {
+            Debug.Log("start run");
+            //lastRoutine = StartCoroutine(moveAudio(0.5f, walkClip[0]));
+            //lastRoutine = StartCoroutine(PlayMoveAudio(1F));
+            //AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)], 0.05f);
             move = Move.RUN;
             state = States.MOVE;
             anim.CrossFadeInFixedTime("run", 0.2f);
@@ -161,11 +186,20 @@ public class EnemySkeletonSword : MonoBehaviour
 
 
     }
+    private IEnumerator moveAudio(float delayInSeconds, AudioClip audioToPlay)
+    {
+        yield return new WaitForSeconds(delayInSeconds);
+        audioSource.clip = audioToPlay;
+        audioSource.Play();
+        StartCoroutine(moveAudio(delayInSeconds, audioToPlay));
+    }
 
     void ChangeToIdle()
     {
         if(hit == Hits.LAND || state != States.HIT)
         {
+            //StopCoroutine(lastRoutine);
+            Debug.Log("STOP AUDIO");
             agent.destination = this.transform.position;
             attackDelay = 0.25f;
 
@@ -196,10 +230,20 @@ public class EnemySkeletonSword : MonoBehaviour
                 switch (move)
                 {
                     case Move.WALK:
-
+                        //if (!isWALKING)
+                        //{
+                        //    AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)]);
+                        //    isWALKING = true;
+                        //}
+                        //Debug.Log("walk");
                         break;
                     case Move.RUN:
-
+                        //if (!isWALKING)
+                        //{
+                        //    AudioManager.instance.PlayAudioOnLoop(audioSource, walkClip[Random.Range(0, walkClip.Length)]);
+                        //    isWALKING = true;
+                        //}
+                        //Debug.Log("run");
                         break;
                 }
 
@@ -239,7 +283,7 @@ public class EnemySkeletonSword : MonoBehaviour
                     if ((Time.time - attackTimer) > attackDelay)
                     {
                         int attack = (int)Random.RandomRange(0, 10);
-
+                        AudioManager.instance.StopAudioLoop(audioSource);
                         attackTimer = Time.time;
                         agent.enabled = false;
                         if (attack < 4)
@@ -247,6 +291,9 @@ public class EnemySkeletonSword : MonoBehaviour
                             state = States.ATTACK;
                             ataques = Attack.ATTACK1;
                             anim.CrossFadeInFixedTime("attack1", 0.1f);
+                            //attackFeedback.PlayFeedbacks();#
+                            AudioManager.instance.PlayAudioWithDelay(audioSource, attackClip[Random.Range(0, attackClip.Length)], 0.4f);
+                            //AudioManager.instance.PlayAudio(audioSource, attackClip[Random.Range(0, attackClip.Length)]);
 
                         }
                         else
@@ -255,8 +302,9 @@ public class EnemySkeletonSword : MonoBehaviour
 
                             ataques = Attack.ATTACK2;
                             anim.CrossFadeInFixedTime("attack2", 0.1f);
-
-
+                            //attackFeedback.PlayFeedbacks();
+                            //AudioManager.instance.PlayAudio(audioSource, attackClip[Random.Range(0, attackClip.Length)]);
+                            AudioManager.instance.PlayAudioWithDelay(audioSource, attackClip[Random.Range(0, attackClip.Length)], 0.4f);
 
                         }
                     }
@@ -569,6 +617,8 @@ public class EnemySkeletonSword : MonoBehaviour
             this.health -= damageToDeal;
             Debug.Log(damageToDeal);
             DamageNumber burnNumber = burnDamageNumber.Spawn(this.transform.position, -damageToDeal);
+            Instantiate(burnAudio, this.transform.position, Quaternion.identity);
+            //this.GetComponent<MMF_Player>().PlayFeedbacks();
             // DamageNumber damageNumber = numberPrefab.Spawn(collisionPoint, -6);
             ticksRemainingBurn--;
             if(ticksRemainingBurn == 0)
