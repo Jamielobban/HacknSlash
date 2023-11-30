@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CartelChallenges : MonoBehaviour
 {
-    public List<Challenges1> Challenges1;
-    public List<Challenges2> Challenges2;
+
 
     public List<Challenges> Challenges;
 
@@ -14,14 +13,7 @@ public class CartelChallenges : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < Challenges1.Count;i++)
-        {
-            Challenges.Add(Challenges1[i]);
-        }
-        for (int i = 0; i < Challenges2.Count; i++)
-        {
-            Challenges.Add(Challenges2[i]);
-        }
+
 
         controller = GameObject.FindObjectOfType<ControllerManager>();
         manager = GameObject.FindObjectOfType<ChallengeManager>();
