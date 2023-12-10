@@ -41,6 +41,58 @@ public class GetEnemies : MonoBehaviour
 
         return position;
     }
+    public Vector3 GetEnemiePos(Vector3 pos)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == null || enemies[i].tag != "Enemy")
+            {
+                enemies.RemoveAt(i);
+            }
+        }
+        Vector3 position = Vector3.zero;
+        float distance = 100;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (Vector3.Distance(enemies[i].transform.position, pos) < distance)
+            {
+                distance = Vector3.Distance(enemies[i].transform.position, pos);
+                position = new Vector3(enemies[i].transform.position.x, enemies[i].transform.position.y, enemies[i].transform.position.z);
+            }
+
+        }
+
+
+
+        return position;
+    }
+
+    public GameObject GetEnemieGameObject(Vector3 pos)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == null || enemies[i].tag != "Enemy")
+            {
+                enemies.RemoveAt(i);
+            }
+        }
+        GameObject enemy = null;
+        float distance = 100;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (Vector3.Distance(enemies[i].transform.position, pos) < distance)
+            {
+                distance = Vector3.Distance(enemies[i].transform.position, pos);
+                enemy = enemies[i];
+            }
+
+        }
+
+
+
+        return enemy;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy"))

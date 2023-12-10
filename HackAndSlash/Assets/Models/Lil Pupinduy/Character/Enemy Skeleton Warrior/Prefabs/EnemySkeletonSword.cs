@@ -23,7 +23,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public int stateMultiplier;
 
     public bool isWALKING;
-    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH,SPAWN };
+    enum States { MOVE, ATTACK, IDLE, DELAY, JUMP, HIT, DEATH,SPAWN,TELEPORT };
 
     public PlayerControl.HealthState healthState;
     enum Move { WALK, RUN };
@@ -81,7 +81,7 @@ public class EnemySkeletonSword : MonoBehaviour
     DeathEnemies challenge;
     public float seeDistance;
 
-
+    float teleportTime;
     //public MMFeedbacks attackFeedback;
     
     public AudioSource audioSource;
@@ -195,14 +195,14 @@ public class EnemySkeletonSword : MonoBehaviour
         if(hit == Hits.LAND || state != States.HIT)
         {
             //StopCoroutine(lastRoutine);
-            Debug.Log("STOP AUDIO");
             agent.destination = this.transform.position;
             attackDelay = 0.25f;
 
             attackTimer = Time.time;
             GetDamage = true;
+            rigidbody.isKinematic = true;
 
-                agent.enabled = true;
+            agent.enabled = true;
 
             state = States.IDLE;
             anim.CrossFadeInFixedTime("idle", 0.2f);
@@ -447,6 +447,13 @@ public class EnemySkeletonSword : MonoBehaviour
                     Reborn();
                 }
                 break;
+            case States.TELEPORT:
+                if((Time.time- teleportTime) >=0.25f)
+                {
+                    returnState();
+                }
+
+                break;
         }
         if (state == States.DEATH)
         {
@@ -482,6 +489,47 @@ public class EnemySkeletonSword : MonoBehaviour
             healthState = PlayerControl.HealthState.NORMAL;
             stateMultiplier = 0;
         }
+    }
+
+    void returnState()
+    {
+
+        RaycastHit rayhit2;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out rayhit2, 200, 1 << 7))
+        {
+            if (rayhit2.distance < 1)
+            {
+                agent.destination = this.transform.position;
+                attackDelay = 0.25f;
+                rigidbody.isKinematic = true;
+
+                attackTimer = Time.time;
+                GetDamage = true;
+
+                agent.enabled = true;
+
+                state = States.IDLE;
+                anim.CrossFadeInFixedTime("idle", 0.2f);
+            }
+            else
+            {
+                anim.CrossFadeInFixedTime("idle", 0.2f);
+
+                fallStartTime = Time.time;
+                state = States.HIT;
+                hit = Hits.DOWN;
+            }
+        }
+
+    }
+    public void Teleport()
+    {
+        agent.enabled = false;
+        rigidbody.isKinematic = false;
+
+        state = States.TELEPORT;
+        teleportTime = Time.time;
     }
     void Alive()
     {
@@ -872,6 +920,15 @@ public class EnemySkeletonSword : MonoBehaviour
                     delayCaer = Time.time;
 
                     rigidbody.AddForce(this.transform.up * ImpulsoGolpeAire * Time.fixedDeltaTime, ForceMode.Impulse);
+                    Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
+                    this.transform.LookAt(this.transform.position + ForceDirection);
+
+                    hitTime = Time.time;
+                    knockbackForce = other.GetComponent<AttackCollider>().Knockback;
+                    knockbackForce /= 5;
+                    //rigidbody.AddForce(-ForceDirection * other.GetComponent<AttackCollider>().Knockback * Time.fixedDeltaTime, ForceMode.Impulse);
+                    knockbackForceDir = -ForceDirection;
+
                     anim.CrossFadeInFixedTime("AirDamage", 0.2f);
 
                     other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
@@ -923,7 +980,14 @@ public class EnemySkeletonSword : MonoBehaviour
                     }
                     
                     state = States.HIT;
-                    hit = Hits.HIT1;
+                    if(other.GetComponent<AttackCollider>().enemyHitAnim == "GolpeSalto")
+                        hit = Hits.UP;
+
+                    else
+                        hit = Hits.HIT1;
+
+                        fallStartTime = Time.time;
+
 
                     anim.CrossFadeInFixedTime(other.GetComponent<AttackCollider>().enemyHitAnim, 0.2f);
 
