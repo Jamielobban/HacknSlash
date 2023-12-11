@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using MoreMountains.Feedbacks;
-public class Enemy : MonoBehaviour
+public class EnemyOld : MonoBehaviour
 {
     Rigidbody rigidbody;
     public float JumpForce;
