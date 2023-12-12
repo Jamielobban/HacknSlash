@@ -144,6 +144,7 @@ public class PlayerControl : MonoBehaviour
     public float delayDashes;
     public GetEnemies enemieTarget;
     public GetEnemies attackTeleport;
+    public GetEnemies attackTeleport2;
 
     public GameObject[] dashEffects;
 
@@ -199,6 +200,8 @@ public class PlayerControl : MonoBehaviour
     float hitTime;
     float deathTime;
     int repeticionGolpe;
+
+    public Animator desaparecer;
 
     [Header("Combat Stats")]
     [Space]
@@ -601,17 +604,40 @@ public class PlayerControl : MonoBehaviour
     }
 
     Vector3 enemy;
+
+    void Aparecer()
+    {
+        playerAnim.Play("Aparecer", 1);
+
+    }
     void PlayAttack()
     {
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) <6)
         {
             enemy = attackTeleport.GetEnemie(this.transform.position);
-            enemy.y = player.transform.position.y;
+            Vector3 enem = enemy;
+            enem.y = player.transform.position.y;
+            enemy += (enem - player.transform.position).normalized * 0.5f;
+            Vector3 dir = new Vector3(0, 0, 0);
 
-            Vector3 dir = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0, UnityEngine.Random.Range(-1.0f, 1.0f));
+            if(currentComboAttack == -1||controller.LeftStickValue().magnitude == 0)
+            {
+                dir = -(enem - player.transform.position);
+            }
+            else
+            {
+                playerAnim.Play("Desaparecer",1);
+                Invoke("Aparecer", 0.1f);
+                dir = (camera.transform.position - (camera.transform.position + (camera.transform.forward* -controller.LeftStickValue().y) + (camera.transform.right * -controller.LeftStickValue().x)));
+
+
+            }
             dir.Normalize();
 
             dir = attackTeleport.GetEnemiePos(this.transform.position) + (dir*3);
+            if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
+                dir.y = player.transform.position.y;
+
             this.GetComponent<Rigidbody>().DOMove(dir, 0.1f, false);
 
         }
@@ -825,7 +851,14 @@ public class PlayerControl : MonoBehaviour
                 CheckNextAttack();
                 AttackMovement();
 
-                player.transform.LookAt(enemy);
+
+                if(enemy != Vector3.zero)
+                {
+                    Vector3 enem = enemy;
+                    enem.y = player.transform.position.y;
+                    player.transform.LookAt(enem);
+
+                }
 
                 if (CheckIfNextAttack())
                     break;
@@ -1206,36 +1239,56 @@ public class PlayerControl : MonoBehaviour
 
     bool CheckAtaques()
     {
+        float delay = 0;
+        if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
+        {
+            if (currentComboAttack < currentComboAttacks.attacks.Length)
+                delay = currentComboAttacks.attacks[currentComboAttack].delay;
 
-        if(controller.Teleport1)
+        }
+        if (controller.Teleport1)
         {
 
-            Vector3 pos2 = Vector3.zero;
-            RaycastHit hit;
+            Vector3 pos2 = attackTeleport2.GetEnemiePos(this.transform.position);
 
-            if (Physics.Raycast(camera.transform.GetChild(0).GetChild(0).position, -(camera.transform.GetChild(0).GetChild(0).position- camera.transform.GetChild(3).position).normalized, out hit, 2000, 1 << 7))
-            {
-                pos2 = hit.point;
-            }
             if(pos2 != Vector3.zero)
             {
                 moveDir = Vector3.zero;
                 moveDirSaved = Vector3.zero;
 
-
+                playerAnim.Play("Desaparecer", 1);
+                Invoke("Aparecer", 0.1f);
 
 
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().useGravity = false;
-                Vector3 pos = (attackTeleport.GetEnemiePos(this.transform.position) - this.transform.position).normalized;
+                Vector3 pos = (pos2 - this.transform.position).normalized;
 
-                pos = attackTeleport.GetEnemiePos(this.transform.position) - (pos * 2);
+                pos = attackTeleport.GetEnemiePos(this.transform.position) - (pos * 3);
                 pos.y = attackTeleport.GetEnemiePos(this.transform.position).y;
-                this.GetComponent<Rigidbody>().DOMove(pos2, 0.5f);
+                this.GetComponent<Rigidbody>().DOMove(pos2, 0.25f);
+                
+
                 controller.ResetBotonesAtaques();
                 TeleportTime = Time.time;
 
-                states = States.TELEPORT;
+                if ((Time.time - attackStartTime) >= delay + 0.1f)
+                {
+                    currentComboAttack = -1;
+                    passiveCombo.Clear();
+                }
+                else if (GetAttacks(ComboAtaques.QuadratL2).attacks.Length - 1 <= currentComboAttack)
+                {
+                    currentComboAttack = GetAttacks(ComboAtaques.QuadratL2).attacks.Length - 1;
+                }
+                passiveCombo.Add(PassiveCombo.QUADRATFLOORL2);
+                attacks = Attacks.GROUND;
+                currentComboAttacks = GetAttacks(ComboAtaques.QuadratL2);
+                PlayAttack();
+
+                states = States.ATTACK;
+
+                controller.ResetBotonesAtaques();
                 return true;
             }
             
@@ -1281,17 +1334,11 @@ public class PlayerControl : MonoBehaviour
         else if (attackFinished && (Time.time - comboFinishedTime) < delayCombos)
             return false;
 
-        float delay = 0;
-        if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
-        {
-            if(currentComboAttack < currentComboAttacks.attacks.Length)
-            delay = currentComboAttacks.attacks[currentComboAttack].delay;
 
-        }
 
         if ((Time.time - attackStartTime) >= delay)
         {
-
+            
 
 
             if (controller.ataqueCuadradoL2)
@@ -1777,6 +1824,8 @@ public class PlayerControl : MonoBehaviour
                 controller.ResetBotonesAtaques();
                 return true;
             }
+
+            enemy = Vector3.zero;
         }
         //else
         //{

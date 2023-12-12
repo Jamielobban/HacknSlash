@@ -15,9 +15,14 @@ public class AbilityPowerManager : MonoBehaviour
     // Decay rate for sliders
     public float decayRate = 0.00001f;
 
-
+    bool Combo = false;
+    int ComboHabilitiCout = 0;
 
     public int comboCount;
+
+
+    PlayerControl.ComboAtaques[] combo;
+
 
     public TMP_Text comboNumber;
 
@@ -76,10 +81,21 @@ public class AbilityPowerManager : MonoBehaviour
         slider.value = Mathf.Clamp01(slider.value - decayRate * Time.deltaTime);
     }
 
+    void DesaparecerCombo()
+    {
+        Combo = false;
+        ComboHabilitiCout = comboCount;
+    }
+
+
+
     // Function to increase the combo count
     public void IncreaseCombo()
     {
         comboCount++;
+
+
+
         comboNumber.text = comboCount.ToString();
         comboSlider.value = comboSlider.maxValue;
 

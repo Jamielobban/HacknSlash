@@ -195,7 +195,6 @@ public class EnemySkeletonSword : MonoBehaviour
         if(hit == Hits.LAND || state != States.HIT)
         {
             //StopCoroutine(lastRoutine);
-            agent.destination = this.transform.position;
             attackDelay = 0.25f;
 
             attackTimer = Time.time;
@@ -203,6 +202,7 @@ public class EnemySkeletonSword : MonoBehaviour
             rigidbody.isKinematic = true;
 
             agent.enabled = true;
+            agent.destination = this.transform.position;
 
             state = States.IDLE;
             anim.CrossFadeInFixedTime("idle", 0.2f);
@@ -500,7 +500,6 @@ public class EnemySkeletonSword : MonoBehaviour
         {
             if (rayhit2.distance < 1)
             {
-                agent.destination = this.transform.position;
                 attackDelay = 0.25f;
                 rigidbody.isKinematic = true;
 
@@ -508,6 +507,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 GetDamage = true;
 
                 agent.enabled = true;
+                agent.destination = this.transform.position;
 
                 state = States.IDLE;
                 anim.CrossFadeInFixedTime("idle", 0.2f);
