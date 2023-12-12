@@ -59,7 +59,7 @@ public class PlayerControl : MonoBehaviour
 
     public float delayIdleToMoveTime;
 
-    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2 };
+    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, Teleport };
 
     public int currentScroll;
     [System.Serializable]
@@ -177,7 +177,8 @@ public class PlayerControl : MonoBehaviour
         QUADRATFLOORL2,
         TRIANGLEFLOORL2,
         HOLDQUADRATFLOORL2,
-        HOLDTRIANGLEFLOORL2
+        HOLDTRIANGLEFLOORL2,
+        TELEPORT
 
     }
     public List<PassiveCombo> passiveCombo = new List<PassiveCombo>();
@@ -612,7 +613,7 @@ public class PlayerControl : MonoBehaviour
     }
     void PlayAttack()
     {
-        if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) <6)
+        if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) <6 && currentComboAttacks.combo != ComboAtaques.Teleport)
         {
             enemy = attackTeleport.GetEnemie(this.transform.position);
             Vector3 enem = enemy;
@@ -1259,14 +1260,14 @@ public class PlayerControl : MonoBehaviour
                 playerAnim.Play("Desaparecer", 1);
                 Invoke("Aparecer", 0.1f);
 
+                enemy = attackTeleport2.GetEnemiePos(this.transform.position);
 
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                this.GetComponent<Rigidbody>().useGravity = false;
                 Vector3 pos = (pos2 - this.transform.position).normalized;
 
-                pos = attackTeleport.GetEnemiePos(this.transform.position) - (pos * 3);
-                pos.y = attackTeleport.GetEnemiePos(this.transform.position).y;
-                this.GetComponent<Rigidbody>().DOMove(pos2, 0.25f);
+                pos = attackTeleport2.GetEnemiePos(this.transform.position) - (pos * 4);
+
+                this.GetComponent<Rigidbody>().DOMove(pos, 0.25f);
                 
 
                 controller.ResetBotonesAtaques();
@@ -1277,13 +1278,13 @@ public class PlayerControl : MonoBehaviour
                     currentComboAttack = -1;
                     passiveCombo.Clear();
                 }
-                else if (GetAttacks(ComboAtaques.QuadratL2).attacks.Length - 1 <= currentComboAttack)
+                else if (GetAttacks(ComboAtaques.Teleport).attacks.Length - 1 <= currentComboAttack)
                 {
-                    currentComboAttack = GetAttacks(ComboAtaques.QuadratL2).attacks.Length - 1;
+                    currentComboAttack = GetAttacks(ComboAtaques.Teleport).attacks.Length - 1;
                 }
-                passiveCombo.Add(PassiveCombo.QUADRATFLOORL2);
+                passiveCombo.Add(PassiveCombo.TELEPORT);
                 attacks = Attacks.GROUND;
-                currentComboAttacks = GetAttacks(ComboAtaques.QuadratL2);
+                currentComboAttacks = GetAttacks(ComboAtaques.Teleport);
                 PlayAttack();
 
                 states = States.ATTACK;
