@@ -145,6 +145,7 @@ public class PlayerControl : MonoBehaviour
     public GetEnemies enemieTarget;
     public GetEnemies attackTeleport;
     public GetEnemies attackTeleport2;
+    public GetEnemies remate;
 
     public GameObject[] dashEffects;
 
@@ -344,7 +345,7 @@ public class PlayerControl : MonoBehaviour
                     {
                         playerAnim.speed = 1;
 
-                        StartCoroutine(DelayGolpe(0, 0));
+                        StartCoroutine(DelayGolpe(0, 0,1));
 
                         playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
                         doubleJump = false;
@@ -478,7 +479,7 @@ public class PlayerControl : MonoBehaviour
         slash.SetActive(false);
     }
 
-    private IEnumerator DelayGolpe(float time, int golpe)
+    private IEnumerator DelayGolpe(float time, int golpe, float damageMult)
     {
 
         yield return new WaitForSeconds(time);
@@ -528,7 +529,7 @@ public class PlayerControl : MonoBehaviour
                             spawnedObject.GetComponent<AttackCollider>().enemyStandUp = i.EnemyStandUp;
 
 
-                            spawnedObject.GetComponent<AttackCollider>().damage = GetCritOrDamage(i.damage);
+                            spawnedObject.GetComponent<AttackCollider>().damage = GetCritOrDamage(i.damage* damageMult);
 
 
                             spawnedObject.GetComponent<AttackCollider>().Knockback = i.knockback.x;
@@ -576,7 +577,7 @@ public class PlayerControl : MonoBehaviour
 
                 
 
-                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = GetCritOrDamage(currentComboAttacks.attacks[golpe].damage);
+                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = GetCritOrDamage(currentComboAttacks.attacks[golpe].damage* damageMult);
 
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
@@ -614,9 +615,7 @@ public class PlayerControl : MonoBehaviour
     void PlayAttack()
     {
 
-        camera.GetComponent<Remate>().remate();
-        camera.transform.DORotate(player.transform.eulerAngles,0.1f);
-        camera.transform.GetChild(0).DOLocalRotate(new Vector3(360, 0, 0), 0.1f);
+        float damageMult = 1;
 
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) <6 && currentComboAttacks.combo != ComboAtaques.Teleport)
         {
@@ -645,8 +644,9 @@ public class PlayerControl : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(dir, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7))
+            if (Physics.Raycast(dir + new Vector3(0,1,0), transform.TransformDirection(-this.transform.up), out hit, 2, 1 << 7))
             {
+                dir.y = hit.point.y;
                 if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
                 {
                 }
@@ -663,6 +663,80 @@ public class PlayerControl : MonoBehaviour
 
         }
 
+        if(remate.GetEnemyDebil(this.transform.position) != null && (currentComboAttacks.combo == ComboAtaques.HoldQuadrat|| currentComboAttacks.combo == ComboAtaques.HoldQuadratL2 || currentComboAttacks.combo == ComboAtaques.HoldTriangle || currentComboAttacks.combo == ComboAtaques.HoldTriangleL2))
+        {
+            GameObject enemyObject = remate.GetEnemyDebil(this.transform.position);
+            enemyObject.GetComponent<EnemySkeletonSword>().EndDebil();
+
+            Vector3 pos = new Vector3(enemyObject.transform.position.x, player.transform.position.y, enemyObject.transform.position.z);
+            damageMult = 5;
+            enemy = pos;
+            Vector3 enem = enemy;
+            enem.y = player.transform.position.y;
+            enemy += (enem - player.transform.position).normalized * 0.5f;
+            Vector3 dir = new Vector3(0, 0, 0);
+
+            if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
+            {
+                dir = -(enem - player.transform.position);
+            }
+            else
+            {
+                dir = (camera.transform.position - (camera.transform.position + (camera.transform.forward * -controller.LeftStickValue().y) + (camera.transform.right * -controller.LeftStickValue().x)));
+
+            }
+            dir.Normalize();
+
+            dir = pos + (dir * 3);
+
+            if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
+                dir.y = player.transform.position.y;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 2, 1 << 7))
+            {
+                dir.y = hit.point.y;
+
+                if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
+                {
+                }
+                else
+                {
+                    playerAnim.Play("Desaparecer", 1);
+                    Invoke("Aparecer", 0.1f);
+                }
+
+                this.GetComponent<Rigidbody>().DOMove(dir, 0.1f, false);
+
+            }
+
+            switch(currentComboAttacks.combo)
+            {
+                case ComboAtaques.HoldQuadrat:
+                    camera.GetComponent<Remate>().remate("HoldQuadrat");
+
+                    break;
+                case ComboAtaques.HoldQuadratL2:
+                    camera.GetComponent<Remate>().remate("HoldQuadratL2");
+
+                    break;
+                case ComboAtaques.HoldTriangle:
+                    camera.GetComponent<Remate>().remate("HoldTriangle");
+
+                    break;
+                case ComboAtaques.HoldTriangleL2:
+                    camera.GetComponent<Remate>().remate("HoldTriangleL2");
+
+                    break;
+            }
+
+            camera.transform.DORotate(player.transform.eulerAngles, 0.1f);
+            camera.transform.GetChild(0).DOLocalRotate(new Vector3(360, 0, 0), 0.1f);
+        }
+
+
+
         playerAnim.speed = 1.75f;
         currentComboAttack++;
         if (currentComboAttacks.attacks[currentComboAttack].collider != null && currentComboAttacks.combo != ComboAtaques.air2)
@@ -671,7 +745,7 @@ public class PlayerControl : MonoBehaviour
             for (int i = 0; i <= currentComboAttacks.attacks[currentComboAttack].repeticionGolpes; i++)
             {
                 stopAttack = false;
-                StartCoroutine(DelayGolpe(currentComboAttacks.attacks[currentComboAttack].delayGolpe + (i * currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes), currentComboAttack));
+                StartCoroutine(DelayGolpe(currentComboAttacks.attacks[currentComboAttack].delayGolpe + (i * currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes), currentComboAttack,damageMult) );
 
 
             }
@@ -1260,6 +1334,21 @@ public class PlayerControl : MonoBehaviour
 
     bool CheckAtaques()
     {
+        //if(controller.Box.action != null)
+        //{
+        //    if (controller.Box.action.WasPressedThisFrame() && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Cargar") && (states == States.IDLE|| states == States.MOVE))
+        //    {
+        //        playerAnim.CrossFadeInFixedTime("Cargar", 0.1f);
+        //    }
+        //}
+        //if (controller.Triangle.action != null)
+        //{
+        //    if (controller.Triangle.action.WasPressedThisFrame() && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Cargar") && (states == States.IDLE || states == States.MOVE))
+        //    {
+        //        playerAnim.CrossFadeInFixedTime("Cargar", 0.1f);
+        //    }
+        //}
+
         float delay = 0;
         if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
         {
@@ -1737,6 +1826,7 @@ public class PlayerControl : MonoBehaviour
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
 
                 }
+
                 if ((Time.time - attackStartTime) >= delay + 0.1f)
                 {
                     currentComboAttack = -1;

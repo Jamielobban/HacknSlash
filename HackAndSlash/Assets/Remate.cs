@@ -12,10 +12,10 @@ public class Remate : MonoBehaviour
         
     }
 
-    public void remate()
+    public void remate(string attack)
     {
         a = true;
-        this.GetComponent<Animator>().CrossFadeInFixedTime("Attack", 0.1f);
+        this.GetComponent<Animator>().CrossFadeInFixedTime(attack, 0.1f);
     }
     public void endas()
     {

@@ -89,9 +89,17 @@ public class EnemySkeletonSword : MonoBehaviour
     public AudioClip[] walkClip;
     public AudioClip[] burrowing;
     public AudioClip dying;
+
+    public bool debil;
+
+    float timeDebil;
+
+    public GameObject aa;
     // Start is called before the first frame update
     void Start()
     {
+        aa.SetActive(false);
+        debil = false;
         isWALKING = false;
         audioSource = GetComponent<AudioSource>();
         challenge = GameObject.FindObjectOfType<DeathEnemies>();
@@ -213,7 +221,15 @@ public class EnemySkeletonSword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(debil)
+        {
+            if((Time.time-timeDebil) > 3)
+            {
+                debil = false;
+                aa.SetActive(false);
 
+            }
+        }
 
             //if (state != States.MOVE)
             //    agent.speed = 0;
@@ -489,6 +505,8 @@ public class EnemySkeletonSword : MonoBehaviour
             healthState = PlayerControl.HealthState.NORMAL;
             stateMultiplier = 0;
         }
+
+
     }
 
     void returnState()
@@ -713,17 +731,41 @@ public class EnemySkeletonSword : MonoBehaviour
         // For example, updating enemy health, playing sound effects, triggering animations, etc.
     }
 
+    public void EndDebil()
+    {
+        debil = false;
+        aa.SetActive(false);
+    }
     void ChangeHealth(int value)
     {
         
-            health += (int)value;
-        if(health <0)
+
+
+        health += (int)value;
+
+
+        if (health <0)
         {
             health = 0;
         }
         else if(health > maxHealth)
         {
             health = maxHealth;
+
+        }
+
+        if (health < maxHealth)
+        {
+            int rand = Random.RandomRange(0, 5);
+
+            if(rand == 0)
+            {
+                debil = true;
+                aa.SetActive(true);
+
+                timeDebil = Time.time;
+            }
+
 
         }
         vida.value = (float)((float)health / (float)maxHealth);
@@ -762,6 +804,8 @@ public class EnemySkeletonSword : MonoBehaviour
             //Debug.Log("Does this always hit");
             if (health <= 0)
             {
+                debil = false;
+                aa.SetActive(false);
                 challenge.SetEnemieDeath(other.GetComponent<AttackCollider>().attack);
                 collisionPoint = FindClosestPointOnCollider(other, transform.position);
                 //other.GetComponent<AttackCollider>().SubscribeToAttackResult();
@@ -915,7 +959,26 @@ public class EnemySkeletonSword : MonoBehaviour
                     hit = Hits.UP;
 
                 }
-                else if (other.CompareTag("GolpeAire"))
+                else if (other.CompareTag("GolpeVerticalCircular"))
+                {
+                    rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
+                    anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
+                    fallStartTime = Time.time;
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+
+
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
+                    //ComboManager.instance.IncreaseCombo();
+                    AbilityPowerManager.instance.IncreaseCombo();
+                    state = States.HIT;
+                    hit = Hits.UP;
+                    Invoke("DelayAire", delayJumpHit);
+                }
+                else if (other.CompareTag("GolpeAire") || (state == States.HIT && (hit == Hits.UP || hit == Hits.DOWN || hit == Hits.AIR)))
                 {
                     delayCaer = Time.time;
 
@@ -943,25 +1006,6 @@ public class EnemySkeletonSword : MonoBehaviour
                     fallStartTime = Time.time;
                     state = States.HIT;
                     hit = Hits.AIR;
-                }
-                else if (other.CompareTag("GolpeVerticalCircular"))
-                {
-                    rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
-                    anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
-                    fallStartTime = Time.time;
-                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
-
-
-                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
-                    SpawnWhiteSplash(collisionPoint);
-                    SpawnBloodSplash(collisionPoint);
-                    SpawnHitLine(collisionPoint);
-                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
-                    //ComboManager.instance.IncreaseCombo();
-                    AbilityPowerManager.instance.IncreaseCombo();
-                    state = States.HIT;
-                    hit = Hits.UP;
-                    Invoke("DelayAire", delayJumpHit);
                 }
                 else if (other.GetComponent<AttackCollider>() != null)
                 {

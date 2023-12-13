@@ -39,8 +39,8 @@ public class ControllerManager : MonoBehaviour
     Vector2 rightStick;
     InputAction.CallbackContext X;
     InputAction.CallbackContext O;
-    InputAction.CallbackContext Box;
-    InputAction.CallbackContext Triangle;
+    public InputAction.CallbackContext Box;
+    public InputAction.CallbackContext Triangle;
     public InputAction.CallbackContext Teleport;
 
     InputAction.CallbackContext R2;
@@ -75,6 +75,7 @@ public class ControllerManager : MonoBehaviour
             controller = Gamepad.all[i];
         }
     }
+
     public bool GetController()
     {
         return true;
@@ -212,7 +213,7 @@ public class ControllerManager : MonoBehaviour
                 cuadradoHold = true;
             }
 
-            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.25f)
+            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.35f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
@@ -234,7 +235,7 @@ public class ControllerManager : MonoBehaviour
 
                 }
             }
-            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.25f && cuadradoHold)
+            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.35f && cuadradoHold)
             {
                 ResetBotonesAtaques();
 

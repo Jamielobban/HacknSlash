@@ -114,4 +114,30 @@ public class GetEnemies : MonoBehaviour
 
         }
     }
+
+    public GameObject GetEnemyDebil(Vector3 pos)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == null || enemies[i].tag != "Enemy")
+            {
+                enemies.RemoveAt(i);
+            }
+        }
+        GameObject position = null;
+        float distance = 100;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].GetComponent<EnemySkeletonSword>().debil == true)
+            {
+                position = enemies[i];
+            }
+
+        }
+
+
+
+        return position;
+    }
+
 }
