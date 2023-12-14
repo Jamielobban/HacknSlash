@@ -15,6 +15,7 @@ using DG.Tweening;
 
 public class PlayerControl : MonoBehaviour
 {
+    public GameObject flash;
     public TextMeshProUGUI currentHealthText;
     public TextMeshProUGUI maxHealthText;
     public UnityEngine.UI.Slider healthSlider;
@@ -345,7 +346,7 @@ public class PlayerControl : MonoBehaviour
                     {
                         playerAnim.speed = 1;
 
-                        StartCoroutine(DelayGolpe(0, 0,1));
+                        StartCoroutine(DelayGolpe(0, 0, 1* damageMult));
 
                         playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
                         doubleJump = false;
@@ -615,7 +616,7 @@ public class PlayerControl : MonoBehaviour
     void PlayAttack()
     {
 
-        float damageMult = 1;
+        float damageMultiplier = 1;
 
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) <6 && currentComboAttacks.combo != ComboAtaques.Teleport)
         {
@@ -669,7 +670,7 @@ public class PlayerControl : MonoBehaviour
             enemyObject.GetComponent<EnemySkeletonSword>().EndDebil();
 
             Vector3 pos = new Vector3(enemyObject.transform.position.x, player.transform.position.y, enemyObject.transform.position.z);
-            damageMult = 5;
+            damageMultiplier = 5;
             enemy = pos;
             Vector3 enem = enemy;
             enem.y = player.transform.position.y;
@@ -745,11 +746,12 @@ public class PlayerControl : MonoBehaviour
             for (int i = 0; i <= currentComboAttacks.attacks[currentComboAttack].repeticionGolpes; i++)
             {
                 stopAttack = false;
-                StartCoroutine(DelayGolpe(currentComboAttacks.attacks[currentComboAttack].delayGolpe + (i * currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes), currentComboAttack,damageMult) );
+                StartCoroutine(DelayGolpe(currentComboAttacks.attacks[currentComboAttack].delayGolpe + (i * currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes), currentComboAttack, damageMultiplier * damageMult) );
 
 
             }
         }
+        damageMult = 1;
 
         playerAnim.CrossFadeInFixedTime(currentComboAttacks.attacks[currentComboAttack].name, currentComboAttacks.attacks[currentComboAttack].transition);
 
@@ -918,6 +920,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.GetController())
             return;
+        CheckPerfectHit();
 
         RotateCamera();
 
@@ -1331,7 +1334,62 @@ public class PlayerControl : MonoBehaviour
     //        i.item.OnItemPickup(this, i.stacks, i.statType);
     //    }
     //}
+    float damageMult = 1;
+    float delayDaño = 0.15f;
+    bool atackPress = false;
+    void CheckPerfectHit()
+    {
+        if (currentComboAttacks == null|| currentComboAttack == -1)
+        {
 
+            flash.SetActive(false);
+
+            return;
+
+        }
+
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay - delayDaño && !flash.activeSelf && !atackPress && damageMult == 1)
+        {
+            flash.SetActive(true);
+        }
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño && flash.activeSelf)
+        {
+            flash.SetActive(false);
+
+        }
+
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay - delayDaño && damageMult == 1 && (Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño)
+        {
+            if((controller.ataqueCuadradoPress) || controller.ataqueCuadradoCargadoPress || controller.ataqueCuadradoL2Press || controller.ataqueCuadradoCargadoL2Press || controller.ataqueTrianguloPress || controller.ataqueTrianguloCargadoPress || controller.ataqueTrianguloL2Press || controller.ataqueTrianguloCargadoL2Press)
+            {
+                if(!atackPress)
+                {
+                    damageMult = 5.5f;
+                    flash.SetActive(false);
+
+                }
+
+            }
+        }
+
+        if ((Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay - delayDaño && !atackPress)
+        {
+            if ((controller.ataqueCuadradoPress) || controller.ataqueCuadradoCargadoPress || controller.ataqueCuadradoL2Press || controller.ataqueCuadradoCargadoL2Press || controller.ataqueTrianguloPress || controller.ataqueTrianguloCargadoPress || controller.ataqueTrianguloL2Press || controller.ataqueTrianguloCargadoL2Press)
+            {
+                atackPress = true;
+                flash.SetActive(false);
+
+            }
+        }
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño && atackPress)
+        {
+            atackPress = false;
+            flash.SetActive(false);
+
+        }
+
+
+    }
     bool CheckAtaques()
     {
         //if(controller.Box.action != null)
@@ -1348,7 +1406,6 @@ public class PlayerControl : MonoBehaviour
         //        playerAnim.CrossFadeInFixedTime("Cargar", 0.1f);
         //    }
         //}
-
         float delay = 0;
         if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
         {
@@ -1386,8 +1443,10 @@ public class PlayerControl : MonoBehaviour
 
                     TeleportTime = Time.time;
 
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1478,8 +1537,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN)
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1497,8 +1558,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1516,8 +1579,10 @@ public class PlayerControl : MonoBehaviour
                 else if (states == States.IDLE)
                 {
 
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1555,8 +1620,10 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1577,8 +1644,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN)
                     {
-                        if ((Time.time - attackStartTime) >= delay+0.1f)
+                        if ((Time.time - attackStartTime) >= delay+ delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1596,8 +1665,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1615,8 +1686,10 @@ public class PlayerControl : MonoBehaviour
                 else if (states == States.IDLE)
                 {
 
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1656,8 +1729,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN)
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1678,8 +1753,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1696,8 +1773,10 @@ public class PlayerControl : MonoBehaviour
                 }
                 else if (states == States.IDLE)
                 {
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1730,8 +1809,10 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1753,8 +1834,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN)
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1775,8 +1858,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + 0.1f)
+                        if ((Time.time - attackStartTime) >= delay + delayDaño)
                         {
+                            damageMult = 1;
+
                             currentComboAttack = -1;
                             passiveCombo.Clear();
                         }
@@ -1793,8 +1878,10 @@ public class PlayerControl : MonoBehaviour
                 }
                 else if (states == States.IDLE)
                 {
-                    if ((Time.time - attackStartTime) >= delay + 0.1f)
+                    if ((Time.time - attackStartTime) >= delay + delayDaño)
                     {
+                        damageMult = 1;
+
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
@@ -1827,8 +1914,10 @@ public class PlayerControl : MonoBehaviour
 
                 }
 
-                if ((Time.time - attackStartTime) >= delay + 0.1f)
+                if ((Time.time - attackStartTime) >= delay + delayDaño)
                 {
+                    damageMult = 1;
+
                     currentComboAttack = -1;
                     passiveCombo.Clear();
                 }
@@ -1860,8 +1949,10 @@ public class PlayerControl : MonoBehaviour
 
                 }
 
-                if ((Time.time - attackStartTime) >= delay + 0.1f)
+                if ((Time.time - attackStartTime) >= delay + delayDaño)
                 {
+                    damageMult = 1;
+
                     currentComboAttack = -1;
                     passiveCombo.Clear();
                 }
@@ -1892,8 +1983,10 @@ public class PlayerControl : MonoBehaviour
 
                 }
 
-                if ((Time.time - attackStartTime) >= delay + 0.1f)
+                if ((Time.time - attackStartTime) >= delay + delayDaño)
                 {
+                    damageMult = 1;
+
                     currentComboAttack = -1;
                     passiveCombo.Clear();
                 }
@@ -1924,8 +2017,10 @@ public class PlayerControl : MonoBehaviour
 
                 }
 
-                if ((Time.time - attackStartTime) >= delay + 0.1f)
+                if ((Time.time - attackStartTime) >= delay + delayDaño)
                 {
+                    damageMult = 1;
+
                     currentComboAttack = -1;
                     passiveCombo.Clear();
                 }

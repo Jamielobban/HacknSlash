@@ -24,6 +24,20 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueCuadradoL2;
     public bool ataqueTrianguloL2;
 
+
+    public bool ataqueCuadradoPress;
+    public bool ataqueCuadradoCargadoPress;
+    public bool ataqueTrianguloPress;
+    public bool ataqueTrianguloCargadoPress;
+
+
+    public bool ataqueCuadradoCargadoL2Press;
+    public bool ataqueTrianguloCargadoL2Press;
+    public bool ataqueCuadradoL2Press;
+    public bool ataqueTrianguloL2Press;
+
+
+
     bool dejarMantenerCuadrado;
     bool dejarMantenerTriangulo;
 
@@ -221,17 +235,20 @@ public class ControllerManager : MonoBehaviour
                     if (L2.action.IsPressed())
                     {
                         ataqueCuadradoL2 = true;
+                        ataqueCuadradoL2Press = true;
 
                     }
                     else
                     {
                         ataqueCuadrado = true;
+                        ataqueCuadradoPress = true;
 
                     }
                 }
                 else
                 {
                     ataqueCuadrado = true;
+                    ataqueCuadradoPress = true;
 
                 }
             }
@@ -244,17 +261,20 @@ public class ControllerManager : MonoBehaviour
                     if(L2.action.IsPressed())
                     {
                         ataqueCuadradoCargadoL2 = true;
+                        ataqueCuadradoCargadoL2Press = true;
 
                     }
                     else
                     {
                         ataqueCuadradoCargado = true;
+                        ataqueCuadradoCargadoPress = true;
 
                     }
                 }
                 else
                 {
                     ataqueCuadradoCargado = true;
+                    ataqueCuadradoCargadoPress = true;
 
                 }
                 cuadradoHold = false;
@@ -277,17 +297,20 @@ public class ControllerManager : MonoBehaviour
                     if (L2.action.IsPressed())
                     {
                         ataqueTrianguloL2 = true;
+                        ataqueTrianguloL2Press = true;
 
                     }
                     else
                     {
                         ataqueTriangulo = true;
+                        ataqueTrianguloPress = true;
 
                     }
                 }
                 else
                 {
                     ataqueTriangulo = true;
+                    ataqueTrianguloPress = true;
 
                 }
 
@@ -304,17 +327,20 @@ public class ControllerManager : MonoBehaviour
                     if (L2.action.IsPressed())
                     {
                         ataqueTrianguloCargadoL2 = true;
+                        ataqueTrianguloCargadoL2Press = true;
 
                     }
                     else
                     {
                         ataqueTrianguloCargado = true;
+                        ataqueTrianguloCargadoPress = true;
 
                     }
                 }
                 else
                 {
                     ataqueTrianguloCargado = true;
+                    ataqueTrianguloCargadoPress = true;
 
                 }
 
@@ -342,6 +368,14 @@ public class ControllerManager : MonoBehaviour
         Teleport2 = false;
         Teleport1 = false;
 
+        ataqueCuadradoPress = false;
+        ataqueTrianguloPress = false;
+        ataqueCuadradoCargadoPress = false;
+        ataqueTrianguloCargadoPress = false;
+        ataqueTrianguloCargadoL2Press = false;
+        ataqueCuadradoCargadoL2Press = false;
+        ataqueTrianguloL2Press = false;
+        ataqueCuadradoL2Press = false;
 
         if (X.action != null)
         {
