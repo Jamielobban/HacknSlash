@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent _agent;
+    public Transform target;
 
     protected virtual void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        target = FindObjectOfType<PlayerControl>().transform;
     }
 
     public void EnableMovement()
@@ -22,7 +22,7 @@ public class EnemyMovement : MonoBehaviour
         _agent.isStopped = true;
     }
 
-    public void HandleFollow(Transform target)
+    public void HandleFollow()
     {
         _agent.destination = target.position;
         HandleRotation();

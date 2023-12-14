@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public IState currentState;
+    public EnemyController controller { get; private set; }
 
     public virtual void SetState(IState newState)
     {
@@ -20,7 +21,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-
+        controller = GetComponent<EnemyController>();
+        SetState(new IdleState());
     }
 
     protected virtual void Start()
