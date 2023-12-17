@@ -118,6 +118,12 @@ public class EnemySkeletonSword : MonoBehaviour
         agent.enabled = false;
         state = States.SPAWN;
         Reborn();
+        RaycastHit rayhit2;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out rayhit2, 200, 1 << 7))
+        {
+            this.transform.position = rayhit2.point;
+        }
     }
     void StartWalk()
     {
@@ -396,6 +402,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 switch (hit)
                 {
                     case Hits.UP:
+                        if((Time.time- fallStartTime) < 0.1f)
                         ApplyGravity();
                         break;
                     case Hits.DOWN:
@@ -433,7 +440,7 @@ public class EnemySkeletonSword : MonoBehaviour
                         break;
                     case Hits.AIR:
                         rigidbody.AddForce(this.transform.up * speedFlotando * curve.Evaluate((Time.time - delayCaer)), ForceMode.Force);
-                        if ((Time.time - delayCaer) > 0.25f)
+                        if ((Time.time - delayCaer) > 0.5f)
                         {
                             hit = Hits.DOWN;
                             anim.CrossFadeInFixedTime("fall", 0.2f);
@@ -983,6 +990,8 @@ public class EnemySkeletonSword : MonoBehaviour
                     delayCaer = Time.time;
 
                     rigidbody.AddForce(this.transform.up * ImpulsoGolpeAire * Time.fixedDeltaTime, ForceMode.Impulse);
+                    rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
+
                     Vector3 ForceDirection = -(GameObject.FindFirstObjectByType<PlayerControl>().transform.GetChild(0).forward).normalized;
                     this.transform.LookAt(this.transform.position + ForceDirection);
 

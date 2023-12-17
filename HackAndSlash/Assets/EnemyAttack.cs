@@ -23,4 +23,13 @@ public class EnemyAttack : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerControl>() != null)
+        {
+            other.GetComponent<PlayerControl>().GetDamage(damage);
+
+        }
+    }
 }
