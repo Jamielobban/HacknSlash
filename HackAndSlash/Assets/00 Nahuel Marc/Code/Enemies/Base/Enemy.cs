@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        // Configurar eventos de transición
+        // Configurar eventos de transiciï¿½n
         events.OnIdle += () => SetState(new IdleState());
         events.OnPatrolling += () => SetState(new PatrollState());
         events.OnAttacking += () => SetState(new AttackState());
