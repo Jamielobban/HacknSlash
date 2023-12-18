@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrollState : MonoBehaviour
+public class PatrollState : EnemyState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(Enemy enemy)
     {
-        
+        base.EnterState(enemy);
+
+    }
+    public override void UpdateState(Enemy enemy)
+    {
+        enemy.movements.HandlePatrollInArea();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ExitState(Enemy enemy)
     {
-        
+        Debug.Log("Exit State Patroll");
+
+        base.ExitState(enemy);
     }
 }

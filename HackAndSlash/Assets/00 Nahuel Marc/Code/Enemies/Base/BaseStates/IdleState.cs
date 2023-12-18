@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : MonoBehaviour
+public class IdleState : EnemyState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(Enemy enemy)
     {
-        
+        base.EnterState(enemy);
+    }
+    public override void UpdateState(Enemy enemy)
+    {
+        if(enemy.movements.InRangeToChase())
+        {
+            enemy.events.Following();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ExitState(Enemy enemy)
     {
-        
+        base.ExitState(enemy);
     }
 }

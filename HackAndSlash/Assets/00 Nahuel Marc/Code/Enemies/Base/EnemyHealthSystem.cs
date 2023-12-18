@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class EnemyHealthSystem : MonoBehaviour, IDamageable
 {
-    protected EnemyController _enemy;
+    protected Enemy _enemy;
     protected float _currentHealth;
     public CharacterStat maxHealth = new CharacterStat();
 
     protected virtual void Awake()
     {
-        _enemy = transform.parent.GetComponent<EnemyController>();
+        _enemy = transform.parent.GetComponent<Enemy>();
         _currentHealth = maxHealth.Value;
+        _enemy.events.OnHeal += ChangeLife;
+        _enemy.events.OnHit += ChangeLife;
     }
 
-    public virtual void Die()
+    public virtual void Stun(float stunTime)
     {
-        //StartRespawnHandler
-        //SetVFX
-        //Sound? etc.
-        throw new System.NotImplementedException();
+        _enemy.events.OnStun += () => _enemy.SetState(new StunState(stunTime));
+        _enemy.events.Stun();
     }
 
     public virtual void Heal(float amount)
@@ -27,22 +27,23 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         _currentHealth += amount;
         if(_currentHealth > maxHealth.Value)
         {
-            _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
             _currentHealth = maxHealth.Value;
         }
-        _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
+        _enemy.events.Heal();
     }
 
     public virtual void TakeDamage(float damage)
     {
         _currentHealth -= damage;
+        _enemy.events.Hit();
         if(_currentHealth <= 0)
         {
-            _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
-            Die();
+            _enemy.events.Die();
         }
-        _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
-
     }
 
+    private void ChangeLife()
+    {
+        _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
+    }
 }
