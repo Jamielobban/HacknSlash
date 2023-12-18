@@ -28,7 +28,7 @@ public class EnemySkeletonSword : MonoBehaviour
     public PlayerControl.HealthState healthState;
     enum Move { WALK, RUN };
     enum Jump { JUMP, AIR, LAND, DELAY };
-    enum Hits { UP, LAND, DOWN, HIT1, AIR };
+    enum Hits { UP, LAND, DOWN, HIT1, AIR,REBOTE };
     enum Attack { ATTACK1, ATTACK2 };
     Attack ataques;
     Hits hit;
@@ -402,8 +402,10 @@ public class EnemySkeletonSword : MonoBehaviour
                 switch (hit)
                 {
                     case Hits.UP:
-                        if((Time.time- fallStartTime) < 0.1f)
-                        ApplyGravity();
+                        if ((Time.time - fallStartTime) < 0.2f)
+                        {
+                            rigidbody.AddForce(this.transform.up * JumpForce * Time.deltaTime, ForceMode.Force);
+                        }
                         break;
                     case Hits.DOWN:
                         ApplyGravity();
@@ -446,6 +448,27 @@ public class EnemySkeletonSword : MonoBehaviour
                             anim.CrossFadeInFixedTime("fall", 0.2f);
                             fallStartTime = Time.time;
 
+                        }
+                        break;
+                    case Hits.REBOTE:
+
+                
+                        rigidbody.AddForce(this.transform.up * -100000 * Time.deltaTime, ForceMode.Force);
+                        
+                        RaycastHit rayhit3;
+
+                        if (Physics.Raycast(transform.position, transform.TransformDirection(-this.transform.up), out rayhit3, 200, 1 << 7))
+                        {
+                            if (rayhit3.distance < 1f)
+                            {
+                                fallStartTime = Time.time;
+                                JumpForce = 15000;
+
+                                Invoke("DelayAire", delayJumpHit);
+                                anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
+                                rigidbody.velocity = Vector3.zero;
+                                hit = Hits.UP;
+                            }
                         }
                         break;
                 }
@@ -944,7 +967,8 @@ public class EnemySkeletonSword : MonoBehaviour
 
                 if (other.CompareTag("GolpeVertical"))
                 {
-                    fallStartTime = Time.time;
+                    JumpForce = 12500;
+                       fallStartTime = Time.time;
 
                     anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
 
@@ -958,7 +982,6 @@ public class EnemySkeletonSword : MonoBehaviour
                     AbilityPowerManager.instance.IncreaseCombo();
                     //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
 
-                    rigidbody.AddForce(this.transform.up * JumpForce, ForceMode.Impulse);
 
                     Invoke("DelayAire", delayJumpHit);
 
@@ -966,8 +989,32 @@ public class EnemySkeletonSword : MonoBehaviour
                     hit = Hits.UP;
 
                 }
+                else if (other.CompareTag("GolpeRebote"))
+                {
+                    fallStartTime = Time.time;
+
+                    anim.CrossFadeInFixedTime("AirDamage", 0.2f);
+
+                    other.GetComponent<AttackCollider>().enemyHitFeedback?.PlayFeedbacks();
+
+                    collisionPoint = FindClosestPointOnCollider(other, transform.position);
+                    SpawnWhiteSplash(collisionPoint);
+                    SpawnBloodSplash(collisionPoint);
+                    SpawnHitLine(collisionPoint);
+                    //ComboManager.instance.IncreaseCombo();
+                    AbilityPowerManager.instance.IncreaseCombo();
+                    //health -= (int)other.GetComponent<AttackCollider>().GetCritOrDamage();
+
+                    
+
+                    state = States.HIT;
+                    hit = Hits.REBOTE;
+
+                }
                 else if (other.CompareTag("GolpeVerticalCircular"))
                 {
+                    JumpForce = 5000;
+
                     rigidbody.AddForce(this.transform.up * other.GetComponent<AttackCollider>().KnockbackY * Time.fixedDeltaTime, ForceMode.Impulse);
                     anim.CrossFadeInFixedTime("GolpeSalto", 0.2f);
                     fallStartTime = Time.time;
@@ -1019,6 +1066,7 @@ public class EnemySkeletonSword : MonoBehaviour
                 else if (other.GetComponent<AttackCollider>() != null)
                 {
                         hitCount++;
+                    JumpForce = other.GetComponent<AttackCollider>().KnockbackY;
 
                     if (other.GetComponent<AttackCollider>().enemyStandUp)
                     {
@@ -1026,12 +1074,14 @@ public class EnemySkeletonSword : MonoBehaviour
                         hitTimeDown = Time.time;
                     }
                     else
-                    {                    
-
-                        Invoke("ChangeToIdleHit", 0.8f);
+                    {
+                        if (other.GetComponent<AttackCollider>().enemyHitAnim == "GolpeSalto")
+                            Invoke("DelayAire", 0.1f);
+                        else
+                            Invoke("ChangeToIdleHit", 0.8f);
 
                     }
-                    
+
                     state = States.HIT;
                     if(other.GetComponent<AttackCollider>().enemyHitAnim == "GolpeSalto")
                         hit = Hits.UP;
