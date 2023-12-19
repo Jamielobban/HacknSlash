@@ -152,15 +152,15 @@ public class ControllerManager : MonoBehaviour
 
         return leftStick.magnitude > 0.3f;
 
-        
+
 
     }
     public Vector2 LeftStickValue()
     {
 
-            return leftStick;
+        return leftStick;
 
-        
+
 
     }
     public Vector2 RightStickValue()
@@ -225,11 +225,7 @@ public class ControllerManager : MonoBehaviour
             {
                 delayCuadrado = Time.time;
                 cuadradoHold = true;
-            }
 
-            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.35f)
-            {
-                ResetBotonesAtaques();
                 if (L2.action != null)
                 {
                     if (L2.action.IsPressed())
@@ -252,34 +248,60 @@ public class ControllerManager : MonoBehaviour
 
                 }
             }
-            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.35f && cuadradoHold)
-            {
-                ResetBotonesAtaques();
 
-                if (L2.action != null)
-                {
-                    if(L2.action.IsPressed())
-                    {
-                        ataqueCuadradoCargadoL2 = true;
-                        ataqueCuadradoCargadoL2Press = true;
+            //if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.35f)
+            //{
+            //    ResetBotonesAtaques();
+            //    if (L2.action != null)
+            //    {
+            //        if (L2.action.IsPressed())
+            //        {
+            //            ataqueCuadradoL2 = true;
+            //            ataqueCuadradoL2Press = true;
 
-                    }
-                    else
-                    {
-                        ataqueCuadradoCargado = true;
-                        ataqueCuadradoCargadoPress = true;
+            //        }
+            //        else
+            //        {
+            //            ataqueCuadrado = true;
+            //            ataqueCuadradoPress = true;
 
-                    }
-                }
-                else
-                {
-                    ataqueCuadradoCargado = true;
-                    ataqueCuadradoCargadoPress = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ataqueCuadrado = true;
+            //        ataqueCuadradoPress = true;
 
-                }
-                cuadradoHold = false;
+            //    }
+            //}
+            //if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.35f && cuadradoHold)
+            //{
+            //    ResetBotonesAtaques();
 
-            }
+            //    if (L2.action != null)
+            //    {
+            //        if(L2.action.IsPressed())
+            //        {
+            //            ataqueCuadradoCargadoL2 = true;
+            //            ataqueCuadradoCargadoL2Press = true;
+
+            //        }
+            //        else
+            //        {
+            //            ataqueCuadradoCargado = true;
+            //            ataqueCuadradoCargadoPress = true;
+
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ataqueCuadradoCargado = true;
+            //        ataqueCuadradoCargadoPress = true;
+
+            //    }
+            //    cuadradoHold = false;
+
+            //}
         }
         if (Triangle.action != null)
         {
@@ -287,11 +309,6 @@ public class ControllerManager : MonoBehaviour
             {
                 delayTriangulo = Time.time;
                 trianguloHold = true;
-
-            }
-            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.35f)
-            {
-                ResetBotonesAtaques();
                 if (L2.action != null)
                 {
                     if (L2.action.IsPressed())
@@ -313,38 +330,63 @@ public class ControllerManager : MonoBehaviour
                     ataqueTrianguloPress = true;
 
                 }
-
-
             }
+            //if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.35f)
+            //{
+            //    ResetBotonesAtaques();
+            //    if (L2.action != null)
+            //    {
+            //        if (L2.action.IsPressed())
+            //        {
+            //            ataqueTrianguloL2 = true;
+            //            ataqueTrianguloL2Press = true;
 
-            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.35f && trianguloHold)
-            {
-                ResetBotonesAtaques();
+            //        }
+            //        else
+            //        {
+            //            ataqueTriangulo = true;
+            //            ataqueTrianguloPress = true;
 
-                trianguloHold = false;
-                if (L2.action != null)
-                {
-                    if (L2.action.IsPressed())
-                    {
-                        ataqueTrianguloCargadoL2 = true;
-                        ataqueTrianguloCargadoL2Press = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ataqueTriangulo = true;
+            //        ataqueTrianguloPress = true;
 
-                    }
-                    else
-                    {
-                        ataqueTrianguloCargado = true;
-                        ataqueTrianguloCargadoPress = true;
+            //    }
 
-                    }
-                }
-                else
-                {
-                    ataqueTrianguloCargado = true;
-                    ataqueTrianguloCargadoPress = true;
 
-                }
+            //}
 
-            }
+            //if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.35f && trianguloHold)
+            //{
+            //    ResetBotonesAtaques();
+
+            //    trianguloHold = false;
+            //    if (L2.action != null)
+            //    {
+            //        if (L2.action.IsPressed())
+            //        {
+            //            ataqueTrianguloCargadoL2 = true;
+            //            ataqueTrianguloCargadoL2Press = true;
+
+            //        }
+            //        else
+            //        {
+            //            ataqueTrianguloCargado = true;
+            //            ataqueTrianguloCargadoPress = true;
+
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ataqueTrianguloCargado = true;
+            //        ataqueTrianguloCargadoPress = true;
+
+            //    }
+
+            //}
         }
 
         if (O.action != null)
@@ -393,10 +435,10 @@ public class ControllerManager : MonoBehaviour
                 if (L2.action.IsPressed() && O.action.IsPressed() && !holdTeleport)
                 {
                     holdTeleport = true;
-                       time = Time.time;
+                    time = Time.time;
                 }
 
-                if((Time.time-time) >= 0.25f && L2.action.IsPressed() && O.action.IsPressed())
+                if ((Time.time - time) >= 0.25f && L2.action.IsPressed() && O.action.IsPressed())
                 {
                     holdTeleport = false;
 
