@@ -916,7 +916,7 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.LAND;
                 doubleJump = false;
                 moveDirSaved = new Vector3();
-                landFeedback.PlayFeedbacks();
+                //landFeedback.PlayFeedbacks();
 
                 return true;
             }
@@ -1201,7 +1201,7 @@ public class PlayerControl : MonoBehaviour
                             //Debug.Log("Landed");
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
-                            landVFX.PlayDustVFX(this.transform.position);
+                            //landVFX.PlayDustVFX(this.transform.position);
                             CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
