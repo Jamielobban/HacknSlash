@@ -273,10 +273,10 @@ public class PlayerControl : MonoBehaviour
     {
         float randomValue = UnityEngine.Random.Range(0f, 100f);
         isCrit = randomValue <= critChance;
-        if (isCrit)
-        {
-            critFeedback.PlayFeedbacks();
-        }
+        //if (isCrit)
+        //{
+        //    critFeedback.PlayFeedbacks();
+        //}
 
 
         Debug.Log("Is Critical Hit: " + isCrit);
@@ -492,10 +492,10 @@ public class PlayerControl : MonoBehaviour
 
         if ((states == States.ATTACK && !stopAttack) || currentComboAttacks.combo == ComboAtaques.air2)
         {
-            if (currentComboAttacks.attacks[golpe].effects != null)
-            {
-                currentComboAttacks.attacks[golpe].effects.PlayFeedbacks();
-            }
+            //if (currentComboAttacks.attacks[golpe].effects != null)
+            //{
+            //    currentComboAttacks.attacks[golpe].effects.PlayFeedbacks();
+            //}
             repeticionGolpe++;
 
             if (currentComboAttacks.combo == ComboAtaques.HoldTriangleL2 && repeticionGolpe == 1)
@@ -833,8 +833,8 @@ public class PlayerControl : MonoBehaviour
                 doubleJump = false;
                 this.gameObject.layer = 3;
 
-                if (states == States.JUMP)
-                    landFeedback.PlayFeedbacks();
+                //if (states == States.JUMP)
+                //    landFeedback.PlayFeedbacks();
 
                 return false;
             }
@@ -861,7 +861,7 @@ public class PlayerControl : MonoBehaviour
 
             if (states != States.JUMP)
             {
-                singleJumpVFX.PlaySingleJumpVFX(this.transform.position);
+                //singleJumpVFX.PlaySingleJumpVFX(this.transform.position);
                 timeJumping = Time.time;
                 fallStartTime = Time.time;
                 states = States.JUMP;
@@ -869,7 +869,7 @@ public class PlayerControl : MonoBehaviour
                 playerAnim.CrossFadeInFixedTime("Jump", 0.1f);
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce, ForceMode.Impulse);
-                jumpFeedback.PlayFeedbacks();
+                //jumpFeedback.PlayFeedbacks();
 
                 return true;
 
@@ -877,7 +877,7 @@ public class PlayerControl : MonoBehaviour
             else if (!doubleJump)
             {
                 Move(1);
-                doubleJumpVFX.PlayDoubleJumpVFX(this.transform.position + new Vector3(0f, 4f, 0f));
+                //doubleJumpVFX.PlayDoubleJumpVFX(this.transform.position + new Vector3(0f, 4f, 0f));
                 doubleJump = true;
                 timeJumping = Time.time;
                 fallStartTime = Time.time;
@@ -886,7 +886,7 @@ public class PlayerControl : MonoBehaviour
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.5f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
-                doubleJumpFeedback.PlayFeedbacks();
+                //doubleJumpFeedback.PlayFeedbacks();
 
                 return true;
 
@@ -2186,7 +2186,7 @@ public class PlayerControl : MonoBehaviour
             playerAnim.speed = 2f;
             this.gameObject.layer = 8;
 
-            dashFeedback.PlayFeedbacks();
+            //dashFeedback.PlayFeedbacks();
 
             dashCount++;
             stopAttack = true;
@@ -2225,35 +2225,35 @@ public class PlayerControl : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-        walkFeedback.StopFeedbacks();
-        if (states == States.MOVE && moves == Moves.WALK)
-        {
-            walkFeedback.PlayFeedbacks();
-            StartCoroutine(WalkFeedbak(0.42f));
-        }
+        //walkFeedback.StopFeedbacks();
+        //if (states == States.MOVE && moves == Moves.WALK)
+        //{
+        //    walkFeedback.PlayFeedbacks();
+        //    StartCoroutine(WalkFeedbak(0.42f));
+        //}
     }
     private IEnumerator RunFeedback(float time)
     {
 
         yield return new WaitForSeconds(time);
-        runFeedback.StopFeedbacks();
-        if (states == States.MOVE && moves == Moves.RUN)
-        {
-            runFeedback.PlayFeedbacks();
-            StartCoroutine(RunFeedback(0.3f));
-        }
+        //runFeedback.StopFeedbacks();
+        //if (states == States.MOVE && moves == Moves.RUN)
+        //{
+        //    runFeedback.PlayFeedbacks();
+        //    StartCoroutine(RunFeedback(0.3f));
+        //}
 
     }
     void StartRun()
     {
-        if (states == States.MOVE && moves == Moves.RUN)
-            runStartFeedback.PlayFeedbacks();
+        //if (states == States.MOVE && moves == Moves.RUN)
+        //    runStartFeedback.PlayFeedbacks();
 
     }
     void EndRun()
     {
-        if ((states == States.MOVE && moves == Moves.WALK) || states == States.IDLE)
-            idleFeedback.PlayFeedbacks();
+        //if ((states == States.MOVE && moves == Moves.WALK) || states == States.IDLE)
+        //    idleFeedback.PlayFeedbacks();
 
     }
     void CheckMove()
@@ -2409,7 +2409,7 @@ public class PlayerControl : MonoBehaviour
                 states = States.HIT;
                 hitTime = Time.time;
                 playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
-                hitFeedback.PlayFeedbacks();
+                //hitFeedback.PlayFeedbacks();
             }
 
         }
