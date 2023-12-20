@@ -19,12 +19,7 @@ public class StunState : EnemyState
         _currentTime += Time.deltaTime;
         if(_currentTime >= stunTime)
         {
-            //Swap to other state check if onattak onchase on idle
-            if(_enemy.movements.InRangeToChase())
-            {
-                _enemy.events.Following();
-            }
-
+            _enemy.events.Idle();
             _currentTime = 0;
         }
     }

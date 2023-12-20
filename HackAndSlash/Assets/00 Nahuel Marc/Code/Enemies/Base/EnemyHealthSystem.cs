@@ -12,6 +12,11 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     {
         _enemy = transform.parent.GetComponent<Enemy>();
         _currentHealth = maxHealth.Value;
+
+    }
+
+    protected virtual void Start()
+    {
         _enemy.events.OnHeal += ChangeLife;
         _enemy.events.OnHit += ChangeLife;
     }

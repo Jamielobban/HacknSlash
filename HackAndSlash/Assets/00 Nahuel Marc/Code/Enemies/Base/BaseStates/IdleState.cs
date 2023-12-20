@@ -12,6 +12,7 @@ public class IdleState : EnemyState
         {
             enemy.events.Following();
         }
+        //else if(enemy.movements.)
     }
 
     public override void ExitState(Enemy enemy)
