@@ -1175,19 +1175,23 @@ public class PlayerControl : MonoBehaviour
 
                         break;
                     case Jump.FALL:
-                        switch (moves)
+                        if((Time.time - fallStartTime)> 0.2f)
                         {
-                            case Moves.IDLE:
-                                Move(walkSpeedAir / 2);
-                                break;
-                            case Moves.WALK:
-                                Move(walkSpeedAir);
+                            switch (moves)
+                            {
+                                case Moves.IDLE:
+                                    Move(walkSpeedAir / 2);
+                                    break;
+                                case Moves.WALK:
+                                    Move(walkSpeedAir);
 
-                                break;
-                            case Moves.RUN:
-                                Move(runSpeedAir);
-                                break;
+                                    break;
+                                case Moves.RUN:
+                                    Move(runSpeedAir);
+                                    break;
+                            }
                         }
+
                         if (CheckIfJump())
                             break;
                         if (CheckAtaques())
