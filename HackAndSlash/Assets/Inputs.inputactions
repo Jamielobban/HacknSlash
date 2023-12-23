@@ -10,7 +10,7 @@
                     "type": "Value",
                     "id": "d93cf868-f047-4167-8ec2-7a6c9f94daf7",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "StickDeadzone(min=0.25)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -219,7 +219,7 @@
                 {
                     "name": "",
                     "id": "20865459-047e-485b-aa03-731a717e9884",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
