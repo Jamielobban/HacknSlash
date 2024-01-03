@@ -13,6 +13,7 @@ public class StunState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
+        _currentTime = 0f;
     }
     public override void UpdateState(Enemy enemy)
     {
@@ -20,12 +21,13 @@ public class StunState : EnemyState
         if(_currentTime >= stunTime)
         {
             _enemy.events.Idle();
-            _currentTime = 0;
+            _currentTime = 0f;
         }
     }
 
     public override void ExitState(Enemy enemy)
     {
         base.ExitState(enemy);
+        _currentTime = 0f;
     }
 }

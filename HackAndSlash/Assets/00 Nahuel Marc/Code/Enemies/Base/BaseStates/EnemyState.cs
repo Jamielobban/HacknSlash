@@ -1,7 +1,6 @@
 using UnityEngine;
 
 // -- Base Class for enemy states. parent -> patroll, attack, etc. -- //
-
 public abstract class EnemyState : MonoBehaviour, IState
 {
     protected Enemy _enemy;

@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
-
+// -- Enemy base class for movements and displacements -- //
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target;
     private NavMeshAgent _agent;
     private EnemyEvents _events;
+    private Rigidbody _rb;
 
     #region Stats
 
     public CharacterStat chaseSight = new CharacterStat();
     public CharacterStat areaPatroll = new CharacterStat();
+    public CharacterStat toAirForce = new CharacterStat();
 
     #endregion
     #region AreaPatroll Variables
@@ -23,6 +25,7 @@ public class EnemyMovement : MonoBehaviour
     {
         respawnPoint = transform.position;
         patrollPoint = GetRandomNavmeshPoint();
+        _rb = GetComponent<Rigidbody>();
         _events = GetComponent<EnemyEvents>();
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerControl>().transform;
@@ -31,9 +34,12 @@ public class EnemyMovement : MonoBehaviour
         _events.OnAttacking += () => DisableMovement();
         _events.OnPatrolling += () => EnableMovement();
         _events.OnFollowing += () => EnableMovement();
-        _events.OnAir += () => { DisableMovement(); DisableAgent(); }; // TESTING
+        _events.OnAir += () => { DisableMovement(); DisableAgent(); ThrowToAir(); }; // TESTING
         _events.OnStun += () => DisableMovement();
     }
+    public Rigidbody GetRigidBody() => _rb;
+    public void EnableGravity() => _rb.useGravity = true;
+    public void DisableGravity() => _rb.useGravity = false;
     public void EnableAgent() => _agent.enabled = true;
     public void DisableAgent() => _agent.enabled = false;
     private void EnableMovement() => _agent.isStopped = false;
@@ -59,14 +65,15 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void KnockBack(float x, float y)
+    public void KnockBack()
     {
-
+        _rb.AddForce(transform.up * 200, ForceMode.Impulse);
     }
 
     public void ThrowToAir()
     {
-
+        DisableGravity();
+        _rb.AddForce(Vector3.up * toAirForce.Value, ForceMode.Impulse);
     }
 
     private void HandleRotation()

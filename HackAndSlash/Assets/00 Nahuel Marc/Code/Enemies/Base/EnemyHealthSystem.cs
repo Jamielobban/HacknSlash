@@ -47,6 +47,12 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         }
     }
 
+    public virtual void Impact()
+    {
+        //Si throw air true -> set state air
+        _enemy.SetState(new AirState());
+    }
+
     private void ChangeLife()
     {
         _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);

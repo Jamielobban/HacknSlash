@@ -14,12 +14,11 @@ public class ChaseState : EnemyState
         {
             enemy.events.Idle();
         }
+        //Check range to attack
     }
 
     public override void ExitState(Enemy enemy)
     {
-        Debug.Log("Exit State Chase");
-
         base.ExitState(enemy);
     }
 }

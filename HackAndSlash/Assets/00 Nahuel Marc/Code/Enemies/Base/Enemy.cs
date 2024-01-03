@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public EnemyHud hud { get; private set; }
     public EnemyMovement movements { get; private set; }
     public EnemyAnimations animations { get; private set; }
+    public EnemyStats stats { get; private set; }
 
     public virtual void SetState(IState newState)
     {
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        stats = GetComponent<EnemyStats>();
         animations = transform.GetChild(0).GetComponent<EnemyAnimations>();
         events = GetComponent<EnemyEvents>();
         hud = GetComponent<EnemyHud>();
