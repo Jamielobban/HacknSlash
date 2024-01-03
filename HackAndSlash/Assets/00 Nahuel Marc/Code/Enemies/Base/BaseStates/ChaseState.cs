@@ -9,7 +9,7 @@ public class ChaseState : EnemyState
     }
     public override void UpdateState(Enemy enemy)
     {
-        enemy.movements.HandlePatrollInArea();
+        enemy.movements.HandleFollow();
         if(!enemy.movements.InRangeToChase())
         {
             enemy.events.Idle();

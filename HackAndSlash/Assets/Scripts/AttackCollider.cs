@@ -24,7 +24,6 @@ public class AttackCollider : MonoBehaviour
 
     public PlayerControl.PassiveCombo attack;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -32,6 +31,11 @@ public class AttackCollider : MonoBehaviour
     public void SetFeedback(MMFeedbacks enemyHitFeedback)
     {
         this.enemyHitFeedback = enemyHitFeedback;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.GetComponent<IDamageable>().TakeDamage(damage);
     }
     //public float GetCritOrDamage()
     //{
@@ -50,7 +54,7 @@ public class AttackCollider : MonoBehaviour
     //    float randomValue = Random.Range(0f, 100f);  
     //    isCrit = randomValue <= this.transform.GetComponentInParent<PlayerControl>().critChance;   
 
-       
+
     //    Debug.Log("Is Critical Hit: " + isCrit);
 
     //    return isCrit;
@@ -64,4 +68,5 @@ public class AttackCollider : MonoBehaviour
 
     //    return finalDamage;
     //}
+
 }

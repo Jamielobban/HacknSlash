@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         events.OnPatrolling += () => SetState(new PatrollState());
         events.OnAttacking += () => SetState(new AttackState());
         events.OnFollowing += () => SetState(new ChaseState());
-       // events.OnStun += () => SetState(new StunState(0f));
+        //events.OnStun += () => SetState(new StunState(0f));
         events.OnAir += () => SetState(new AirState());
 
         events.Idle();

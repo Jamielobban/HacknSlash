@@ -31,7 +31,6 @@ public class EnemyMovement : MonoBehaviour
         _events.OnAttacking += () => DisableMovement();
         _events.OnPatrolling += () => EnableMovement();
         _events.OnFollowing += () => EnableMovement();
-        //_events.OnAir += () => DisableMovement();
         _events.OnAir += () => { DisableMovement(); DisableAgent(); }; // TESTING
         _events.OnStun += () => DisableMovement();
     }
