@@ -834,6 +834,7 @@ public class EnemySkeletonSword : MonoBehaviour
             //Debug.Log("Does this always hit");
             if (health <= 0)
             {
+                player.GetComponent<PlayerControl>().CallItemOnKill(this);
                 debil = false;
                 aa.SetActive(false);
                 challenge.SetEnemieDeath(other.GetComponent<AttackCollider>().attack);

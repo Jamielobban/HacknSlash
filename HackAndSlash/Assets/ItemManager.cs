@@ -8,8 +8,10 @@ public class ItemManager : MonoBehaviour
     public static ItemManager instance;
 
     //public List<GameObject> itemPool = new List<GameObject>();
-    public int test;
+    //public int test;
     public List<GameObject> itemPool = new List<GameObject>();
+
+    public List<Item> itemList = new List<Item>();
     private void Awake()
     {
         // Singleton pattern to ensure only one instance exists
@@ -24,6 +26,7 @@ public class ItemManager : MonoBehaviour
         }
 
         // Initialize other manager-specific setup here
+        AddItemsToList();
     }
 
     // Start is called before the first frame update
@@ -38,6 +41,22 @@ public class ItemManager : MonoBehaviour
         
     }
 
+    public Item GetRandomItem()
+    {
+        if (itemPool.Count == 0)
+        {
+            Debug.LogWarning("Item pool is empty. Add items to the pool.");
+            return null;
+        }
+
+        return itemList[Random.Range(0, itemList.Count)];
+    }
+
+
+    public void SpawnItem(Vector3 initialPosition, GameObject itemSpawn)
+    {
+        Instantiate(itemSpawn, initialPosition, Quaternion.identity);
+    }
     // Call this method when you want to spawn a random item
     public void SpawnRandomItem(Vector3 initialPosition)
     {
@@ -72,6 +91,15 @@ public class ItemManager : MonoBehaviour
                      randomItem.GetComponent<BounceEffect>().enabled = true;
                  });
         //}
+    }
+
+    private void AddItemsToList()
+    {
+        itemList.Add(new CritItem());
+        itemList.Add(new CritDamageItem());
+        itemList.Add(new AttackDamge());
+        itemList.Add(new Meat());
+        itemList.Add(new BoosterShot());
     }
 }
 

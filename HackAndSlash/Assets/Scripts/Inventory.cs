@@ -101,8 +101,6 @@ public class Inventory : MonoBehaviour
                         panel.itemImage.sprite = i.item.GiveSprite();
                         panel.stacksText.gameObject.SetActive(true);
                         panel.stacksText.text = " " + i.stacks;
-                        //Debug.Log("refresh");
-                        //Debug.Log(i.stacks);
                     }
                     else
                     {
@@ -133,7 +131,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        i.stacks += amount;
+                        i.stacks = amount;
                         if (inventorymenu.activeSelf) RefreshInventory();
                         return 0;
                     }

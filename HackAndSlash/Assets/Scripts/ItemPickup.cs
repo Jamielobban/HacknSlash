@@ -15,17 +15,11 @@ public class ItemPickup : MonoBehaviour
     public int currentstacks;
     public PlayerControl playerControl;
     public GameObject audioClip;
-    //public GameObject itemPopup;
-    //public Image canvasImage;
-    //public TMP_Text itemDescriptionText;
-    //private Tween itemPopupTween;
-    //private WaitForSeconds popupDelay = new WaitForSeconds(3f);
+
     // Start is called before the first frame update
     private void Awake()
     {
-        //itemPopup = GameObject.FindGameObjectWithTag("ItemPopup");
-        //canvasImage = GameObject.FindGameObjectWithTag("ItemImage").GetComponent<Image>();
-        //itemDescriptionText = GameObject.FindGameObjectWithTag("ItemText").GetComponent<TMP_Text>();
+
         inventory = FindObjectOfType<Inventory>();
         playerControl = FindObjectOfType<PlayerControl>();
     }
@@ -54,15 +48,12 @@ public class ItemPickup : MonoBehaviour
     {
         switch (itemToAssign)
         {
-            case Items.HealingItem: return new HealingItem();
-            case Items.FireDamageItem: return new FireDamage();
-            case Items.HealingAreaItem: return new HealingArea();
+            
             case Items.CritItem: return new CritItem();
             case Items.AttackDamageItem: return new AttackDamge();
             case Items.MeatItem: return new Meat();
-            case Items.MonsterToothItem: return new MonsterTooth();
-            case Items.GasolineItem: return new Gasoline();
-            case Items.FeatherItem: return new Feather();
+            case Items.BoosterShotItem: return new BoosterShot();
+            case Items.CritDamageItem: return new CritDamageItem();
 
             default: return null;
         }
@@ -86,19 +77,15 @@ public class ItemPickup : MonoBehaviour
         // Retrieve the associated StatType from the item
         StatType associatedStatType = item.GetAssociatedStatType();
 
-        player.items.Add(new ItemList(item, item.GiveName(), 1, item.GiveSprite(), item.GiveDescription(), associatedStatType));
+        player.items.Add(new ItemList(item, item.GiveName(), 1, item.GiveSprite(), item.GiveDescription(), associatedStatType, item.GetRarity()));
         inventory.AddItem(item, 1);
     }
 }
 public enum Items
 {
-    HealingItem,
-    FireDamageItem,
-    HealingAreaItem,
     CritItem,
     AttackDamageItem,
     MeatItem,
-    MonsterToothItem,
-    GasolineItem,
-    FeatherItem
+    BoosterShotItem,
+    CritDamageItem,
 }

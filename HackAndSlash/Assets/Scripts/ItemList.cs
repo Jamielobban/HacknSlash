@@ -11,8 +11,10 @@ public class ItemList
     public Sprite itemImage;
     public string itemDescription;
     public StatType statType;
+    public RarityType rarity;
 
-    public ItemList(Item newItem, string newName, int newStacks, Sprite newImage, string newDescription, StatType newStatType)
+    public ItemList(Item newItem, string newName, int newStacks,
+        Sprite newImage, string newDescription, StatType newStatType, RarityType newRarity)
     {
         item = newItem;
         name = newName;
@@ -20,5 +22,6 @@ public class ItemList
         itemImage = newImage;
         itemDescription = newDescription;
         statType = newStatType;
+        rarity = newRarity;
     }
 }

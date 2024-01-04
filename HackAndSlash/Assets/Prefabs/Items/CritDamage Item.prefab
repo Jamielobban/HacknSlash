@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7653561505888478174}
   - component: {fileID: 5476438788110660188}
   m_Layer: 0
-  m_Name: Other Orb
+  m_Name: CritDamage Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,10 +147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651c8cfb3f82e254e82e6053fcd1df79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDrop: 0
+  itemDrop: 4
   inventory: {fileID: 0}
   currentstacks: 1
   playerControl: {fileID: 0}
+  audioClip: {fileID: 8560308747712322189, guid: a4052666eedb195468ba1ed1bef58ebc,
+    type: 3}
 --- !u!114 &5476438788110660188
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -279,7 +279,7 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        Debug.Log("Is Critical Hit: " + isCrit);
+        //Debug.Log("Is Critical Hit: " + isCrit);
 
         return isCrit;
     }
@@ -287,9 +287,6 @@ public class PlayerControl : MonoBehaviour
     private float CalculateDamage(float baseDamage, bool isCrit)
     {
         float finalDamage = isCrit ? baseDamage * (2f * critDamageMultiplier) : baseDamage;
-
-        //Debug.Log("Final Damage: " + finalDamage);
-
         return finalDamage;
     }
     ListaAtaques GetAttacks(ComboAtaques combo)
@@ -1345,6 +1342,9 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+   
+     
+    // SUPER IMPORTANT LES SEGUENTS 3 FUNCIONS
     public int GetItemStacks(string itemName)
     {
         foreach (ItemList i in items)
@@ -1356,6 +1356,43 @@ public class PlayerControl : MonoBehaviour
         }
         return 0;
     }
+
+    public string GetItemDescription(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.itemDescription;
+            }
+        }
+        return null;
+    }
+    public Sprite GetItemImage(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.itemImage;
+            }
+        }
+        return null;
+    }
+
+    public RarityType GetItemRarity(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.rarity;
+            }
+        }
+        return 0;
+    }
+    //ASDAS
+
 
     public void CallItemOnJump()
     {
@@ -1497,6 +1534,12 @@ public class PlayerControl : MonoBehaviour
                     else if (GetAttacks(ComboAtaques.Teleport).attacks.Length - 1 <= currentComboAttack)
                     {
                         currentComboAttack = GetAttacks(ComboAtaques.Teleport).attacks.Length - 1;
+                        for (int i = 0; i < GetAttacks(ComboAtaques.Quadrat).attacks.Length; i++)
+                        {
+                            GetAttacks(ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
+                            GetAttacks(ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
+                        }
+
                     }
                     passiveCombo.Add(PassiveCombo.TELEPORT);
                     attacks = Attacks.GROUND;
@@ -1687,7 +1730,7 @@ public class PlayerControl : MonoBehaviour
                     {
                         currentComboAttack = GetAttacks(ComboAtaques.Quadrat).attacks.Length - 1;
 
-                        Debug.Log("Attack");
+                        //Debug.Log("Attack");
                     }
                     passiveCombo.Add(PassiveCombo.QUADRATFLOOR);
                     if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)

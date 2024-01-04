@@ -8,10 +8,12 @@ public abstract class Item
     int idItem;
 
     public abstract string GiveName();
-
     public abstract string GiveDescription();
     public abstract Sprite GiveSprite();
     public abstract StatType GetAssociatedStatType();
+
+    public abstract RarityType GetRarity();
+
 
     public virtual void Update(PlayerControl player, int stacks)
     {
@@ -58,9 +60,22 @@ public enum StatType
     CritDamage,
     None
 }
+
+public enum RarityType
+{
+    Common,
+    Uncommon,
+    Rare,
+    Legendary
+}
+
+//Gives crit chance
 public class CritItem : Item
 {
-
+    public override RarityType GetRarity()
+    {
+        return RarityType.Uncommon;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.CritChance;
@@ -88,8 +103,49 @@ public class CritItem : Item
     }
 }
 
+
+//Gives crit damage
+public class CritDamageItem : Item
+{
+    public override RarityType GetRarity()
+    {
+        return RarityType.Legendary;
+    }
+    public override StatType GetAssociatedStatType()
+    {
+        return StatType.CritDamage;
+    }
+    public override string GiveName()
+    {
+        return "Crit Damage";
+    }
+
+    public override string GiveDescription()
+    {
+        return "Adds 5% crit chance damage per stack.";
+    }
+
+    public override Sprite GiveSprite()
+    {
+        return Resources.Load<Sprite>("Item Images/Glasses");
+    }
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.CritDamage)
+        {
+            Debug.Log("Hello");
+            player.critDamageMultiplier += 5;
+        }
+    }
+}
+
+//Gives attack damage
 public class AttackDamge : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.Damage;
@@ -118,11 +174,16 @@ public class AttackDamge : Item
     }
 }
 
+//Gives max health
 public class Meat : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Uncommon;
+    }
     public override StatType GetAssociatedStatType()
     {
-        return StatType.Health;
+        return StatType.MaxHealth;
     }
     public override string GiveName()
     {
@@ -141,7 +202,7 @@ public class Meat : Item
 
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
-        if (statType == StatType.Health)
+        if (statType == StatType.MaxHealth)
         {
             player.maxHealth += 5 + (1 * stacks);
             player.SetHealth();
@@ -149,8 +210,52 @@ public class Meat : Item
     }
 }
 
+//Gives current health
+public class BoosterShot : Item
+{
+    public override RarityType GetRarity()
+    {
+        return RarityType.Rare;
+    }
+
+    public override StatType GetAssociatedStatType()
+    {
+        return StatType.Health;
+    }
+    public override string GiveName()
+    {
+        return "BoosterShot";
+    }
+
+    public override string GiveDescription()
+    {
+        return "Adds 10 health per stack.";
+    }
+
+    public override Sprite GiveSprite()
+    {
+        return Resources.Load<Sprite>("Item Images/Meat");
+    }
+
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.Health)
+        {
+            player.currentHealth += 5 + (1 * stacks);
+            player.SetHealth();
+        }
+    }
+}
+
+
+//On hit heal
+
 public class MonsterTooth : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -169,10 +274,19 @@ public class MonsterTooth : Item
     {
         return Resources.Load<Sprite>("Item Images/Tooth");
     }
+
+    public override void OnHit(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    {
+        base.OnHit(player, enemy, stacks);
+    }
 }
 
 public class Gasoline : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -195,6 +309,10 @@ public class Gasoline : Item
 
 public class Lighter : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -217,6 +335,10 @@ public class Lighter : Item
 
 public class Icy : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -239,6 +361,10 @@ public class Icy : Item
 
 public class Feather : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -261,6 +387,10 @@ public class Feather : Item
 
 public class HealingItem : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -288,6 +418,10 @@ public class HealingItem : Item
 
 public class FireDamage : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -320,6 +454,10 @@ public class FireDamage : Item
 
 public class HealingArea : Item
 {
+    public override RarityType GetRarity()
+    {
+        return RarityType.Common;
+    }
     public override StatType GetAssociatedStatType()
     {
         return StatType.None;
@@ -347,21 +485,9 @@ public class HealingArea : Item
     {
         if(internalCooldown <= 0) {
             if(effect == null) effect = (GameObject)Resources.Load("Item Effects/Something",typeof(GameObject));
+
             GameObject healingArea = GameObject.Instantiate(effect, player.transform.position + new Vector3(0f,0.1f,0f), Quaternion.Euler(Vector3.zero));
             internalCooldown = 1f;
         }
     }
 }
-
-
-//public class
-    //crowbar --> 20% mes de daño a enemics que tenen 75% de vida, stack + 5%
-    //gasoline --> quan moren surt explosio, stack 1.1 x scale
-    //teddy bear --> 5% change to absorb, + 3% stack, logaritmic fins a 50%
-    //bleed --> 10% change to inflict bleed, 5% every stack
-    //Reduce all incoming damage by 5 (+5 per stack). Cannot be reduced below 1.
-    //Killing an enemy spawns a healing orb that heals for 8 plus an additional 2% (+2% per stack) of maximum health.
-    //2 seconds after getting hurt, heal for 20 plus an additional 5% (+5% per stack) of maximum health.
-    //Your attacks have a 10% (+10% per stack) chance to 'Critically Strike', dealing double damage.
-    //Increase damage to enemies within 13m by 20% (+20% per stack).
-    //Leech seed

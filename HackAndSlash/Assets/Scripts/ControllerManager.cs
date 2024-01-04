@@ -51,11 +51,15 @@ public class ControllerManager : MonoBehaviour
     public bool MouseControl;
     Vector2 leftStick;
     Vector2 rightStick;
+    Vector2 dPad;
     InputAction.CallbackContext X;
     InputAction.CallbackContext O;
     public InputAction.CallbackContext Box;
     public InputAction.CallbackContext Triangle;
     public InputAction.CallbackContext Teleport;
+
+    //InputAction.CallbackContext dPad;
+
 
     InputAction.CallbackContext R2;
     InputAction.CallbackContext L2;
@@ -72,6 +76,7 @@ public class ControllerManager : MonoBehaviour
     {
         leftStick = new Vector2();
         rightStick = new Vector2();
+        dPad = new Vector2();
 
         dash = false;
         ataqueCuadrado = false;
@@ -114,6 +119,10 @@ public class ControllerManager : MonoBehaviour
     {
         rightStick = context.ReadValue<Vector2>();
     }
+    public void GetDpad(InputAction.CallbackContext context)
+    {
+        leftStick = context.ReadValue<Vector2>();
+    }
     public void GetR2(InputAction.CallbackContext context)
     {
         R2 = context;
@@ -122,6 +131,8 @@ public class ControllerManager : MonoBehaviour
     {
         interact = context;
     }
+
+
 
     public void GetTab(InputAction.CallbackContext context)
     {
@@ -169,6 +180,11 @@ public class ControllerManager : MonoBehaviour
         return rightStick;
     }
 
+    public Vector2 GetDpadValue()
+    {
+        return dPad;
+    }
+
     public bool RightTriggerPressed()
     {
         if (R2.action == null)
@@ -210,8 +226,15 @@ public class ControllerManager : MonoBehaviour
             return true;
         }
         return false;
-    }
 
+    }
+    public bool CheckIfPressed()
+    {
+        if (X.action == null) { 
+            return false;
+        }
+        return X.action.WasPressedThisFrame();
+    }
     public void ControlesAtaques()
     {
         //ataqueCuadrado = false;
