@@ -31,10 +31,11 @@ public class EnemyMovement : MonoBehaviour
         target = FindObjectOfType<PlayerControl>().transform;
 
         _events.OnIdle += () => DisableMovement();
+        //_events.OnHit += () => DisableMovement();
         _events.OnAttacking += () => DisableMovement();
         _events.OnPatrolling += () => EnableMovement();
         _events.OnFollowing += () => EnableMovement();
-        _events.OnAir += () => { DisableMovement(); DisableAgent(); ThrowToAir(); }; // TESTING
+        _events.OnAir += () => { DisableMovement(); DisableAgent(); };
         _events.OnStun += () => DisableMovement();
     }
     public Rigidbody GetRigidBody() => _rb;
@@ -44,6 +45,11 @@ public class EnemyMovement : MonoBehaviour
     public void DisableAgent() => _agent.enabled = false;
     private void EnableMovement() => _agent.isStopped = false;
     private void DisableMovement() => _agent.isStopped = true;
+
+    public void ApplyCustomGravity(float scale)
+    {
+        _rb.AddForce(Vector3.down * scale * Physics.gravity.magnitude, ForceMode.Acceleration);
+    }
 
     public void HandleFollow()
     {
@@ -103,8 +109,8 @@ public class EnemyMovement : MonoBehaviour
         return finalPos;
     }
 
-    private float DistanceToPlayer() => Vector3.Distance(target.position, transform.position);
-    public bool InRangeToChase() => DistanceToPlayer() > chaseSight.Value;
+    public float DistanceToPlayer() => Vector3.Distance(target.position, transform.position);
+    public bool InRangeToChase() => DistanceToPlayer() < chaseSight.Value;
 
     private void OnDestroy()
     {

@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class IdleState : EnemyState
+public class DeadState : EnemyState
 {
+    private float _counter = 0f;
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        Debug.Log("Enter Idle");
+        Debug.Log("Enter Dead");
 
     }
     public override void UpdateState(Enemy enemy)
     {
-        if(enemy.movements.InRangeToChase())
+        _counter += Time.deltaTime;
+        if (_counter >= 2.5f)
         {
-            enemy.events.Following();
+            Destroy(enemy.gameObject);
         }
     }
 
     public override void ExitState(Enemy enemy)
     {
+        _counter = 0;
         base.ExitState(enemy);
     }
 }

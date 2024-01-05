@@ -2,27 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using DamageNumbersPro;
 
 public class AttackCollider : MonoBehaviour
 {
 
+
+
     public MMFeedbacks enemyHitFeedback;
     public float Knockback;
     public float KnockbackY;
-    public bool enemyStandUp;
-    public string enemyHitAnim;
-    public float damage;
 
+
+    // *** NO Need ***//
     public PlayerControl.HealthState healthState;
-
+    public PlayerControl.PassiveCombo attack;
     [SerializeField]
     public float spawnDelay;
     public float spawnDistance;
     public float upDistance;
+    public bool enemyStandUp;
+    public string enemyHitAnim;
 
+    // *** Need 100% *** //
+    public float damage;
     public bool isCrit;
-
-    public PlayerControl.PassiveCombo attack;
+    public bool toAir = false;
 
     void Start()
     {
@@ -35,38 +40,21 @@ public class AttackCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IDamageable>().TakeDamage(damage);
+        if (other.GetComponent<IDamageable>() != null)
+        {
+            Vector3 collisionPoint = FindClosestPointOnCollider(other, transform.position);
+            IDamageable enemy = other.GetComponent<IDamageable>();
+            enemy.TakeDamage(damage, isCrit, collisionPoint);
+            if(toAir)
+            {
+                enemy.AirDamageable();
+            }
+        }
     }
-    //public float GetCritOrDamage()
-    //{
-    //    float baseDamage = this.transform.GetComponentInParent<PlayerControl>().attackDamage;
 
-    //    bool isCrit = IsCriticalHit();
-
-    //    float finalDamage = CalculateDamage(baseDamage, isCrit);
-    //   // Debug.Log("Final Damage: " + finalDamage);
-
-    //    return finalDamage;
-    //}
-
-    //private bool IsCriticalHit()
-    //{
-    //    float randomValue = Random.Range(0f, 100f);  
-    //    isCrit = randomValue <= this.transform.GetComponentInParent<PlayerControl>().critChance;   
-
-
-    //    Debug.Log("Is Critical Hit: " + isCrit);
-
-    //    return isCrit;
-    //}
-
-    //private float CalculateDamage(float baseDamage, bool isCrit)
-    //{
-    //    float finalDamage = isCrit ? baseDamage * (2f * this.transform.GetComponentInParent<PlayerControl>().critDamageMultiplier) : baseDamage;
-
-    //    //Debug.Log("Final Damage: " + finalDamage);
-
-    //    return finalDamage;
-    //}
+    Vector3 FindClosestPointOnCollider(Collider collider, Vector3 point)
+    {
+        return collider.ClosestPointOnBounds(point);
+    }
 
 }

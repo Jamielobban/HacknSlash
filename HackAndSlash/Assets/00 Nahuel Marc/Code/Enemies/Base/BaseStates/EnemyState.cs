@@ -12,6 +12,7 @@ public abstract class EnemyState : MonoBehaviour, IState
     public virtual void ExitState(Enemy enemy)
     {
         // Handle Exit State
+        Destroy(this);
     }
 
 }

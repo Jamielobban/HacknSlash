@@ -17,12 +17,22 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnFollowing += () => _anim.SetFloat("speed", 1);
         _events.OnHit += () => PlayTargetAnimation("Hit", true);
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
-        _events.OnDie += () => PlayTargetAnimation("Die", true);
+        _events.OnAir += () => PlayTargetAnimation("Sleep", true);
+        _events.OnDie += () => DeadAnimEnd();
     }
 
     public virtual void PlayTargetAnimation(string targetAnimation, bool isInteracting)
     {
         _anim.SetBool("isInteracting", isInteracting);
         _anim.CrossFade(targetAnimation, 0.2f);
+    }
+
+    private void DeadAnimEnd()
+    {
+        PlayTargetAnimation("Die", true);
+        this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        {
+            Debug.Log("Hola");
+        });
     }
 }

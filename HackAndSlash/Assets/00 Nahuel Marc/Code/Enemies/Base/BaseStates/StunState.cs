@@ -13,6 +13,8 @@ public class StunState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
+        Debug.Log("Enter Stun");
+
         _currentTime = 0f;
     }
     public override void UpdateState(Enemy enemy)
@@ -27,7 +29,7 @@ public class StunState : EnemyState
 
     public override void ExitState(Enemy enemy)
     {
-        base.ExitState(enemy);
         _currentTime = 0f;
+        base.ExitState(enemy);
     }
 }

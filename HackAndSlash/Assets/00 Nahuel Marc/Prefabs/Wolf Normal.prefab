@@ -762,6 +762,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
+      propertyPath: toAirForce.baseValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
       propertyPath: areaPatroll.baseValue
       value: 5
       objectReference: {fileID: 0}
@@ -800,7 +805,7 @@ PrefabInstance:
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.44
+      value: 2.99
       objectReference: {fileID: 0}
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
@@ -927,6 +932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0563be0ab8aa27478ecbb815474927e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToActiveGravity:
+    baseValue: 2
 --- !u!54 &1421137996482641826
 Rigidbody:
   m_ObjectHideFlags: 0
