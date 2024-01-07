@@ -7,8 +7,8 @@ public class DeadState : EnemyState
     {
         base.EnterState(enemy);
         Debug.Log("Enter Dead");
-
     }
+
     public override void UpdateState(Enemy enemy)
     {
         _counter += Time.deltaTime;

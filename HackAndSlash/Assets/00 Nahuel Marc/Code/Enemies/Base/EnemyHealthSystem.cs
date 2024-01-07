@@ -97,6 +97,5 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     private void SpawnHitLine(Vector3 spawnPoint)
     {
         SpawnEffect(hitEffect2, spawnPoint + new Vector3(Random.Range(0, 0.15f), Random.Range(0.85f, 1.15f), 0f));
-       // hitToLook.transform.LookAt(GameObject.FindGameObjectWithTag("PlayerCenter").transform.position);
     }
 }
