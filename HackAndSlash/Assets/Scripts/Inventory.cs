@@ -133,7 +133,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        i.stacks += amount;
+                        i.stacks = amount;
                         if (inventorymenu.activeSelf) RefreshInventory();
                         return 0;
                     }
