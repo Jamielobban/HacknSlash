@@ -8,6 +8,11 @@ public class Enemy : MonoBehaviour
     public EnemyHud hud { get; private set; }
     public EnemyMovement movements { get; private set; }
     public EnemyAnimations animations { get; private set; }
+    public EnemyStats stats { get; private set; }
+
+    public EnemyAttackHolder attackHolder { get; private set; }
+
+    public bool isDead = false;
 
     public virtual void SetState(IState newState)
     {
@@ -22,6 +27,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        attackHolder = GetComponent<EnemyAttackHolder>();
+        stats = GetComponent<EnemyStats>();
         animations = transform.GetChild(0).GetComponent<EnemyAnimations>();
         events = GetComponent<EnemyEvents>();
         hud = GetComponent<EnemyHud>();
@@ -31,12 +38,13 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         // Configurar eventos de transici�n
-        events.OnIdle += () => SetState(new IdleState());
-        events.OnPatrolling += () => SetState(new PatrollState());
-        events.OnAttacking += () => SetState(new AttackState());
-        events.OnFollowing += () => SetState(new ChaseState());
-       // events.OnStun += () => SetState(new StunState(0f));
-        events.OnAir += () => SetState(new AirState());
+        events.OnIdle += () => SetState(gameObject.AddComponent<IdleState>());
+        events.OnPatrolling += () => SetState(gameObject.AddComponent<PatrollState>());
+        events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
+        events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
+        //events.OnStun += () => SetState(new StunState(0f));
+        events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
+        events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
         events.Idle();
     }

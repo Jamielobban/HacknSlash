@@ -13,24 +13,23 @@ public class StunState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
+        Debug.Log("Enter Stun");
+
+        _currentTime = 0f;
     }
     public override void UpdateState(Enemy enemy)
     {
         _currentTime += Time.deltaTime;
         if(_currentTime >= stunTime)
         {
-            //Swap to other state check if onattak onchase on idle
-            if(_enemy.movements.InRangeToChase())
-            {
-                _enemy.events.Following();
-            }
-
-            _currentTime = 0;
+            _enemy.events.Idle();
+            _currentTime = 0f;
         }
     }
 
     public override void ExitState(Enemy enemy)
     {
+        _currentTime = 0f;
         base.ExitState(enemy);
     }
 }

@@ -844,55 +844,55 @@ public class PlayerControl : MonoBehaviour
 
 
 
-    }
-    // SUPER IMPORTANT LES SEGUENTS 3 FUNCIONS
-    public int GetItemStacks(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.name == itemName)
-            {
-                return i.stacks;
-            }
-        }
-        return 0;
-    }
-
-    public string GetItemDescription(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.name == itemName)
-            {
-                return i.itemDescription;
-            }
-        }
-        return null;
-    }
-    public Sprite GetItemImage(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.name == itemName)
-            {
-                return i.itemImage;
-            }
-        }
-        return null;
-    }
-
-    public RarityType GetItemRarity(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.name == itemName)
-            {
-                return i.rarity;
-            }
-        }
-        return 0;
-    }
-    //ASDAS
+    }
+    // SUPER IMPORTANT LES SEGUENTS 3 FUNCIONS
+    public int GetItemStacks(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.stacks;
+            }
+        }
+        return 0;
+    }
+
+    public string GetItemDescription(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.itemDescription;
+            }
+        }
+        return null;
+    }
+    public Sprite GetItemImage(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.itemImage;
+            }
+        }
+        return null;
+    }
+
+    public RarityType GetItemRarity(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return i.rarity;
+            }
+        }
+        return 0;
+    }
+    //ASDAS
 
     ComboAtaques GetCurrentAttackCombo()
     {
@@ -1223,8 +1223,8 @@ public class PlayerControl : MonoBehaviour
 
                         break;
                     case Jump.FALL:
-                        if ((Time.time - fallStartTime) > 0.2f)
-                        {
+                        if ((Time.time - fallStartTime) > 0.2f)
+                        {
                             switch (moves)
                             {
                                 case Moves.IDLE:
@@ -1237,7 +1237,7 @@ public class PlayerControl : MonoBehaviour
                                 case Moves.RUN:
                                     Move(runSpeedAir);
                                     break;
-                            }
+                            }
                         }
 
                         if (CheckIfJump())
@@ -1413,7 +1413,7 @@ public class PlayerControl : MonoBehaviour
     //    }
     //}
     float damageMult = 1;
-    public float delayDaño = 0.5f;
+    public float delayDaï¿½o = 0.5f;
     bool atackPress = false;
     void CheckPerfectHit()
     {
@@ -1430,23 +1430,23 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay && !flash.isPlaying && !atackPress && damageMult == 1 && (Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño)
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay && !flash.isPlaying && !atackPress && damageMult == 1 && (Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay + delayDaï¿½o)
         {
-            flash.startLifetime = delayDaño;
+            flash.startLifetime = delayDaï¿½o;
             for (int i = 0; i < flash.gameObject.transform.childCount; i++)
             {
-                flash.gameObject.transform.GetChild(i).GetComponent<ParticleSystem>().startLifetime = delayDaño;
+                flash.gameObject.transform.GetChild(i).GetComponent<ParticleSystem>().startLifetime = delayDaï¿½o;
             }
 
 
             flash.Play();
         }
-        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño && flash.isPlaying)
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaï¿½o && flash.isPlaying)
         {
 
         }
 
-        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay && damageMult == 1 && (Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño)
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay && damageMult == 1 && (Time.time - attackStartTime) <= currentComboAttacks.attacks[currentComboAttack].delay + delayDaï¿½o)
         {
             if ((controller.ataqueCuadradoPress) || controller.ataqueCuadradoCargadoPress || controller.ataqueCuadradoL2Press || controller.ataqueCuadradoCargadoL2Press || controller.ataqueTrianguloPress || controller.ataqueTrianguloCargadoPress || controller.ataqueTrianguloL2Press || controller.ataqueTrianguloCargadoL2Press)
             {
@@ -1467,7 +1467,7 @@ public class PlayerControl : MonoBehaviour
 
             }
         }
-        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaño && atackPress)
+        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].delay + delayDaï¿½o && atackPress)
         {
             atackPress = false;
 
@@ -1528,7 +1528,7 @@ public class PlayerControl : MonoBehaviour
 
                     TeleportTime = Time.time;
 
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1589,7 +1589,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1610,7 +1610,7 @@ public class PlayerControl : MonoBehaviour
                 else
                 {
 
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1651,7 +1651,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1675,7 +1675,7 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN || currentComboAttacks.combo == ComboAtaques.run1)
                     {
-                        if ((Time.time - attackStartTime) >= delay + delayDaño)
+                        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                         {
                             damageMult = 1;
 
@@ -1696,7 +1696,7 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + delayDaño)
+                        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                         {
                             damageMult = 1;
 
@@ -1717,7 +1717,7 @@ public class PlayerControl : MonoBehaviour
                 else if (states == States.IDLE)
                 {
 
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1756,7 +1756,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1776,7 +1776,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1812,7 +1812,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP)
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1837,7 +1837,7 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     if (moves == Moves.RUN || currentComboAttacks.combo == ComboAtaques.run2)
                     {
-                        if ((Time.time - attackStartTime) >= delay + delayDaño)
+                        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                         {
                             damageMult = 1;
 
@@ -1861,7 +1861,7 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        if ((Time.time - attackStartTime) >= delay + delayDaño)
+                        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                         {
                             damageMult = 1;
 
@@ -1881,7 +1881,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 else if (states == States.IDLE)
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDaño)
+                    if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
                     {
                         damageMult = 1;
 
@@ -1918,7 +1918,7 @@ public class PlayerControl : MonoBehaviour
 
             //        }
 
-            //        if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //        {
             //            damageMult = 1;
 
@@ -1955,7 +1955,7 @@ public class PlayerControl : MonoBehaviour
 
             //            }
 
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //            if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //            {
             //                damageMult = 1;
 
@@ -1988,7 +1988,7 @@ public class PlayerControl : MonoBehaviour
 
             //            }
 
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //            if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //            {
             //                damageMult = 1;
 
@@ -2023,7 +2023,7 @@ public class PlayerControl : MonoBehaviour
 
             //        }
 
-            //        if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //        {
             //            damageMult = 1;
 
@@ -2059,7 +2059,7 @@ public class PlayerControl : MonoBehaviour
 
             //            }
 
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //            if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //            {
             //                damageMult = 1;
 
@@ -2096,7 +2096,7 @@ public class PlayerControl : MonoBehaviour
 
             //            }
 
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
+            //            if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
             //            {
             //                damageMult = 1;
 
@@ -2122,7 +2122,7 @@ public class PlayerControl : MonoBehaviour
             //    }
         }
 
-        if ((Time.time - attackStartTime) >= delay + delayDaño)
+        if ((Time.time - attackStartTime) >= delay + delayDaï¿½o)
         {
             currentComboAttacks = GetAttacks(ComboAtaques.air1);
 
@@ -2301,30 +2301,30 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.StartMove() && states != States.MOVE)
         {
-            states = States.MOVE;
-
-            //if (controller.RightTriggerPressed())
-            //{
-            //    Invoke("StartRun", 0.25f);
-
-            //    moves = Moves.RUN;
-            //    playerAnim.CrossFadeInFixedTime("Run", 0.2f);
-            //    StartCoroutine(RunFeedback(0.3f));
-            //    //StartCoroutine(RunFeedback(0));
-
-            //}
-            //else
-            //{
-            //    Invoke("EndRun", 0.25f);
-
-
-            moves = Moves.WALK;
-            playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-            StartCoroutine(WalkFeedbak(0.42f));
-            //StartCoroutine(WalkFeedbak(0));
-
-
-            //}
+            states = States.MOVE;
+
+            //if (controller.RightTriggerPressed())
+            //{
+            //    Invoke("StartRun", 0.25f);
+
+            //    moves = Moves.RUN;
+            //    playerAnim.CrossFadeInFixedTime("Run", 0.2f);
+            //    StartCoroutine(RunFeedback(0.3f));
+            //    //StartCoroutine(RunFeedback(0));
+
+            //}
+            //else
+            //{
+            //    Invoke("EndRun", 0.25f);
+
+
+            moves = Moves.WALK;
+            playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+            StartCoroutine(WalkFeedbak(0.42f));
+            //StartCoroutine(WalkFeedbak(0));
+
+
+            //}
         }
         else if (states == States.MOVE)
         {
