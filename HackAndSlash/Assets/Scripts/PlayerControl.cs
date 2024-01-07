@@ -247,6 +247,7 @@ public class PlayerControl : MonoBehaviour
         states = States.IDLE;
         moves = Moves.IDLE;
     }
+
     public void SetHealth()
     {
         currentHealthText.text = currentHealth.ToString();
@@ -559,7 +560,7 @@ public class PlayerControl : MonoBehaviour
                     currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;
 
                     currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).localEulerAngles += new Vector3(0, 0, 90);
-                    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "GolpeSalto";
+                    //currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "GolpeSalto";
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = false;
 
@@ -568,7 +569,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     currentComboAttacks.attacks[golpe].collider.tag = "GolpeRebote";
 
-                    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "HitFuerte";
+                   // currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "HitFuerte";
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = -currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = true;
 
@@ -577,9 +578,18 @@ public class PlayerControl : MonoBehaviour
                 {
                     currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;
 
-                    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
+                    //currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
+
+                }
+                if(currentComboAttacks.combo == ComboAtaques.HoldQuadrat)
+                {
+                    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().toAir = true;
+                }
+                else
+                {
+                    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().toAir = false;
 
                 }
 

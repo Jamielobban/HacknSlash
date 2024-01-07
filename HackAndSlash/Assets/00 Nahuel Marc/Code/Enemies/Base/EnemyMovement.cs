@@ -30,12 +30,12 @@ public class EnemyMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerControl>().transform;
 
-        _events.OnIdle += () => DisableMovement();
+        _events.OnIdle += DisableMovement;
         //_events.OnHit += () => DisableMovement();
-        _events.OnAttacking += () => DisableMovement();
-        _events.OnPatrolling += () => EnableMovement();
+        _events.OnAttacking += DisableMovement;
+        _events.OnPatrolling += EnableMovement;
         _events.OnFollowing += () => EnableMovement();
-        _events.OnAir += () => { DisableMovement(); DisableAgent(); };
+        _events.OnAir += DisableMovement;
         _events.OnStun += () => DisableMovement();
     }
     public Rigidbody GetRigidBody() => _rb;

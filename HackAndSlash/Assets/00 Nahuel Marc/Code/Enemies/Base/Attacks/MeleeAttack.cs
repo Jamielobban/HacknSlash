@@ -13,4 +13,12 @@ public class MeleeAttack : EnemyBaseAttack
     {
         damageCollider.enabled = false;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<PlayerControl>() != null)
+        {
+            other.GetComponent<PlayerControl>().GetDamage(data.damage.Value);
+        }
+    }
 }

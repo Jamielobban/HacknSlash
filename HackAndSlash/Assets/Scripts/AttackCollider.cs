@@ -8,7 +8,6 @@ public class AttackCollider : MonoBehaviour
 {
 
 
-
     public MMFeedbacks enemyHitFeedback;
     public float Knockback;
     public float KnockbackY;
@@ -24,6 +23,7 @@ public class AttackCollider : MonoBehaviour
     public bool enemyStandUp;
     public string enemyHitAnim;
 
+    //*** LINE 555 PLAYER CONTROL setter ***//
     // *** Need 100% *** //
     public float damage;
     public bool isCrit;
