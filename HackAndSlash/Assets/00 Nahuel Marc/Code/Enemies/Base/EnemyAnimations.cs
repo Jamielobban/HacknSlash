@@ -17,7 +17,7 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnFollowing += () => _anim.SetFloat("speed", 1);
         _events.OnHit += () => PlayTargetAnimation("Hit", true);
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
-        _events.OnAir += () => PlayTargetAnimation("Sleep", true);
+        _events.OnAir += () => PlayTargetAnimation("Sleep", true); // Only wolf
         _events.OnDie += () => DeadAnimEnd();
     }
 
@@ -26,7 +26,7 @@ public class EnemyAnimations : MonoBehaviour
         _anim.SetBool("isInteracting", isInteracting);
         _anim.CrossFade(targetAnimation, 0.2f);
     }
-
+    //CHECK
     private void DeadAnimEnd()
     {
         PlayTargetAnimation("Die", true);
