@@ -15,9 +15,8 @@ public class ChaseState : EnemyState
         {
             enemy.events.Idle();
         }
-        if(InRangeToAttack(0) && !enemy.attackHolder.attacks[0].IsInCd())
+        if(InRangeToAttack(0) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
         {
-            Debug.Log("Attack");
             enemy.events.Attacking();
         }
     }

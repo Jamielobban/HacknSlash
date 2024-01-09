@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class AirState : EnemyState
 {
-    private bool isGrounded;
     private float _elapsedGravityDelay = 0f;
 
     public override void EnterState(Enemy enemy)
@@ -10,36 +9,41 @@ public class AirState : EnemyState
         base.EnterState(enemy);
         Debug.Log("Enter Air");
         enemy.events.OnHit += ResetGravity;
+        enemy.events.OnDie += () => _elapsedGravityDelay = 50f;
+        _elapsedGravityDelay = 0f;
+        enemy.onAir = true;
+        enemy.movements.DisableMovement();
         enemy.movements.DisableAgent();
-        enemy.movements.ThrowToAir();
+        enemy.movements.Throw();
     }
     public override void UpdateState(Enemy enemy)
     {
-        //Delay to active gravity
         _elapsedGravityDelay += Time.deltaTime;
 
         if(_elapsedGravityDelay >= enemy.stats.timeToActiveGravity.Value)
         {
-            enemy.movements.ApplyCustomGravity(2.0f);
+            enemy.movements.ApplyCustomGravity(10f);
 
             //OnTouch ground swap to idle state
-            isGrounded = Physics.Raycast(enemy.transform.position, Vector3.down, 0.04f, LayerMask.NameToLayer("Suelo"));
-
-            if (isGrounded)
+            Debug.Log(enemy.movements.CheckGround(enemy));
+            if(enemy.movements.CheckGround(enemy))
             {
+                enemy.onAir = false;
                 ResetGravity();
                 enemy.movements.EnableAgent();
                 enemy.events.Idle();
             }
         }
-
     }
-    public void ResetGravity() => _elapsedGravityDelay = 0f;
-
+    public void ResetGravity()
+    {
+        _enemy.movements.GetRigidBody().velocity = Vector3.zero;
+        _elapsedGravityDelay = 0f;
+    } 
     public override void ExitState(Enemy enemy)
     {
         Debug.Log("Exit Air State");
-        enemy.animations.Animator.StopPlayback();
+        enemy.animations.Animator.SetTrigger("endAir");
         enemy.events.OnHit -= ResetGravity;
         base.ExitState(enemy);
     }

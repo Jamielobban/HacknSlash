@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // -- Base Class for each enemy -- //
-public class Enemy : MonoBehaviour
+public class Enemy : PoolableObject
 {
     public IState currentState;
     public EnemyEvents events { get; private set; }
@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour
     public EnemyAttackHolder attackHolder { get; private set; }
 
     public bool isDead = false;
-
+    public bool canAttack = true;
+    public bool onAir = false;
     public virtual void SetState(IState newState)
     {
         if(currentState == newState)

@@ -10,11 +10,11 @@ public class AttackState : EnemyState
     }
     public override void UpdateState(Enemy enemy)
     {
-        if(enemy.attackHolder.attacks[0].IsInCd() && enemy.movements.InRangeToChase())
+        if(enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && enemy.movements.InRangeToChase())
         {
             enemy.events.Following();
         }
-        else if(enemy.attackHolder.attacks[0].IsInCd() && !enemy.movements.InRangeToChase())
+        else if(enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && !enemy.movements.InRangeToChase())
         {
             enemy.events.Idle();
         }

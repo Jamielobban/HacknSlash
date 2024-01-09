@@ -692,7 +692,7 @@ public class PlayerControl : MonoBehaviour
 
 
         }
-
+        /*
         if (remate.GetEnemyDebil(this.transform.position) != null && (currentComboAttacks.combo == ComboAtaques.HoldTriangle || currentComboAttacks.combo == ComboAtaques.HoldQuadrat))
         {
             GameObject enemyObject = remate.GetEnemyDebil(this.transform.position);
@@ -760,7 +760,7 @@ public class PlayerControl : MonoBehaviour
             camera.transform.GetChild(0).DOLocalRotate(new Vector3(360, 0, 0), 0.1f);
         }
 
-
+        */
 
         playerAnim.speed = 1.75f;
         currentComboAttack++;
@@ -2313,28 +2313,27 @@ public class PlayerControl : MonoBehaviour
         {
             states = States.MOVE;
 
-            //if (controller.RightTriggerPressed())
-            //{
-            //    Invoke("StartRun", 0.25f);
+            if (controller.RightTriggerPressed())
+            {
+                Invoke("StartRun", 0.25f);
 
-            //    moves = Moves.RUN;
-            //    playerAnim.CrossFadeInFixedTime("Run", 0.2f);
-            //    StartCoroutine(RunFeedback(0.3f));
-            //    //StartCoroutine(RunFeedback(0));
+                moves = Moves.RUN;
+                playerAnim.CrossFadeInFixedTime("Run", 0.2f);
+                StartCoroutine(RunFeedback(0.3f));
+                StartCoroutine(RunFeedback(0));
 
-            //}
-            //else
-            //{
-            //    Invoke("EndRun", 0.25f);
+            }
+            else
+            {
+                Invoke("EndRun", 0.25f);
+
+                moves = Moves.WALK;
+                playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+                StartCoroutine(WalkFeedbak(0.42f));
+                StartCoroutine(WalkFeedbak(0));
 
 
-            moves = Moves.WALK;
-            playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-            StartCoroutine(WalkFeedbak(0.42f));
-            //StartCoroutine(WalkFeedbak(0));
-
-
-            //}
+            }
         }
         else if (states == States.MOVE)
         {
@@ -2344,19 +2343,19 @@ public class PlayerControl : MonoBehaviour
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
                 StartCoroutine(RunFeedback(0.3f));
-                //StartCoroutine(RunFeedback(0));
+                StartCoroutine(RunFeedback(0));
 
             }
-            //else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
-            //{
-            //    Invoke("EndRun", 0.25f);
+            else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
+            {
+                Invoke("EndRun", 0.25f);
 
-            //    moves = Moves.WALK;
-            //    playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-            //    StartCoroutine(WalkFeedbak(0.42f));
-            //    //StartCoroutine(WalkFeedbak(0));
+                moves = Moves.WALK;
+                playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+                StartCoroutine(WalkFeedbak(0.42f));
+                StartCoroutine(WalkFeedbak(0));
 
-            //}
+            }
         }
 
 

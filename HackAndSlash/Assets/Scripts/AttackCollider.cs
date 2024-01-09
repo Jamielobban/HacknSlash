@@ -42,6 +42,8 @@ public class AttackCollider : MonoBehaviour
     {
         if (other.GetComponent<IDamageable>() != null)
         {
+            enemyHitFeedback?.PlayFeedbacks();
+
             Vector3 collisionPoint = FindClosestPointOnCollider(other, transform.position);
             IDamageable enemy = other.GetComponent<IDamageable>();
             enemy.TakeDamage(damage, isCrit, collisionPoint);
@@ -52,9 +54,5 @@ public class AttackCollider : MonoBehaviour
         }
     }
 
-    Vector3 FindClosestPointOnCollider(Collider collider, Vector3 point)
-    {
-        return collider.ClosestPointOnBounds(point);
-    }
-
+    Vector3 FindClosestPointOnCollider(Collider collider, Vector3 point) => collider.ClosestPointOnBounds(point);
 }
