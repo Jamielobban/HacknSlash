@@ -11,7 +11,7 @@ public class AirState : EnemyState
         Debug.Log("Enter Air");
         enemy.events.OnHit += ResetGravity;
         _elapsedGravityDelay = 0f;
-
+        enemy.onAir = true;
         enemy.movements.DisableMovement();
         enemy.movements.DisableAgent();
         enemy.movements.ThrowToAir();
@@ -47,6 +47,7 @@ public class AirState : EnemyState
     public override void ExitState(Enemy enemy)
     {
         Debug.Log("Exit Air State");
+        enemy.onAir = false;
         enemy.animations.Animator.SetTrigger("endAir");
         enemy.events.OnHit -= ResetGravity;
         base.ExitState(enemy);

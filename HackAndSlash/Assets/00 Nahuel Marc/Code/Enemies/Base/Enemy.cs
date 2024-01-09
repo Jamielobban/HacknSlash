@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     public bool isDead = false;
     public bool canAttack = true;
+    public bool onAir = false;
     public virtual void SetState(IState newState)
     {
         if(currentState == newState)
