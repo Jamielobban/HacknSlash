@@ -33,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerControl>().transform;
 
-        _events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitEffect(); } ;
+        _events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); } ;
         _events.OnIdle += DisableMovement;
         _events.OnAttacking += DisableMovement;
         _events.OnPatrolling += EnableMovement;
@@ -72,7 +72,7 @@ public class EnemyMovement : MonoBehaviour
             reached = true;
         }
     }
-    public void HitEffect()
+    public void HitStopEffect()
     {
         _enemy.canAttack = false;
         this.Wait(_enemy.animations.Animator.GetCurrentAnimatorClipInfo(0).Length, () =>

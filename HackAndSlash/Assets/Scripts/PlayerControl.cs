@@ -601,7 +601,7 @@ public class PlayerControl : MonoBehaviour
 
 
                 currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = GetCritOrDamage(currentComboAttacks.attacks[golpe].damage * damageMult * potenciado);
-
+                currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().isCrit = IsCriticalHit();
 
                 if (potenciado == 1)
                     currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);

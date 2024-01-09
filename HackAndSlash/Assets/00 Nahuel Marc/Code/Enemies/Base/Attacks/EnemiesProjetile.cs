@@ -1,6 +1,4 @@
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class EnemiesProjetile : MonoBehaviour
 {
@@ -18,6 +16,10 @@ public class EnemiesProjetile : MonoBehaviour
     void Start()
     {
         targetPosition = FindObjectOfType<PlayerControl>().transform.position;
+        if(Mathf.Abs(Vector3.Distance(targetPosition, transform.position)) <= 1)
+        {
+            Destroy(gameObject);
+        }
         rb = GetComponent<Rigidbody>();
         if (flash != null)
         {
@@ -54,6 +56,10 @@ public class EnemiesProjetile : MonoBehaviour
         {
             DieEffects();
             player.GetDamage(damage);
+            Destroy(gameObject);
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
