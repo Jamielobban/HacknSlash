@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     protected EnemyEvents _events;
     protected Rigidbody _rb;
     protected Enemy _enemy;
+    public NavMeshAgent Agent => _agent;
 
     #region Stats
 
@@ -106,8 +107,18 @@ public class EnemyMovement : MonoBehaviour
         return finalPos;
     }
 
+    public bool CheckGround(Enemy e)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 0.1f, LayerMask.GetMask("Suelo")))
+        {
+            return hit.collider.GetComponent<TerrainCollider>() != null;
+        }
+        return false;
+    }
+
     public void ApplyCustomGravity(float scale) => _rb.AddForce(Vector3.down * scale * Physics.gravity.magnitude, ForceMode.Acceleration);
-    public void ThrowToAir() => _rb.AddForce(Vector3.up * toAirForce.Value, ForceMode.Impulse);
+    public void Throw() => _rb.AddForce(Vector3.up * toAirForce.Value, ForceMode.Impulse);
     public float DistanceToPlayer() => (Vector3.Distance(target.position, transform.position)- 0.5f);
     public bool InRangeToChase() => DistanceToPlayer() < chaseSight.Value;
 

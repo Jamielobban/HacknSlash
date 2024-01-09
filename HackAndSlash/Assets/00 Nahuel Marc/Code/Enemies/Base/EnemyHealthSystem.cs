@@ -69,7 +69,10 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     }
     public virtual void AirDamageable()
     {
-        _enemy.events.Air();
+        if(!_enemy.onAir)
+        {
+            _enemy.events.Air();
+        }
     }
 
     private void ChangeLife()

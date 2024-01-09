@@ -3,9 +3,8 @@ using UnityEngine;
 public class MeleeAttack : EnemyBaseAttack
 {
     public Collider damageCollider;
-    protected override void SetVisualEffects()
+    protected override void AttackAction()
     {
-        base.SetVisualEffects();
         damageCollider.enabled = true;
         Invoke("DisableCollider", 0.2f);
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // -- Base Class for each enemy -- //
-public class Enemy : MonoBehaviour
+public class Enemy : PoolableObject
 {
     public IState currentState;
     public EnemyEvents events { get; private set; }

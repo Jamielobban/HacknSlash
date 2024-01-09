@@ -41,12 +41,15 @@ public class EnemyBaseAttack : MonoBehaviour
     private IEnumerator HandleAttack()
     {
         currentAttackState = Enums.EnemyAttackState.Casting;
+        PlayAttackAnimation();
         yield return new WaitForSeconds(data.castTime.Value);
         SetVisualEffects();
+        AttackAction();
         _currentTime = data.cooldown.Value;
         currentAttackState = Enums.EnemyAttackState.Cooldown;
     }
-    protected virtual void SetVisualEffects()
+
+    protected virtual void PlayAttackAnimation()
     {
         _animationOver = false;
         enemy.animations.PlayTargetAnimation("" + data.animation, true);
@@ -55,11 +58,16 @@ public class EnemyBaseAttack : MonoBehaviour
             _animationOver = true;
         });
     }
+    protected virtual void SetVisualEffects()
+    {
+
+    }
+    protected virtual void AttackAction()
+    {
+
+    }
     public virtual bool IsReadToUse() => currentAttackState == Enums.EnemyAttackState.ReadyToUse;
-
     public virtual bool IsInCd() => _currentTime < data.cooldown.Value && _currentTime >= 0;
-
     public virtual void ResetAbility() => currentAttackState = Enums.EnemyAttackState.ReadyToUse;
     public virtual bool IsAtkAnimaitonOver() => _animationOver;
-
 }
