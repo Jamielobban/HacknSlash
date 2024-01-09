@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public EnemyAttackHolder attackHolder { get; private set; }
 
     public bool isDead = false;
-
+    public bool canAttack = true;
     public virtual void SetState(IState newState)
     {
         if(currentState == newState)

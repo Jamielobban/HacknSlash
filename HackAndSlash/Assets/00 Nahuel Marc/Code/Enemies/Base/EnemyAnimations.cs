@@ -5,7 +5,7 @@ public class EnemyAnimations : MonoBehaviour
 {
     private Animator _anim;
     public Animator Animator => _anim;
-    private EnemyEvents _events;
+    protected EnemyEvents _events;
     protected virtual void Awake()
     {
         _events = transform.parent.GetComponent<EnemyEvents>();
@@ -17,7 +17,6 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnFollowing += () => _anim.SetFloat("speed", 1);
         _events.OnHit += () => PlayTargetAnimation("Hit", true);
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
-        _events.OnAir += () => PlayTargetAnimation("Sleep", true); // Only wolf
         _events.OnDie += () => DeadAnimEnd();
     }
 
@@ -32,6 +31,7 @@ public class EnemyAnimations : MonoBehaviour
         PlayTargetAnimation("Die", true);
         this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
+            //Respawn?
             Debug.Log("Hola");
         });
     }

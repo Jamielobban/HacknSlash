@@ -5,6 +5,7 @@ public class MeleeAttack : EnemyBaseAttack
     public Collider damageCollider;
     protected override void SetVisualEffects()
     {
+        base.SetVisualEffects();
         damageCollider.enabled = true;
         Invoke("DisableCollider", 0.2f);
     }
@@ -16,9 +17,6 @@ public class MeleeAttack : EnemyBaseAttack
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<PlayerControl>() != null)
-        {
-            other.GetComponent<PlayerControl>().GetDamage(data.damage.Value);
-        }
+        other.GetComponent<PlayerControl>()?.GetDamage(data.damage.Value);
     }
 }

@@ -4,10 +4,8 @@ using UnityEngine;
 public class EnemyAttackHolder : MonoBehaviour
 {
     public List<EnemyBaseAttack> attacks = new List<EnemyBaseAttack>();
-    public void UseAbility(int attck)
+    public void UseAbility(int attack)
     {
-       attacks[attck].Use();
+       attacks[attack].Use();
     }
-
-
 }

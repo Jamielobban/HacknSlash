@@ -4,9 +4,10 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target;
-    private NavMeshAgent _agent;
-    private EnemyEvents _events;
-    private Rigidbody _rb;
+    protected NavMeshAgent _agent;
+    protected EnemyEvents _events;
+    protected Rigidbody _rb;
+    protected Enemy _enemy;
 
     #region Stats
 
@@ -23,6 +24,7 @@ public class EnemyMovement : MonoBehaviour
 
     protected virtual void Awake()
     {
+        _enemy = GetComponent<Enemy>();
         respawnPoint = transform.position;
         patrollPoint = GetRandomNavmeshPoint();
         _rb = GetComponent<Rigidbody>();
@@ -30,26 +32,25 @@ public class EnemyMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerControl>().transform;
 
+        _events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitEffect(); } ;
         _events.OnIdle += DisableMovement;
-        //_events.OnHit += () => DisableMovement();
         _events.OnAttacking += DisableMovement;
         _events.OnPatrolling += EnableMovement;
-        _events.OnFollowing += () => EnableMovement();
-        _events.OnAir += DisableMovement;
-        _events.OnStun += () => DisableMovement();
+        _events.OnFollowing += EnableMovement;
+        _events.OnStun += DisableMovement;
     }
     public Rigidbody GetRigidBody() => _rb;
     public void EnableGravity() => _rb.useGravity = true;
     public void DisableGravity() => _rb.useGravity = false;
-    public void EnableAgent() => _agent.enabled = true;
+    public void EnableAgent()
+    {
+        _agent.enabled = true;
+        _agent.ResetPath();
+    }
     public void DisableAgent() => _agent.enabled = false;
     private void EnableMovement() => _agent.isStopped = false;
-    private void DisableMovement() => _agent.isStopped = true;
+    public void DisableMovement() => _agent.isStopped = true;
 
-    public void ApplyCustomGravity(float scale)
-    {
-        _rb.AddForce(Vector3.down * scale * Physics.gravity.magnitude, ForceMode.Acceleration);
-    }
 
     public void HandleFollow()
     {
@@ -70,29 +71,25 @@ public class EnemyMovement : MonoBehaviour
             reached = true;
         }
     }
-
-    public void KnockBack()
+    public void HitEffect()
     {
-        _rb.AddForce(transform.up * 200, ForceMode.Impulse);
-    }
-
-    public void ThrowToAir()
-    {
-        DisableGravity();
-        _rb.AddForce(Vector3.up * toAirForce.Value, ForceMode.Impulse);
+        _enemy.canAttack = false;
+        this.Wait(_enemy.animations.Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        {
+            if (_agent.isActiveAndEnabled)
+            {
+                EnableMovement();
+            }
+            _enemy.canAttack = true;
+        });
     }
 
     private void HandleRotation()
     {
-        if(_agent.path.corners.Length > 0)
+        if(_agent.path.corners.Length > 0 && _agent.velocity.magnitude > 0)
         {
-            Vector3 forward = _agent.velocity.normalized;
-            if(forward.magnitude > 0)
-            {
-                Quaternion rotation = Quaternion.LookRotation(forward); // 5f -> RotationSpeed
-                Quaternion enemyRot = Quaternion.Slerp(transform.rotation, rotation, 5f * Time.deltaTime);
-                transform.rotation = enemyRot;
-            }
+            Quaternion rotation = Quaternion.LookRotation(_agent.velocity.normalized); // 5f -> RotationSpeed
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5f * Time.deltaTime);
         }
     }
 
@@ -109,14 +106,18 @@ public class EnemyMovement : MonoBehaviour
         return finalPos;
     }
 
-    public float DistanceToPlayer() => Vector3.Distance(target.position, transform.position);
+    public void ApplyCustomGravity(float scale) => _rb.AddForce(Vector3.down * scale * Physics.gravity.magnitude, ForceMode.Acceleration);
+    public void ThrowToAir() => _rb.AddForce(Vector3.up * toAirForce.Value, ForceMode.Impulse);
+    public float DistanceToPlayer() => (Vector3.Distance(target.position, transform.position)- 0.5f);
     public bool InRangeToChase() => DistanceToPlayer() < chaseSight.Value;
 
     private void OnDestroy()
     {
-        _events.OnIdle -= () => DisableMovement();
-        _events.OnAttacking -= () => DisableMovement();
-        _events.OnPatrolling -= () => EnableMovement();
-        _events.OnFollowing -= () => EnableMovement();
+        _events.OnIdle -= DisableMovement;
+        _events.OnAttacking -= DisableMovement;
+        _events.OnPatrolling -= EnableMovement;
+        _events.OnFollowing -= EnableMovement;
+        _events.OnAir -= DisableMovement;
+        _events.OnStun -= DisableMovement;
     }
 }

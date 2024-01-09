@@ -10,36 +10,44 @@ public class AirState : EnemyState
         base.EnterState(enemy);
         Debug.Log("Enter Air");
         enemy.events.OnHit += ResetGravity;
+        _elapsedGravityDelay = 0f;
+
+        enemy.movements.DisableMovement();
         enemy.movements.DisableAgent();
         enemy.movements.ThrowToAir();
     }
     public override void UpdateState(Enemy enemy)
     {
-        //Delay to active gravity
         _elapsedGravityDelay += Time.deltaTime;
 
         if(_elapsedGravityDelay >= enemy.stats.timeToActiveGravity.Value)
         {
-            enemy.movements.ApplyCustomGravity(2.0f);
+            enemy.movements.ApplyCustomGravity(1.5f);
 
             //OnTouch ground swap to idle state
-            isGrounded = Physics.Raycast(enemy.transform.position, Vector3.down, 0.04f, LayerMask.NameToLayer("Suelo"));
-
-            if (isGrounded)
+            RaycastHit hit;
+            if (Physics.Raycast(enemy.transform.position, Vector3.down, out hit, 0.1f, LayerMask.GetMask("Suelo")))
             {
-                ResetGravity();
-                enemy.movements.EnableAgent();
-                enemy.events.Idle();
+                if (hit.collider.GetComponent<TerrainCollider>() != null)
+                {
+                    // Restablecer la gravedad y activar el agente
+                    ResetGravity();
+                    enemy.movements.EnableAgent();
+                    enemy.events.Idle();
+                }
             }
         }
 
     }
-    public void ResetGravity() => _elapsedGravityDelay = 0f;
-
+    public void ResetGravity()
+    {
+        _enemy.movements.GetRigidBody().velocity = Vector3.zero;
+        _elapsedGravityDelay = 0f;
+    } 
     public override void ExitState(Enemy enemy)
     {
         Debug.Log("Exit Air State");
-        enemy.animations.Animator.StopPlayback();
+        enemy.animations.Animator.SetTrigger("endAir");
         enemy.events.OnHit -= ResetGravity;
         base.ExitState(enemy);
     }
