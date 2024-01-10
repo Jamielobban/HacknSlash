@@ -49,7 +49,7 @@ public class Enemy : PoolableObject
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
-        events.Idle();
+        ResetEnemy();
     }
     protected virtual void FixedUpdate()
     {
@@ -62,7 +62,13 @@ public class Enemy : PoolableObject
 
     public virtual void ResetEnemy()
     {
+        UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
         healthSystem.ResetHealthEnemy();
         events.Idle();
+    }
+
+    private void UpgradeEnemy(float scaleFactor)
+    {
+        healthSystem.currentMaxHealth *= scaleFactor;
     }
 }

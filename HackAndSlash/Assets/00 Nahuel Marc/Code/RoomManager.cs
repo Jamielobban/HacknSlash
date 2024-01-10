@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    public float scaleDivision = 4;
     public GameObject spawnerPrefab;
     public GameObject player;
     public int numStartEnemiesSpawn = 5;
@@ -37,7 +38,7 @@ public class RoomManager : MonoBehaviour
             return _instance;
         }
     }
-
+    public float GetScaleFactor() => 1 + (stageLevel / scaleDivision);
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
