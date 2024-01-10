@@ -12,9 +12,11 @@ using System;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using DamageNumbersPro;
 
 public class PlayerControl : MonoBehaviour
 {
+    public DamageNumber healPixel;
     public ParticleSystem flash;
     public TextMeshProUGUI currentHealthText;
     public TextMeshProUGUI maxHealthText;
@@ -250,6 +252,10 @@ public class PlayerControl : MonoBehaviour
 
     public void SetHealth()
     {
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         currentHealthText.text = currentHealth.ToString();
         maxHealthText.text = maxHealth.ToString();
         healthSlider.value = currentHealth / maxHealth;
@@ -868,6 +874,18 @@ public class PlayerControl : MonoBehaviour
         return 0;
     }
 
+    public bool CheckIfHasItem(string itemName)
+    {
+        foreach (ItemList i in items)
+        {
+            if (i.name == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public string GetItemDescription(string itemName)
     {
         foreach (ItemList i in items)
@@ -1399,11 +1417,11 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void CallItemOnHit(EnemySkeletonSword enemy)
+    public void CallItemOnHit()
     {
         foreach (ItemList i in items)
         {
-            i.item.OnHit(this, enemy, i.stacks);
+            i.item.OnHit(this, i.stacks);
         }
     }
 

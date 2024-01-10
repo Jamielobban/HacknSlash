@@ -1,3 +1,4 @@
+using DamageNumbersPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public abstract class Item
 
     }
 
-    public virtual void OnHit(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    public virtual void OnHit(PlayerControl player, int stacks)
     {
 
     }
@@ -51,6 +52,7 @@ public abstract class Item
     }
 
 }
+
 public enum StatType
 {
     Health,
@@ -133,7 +135,6 @@ public class CritDamageItem : Item
     {
         if (statType == StatType.CritDamage)
         {
-            Debug.Log("Hello");
             player.critDamageMultiplier += 5;
         }
     }
@@ -158,7 +159,7 @@ public class AttackDamge : Item
     public override string GiveDescription()
     {
 
-        return "Gain 3 attack damage per stack.";
+        return "Gain 20% attack damage per stack.";
     }
 
     public override Sprite GiveSprite()
@@ -169,7 +170,7 @@ public class AttackDamge : Item
     {
         if (statType == StatType.Damage)
         {
-            player.attackDamage += 0.2f + (stacks * 0.05f);
+            player.attackDamage += 0.2f;
         }
     }
 }
@@ -192,7 +193,7 @@ public class Meat : Item
 
     public override string GiveDescription()
     {
-        return "Adds 10 max health per stack.";
+        return "Adds 5 max health per stack.";
     }
 
     public override Sprite GiveSprite()
@@ -229,7 +230,7 @@ public class BoosterShot : Item
 
     public override string GiveDescription()
     {
-        return "Adds 10 health per stack.";
+        return "Adds 40 health per stack.";
     }
 
     public override Sprite GiveSprite()
@@ -241,8 +242,11 @@ public class BoosterShot : Item
     {
         if (statType == StatType.Health)
         {
-            player.currentHealth += 5 + (1 * stacks);
-            player.SetHealth();
+            if(player.currentHealth < player.maxHealth)
+            {
+                player.currentHealth += 40;
+                player.SetHealth();
+            }
         }
     }
 }
@@ -254,7 +258,7 @@ public class MonsterTooth : Item
 {
     public override RarityType GetRarity()
     {
-        return RarityType.Common;
+        return RarityType.Rare;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -267,7 +271,7 @@ public class MonsterTooth : Item
 
     public override string GiveDescription()
     {
-        return "When killing an enemy heal 3 hp per stack (+ 1 per stack).";
+        return "When striking an enemy heal 3 hp per stack.";
     }
 
     public override Sprite GiveSprite()
@@ -275,9 +279,13 @@ public class MonsterTooth : Item
         return Resources.Load<Sprite>("Item Images/Tooth");
     }
 
-    public override void OnHit(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    public override void OnHit(PlayerControl player, int stacks)
     {
-        base.OnHit(player, enemy, stacks);
+        int heal = 3;
+        player.currentHealth += heal;
+
+        player.healPixel.Spawn(player.transform.position + new Vector3(0f,2f,0f), heal);
+        player.SetHealth();
     }
 }
 
@@ -333,11 +341,11 @@ public class Lighter : Item
     }
 }
 
-public class Icy : Item
+public class Slashes : Item
 {
     public override RarityType GetRarity()
     {
-        return RarityType.Common;
+        return RarityType.Legendary;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -345,18 +353,31 @@ public class Icy : Item
     }
     public override string GiveName()
     {
-        throw new System.NotImplementedException();
+        return "Slashes";
     }
 
     public override string GiveDescription()
     {
-        return "Hello";
+        return "Your heavy attacks now launch long-range slashes";
     }
 
     public override Sprite GiveSprite()
     {
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
+
+    //public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    //{
+    //    if (statType == StatType.None)
+    //    {
+    //        if (player.currentHealth < player.maxHealth)
+    //        {
+    //            player.currentHealth += 40;
+    //            player.SetHealth();
+    //        }
+    //    }
+    //}
+
 }
 
 public class Feather : Item
@@ -440,9 +461,9 @@ public class FireDamage : Item
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
 
-    public override void OnHit(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    public override void OnHit(PlayerControl player, int stacks)
     {
-        enemy.health -= 3 * stacks;
+        //enemy.health -= 3 * stacks;
     }
 
 

@@ -811,6 +811,7 @@ public class EnemySkeletonSword : MonoBehaviour
 
         if (other.GetComponent<AttackCollider>() != null && GetDamage && hits == 0)
         {
+            player.GetComponent<PlayerControl>().CallItemOnHit();
             hits++;
             Invoke("RestartHit", 0.05f);
 

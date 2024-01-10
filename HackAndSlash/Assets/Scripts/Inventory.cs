@@ -23,6 +23,8 @@ public class Inventory : MonoBehaviour
     public int inventorySize = 14;
 
     public PlayerStats playerStats;
+    public GameObject backdrop;
+    public GameObject itemDescription;
     ControllerManager controller;
 
     // Start is called before the first frame update
@@ -48,14 +50,19 @@ public class Inventory : MonoBehaviour
                 if (inventorymenu.activeSelf)
                 {
                     inventorymenu.SetActive(false);
-
+                    backdrop.SetActive(false);
+                    itemDescription.SetActive(false);
+                    Time.timeScale = 1.0f;
                 }
                 else
                 {
                     inventorymenu.SetActive(true);
+                    backdrop.SetActive(true);
+                    itemDescription.SetActive(true);
                     //AddItem(new HealingItem(), 1);
                     //Debug.Log("Hola");
                     RefreshInventory();
+                    Time.timeScale = 0.0f;
                 }
             }
         }

@@ -73,8 +73,11 @@ public class RoomManager : MonoBehaviour
     {
         stageLevel++;
         textStage.text = "Stage " + stageLevel;
-        AbilityPowerManager.instance.itemChoice.SetActive(true);
-        AbilityPowerManager.instance.ShowNewOptions();
+        if(stageLevel > 1)
+        {
+            AbilityPowerManager.instance.itemChoice.SetActive(true);
+            AbilityPowerManager.instance.ShowNewOptions();
+        }
         textStage.gameObject.GetComponent<TextMeshProFadeObject>().FadeIn();
         GenerateSpawner(0.3f, 0f); // Insta Spawner
         GenerateSpawner(0.7f, 1f); // Time Spawner
