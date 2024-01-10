@@ -25,8 +25,7 @@ public class AirState : EnemyState
             enemy.movements.ApplyCustomGravity(10f);
 
             //OnTouch ground swap to idle state
-            Debug.Log(enemy.movements.CheckGround(enemy));
-            if(enemy.movements.CheckGround(enemy))
+            if(enemy.movements.CheckGround(enemy)) 
             {
                 enemy.onAir = false;
                 ResetGravity();

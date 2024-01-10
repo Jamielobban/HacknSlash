@@ -20,14 +20,6 @@ public class DeadState : EnemyState
                 enemy.movements.EnableAgent();
             }
         }
-        else
-        {
-            _counter += Time.deltaTime;
-            if (_counter >= 2f)
-            {
-                enemy.gameObject.SetActive(false);
-            }
-        }
 
     }
 

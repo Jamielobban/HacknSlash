@@ -26,14 +26,15 @@ public class EnemyAnimations : MonoBehaviour
         _anim.SetBool("isInteracting", isInteracting);
         _anim.CrossFade(targetAnimation, 0.2f);
     }
-    //CHECK
     private void DeadAnimEnd()
     {
         PlayTargetAnimation("Die", true);
         this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
             //Respawn?
-            Debug.Log("Hola");
+            RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
+            _enemy.ResetEnemy();
+            _enemy.gameObject.SetActive(false);
         });
     }
 }

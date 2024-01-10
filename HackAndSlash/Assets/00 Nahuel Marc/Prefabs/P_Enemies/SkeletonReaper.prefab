@@ -83,6 +83,7 @@ MonoBehaviour:
   prefabProjectile: {fileID: 8249245426802834546, guid: de818659214183a488147e89628215b8,
     type: 3}
   shootPoint: {fileID: 2853375574165819987}
+  ableDistToShoot: 3
 --- !u!1 &8818795478933771085
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +193,7 @@ PrefabInstance:
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
@@ -270,7 +271,7 @@ PrefabInstance:
     - target: {fileID: 8667008309283285799, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: maxHealth.baseValue
-      value: 500
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8667008309283285799, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}

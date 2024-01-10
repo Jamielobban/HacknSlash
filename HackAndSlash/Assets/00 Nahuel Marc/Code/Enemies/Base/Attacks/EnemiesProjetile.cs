@@ -58,7 +58,7 @@ public class EnemiesProjetile : MonoBehaviour
             player.GetDamage(damage);
             Destroy(gameObject);
         }
-        else
+        else if(other.gameObject.layer == LayerMask.NameToLayer("Suelo"))
         {
             Destroy(gameObject);
         }

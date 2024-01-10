@@ -11,7 +11,7 @@ public class BurstSpawner : MonoBehaviour
     [SerializeField] private int _spawnCount = 2; // how many enemies to spawn when enter area
     [SerializeField] private float _spawnDelay = 0.5f;
 
-    private Coroutine _spawnEnemiesCoroutine; // !!Only call once
+    private Coroutine _spawnEnemiesCoroutine; 
 
     private Bounds _bounds;
 
@@ -22,7 +22,6 @@ public class BurstSpawner : MonoBehaviour
         _bounds = _collider.bounds;
         _spawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
     }
-
 
     private Vector3 GetRandomPosInBounds()
     {
