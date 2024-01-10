@@ -5,7 +5,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 {
     protected Enemy _enemy;
     protected float _currentHealth;
-    public CharacterStat maxHealth = new CharacterStat();
+    public CharacterStat baseMaxHealth = new CharacterStat();
+    public float currentMaxHealth;
 
     #region Prefabs Effects
 
@@ -17,14 +18,16 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     #endregion
     public void ResetHealthEnemy()
     {
-        _currentHealth = maxHealth.Value;
+        _currentHealth = currentMaxHealth;
         ChangeLife();
         gameObject.SetActive(true);
     }
     protected virtual void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
-        _currentHealth = maxHealth.Value;
+        currentMaxHealth = baseMaxHealth.Value;
+
+        _currentHealth = currentMaxHealth;
     }
 
     protected virtual void Start()
@@ -42,9 +45,9 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public virtual void Heal(float amount)
     {
         _currentHealth += amount;
-        if(_currentHealth > maxHealth.Value)
+        if(_currentHealth > currentMaxHealth)
         {
-            _currentHealth = maxHealth.Value;
+            _currentHealth = currentMaxHealth;
         }
         _enemy.events.Heal();
     }
@@ -82,7 +85,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
     private void ChangeLife()
     {
-        _enemy.hud.UpdateHealthBar(_currentHealth, maxHealth.Value);
+        _enemy.hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }
 
     private void SpawnEffect(GameObject effect, Vector3 spawnPoint)
