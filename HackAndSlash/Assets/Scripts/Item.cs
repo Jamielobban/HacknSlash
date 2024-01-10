@@ -91,7 +91,7 @@ public class CritItem : Item
 
     public override string GiveDescription()
     {
-        return "Adds 5% crit chance per stack. Crits deal double damage.";
+        return "Adds 2% crit chance per stack. Crits deal double damage.";
     }
 
     public override Sprite GiveSprite()
@@ -102,7 +102,7 @@ public class CritItem : Item
     {
         if (statType == StatType.CritChance)
         {
-            player.critChance += 5;
+            player.critChance += 2;
         }
     }
 }
@@ -126,7 +126,7 @@ public class CritDamageItem : Item
 
     public override string GiveDescription()
     {
-        return "Adds 5% crit chance damage per stack.";
+        return "Adds 2% crit chance damage per stack.";
     }
 
     public override Sprite GiveSprite()
@@ -137,7 +137,7 @@ public class CritDamageItem : Item
     {
         if (statType == StatType.CritDamage)
         {
-            player.critDamageMultiplier += 5;
+            player.critDamageMultiplier += 2;
         }
     }
 }
