@@ -20,9 +20,17 @@ public class GetEnemies : MonoBehaviour
     {
         for(int i = 0; i < enemies.Count;i++)
         {
-            if(enemies[i] == null || enemies[i].tag != "Enemy")
+            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
             {
                 enemies.RemoveAt(i);
+            }
+            if (enemies[i].transform.parent != null)
+            {
+                if (!enemies[i].transform.parent.gameObject.activeSelf)
+                {
+                    enemies.RemoveAt(i);
+
+                }
             }
         }
         Vector3 position =  Vector3.zero;
@@ -45,10 +53,19 @@ public class GetEnemies : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i] == null || enemies[i].tag != "Enemy")
+            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
             {
                 enemies.RemoveAt(i);
             }
+            if (enemies[i].transform.parent != null)
+            {
+                if (!enemies[i].transform.parent.gameObject.activeSelf)
+                {
+                    enemies.RemoveAt(i);
+
+                }
+            }
+
         }
         Vector3 position = Vector3.zero;
         float distance = 100;
@@ -71,9 +88,17 @@ public class GetEnemies : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i] == null || enemies[i].tag != "Enemy")
+            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
             {
                 enemies.RemoveAt(i);
+            }
+            if (enemies[i].transform.parent != null)
+            {
+                if (!enemies[i].transform.parent.gameObject.activeSelf)
+                {
+                    enemies.RemoveAt(i);
+
+                }
             }
         }
         GameObject enemy = null;
