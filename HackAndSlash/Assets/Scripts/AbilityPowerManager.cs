@@ -1,4 +1,5 @@
 using DarkPixelRPGUI.Scripts.UI.Equipment;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -23,10 +24,27 @@ public class AbilityPowerManager : MonoBehaviour
     public int comboCount;
 
     public TMP_Text comboNumber;
-
-    public static AbilityPowerManager instance;
+    private static AbilityPowerManager _instance;
+    public static AbilityPowerManager instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = FindObjectOfType<AbilityPowerManager>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("Ability Power Manager");
+                    go.AddComponent<AbilityPowerManager>();
+                    DontDestroyOnLoad(go);
+                }
+            }
+            return _instance;
+        }
+    }
 
     public GameObject itemChoice;
+    private Animator itemChoiceAnim;
     private Inventory inventory;
     private Item item1;
     private Item item2;
@@ -54,18 +72,14 @@ public class AbilityPowerManager : MonoBehaviour
     public TMP_Text item2Description;
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
         comboCount = 0;
         player = FindObjectOfType<PlayerControl>();
         inventory = FindObjectOfType<Inventory>();
@@ -74,6 +88,11 @@ public class AbilityPowerManager : MonoBehaviour
         option2Button.onClick.AddListener(OnOption2Clicked);
         InitializeRarityColorMap();
         SetUpControllerNavigation();
+        itemChoiceAnim = itemChoice.GetComponent<Animator>();
+    }
+    private void Start()
+    {
+
     }
     private void Update()
     {
@@ -92,7 +111,6 @@ public class AbilityPowerManager : MonoBehaviour
             else
             {
                 itemChoice.SetActive(true);
-
                 ShowNewOptions();
 
             }
@@ -133,12 +151,18 @@ public class AbilityPowerManager : MonoBehaviour
     {
         player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item1);
+
+
+       // option2Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
     }
 
     public void OnOption2Clicked()
     {
         player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item2);
+
+
+       // option1Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
     }
 
     private void ChooseItem(Item chosenItem)
@@ -149,19 +173,35 @@ public class AbilityPowerManager : MonoBehaviour
         inventory.RefreshInventory();
         player.CallItemOnPickup(chosenItem.GetAssociatedStatType());
 
+        StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
         Time.timeScale = 1.0f;
-        itemChoice.SetActive(false);
+        //itemChoiceAnim.SetTrigger("Close");
         item1 = null;
         item2 = null;
         menuActive = false;
         EventSystem.current.SetSelectedGameObject(null);
     }
 
+    private IEnumerator SetActiveFalseCouroutine(GameObject wow, float delay)
+    {
+        option1Button.GetComponent<Button>().enabled = false;
+        option2Button.GetComponent<Button>().enabled = false;
+        yield return new WaitForSeconds(delay * 5);
 
-    private void ShowNewOptions()
+
+        //itemChoiceAnim.SetTrigger("Close");
+
+
+        yield return new WaitForSeconds(delay);
+        wow.SetActive(false);
+    }
+
+    public void ShowNewOptions()
     {
         menuActive = true;
-        player.GetComponent<PlayerControl>().enabled = false;
+        option1Button.GetComponent<Button>().enabled = true;
+        option2Button.GetComponent<Button>().enabled = true;
+      //  player.GetComponent<PlayerControl>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         Time.timeScale = 0.0f;
         // Generate new items for options

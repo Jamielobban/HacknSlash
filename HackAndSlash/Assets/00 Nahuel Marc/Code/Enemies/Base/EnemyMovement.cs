@@ -46,6 +46,7 @@ public class EnemyMovement : MonoBehaviour
     public void EnableAgent()
     {
         _agent.enabled = true;
+        _agent.Warp(transform.position);
         _agent.ResetPath();
     }
     public void DisableAgent() => _agent.enabled = false;
@@ -110,9 +111,10 @@ public class EnemyMovement : MonoBehaviour
     public bool CheckGround(Enemy e)
     {
         RaycastHit hit;
-        if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 0.1f, LayerMask.GetMask("Suelo")))
+        if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Suelo")))
         {
-            return hit.collider.GetComponent<TerrainCollider>() != null;
+            //return hit.collider.GetComponent<TerrainCollider>() != null;
+            return true;
         }
         return false;
     }

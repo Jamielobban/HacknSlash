@@ -15,7 +15,12 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public GameObject hitEffect2;
 
     #endregion
-
+    public void ResetHealthEnemy()
+    {
+        _currentHealth = maxHealth.Value;
+        ChangeLife();
+        gameObject.SetActive(true);
+    }
     protected virtual void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
@@ -52,7 +57,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         if(_currentHealth <= 0)
         {
             _enemy.events.Die();
-            Destroy(gameObject); // Destroy the collider so he won't be hit again after death
+            gameObject.SetActive(false);
         }
     }
     private void DamageEffects(float dmg, bool critical, Vector3 collisionPoint)

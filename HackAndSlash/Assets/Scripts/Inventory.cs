@@ -59,13 +59,13 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        if(Input.GetKeyDown(KeyCode.K))
-        {
+        //if(Input.GetKeyDown(KeyCode.K))
+        //{
 
-                ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
+        //        //ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
 
             
-        }
+        //}
     }
 
     public void RefreshInventory()
@@ -133,7 +133,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        i.stacks += amount;
+                        i.stacks = amount;
                         if (inventorymenu.activeSelf) RefreshInventory();
                         return 0;
                     }

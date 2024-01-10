@@ -9,10 +9,11 @@ public class Enemy : PoolableObject
     public EnemyMovement movements { get; private set; }
     public EnemyAnimations animations { get; private set; }
     public EnemyStats stats { get; private set; }
-
     public EnemyAttackHolder attackHolder { get; private set; }
+    public EnemyHealthSystem healthSystem { get; private set; }
 
     public bool isDead = false;
+    public bool isGrounded = false;
     public bool canAttack = true;
     public bool onAir = false;
     public virtual void SetState(IState newState)
@@ -30,6 +31,7 @@ public class Enemy : PoolableObject
     {
         attackHolder = GetComponent<EnemyAttackHolder>();
         stats = GetComponent<EnemyStats>();
+        healthSystem = transform.GetChild(1).GetComponent<EnemyHealthSystem>();
         animations = transform.GetChild(0).GetComponent<EnemyAnimations>();
         events = GetComponent<EnemyEvents>();
         hud = GetComponent<EnemyHud>();
@@ -56,5 +58,11 @@ public class Enemy : PoolableObject
     protected virtual void Update()
     {
         currentState?.UpdateState(this);
+    }
+
+    public virtual void ResetEnemy()
+    {
+        healthSystem.ResetHealthEnemy();
+        events.Idle();
     }
 }

@@ -2375,11 +2375,15 @@ public class PlayerControl : MonoBehaviour
 
     void Move(float velocity)
     {
-        movementController.transform.localPosition += new Vector3(controller.LeftStickValue().x, 0, controller.LeftStickValue().y).normalized;
-        var targetRotation = Quaternion.LookRotation(movementController.transform.position - player.transform.position);
+        if(controller.LeftStickValue().magnitude > 0.2f)
+        {
+            movementController.transform.localPosition += new Vector3(controller.LeftStickValue().x, 0, controller.LeftStickValue().y).normalized;
+            var targetRotation = Quaternion.LookRotation(movementController.transform.position - player.transform.position);
 
-        // Smoothly rotate towards the target point.
-        player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 10 * Time.deltaTime);
+            // Smoothly rotate towards the target point.
+            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 10 * Time.deltaTime);
+        }
+
         //player.transform.LookAt(movementController.transform.position);
         RaycastHit hit;
 
@@ -2451,8 +2455,8 @@ public class PlayerControl : MonoBehaviour
                 states = States.DEATH;
                 deathTime = Time.time;
                 playerAnim.CrossFadeInFixedTime("Death", 0.2f);
-
                 cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
+                RoomManager.Instance.ResetRoomManager();
             }
             else
             {

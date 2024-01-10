@@ -1,67 +1,32 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Pool;
-using UnityEngine.Rendering;
 
 public enum SpawnMethod { RoundRobin, Random, };
 public class EnemySpawner : MonoBehaviour
 {
-    public Transform player;
+    #region Spawner Stats
     public int enemiesToSpawn = 5;
     public float timeToSpawn = 1f;
     public List<Enemy> enemies = new List<Enemy>();
     public SpawnMethod enemySpawnMethod = SpawnMethod.RoundRobin;
-    private Dictionary<int, ObjectPool> _enemyObjectsPools = new Dictionary<int, ObjectPool>();
-    private NavMeshTriangulation Triangulation;
+    public GameObject player;
+    #endregion
 
-    public List<GameObject> spawners = new List<GameObject>();
-    public List<GameObject> spawnersInstantiate = new List<GameObject>();
-    public GameObject containerDemon, containerSkeleton;
+    private NavMeshTriangulation Triangulation;
+    private Coroutine _spawnEnemiesCoroutine; // !!Only call once
+    public bool _isBurstSpawner;
     private int _vertexIndex;
+    private RoomManager _roomManager;
     private void Awake()
     {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            _enemyObjectsPools.Add(i, ObjectPool.CreateInstance(enemies[i], enemiesToSpawn));
-        }
-        containerDemon = GameObject.Find("DemonMage 1 (DemonMage) Pool");
-        containerSkeleton = GameObject.Find("SkeletonZombie (SkeletonZombie) Pool");
+        _roomManager = RoomManager.Instance;
     }
     private void Start()
     {
         Triangulation = NavMesh.CalculateTriangulation();
-
-        StartCoroutine(Spawner());
-    }
-
-    public void InstantiateBaseSpawners()
-    {
-        foreach (var spawner in spawners)
-        {
-            GameObject go = Instantiate(spawner, gameObject.transform);
-            spawnersInstantiate.Add(go);
-        }
-    }
-
-    public void DestroyBaseSpawners()
-    {
-        foreach (var spawner in spawnersInstantiate)
-        {
-            Destroy(spawner);
-        }
-        spawnersInstantiate.Clear();
-        for (int i = 0; i < containerDemon.transform.childCount; i++)
-        {
-            containerDemon.transform.GetChild(i).gameObject.SetActive(false);
-        }
-        for (int i = 0; i < containerSkeleton.transform.childCount; i++)
-        {
-            containerSkeleton.transform.GetChild(i).gameObject.SetActive(false);
-        }
+       //StartCoroutine(Spawner());
     }
 
     private IEnumerator Spawner()
@@ -81,6 +46,14 @@ public class EnemySpawner : MonoBehaviour
             _spawnedEnemies++;
             yield return wait;
         }
+        if (_isBurstSpawner)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            _spawnEnemiesCoroutine = null;
+        }
     }
     private void SpawnRoundRobinEnemy(int spawnedEnemies)
     {
@@ -90,6 +63,10 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 ChooseRandomPositionOnNavMesh()
     {
+        if(Triangulation.vertices == null)
+        {
+            Triangulation = NavMesh.CalculateTriangulation();
+        }
         do
         {
             _vertexIndex = Random.Range(0, Triangulation.vertices.Length);
@@ -99,11 +76,16 @@ public class EnemySpawner : MonoBehaviour
 
     public void DoSpawnEnemy(int index, Vector3 spawnPosition)
     {
-        PoolableObject poolable = _enemyObjectsPools[index].GetObject();
+        PoolableObject poolable = _roomManager.enemyObjectsPools[index].GetObject();
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
-
+            // *** ROOM MANAGER ***///
+            _roomManager.AddEnemy(enemy.gameObject);
+            if (!_roomManager.firstEnemySpawned)
+            {
+                _roomManager.firstEnemySpawned = true;
+            }
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPosition, out hit, 50f, -1))
             {
@@ -124,6 +106,17 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnRandomEnemy()
     {
         DoSpawnEnemy(Random.Range(0, enemies.Count), ChooseRandomPositionOnNavMesh());
+    }
+
+    private void OnEnable()
+    {
+        _spawnEnemiesCoroutine = StartCoroutine(Spawner());
+    }
+
+    private void OnDisable()
+    {
+        _spawnEnemiesCoroutine = null;
+        Destroy(gameObject);
     }
 }
 

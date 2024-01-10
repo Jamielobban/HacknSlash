@@ -15,12 +15,11 @@ public class ChaseState : EnemyState
         {
             enemy.events.Idle();
         }
-        if(InRangeToAttack(0) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
+        if(enemy.attackHolder.attacks[0].IsInRangeToAttack(_enemy.movements.DistanceToPlayer()) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
         {
             enemy.events.Attacking();
         }
     }
-    private bool InRangeToAttack(int v) => _enemy.movements.DistanceToPlayer() <= _enemy.attackHolder.attacks[v].data.range.Value;
     public override void ExitState(Enemy enemy)
     {
         base.ExitState(enemy);

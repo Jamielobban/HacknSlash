@@ -66,6 +66,11 @@ public class EnemyBaseAttack : MonoBehaviour
     {
 
     }
+    public virtual bool IsInRangeToAttack(float dist)
+    {
+        return dist <= data.range.Value;
+    }
+
     public virtual bool IsReadToUse() => currentAttackState == Enums.EnemyAttackState.ReadyToUse;
     public virtual bool IsInCd() => _currentTime < data.cooldown.Value && _currentTime >= 0;
     public virtual void ResetAbility() => currentAttackState = Enums.EnemyAttackState.ReadyToUse;
