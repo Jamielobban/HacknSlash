@@ -175,6 +175,7 @@ public class AbilityPowerManager : MonoBehaviour
 
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
         
+        Time.timeScale = 1.0f;
         //itemChoiceAnim.SetTrigger("Close");
         item1 = null;
         item2 = null;
@@ -194,7 +195,6 @@ public class AbilityPowerManager : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
         wow.SetActive(false);
-        Time.timeScale = 1.0f;
     }
 
     public void ShowNewOptions()

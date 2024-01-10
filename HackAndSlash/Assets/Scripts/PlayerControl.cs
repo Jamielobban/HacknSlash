@@ -299,7 +299,7 @@ public class PlayerControl : MonoBehaviour
 
         return finalDamage;
     }
-    ListaAtaques GetAttacks(ComboAtaques combo)
+    public ListaAtaques GetAttacks(ComboAtaques combo)
     {
         for (int i = 0; i < ataques.Length; i++)
         {

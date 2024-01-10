@@ -1,6 +1,7 @@
 using DamageNumbersPro;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -60,6 +61,7 @@ public enum StatType
     CritChance,
     Damage,
     CritDamage,
+    DoubleHit,
     None
 }
 
@@ -380,7 +382,7 @@ public class Slashes : Item
 
 }
 
-public class Feather : Item
+public class DoubleHit : Item
 {
     public override RarityType GetRarity()
     {
@@ -388,21 +390,33 @@ public class Feather : Item
     }
     public override StatType GetAssociatedStatType()
     {
-        return StatType.None;
+        return StatType.DoubleHit;
     }
     public override string GiveName()
     {
-        return "Feather";
+        return "Double Hit Square";
     }
 
     public override string GiveDescription()
     {
-        return "Gain 1 extra jump per stack in the air.";
+        return "Your light attacks now hit twice.";
     }
 
     public override Sprite GiveSprite()
     {
         return Resources.Load<Sprite>("Item Images/Gasoline");
+    }
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.DoubleHit)
+        {
+            Debug.Log("added");
+            for (int i = 0; i < player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks.Length; i++)
+            {
+                player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
+                player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
+            }
+        }
     }
 }
 
