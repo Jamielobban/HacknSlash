@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemiesProjetile : MonoBehaviour
 {
     public float damage;
-    public Vector3 targetPosition;
+    public GameObject targetPosition;
     public float speed = 15f;
     public float hitOffset = 0f;
     public bool UseFirePointRotation;
@@ -15,8 +15,8 @@ public class EnemiesProjetile : MonoBehaviour
 
     void Start()
     {
-        targetPosition = FindObjectOfType<PlayerControl>().transform.position;
-        if(Mathf.Abs(Vector3.Distance(targetPosition, transform.position)) <= 1)
+        targetPosition = FindObjectOfType<PlayerControl>().gameObject;
+        if(Mathf.Abs(Vector3.Distance(targetPosition.transform.position, transform.position)) <= 1)
         {
             Destroy(gameObject);
         }
@@ -39,24 +39,21 @@ public class EnemiesProjetile : MonoBehaviour
                 Destroy(flashInstance, flashPsParts.main.duration);
             }
         }
+        rb.AddForce(((targetPosition.transform.position - transform.position).normalized * speed), ForceMode.Impulse);
         Destroy(gameObject, 5);
-    }
-    private void FixedUpdate()
-    {
-        if (speed != 0)
-        {
-            Vector3 direction = (targetPosition - transform.position).normalized;
-            rb.velocity = direction * speed;
-        }
     }
     private void OnTriggerEnter(Collider other)
     {
         PlayerControl player = other.GetComponent<PlayerControl>();
         if(player != null)
         {
-            DieEffects();
-            player.GetDamage(damage);
-            Destroy(gameObject);
+            if (!(player.gameObject.layer == 8))
+            {
+                DieEffects();
+                player.GetDamage(damage);
+                Destroy(gameObject);
+            }
+
         }
         else if(other.gameObject.layer == LayerMask.NameToLayer("Suelo"))
         {

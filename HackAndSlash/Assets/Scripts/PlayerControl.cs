@@ -1515,8 +1515,8 @@ public class PlayerControl : MonoBehaviour
 
             if (pos2 != Vector3.zero)
             {
-
-
+                this.gameObject.layer = 8;
+                
                 Vector3 pos = (pos2 - this.transform.position).normalized;
 
                 pos = attackTeleport2.GetEnemiePos(this.transform.position) - (pos * 2);
@@ -2364,6 +2364,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.StartMove() && states != States.IDLE)
         {
+            this.gameObject.layer = 3;
             Invoke("EndRun", 0.25f);
             states = States.IDLE;
             moves = Moves.IDLE;
@@ -2462,6 +2463,7 @@ public class PlayerControl : MonoBehaviour
             {
                 states = States.HIT;
                 hitTime = Time.time;
+                playerAnim.speed = 1;
                 playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
                 hitFeedback.PlayFeedbacks();
             }
