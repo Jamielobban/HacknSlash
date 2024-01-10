@@ -70,7 +70,6 @@ public class RoomManager : MonoBehaviour
 
     private void NextStage()
     {
-
         stageLevel++;
         textStage.text = "Stage " + stageLevel;
         AbilityPowerManager.instance.itemChoice.SetActive(true);
