@@ -2454,9 +2454,9 @@ public class PlayerControl : MonoBehaviour
             {
                 states = States.DEATH;
                 deathTime = Time.time;
+                RoomManager.Instance.ResetRoomManager();
                 playerAnim.CrossFadeInFixedTime("Death", 0.2f);
                 cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
-                RoomManager.Instance.ResetRoomManager();
             }
             else
             {

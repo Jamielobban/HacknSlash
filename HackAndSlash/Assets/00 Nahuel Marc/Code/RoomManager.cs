@@ -126,6 +126,6 @@ public class RoomManager : MonoBehaviour
         }
         _enemiesToKill.Clear();
         firstEnemySpawned = false;
-        NextStage();
+       // NextStage();
     }
 }
