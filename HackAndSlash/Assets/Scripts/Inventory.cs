@@ -52,7 +52,9 @@ public class Inventory : MonoBehaviour
                     inventorymenu.SetActive(false);
                     backdrop.SetActive(false);
                     itemDescription.SetActive(false);
-                    Time.timeScale = 1.0f;
+                    if (!AbilityPowerManager.instance.isOpen) { 
+                        Time.timeScale = 1.0f;
+                    }
                 }
                 else
                 {
@@ -62,6 +64,7 @@ public class Inventory : MonoBehaviour
                     //AddItem(new HealingItem(), 1);
                     //Debug.Log("Hola");
                     RefreshInventory();
+                    
                     Time.timeScale = 0.0f;
                 }
             }

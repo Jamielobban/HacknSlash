@@ -70,6 +70,11 @@ public class AbilityPowerManager : MonoBehaviour
     public Image item2Image;
     public TMP_Text item2Name;
     public TMP_Text item2Description;
+
+
+
+
+    public bool isOpen;
     private void Awake()
     {
         if (_instance == null)
@@ -92,7 +97,7 @@ public class AbilityPowerManager : MonoBehaviour
     }
     private void Start()
     {
-
+        isOpen = false;
     }
     private void Update()
     {
@@ -176,6 +181,7 @@ public class AbilityPowerManager : MonoBehaviour
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
         
         Time.timeScale = 1.0f;
+        isOpen = false;
         //itemChoiceAnim.SetTrigger("Close");
         item1 = null;
         item2 = null;
@@ -199,6 +205,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        isOpen = true;
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
