@@ -95,7 +95,6 @@ public class EnemySkeletonSword : MonoBehaviour
     float timeDebil;
 
     public GameObject aa;
-    // Start is called before the first frame update
     void Start()
     {
         aa.SetActive(false);
