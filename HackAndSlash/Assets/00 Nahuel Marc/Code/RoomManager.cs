@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -59,6 +60,10 @@ public class RoomManager : MonoBehaviour
         {
             NextStage();
         }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            KillAllEnemies();
+        }
     }
 
     private void InitializePools()
@@ -104,7 +109,15 @@ public class RoomManager : MonoBehaviour
         }
         UpdateRemainingEnemiesHUD(_enemiesToKill.Count);
     }
-
+    private void KillAllEnemies()
+    {
+        foreach (var enemy in _enemiesToKill)
+        {
+            enemy.SetActive(false);
+            enemy.GetComponent<Enemy>().ResetEnemy();
+        }
+        _enemiesToKill.Clear();
+    }
     public void RemoveEnemy(GameObject enemy)
     {
         if(_enemiesToKill.Contains(enemy))

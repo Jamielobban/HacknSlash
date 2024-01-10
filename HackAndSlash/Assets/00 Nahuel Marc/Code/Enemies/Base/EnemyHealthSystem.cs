@@ -9,7 +9,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public float currentMaxHealth;
 
     #region Prefabs Effects
-
+    private PlayerControl _player;
     public DamageNumber critPrefab, normalPrefab;
     public GameObject[] hitWhiteEffects;
     public GameObject[] bloodEffects;
@@ -24,6 +24,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     }
     protected virtual void Awake()
     {
+        _player = FindObjectOfType<PlayerControl>();
         _enemy = transform.parent.GetComponent<Enemy>();
         currentMaxHealth = baseMaxHealth.Value;
 
@@ -55,6 +56,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public virtual void TakeDamage(float damage, bool isCrit, Vector3 collisionPoint)
     {
         _currentHealth -= damage;
+        _player.CallItemOnHit();
         _enemy.events.Hit();
         DamageEffects(damage, isCrit, collisionPoint);
         if(_currentHealth <= 0)
