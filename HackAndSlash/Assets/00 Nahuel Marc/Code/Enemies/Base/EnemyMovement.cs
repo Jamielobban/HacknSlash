@@ -111,7 +111,7 @@ public class EnemyMovement : MonoBehaviour
     public bool CheckGround(Enemy e)
     {
         RaycastHit hit;
-        if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Suelo")))
+        if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Suelo")))
         {
             //return hit.collider.GetComponent<TerrainCollider>() != null;
             return true;

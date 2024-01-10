@@ -6,7 +6,7 @@ public class CollisionGround : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Suelo")))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Suelo")))
         {
            isGrounded = true;
         }

@@ -1007,6 +1007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
       propertyPath: m_StoppingDistance
       value: 1.7
       objectReference: {fileID: 0}
@@ -1184,7 +1189,6 @@ MonoBehaviour:
   isGrounded: 0
   canAttack: 1
   onAir: 0
-  collisionGround: {fileID: 3723981978843783853}
 --- !u!114 &7034356897863225867
 MonoBehaviour:
   m_ObjectHideFlags: 0

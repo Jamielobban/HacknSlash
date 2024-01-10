@@ -247,6 +247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
+      propertyPath: m_Speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
       propertyPath: m_StoppingDistance
       value: 4
       objectReference: {fileID: 0}
@@ -393,6 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  isGrounded: 0
   canAttack: 1
   onAir: 1
 --- !u!54 &574045541078661437

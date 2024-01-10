@@ -1,21 +1,25 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
     public GameObject spawnerPrefab;
     public GameObject player;
-    [SerializeField] private int enemiesToSpawn = 5;
-    private int stageLevel = 0;
+    public int numStartEnemiesSpawn = 5;
     //Temporal public
     public List<GameObject> _enemiesToKill = new List<GameObject>();
-    private GameObject _spawnPoint;
 
     public bool firstEnemySpawned = false;
     public Dictionary<int, ObjectPool> enemyObjectsPools = new Dictionary<int, ObjectPool>();
     public List<Enemy> enemies = new List<Enemy>();
 
+    private int stageLevel = 0;
+    private GameObject _spawnPoint;
+    private int _currentEnemiesToSpawn;
     private static RoomManager _instance;
+
+    public TextMeshProUGUI textStage, textRemaining;
     public static RoomManager Instance
     {
         get
@@ -34,17 +38,14 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void Active() { }
-
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         _instance = this;
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemyObjectsPools.Add(i, ObjectPool.CreateInstance(enemies[i], enemiesToSpawn));
-        }
+
+        _currentEnemiesToSpawn = numStartEnemiesSpawn;
         _spawnPoint = GameObject.Find("SpawnerInstantiatePoint");
+        InitializePools();
         NextStage();
     }
     private void Update()
@@ -53,22 +54,31 @@ public class RoomManager : MonoBehaviour
         {
             NextStage();
         }
-        Debug.Log("Enemies Remaining: " + _enemiesToKill.Count);
     }
+
+    private void InitializePools()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemyObjectsPools.Add(i, ObjectPool.CreateInstance(enemies[i], _currentEnemiesToSpawn));
+        }
+    }
+
     private void NextStage()
     {
         stageLevel++;
-        Debug.Log("Current Stage Level: " + stageLevel);
+        textStage.text = "Stage " + stageLevel;
+        textStage.gameObject.GetComponent<TextMeshProFadeObject>().FadeIn();
         GenerateSpawner(0.3f, 0f); // Insta Spawner
         GenerateSpawner(0.7f, 1f); // Time Spawner
-        enemiesToSpawn++;
+        _currentEnemiesToSpawn++;
     }
 
     private void GenerateSpawner(float spawnPercentage, float spawnDelay)
     {
         GameObject go = Instantiate(spawnerPrefab, _spawnPoint.transform.position, _spawnPoint.transform.rotation);
         EnemySpawner _spawn = go.GetComponent<EnemySpawner>();
-        _spawn.enemiesToSpawn = Mathf.RoundToInt(enemiesToSpawn * spawnPercentage);
+        _spawn.enemiesToSpawn = Mathf.RoundToInt(_currentEnemiesToSpawn * spawnPercentage);
         _spawn.timeToSpawn = spawnDelay;
         _spawn._isBurstSpawner = true;
         go.SetActive(true);
@@ -82,6 +92,7 @@ public class RoomManager : MonoBehaviour
         {
             _enemiesToKill.Add(enemy);
         }
+        UpdateRemainingEnemiesHUD(_enemiesToKill.Count);
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -90,5 +101,24 @@ public class RoomManager : MonoBehaviour
         {
             _enemiesToKill.Remove(enemy);
         }
+        UpdateRemainingEnemiesHUD(_enemiesToKill.Count);
+    }
+
+    private void UpdateRemainingEnemiesHUD(int value)
+    {
+        textRemaining.text = ("Enemies Remaining: " + value);
+    }
+
+    public void ResetRoomManager()
+    {
+        stageLevel = 0;
+        foreach (var enemy in _enemiesToKill)
+        {
+            enemy.SetActive(false);
+            enemy.GetComponent<Enemy>().ResetEnemy();
+        }
+        _enemiesToKill.Clear();
+        firstEnemySpawned = false;
+        NextStage();
     }
 }
