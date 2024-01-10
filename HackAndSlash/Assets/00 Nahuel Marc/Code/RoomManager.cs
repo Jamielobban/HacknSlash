@@ -46,6 +46,10 @@ public class RoomManager : MonoBehaviour
         _currentEnemiesToSpawn = numStartEnemiesSpawn;
         _spawnPoint = GameObject.Find("SpawnerInstantiatePoint");
         InitializePools();
+        ItemManager.instance.AddItemsToList();
+    }
+    private void Start()
+    {
         NextStage();
     }
     private void Update()
@@ -66,12 +70,15 @@ public class RoomManager : MonoBehaviour
 
     private void NextStage()
     {
+
         stageLevel++;
         textStage.text = "Stage " + stageLevel;
+        AbilityPowerManager.instance.itemChoice.SetActive(true);
+        AbilityPowerManager.instance.ShowNewOptions();
         textStage.gameObject.GetComponent<TextMeshProFadeObject>().FadeIn();
         GenerateSpawner(0.3f, 0f); // Insta Spawner
         GenerateSpawner(0.7f, 1f); // Time Spawner
-        _currentEnemiesToSpawn++;
+        _currentEnemiesToSpawn += 2;
     }
 
     private void GenerateSpawner(float spawnPercentage, float spawnDelay)
