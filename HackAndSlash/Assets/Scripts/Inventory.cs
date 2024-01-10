@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Inventory : MonoBehaviour
     public int inventorySize = 14;
 
     public PlayerStats playerStats;
+    public GameObject itemDescription;
+    public GameObject backdrop;
     ControllerManager controller;
 
     // Start is called before the first frame update
@@ -48,24 +51,28 @@ public class Inventory : MonoBehaviour
                 if (inventorymenu.activeSelf)
                 {
                     inventorymenu.SetActive(false);
-
+                    itemDescription.SetActive(false);
+                    backdrop.SetActive(false);
+                    Time.timeScale = 1.0f;
                 }
                 else
                 {
                     inventorymenu.SetActive(true);
-                    //AddItem(new HealingItem(), 1);
-                    //Debug.Log("Hola");
+                    itemDescription.SetActive(true);
+                    backdrop.SetActive(true);
+                   
                     RefreshInventory();
+                    Time.timeScale = 0.0f;
                 }
             }
         }
-        if(Input.GetKeyDown(KeyCode.K))
-        {
+        //if(Input.GetKeyDown(KeyCode.K))
+        //{
 
-                ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
+        //        ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
 
             
-        }
+        //}
     }
 
     public void RefreshInventory()
@@ -133,7 +140,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        i.stacks += amount;
+                        i.stacks = amount;
                         if (inventorymenu.activeSelf) RefreshInventory();
                         return 0;
                     }

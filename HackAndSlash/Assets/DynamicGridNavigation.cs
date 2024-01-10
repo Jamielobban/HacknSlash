@@ -10,10 +10,12 @@ public class DynamicGridNavigation : MonoBehaviour
 {
     public Transform[] gridElements;
     private int currentIndex;
+    private GameObject lastSelectedObject; // Added to store the last selected object
     ControllerManager controllerMan;
     public TMP_Text ITEMdESC;
     public PlayerControl playerControl;
     public Image itemHighlight;
+
     void Start()
     {
         controllerMan = FindObjectOfType<ControllerManager>();
@@ -22,10 +24,22 @@ public class DynamicGridNavigation : MonoBehaviour
         currentIndex = 0;
     }
 
+    void OnEnable()
+    {
+        currentIndex = 0;
+        // Store the last selected object when the script is enabled
+        lastSelectedObject = EventSystem.current.currentSelectedGameObject;
+    }
+
+    void OnDisable()
+    {
+        // Restore the last selected object when the script is disabled
+        EventSystem.current.SetSelectedGameObject(lastSelectedObject);
+    }
+
     void Update()
     {
         HandleNavigationInput();
-
     }
 
     void HandleNavigationInput()
@@ -41,41 +55,34 @@ public class DynamicGridNavigation : MonoBehaviour
         if (Gamepad.current.dpad.right.wasPressedThisFrame && dpadInput.x > 0.5f)
         {
             // Right
-            currentIndex += 1;
-            currentIndex = Mathf.Clamp(currentIndex, 0, gridElements.Length - 1);
-            EventSystem.current.SetSelectedGameObject(gridElements[currentIndex].gameObject);
-            //Debug.Log("Right");
+            currentIndex = (currentIndex + 1) % gridElements.Length;
         }
         else if (Gamepad.current.dpad.left.wasPressedThisFrame && dpadInput.x < -0.5f)
         {
             // Left
-            currentIndex -= 1;
-            currentIndex = Mathf.Clamp(currentIndex, 0, gridElements.Length - 1);
-            EventSystem.current.SetSelectedGameObject(gridElements[currentIndex].gameObject);
-            //Debug.Log("Left");
+            currentIndex = (currentIndex - 1 + gridElements.Length) % gridElements.Length;
         }
 
         if (Gamepad.current.dpad.up.wasPressedThisFrame && dpadInput.y > 0.5f)
         {
             // Up
-            // Add your logic for upward navigation if needed
-            //Debug.Log("Up");
+            int rowSize = 4; // Assuming 5 elements per row
+            currentIndex = (currentIndex - rowSize + gridElements.Length) % gridElements.Length;
         }
         else if (Gamepad.current.dpad.down.wasPressedThisFrame && dpadInput.y < -0.5f)
         {
             // Down
-            // Add your logic for downward navigation if needed
-            //Debug.Log("Down");
+            int rowSize = 4; // Assuming 5 elements per row
+            currentIndex = (currentIndex + rowSize) % gridElements.Length;
         }
-        Debug.Log(gridElements[currentIndex].name);
-        // Log the selected child's name to the console
+
+        EventSystem.current.SetSelectedGameObject(gridElements[currentIndex].gameObject);
+
         string itemName = gridElements[currentIndex].name;
         string formattedName = itemName.Substring(3).Replace("Panel", "").Trim();
 
-        //Debug.Log(formattedName);
         ITEMdESC.text = playerControl.GetItemDescription(formattedName);
         itemHighlight.transform.position = gridElements[currentIndex].gameObject.transform.position;
-
     }
 
     void RefreshGridElements()
