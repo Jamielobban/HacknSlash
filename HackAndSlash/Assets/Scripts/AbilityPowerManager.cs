@@ -174,6 +174,7 @@ public class AbilityPowerManager : MonoBehaviour
         player.CallItemOnPickup(chosenItem.GetAssociatedStatType());
 
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
+        
         Time.timeScale = 1.0f;
         //itemChoiceAnim.SetTrigger("Close");
         item1 = null;
@@ -186,7 +187,7 @@ public class AbilityPowerManager : MonoBehaviour
     {
         option1Button.GetComponent<Button>().enabled = false;
         option2Button.GetComponent<Button>().enabled = false;
-        yield return new WaitForSeconds(delay * 5);
+        yield return new WaitForSeconds(delay);
 
 
         //itemChoiceAnim.SetTrigger("Close");
@@ -201,12 +202,17 @@ public class AbilityPowerManager : MonoBehaviour
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
-      //  player.GetComponent<PlayerControl>().enabled = false;
+        player.GetComponent<PlayerControl>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         Time.timeScale = 0.0f;
         // Generate new items for options
         item1 = ItemManager.instance.GetRandomItem();
         item2 = ItemManager.instance.GetRandomItem();
+
+        while(item1.GiveName() == item2.GiveName())
+        {
+            item2 = ItemManager.instance.GetRandomItem();
+        }
 
 
         int colorBox1;
@@ -265,11 +271,11 @@ public class AbilityPowerManager : MonoBehaviour
     {
         Navigation nav1 = option1Button.navigation;
         nav1.mode = Navigation.Mode.Explicit;
-        nav1.selectOnDown = option2Button;
+        nav1.selectOnRight = option2Button;
 
         Navigation nav2 = option2Button.navigation;
         nav2.mode = Navigation.Mode.Explicit;
-        nav2.selectOnUp = option1Button;
+        nav2.selectOnLeft = option1Button;
 
         option1Button.navigation = nav1;
         option2Button.navigation = nav2;
@@ -294,7 +300,7 @@ public class AbilityPowerManager : MonoBehaviour
     {
         rarityColorMap = new Dictionary<RarityColor, Color>
         {
-            { RarityColor.White, new Color(1f, 1f, 1f) },    // White
+            { RarityColor.White, new Color(0.75f, 0.75f, 0.75f) },    // White
             { RarityColor.Green, new Color(0f, 1f, 0f) },    // Green
             { RarityColor.Purple, new Color(0.5f, 0f, 1f) }, // Purple
             { RarityColor.Red, new Color(1f, 0f, 0f) }       // Red

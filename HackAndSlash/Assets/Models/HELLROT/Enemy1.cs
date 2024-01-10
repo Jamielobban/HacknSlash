@@ -505,7 +505,8 @@ public class Enemy1 : MonoBehaviour
 
         if (other.GetComponent<AttackCollider>() != null && GetDamage)
         {
-            if(healthState == other.GetComponent<AttackCollider>().healthState)
+            //CallItemOnHitplayer.CallItem
+            if (healthState == other.GetComponent<AttackCollider>().healthState)
             {
                 stateMultiplier++;
                 timeEffectApplied = Time.time;

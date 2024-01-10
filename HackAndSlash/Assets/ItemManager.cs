@@ -109,6 +109,9 @@ public class ItemManager : MonoBehaviour
         itemList.Add(new AttackDamge());
         itemList.Add(new Meat());
         itemList.Add(new BoosterShot());
+        itemList.Add(new MonsterTooth());
+        itemList.Add(new Slashes());
+        itemList.Add(new DoubleHit());
     }
 
 }
