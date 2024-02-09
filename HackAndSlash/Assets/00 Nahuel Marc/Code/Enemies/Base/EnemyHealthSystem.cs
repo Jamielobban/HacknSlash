@@ -53,12 +53,13 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         _enemy.events.Heal();
     }
 
-    public virtual void TakeDamage(float damage, bool isCrit, Vector3 collisionPoint)
+    //  bool isCrit, Vector3 collisionPoint
+    public virtual void TakeDamage(float damage)
     {
         _currentHealth -= damage;
         _player.CallItemOnHit();
         _enemy.events.Hit();
-        DamageEffects(damage, isCrit, collisionPoint);
+       // DamageEffects(damage, isCrit, collisionPoint);
         if(_currentHealth <= 0)
         {
             _enemy.events.Die();

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4015584870617679073
 Transform:
   m_ObjectHideFlags: 0
@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9837129f0b172047b8aac3ea4866465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesToSpawn: 5
-  timeToSpawn: 1
-  enemies:
-  - {fileID: 510826154232109593, guid: 55e533c4ad1688a4bae58141fc3aa95b, type: 3}
-  - {fileID: 4614976856345936542, guid: 029ad75f54678e244b3fa524f3f480b5, type: 3}
+  _enemiesToSpawn: 0
+  _timeToSpawn: 0
+  _isBurstSpawner: 0
   enemySpawnMethod: 0
+  _enemies:
+  - {fileID: 4614976856345936542, guid: 029ad75f54678e244b3fa524f3f480b5, type: 3}
+  - {fileID: 510826154232109593, guid: 55e533c4ad1688a4bae58141fc3aa95b, type: 3}
