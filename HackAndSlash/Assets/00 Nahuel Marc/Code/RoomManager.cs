@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+
+    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+
     public float scaleDivision = 4;
     public GameObject spawnerPrefab;
     public GameObject player;
@@ -13,7 +16,6 @@ public class RoomManager : MonoBehaviour
     public List<GameObject> _enemiesToKill = new List<GameObject>();
 
     public bool firstEnemySpawned = false;
-    public Dictionary<int, ObjectPool> enemyObjectsPools = new Dictionary<int, ObjectPool>();
     public List<Enemy> enemies = new List<Enemy>();
 
     private int stageLevel = 0;
@@ -46,6 +48,7 @@ public class RoomManager : MonoBehaviour
         _instance = this;
 
         _currentEnemiesToSpawn = numStartEnemiesSpawn;
+
         _spawnPoint = GameObject.Find("SpawnerInstantiatePoint");
         InitializePools();
         ItemManager.instance.AddItemsToList();
@@ -70,8 +73,14 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemyObjectsPools.Add(i, ObjectPool.CreateInstance(enemies[i], _currentEnemiesToSpawn));
+            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], _currentEnemiesToSpawn));
         }
+    }
+
+    private void GenerateStage()
+    {
+        stageLevel++;
+        textStage.text = "Stage " + stageLevel;
     }
 
     private void NextStage()
@@ -92,10 +101,10 @@ public class RoomManager : MonoBehaviour
     private void GenerateSpawner(float spawnPercentage, float spawnDelay)
     {
         GameObject go = Instantiate(spawnerPrefab, _spawnPoint.transform.position, _spawnPoint.transform.rotation);
-        EnemySpawner _spawn = go.GetComponent<EnemySpawner>();
-        _spawn.enemiesToSpawn = Mathf.RoundToInt(_currentEnemiesToSpawn * spawnPercentage);
-        _spawn.timeToSpawn = spawnDelay;
-        _spawn._isBurstSpawner = true;
+        SpawnerBase _spawn = go.GetComponent<SpawnerBase>();
+        _spawn.EnemiesToSpawn = Mathf.RoundToInt(_currentEnemiesToSpawn * spawnPercentage);
+        _spawn.TimeToSpawn = spawnDelay;
+        _spawn.IsBurstSpawner = true;
         go.SetActive(true);
     }
 
