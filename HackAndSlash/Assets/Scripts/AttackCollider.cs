@@ -46,7 +46,7 @@ public class AttackCollider : MonoBehaviour
 
             Vector3 collisionPoint = FindClosestPointOnCollider(other, transform.position);
             IDamageable enemy = other.GetComponent<IDamageable>();
-            enemy.TakeDamage(damage, isCrit, collisionPoint);
+            //enemy.TakeDamage(damage, isCrit, collisionPoint);
             if(toAir)
             {
                 enemy.AirDamageable();

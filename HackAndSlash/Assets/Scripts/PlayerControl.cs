@@ -1697,7 +1697,7 @@ public class PlayerControl : MonoBehaviour
                     currentComboAttacks = GetAttacks(ComboAtaques.air1);
                     PlayAttack();
                 }
-                else if (states == States.MOVE || currentComboAttacks.combo == ComboAtaques.run1)
+                else if (states == States.MOVE || (currentComboAttacks != null && currentComboAttacks.combo == ComboAtaques.run1))
                 {
                     if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
