@@ -2,12 +2,18 @@ using System;
 
 public class Enums
 {
+    public enum CameraType
+    {
+        FreeLook,
+        Locked
+    };
+
     public enum EnemyAttackState
     {
         ReadyToUse = 0,
         Casting,
         Cooldown
-    }
+    };
 
     public enum SpawnMethod 
     { 

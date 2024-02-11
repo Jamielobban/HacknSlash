@@ -13,11 +13,18 @@ public class PlayerManager : MonoBehaviour
     public PlayerHUDSystem hud { get; protected set; }
     public PlayerHealthSystem healthSystem { get; protected set; }
     public PlayerInputsSystem inputs { get; private set; }
+    public CameraMovement cameraMovement { get; private set; }
+
+    public PlayerCollision collision;
 
 
     public bool isDead = false;
     public bool isStun = false;
     public bool isInteracting;
+
+    private Camera _mainCamera;
+    public Camera MainCamera { get => _mainCamera; }
+
     [SerializeField] private Enums.CharacterState _currentCharacterState = Enums.CharacterState.Idle;
 
     public Enums.CharacterState CurrentCharacterState
@@ -28,6 +35,8 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        _mainCamera = Camera.main;
+        cameraMovement = GetComponent<CameraMovement>();       
         rb = GetComponent<Rigidbody>();
         animations = transform.GetChild(0).GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();
@@ -37,13 +46,15 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        //handleInputs
+
         if(CurrentCharacterState == Enums.CharacterState.Idle)
         {
-            
+            animations.HandleIdleAnimations();
         }
-        else if(CurrentCharacterState == Enums.CharacterState.Moving)
+        if(CurrentCharacterState == Enums.CharacterState.Moving)
         {
-
+            animations.HandleMovingAnimations();
         }
     }
 
@@ -57,7 +68,6 @@ public class PlayerManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        //cameraScript.UpdateCameraPostion(transfrom)
         isInteracting = animations.GetAnimator.GetBool("isInteracting");
     }
 
@@ -69,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         switch (CurrentCharacterState)
         {
             case Enums.CharacterState.Idle:
+                animations.OnIdleAnimation();
                 break;
             case Enums.CharacterState.Moving:
                 break;

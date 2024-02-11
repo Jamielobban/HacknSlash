@@ -37,8 +37,13 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         if(_currentHealth <= 0)
         {
             _currentHealth = 0;
-            //die
+            Die();
         }
+    }
+
+    public void Die()
+    {
+
     }
 
     void Start()
