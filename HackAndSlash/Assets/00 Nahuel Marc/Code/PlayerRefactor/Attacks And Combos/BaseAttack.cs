@@ -70,7 +70,6 @@ public class BaseAttack : MonoBehaviour
     }
     private bool CharacterIsOnAllowedState()
     {
-        //return data.AllowedCharacterStates.Contains(GameManager.Instance.playerScript.CurrentCharacterState);
-        return true;
+        return data.AllowedCharacterStates.Contains(_player.CurrentCharacterState);
     }
 }

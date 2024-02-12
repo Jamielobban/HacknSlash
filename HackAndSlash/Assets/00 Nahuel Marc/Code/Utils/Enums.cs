@@ -27,6 +27,7 @@ public class Enums
         Idle,
         Moving,
         Dashing,
+        Air,
         Attacking
     };
 

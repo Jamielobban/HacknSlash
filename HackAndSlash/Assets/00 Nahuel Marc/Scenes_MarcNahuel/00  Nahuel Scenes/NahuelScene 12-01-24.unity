@@ -1363,6 +1363,7 @@ MonoBehaviour:
   collision: {fileID: 1345124149}
   isDead: 0
   isStun: 0
+  isInvulnerable: 0
   isInteracting: 0
   _currentCharacterState: 0
 --- !u!114 &65392751
@@ -43717,10 +43718,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.35
+  m_Height: 1.8778559
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.8397617, z: 0}
 --- !u!114 &943642086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91310,6 +91311,68 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2a4176129e5e62446b9e93c598d0dd0b, type: 2}
+    - target: {fileID: 2350190604512225050, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'index_03_l'\n\tTransform 'lowerarm_l'\n\tTransform
+        'root'\n\tTransform 'pinky_03_l'\n\tTransform 'neck_01'\n\tTransform 'pinky_03_r'\n\tTransform
+        'ring_02_l'\n\tTransform 'hand_l'\n\tTransform 'middle_01_l'\n\tTransform
+        'ring_01_r'\n\tand more ...\n\tFrom animation clip 'Jump_Loop'\n\tFrom animation
+        clip 'FallAttack'\n\tFrom animation clip 'Skill_G_2'\n\tFrom animation clip
+        'LandAttack'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6911154
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5948736
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.35956922
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.1979769
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 137.166
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 452.63202
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 106.956
+      objectReference: {fileID: 0}
     - target: {fileID: 8538157711883550048, guid: 7c7aea1c9093ad5478fd05922836fcfe,
         type: 3}
       propertyPath: m_RootOrder

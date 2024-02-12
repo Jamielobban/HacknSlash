@@ -6,5 +6,5 @@ using UnityEngine.InputSystem;
 public class Combo : ScriptableObject
 {
     public List<InputAction> sequence = new List<InputAction>();
-  //  public List<DataAttack> attack;
+    public List<BaseAttack> attack = new List<BaseAttack>();
 }

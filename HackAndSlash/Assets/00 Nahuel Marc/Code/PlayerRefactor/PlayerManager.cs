@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
 
     public bool isDead = false;
     public bool isStun = false;
+    public bool isInvulnerable = false;
     public bool isInteracting;
 
     private Camera _mainCamera;
