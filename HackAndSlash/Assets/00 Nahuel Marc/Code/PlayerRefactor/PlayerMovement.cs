@@ -56,8 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting) { return; }
-        if (_isJumping) { return; }
+        if (_player.isInteracting || _isJumping || !_canMove) { return; }
 
         if (_isSprinting)
         {
@@ -140,8 +139,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        //_player.movement.DisableMovement();
-        //_player.rb.AddForce((GetDirectionNormalized() + Vector3.up) * jumpForce, ForceMode.Impulse);
         _isJumping = true;
         float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
         Vector3 playerVelocity = _moveDirection;

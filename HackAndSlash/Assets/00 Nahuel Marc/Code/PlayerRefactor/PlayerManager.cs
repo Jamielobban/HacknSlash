@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerCollision collision;
 
+    public ComboController comboController { get; private set; }
+
 
     public bool isDead = false;
     public bool isStun = false;
@@ -36,7 +38,8 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
-        cameraMovement = GetComponent<CameraMovement>();       
+        cameraMovement = GetComponent<CameraMovement>();   
+        comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();
         animations = transform.GetChild(0).GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();

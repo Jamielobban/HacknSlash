@@ -1173,6 +1173,7 @@ GameObject:
   - component: {fileID: 65392747}
   - component: {fileID: 65392746}
   - component: {fileID: 65392751}
+  - component: {fileID: 65392752}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1320,7 +1321,7 @@ MonoBehaviour:
     m_Bits: 128
   maxDistance: 1.5
   jumpHeight: 3
-  gravityIntensity: -15
+  gravityIntensity: -20
   isGrounded: 0
 --- !u!114 &65392748
 MonoBehaviour:
@@ -1346,6 +1347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de087b4aac6ab6e409aa1e83c63d5556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDamage: 0
 --- !u!114 &65392750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,6 +1394,19 @@ MonoBehaviour:
     _maxVerticalAngle: 35
     _minVerticalAngle: 35
     _cameraDistance: 5
+--- !u!114 &65392752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65392741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f9097e96eeec34aba70604ee3758f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combos: []
 --- !u!1 &68305962
 GameObject:
   m_ObjectHideFlags: 3
@@ -62742,7 +62757,7 @@ PrefabInstance:
     - target: {fileID: 3293686874548887571, guid: 9f5106045012ae042b8c802c781dc41c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3293686874548887571, guid: 9f5106045012ae042b8c802c781dc41c,
         type: 3}
@@ -88066,7 +88081,7 @@ Transform:
   - {fileID: 1232078377}
   - {fileID: 1845285150}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820619075
 GameObject:

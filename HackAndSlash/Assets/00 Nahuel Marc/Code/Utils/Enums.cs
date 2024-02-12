@@ -8,7 +8,7 @@ public class Enums
         Locked
     };
 
-    public enum EnemyAttackState
+    public enum AttackState
     {
         ReadyToUse = 0,
         Casting,

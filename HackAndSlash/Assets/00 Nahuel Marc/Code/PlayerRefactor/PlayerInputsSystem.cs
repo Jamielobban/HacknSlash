@@ -50,18 +50,12 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void MoveLeftStick_performed(InputAction.CallbackContext context)
     {
-        if(_player.collision.IsGrounded && !_player.isInteracting)
-        {
-            _player.movement.EnableMovement();
-        }
+        _player.movement.EnableMovement();
     }
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
-        if (_player.collision.IsGrounded && !_player.isInteracting)
-        {
-            _player.movement.DisableMovement();
-            _player.ChangeCharacterState(Enums.CharacterState.Idle);
-        }
+        _player.movement.DisableMovement();
+        _player.ChangeCharacterState(Enums.CharacterState.Idle);
     }
 
     private void R2_performed(InputAction.CallbackContext context)
