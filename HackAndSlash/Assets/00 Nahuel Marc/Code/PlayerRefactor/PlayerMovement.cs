@@ -79,9 +79,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(raycastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
-            if (!isGrounded && !_player.isInteracting)
+            if (!isGrounded)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
+                _isJumping = false;
             }
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
@@ -141,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //_player.movement.DisableMovement();
         //_player.rb.AddForce((GetDirectionNormalized() + Vector3.up) * jumpForce, ForceMode.Impulse);
+        _isJumping = true;
         float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
         Vector3 playerVelocity = _moveDirection;
         playerVelocity.y = jumpVelocity;

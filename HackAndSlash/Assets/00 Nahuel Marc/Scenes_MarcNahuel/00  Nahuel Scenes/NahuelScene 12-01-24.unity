@@ -1311,6 +1311,16 @@ MonoBehaviour:
   jumpForce: 20
   dashSpeed: 50
   dashDelay: 2
+  inAirTime: 0
+  leapingVelocity: 3
+  fallingSpeed: 33
+  raycastHeightOffset: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  maxDistance: 1.5
+  jumpHeight: 3
+  gravityIntensity: -15
   isGrounded: 0
 --- !u!114 &65392748
 MonoBehaviour:
@@ -1369,14 +1379,19 @@ MonoBehaviour:
   _sensitivity: 2
   _invertXAxis: 0
   _invertYAxis: 0
+  _collisionLayers:
+    serializedVersion: 2
+    m_Bits: 129
+  _collisionRadius: 2
+  _minimumCollisionOffset: 0.2
   lookAt: {fileID: 1664926818}
   trueLookAt: {fileID: 1664926818}
   _cameraSettings:
     _offsetX: 0
     _offsetY: 0
-    _maxVerticalAngle: 45
-    _minVerticalAngle: 45
-    _cameraDistance: 6
+    _maxVerticalAngle: 35
+    _minVerticalAngle: 35
+    _cameraDistance: 5
 --- !u!1 &68305962
 GameObject:
   m_ObjectHideFlags: 3
@@ -61940,11 +61955,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a8121a95e30e54a94df38ec1b3d656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastHeightOffset: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  maxDistance: 1
 --- !u!1 &1348992932
 GameObject:
   m_ObjectHideFlags: 3
@@ -78728,7 +78738,7 @@ GameObject:
   - component: {fileID: 1529259174}
   - component: {fileID: 1529259173}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78817,7 +78827,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -78844,14 +78854,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529259172}
-  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 323.709, y: 2, z: 331.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 87
-  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1529421629
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,7 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isStun)
+        if (!isStun)
         {
             movement.HandleAllMovement();
         }

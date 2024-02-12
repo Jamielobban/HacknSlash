@@ -11,6 +11,11 @@ public class CameraMovement : MonoBehaviour
     [SerializeField][Range(0.1f, 2.0f)] private float _sensitivity;
     [SerializeField] private bool _invertXAxis;
     [SerializeField] private bool _invertYAxis;
+    [SerializeField] private LayerMask _collisionLayers;
+    [SerializeField] private float _collisionRadius;
+    [SerializeField] private float _minimumCollisionOffset;
+    
+
 
     public Transform lookAt;
     public Transform trueLookAt;
@@ -62,7 +67,7 @@ public class CameraMovement : MonoBehaviour
 
         _cam = Camera.main;
 
-        if(type == Enums.CameraType.Locked)
+        if (type == Enums.CameraType.Locked)
         {
             _cam.transform.parent = transform;
         }
@@ -72,6 +77,7 @@ public class CameraMovement : MonoBehaviour
     private void FixedUpdate()
     {
         OrbitSphericalCoords();
+        HandleCameraCollision();
     }
 
     private void OrbitSphericalCoords()
@@ -171,4 +177,47 @@ public class CameraMovement : MonoBehaviour
         _inTransition = true;
     }
 
+    private void HandleCameraCollision()
+    {
+        float targetPosition = _cameraSettings.GetCameraDistance(); // Valor predeterminado
+
+        RaycastHit hit;
+        Vector3 direction = (_cam.transform.position - lookAt.position).normalized;
+
+        if (Physics.SphereCast(lookAt.position, _collisionRadius, direction, out hit, Mathf.Abs(targetPosition), _collisionLayers))
+        {
+            float distance = Vector3.Distance(lookAt.position, hit.point);
+            targetPosition = Mathf.Max(_minimumCollisionOffset, targetPosition - (distance - _minimumCollisionOffset));
+        }
+
+        Vector3 cameraPositionOffset = -_cam.transform.forward * targetPosition; // Usamos -forward para ir en la dirección opuesta a la cámara
+        _cam.transform.position = Vector3.Lerp(_cam.transform.position, lookAt.position + cameraPositionOffset, 0.2f);
+
+        // Asegurarse de que la cámara siga mirando hacia el objeto lookAt
+        _cam.transform.LookAt(lookAt);
+    }
+
+    //private void HandleCameraCollision()
+    //{
+    //    float targetPosition = _cameraSettings.GetCameraDistance(); // Valor predeterminado
+
+    //    RaycastHit hit;
+    //    Vector3 direction = _cam.transform.position - lookAt.position;
+    //    direction.Normalize();
+
+    //    if (Physics.SphereCast(lookAt.position, _collisionRadius, direction, out hit, Mathf.Abs(targetPosition), _collisionLayers))
+    //    {
+    //        float distance = Vector3.Distance(lookAt.position, hit.point);
+    //        targetPosition = targetPosition - (distance - _minimumCollisionOffset);
+    //    }
+
+    //    if (Mathf.Abs(targetPosition) < _minimumCollisionOffset)
+    //    {
+    //        targetPosition = targetPosition - _minimumCollisionOffset;
+    //    }
+
+    //    Vector3 cameraVectorPosition = _cam.transform.localPosition;
+    //    cameraVectorPosition.z = Mathf.Lerp(_cam.transform.localPosition.z, targetPosition, 0.2f);
+    //    _cam.transform.localPosition = cameraVectorPosition;
+    //}
 }
