@@ -11,7 +11,6 @@ public class DamageAttack : BaseAttack
     protected override void SetVisualEffects()
     {
         base.SetVisualEffects();
-        //Instantiate effect with DealDamage
         GameObject go = Instantiate(data.effect, transform.position, Quaternion.identity);
         go.GetComponent<DealDamage>().attack = this;
     }

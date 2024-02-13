@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "Attack Data", menuName = "Attacks/Combo")]
-public class Combo : ScriptableObject
+public class Combo : MonoBehaviour
 {
     public List<InputAction> sequence = new List<InputAction>();
     public List<BaseAttack> attack = new List<BaseAttack>();
