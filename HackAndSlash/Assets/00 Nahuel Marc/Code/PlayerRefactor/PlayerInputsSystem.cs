@@ -78,12 +78,30 @@ public class PlayerInputsSystem : MonoBehaviour
     {
         _player.movement.Dash();
     }
+    private float _timerHold = 2f;
     private void Square_performed(InputAction.CallbackContext context)
     {
+        _player.comboController.AddInputToSequence(context.action);
+
+        //Do base attack
+
+        if(_player.comboController.CurrentSequence.Count > 1)
+        {
+            //Check use combo
+        }
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
+        _player.comboController.AddInputToSequence(context.action);
+
+        //Do base attack
+
+        if (_player.comboController.CurrentSequence.Count > 1)
+        {
+            //Check use combo
+        }
     }
+
     private void Select_performed(InputAction.CallbackContext context)
     {
     }

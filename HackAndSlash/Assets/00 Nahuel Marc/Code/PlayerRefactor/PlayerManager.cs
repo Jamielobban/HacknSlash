@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
 
     public ComboController comboController { get; private set; }
 
+    //temporal
+    public AttackHolder attackHolder { get; private set; }
+
 
     public bool isDead = false;
     public bool isStun = false;
@@ -39,6 +42,9 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
+
+        attackHolder = GetComponent<AttackHolder>();
+
         cameraMovement = GetComponent<CameraMovement>();   
         comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();

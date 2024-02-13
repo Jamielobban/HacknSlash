@@ -7,8 +7,24 @@ public class ComboController : MonoBehaviour
     public List<Combo> combos = new List<Combo>();
 
     private List<InputAction> _currentSequence = new List<InputAction>();
+    public List<InputAction> CurrentSequence => _currentSequence;
 
-    public void AddComboToSequence(InputAction action)
+    private float _timer = 0f;
+    private float _timeToResetInputs = 2f;
+    private void Update()
+    {
+        if(_currentSequence.Count > 0)
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= _timeToResetInputs)
+            {
+                ClearComboSequence();
+                _timer = 0f;
+            }
+        }
+    }
+
+    public void AddInputToSequence(InputAction action)
     {
         _currentSequence.Add(action);
     }
@@ -24,7 +40,7 @@ public class ComboController : MonoBehaviour
         {
             if(CheckCombo(combo))
             {
-                _currentSequence.Clear();
+               // _currentSequence.Clear();
             }
         }
     }
