@@ -97,7 +97,6 @@ public class PlayerInputsSystem : MonoBehaviour
         if(!_isL2Performed)
         {
             _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
-
         }
     }
 
