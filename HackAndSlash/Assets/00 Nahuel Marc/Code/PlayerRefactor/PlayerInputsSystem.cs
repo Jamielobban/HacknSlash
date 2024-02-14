@@ -9,6 +9,7 @@ public class PlayerInputsSystem : MonoBehaviour
     private PlayerManager _player;
     private PlayerInputActionsRefactor _action;
 
+    private bool _isL2Performed;
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
@@ -27,6 +28,7 @@ public class PlayerInputsSystem : MonoBehaviour
 
         // -- Attack inputs -- // 
         _action.Player.L2.performed += L2_performed;
+        _action.Player.L2.canceled += L2_canceled;
         _action.Player.Square.performed += Square_performed;
         _action.Player.Triangle.performed += Triangle_performed;
 
@@ -68,8 +70,12 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void L2_performed(InputAction.CallbackContext context)
     {
+        _isL2Performed = true;
     }
-
+    private void L2_canceled(InputAction.CallbackContext context)
+    {
+        _isL2Performed = false;
+    }
     private void Jump_performed(InputAction.CallbackContext context)
     {
         _player.movement.HandleJumping();
@@ -81,12 +87,18 @@ public class PlayerInputsSystem : MonoBehaviour
     private float _timerHold = 2f;
     private void Square_performed(InputAction.CallbackContext context)
     {
-        _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);      
-
+        if(!_isL2Performed)
+        {
+            _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
+        }
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
-        _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+        if(!_isL2Performed)
+        {
+            _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+
+        }
     }
 
     private void Select_performed(InputAction.CallbackContext context)
