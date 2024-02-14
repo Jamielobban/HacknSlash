@@ -12,7 +12,8 @@ Material:
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _RENDERENCHANMENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -102,17 +103,20 @@ Material:
     - _CastShadows: 1
     - _Cull: 0
     - _DstBlend: 0
-    - _EmissiveEnchanmentForce: 0
-    - _EmissiveMapForce: 2.88
+    - _EmissiveEnchanmentForce: 2.1
+    - _EmissiveMapForce: 1.65
     - _QueueControl: 1
     - _QueueOffset: 0
+    - _RENDERENCHANMENT: 1
     - _ReceiveShadows: 1
+    - _Smothness: 0
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
+    - _metallicStrenght: 0
     - alphaCutoff: 0
     - baseColorTexture_texCoord: 0
     - emissiveExposureWeight: 0

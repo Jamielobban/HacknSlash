@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackCyborgSoldier : Interactuable
+public class BlackCyborgSoldier : Interactive
 {
     [SerializeField] string[] dialogues;
     [SerializeField] SimpleRTVoiceExample voice;
