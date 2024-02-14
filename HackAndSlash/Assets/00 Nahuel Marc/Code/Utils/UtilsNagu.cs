@@ -20,6 +20,24 @@ public static class UtilsNagu
         return right.normalized;
     }
 
+    public static bool ListContainsAnotherListFromStart<T>(List<T> listaPrincipal, List<T> listaSecundaria)
+    {
+        if (listaSecundaria.Count > listaPrincipal.Count)
+        {
+            return false; 
+        }
+
+        for (int i = 0; i < listaSecundaria.Count; i++)
+        {
+            if (!EqualityComparer<T>.Default.Equals(listaPrincipal[i], listaSecundaria[i]))
+            {
+                return false; 
+            }
+        }
+
+        return true; 
+    }
+
     public static void RemoveAllNulls<T>(ref List<T> list)
     {
         List<T> withoutNulls = new List<T>();

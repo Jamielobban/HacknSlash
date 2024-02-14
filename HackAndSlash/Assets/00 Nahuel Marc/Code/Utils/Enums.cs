@@ -31,7 +31,7 @@ public class Enums
         Attacking
     };
 
-    public enum Abilities
+    public enum InputsAttack
     {
         Square,
         Triangle,

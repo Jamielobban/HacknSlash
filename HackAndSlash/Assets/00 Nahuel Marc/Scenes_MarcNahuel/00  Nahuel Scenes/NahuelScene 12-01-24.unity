@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.006017055, g: 0.060250018, b: 0.19530037, a: 1}
+  m_IndirectSpecularColor: {r: 0.0060169566, g: 0.060250062, b: 0.19530022, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1410,7 +1410,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combos:
-  - {fileID: 11400000, guid: 75ba09011ec0d4742adc819b5ba5b7c4, type: 2}
+  - {fileID: 1608694025}
+  currentAttack: {fileID: 0}
+  currentActionIndex: 0
 --- !u!114 &65392753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,6 +2318,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1608694024}
+  - {fileID: 882024023}
   m_Father: {fileID: 65392742}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2986,6 +2989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 49391ab1d0a50e646b45e42a2cf073f3, type: 2}
   currentAttackState: 0
+  animationLength: 0
   baseDamage: 0
   timeStun: 0
 --- !u!1 &123902425
@@ -3807,6 +3811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 25db29a0b03e2464094af48fa75fb9e6, type: 2}
   currentAttackState: 0
+  animationLength: 1.11
   baseDamage: 0
   timeStun: 0
 --- !u!1 &139726985
@@ -27069,8 +27074,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd7ba2c51eae4e488524071704c0bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 9abc5ef6f3aa30a4886e643d675b2956, type: 2}
   currentAttackState: 0
+  animationLength: 1.13
   baseDamage: 0
   timeStun: 0
 --- !u!1 &754877499
@@ -27179,6 +27185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0981b96e2510e464da0bcca039395b43, type: 2}
   currentAttackState: 0
+  animationLength: 1.16
   baseDamage: 0
   timeStun: 0
 --- !u!1001 &769691451
@@ -43011,6 +43018,55 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 881232174}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &882024022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 882024023}
+  - component: {fileID: 882024024}
+  m_Layer: 0
+  m_Name: ComboSquare triangle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &882024023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882024022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 105083088}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &882024024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7746924a197654abd7d389b8d444c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sequence: 000000000000000001000000
+  attack:
+  - {fileID: 139255833}
+  - {fileID: 1587929670}
+  - {fileID: 768898118}
 --- !u!1 &883522950
 GameObject:
   m_ObjectHideFlags: 3
@@ -64530,8 +64586,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd7ba2c51eae4e488524071704c0bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 1ab45b5efe3bbc546938888f71ecbb5c, type: 2}
   currentAttackState: 0
+  animationLength: 1.09
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1357064517
@@ -68586,6 +68643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   currentAttackState: 0
+  animationLength: 0
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1410976436
@@ -79916,6 +79974,37 @@ MonoBehaviour:
   worldPosition: {x: 250, y: 64, z: 250}
   sizeInWorld: {x: 62.5, y: 32, z: 62.5}
   hasVisualMesh: 1
+--- !u!1 &1586802704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586802705}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1586802705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586802704}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 324, y: 0.254157, z: 335}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 88
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1587929668
 GameObject:
   m_ObjectHideFlags: 0
@@ -79960,8 +80049,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd7ba2c51eae4e488524071704c0bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 9b6e8ae7deebfd74eb1a92fd0ab4a30c, type: 2}
   currentAttackState: 0
+  animationLength: 0.29
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1589509001
@@ -80507,71 +80597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7746924a197654abd7d389b8d444c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequence:
-  - m_Name: Element 0
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: e673d247-881a-45dc-b19f-a48b8ae70474
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 86d4642b-d124-48a4-9b25-abf95e63fdc7
-      m_Path: <Gamepad>/buttonWest
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Element 0
-      m_Flags: 0
-    m_Flags: 0
-  - m_Name: Input Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 3d15c21b-b806-466b-a24b-47ad7dae1a4b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 8436e9ed-6ee2-4e83-90cd-f0697b7cdf06
-      m_Path: <Gamepad>/buttonWest
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Action
-      m_Flags: 0
-    m_Flags: 0
-  - m_Name: Input Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5713ff96-86db-4485-b93e-b9eaf4ed4fcf
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: bdc2577e-78c5-4eae-bf0c-a2d8a82a7dc0
-      m_Path: <Gamepad>/buttonWest
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Action
-      m_Flags: 0
-    m_Flags: 0
-  - m_Name: Input Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b731d54a-7d6d-475f-82d8-5ec6d122e24c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 89ddba6a-9879-4fd6-95ea-95ecf3c21b0c
-      m_Path: <Gamepad>/buttonWest
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Action
-      m_Flags: 0
-    m_Flags: 0
+  sequence: 00000000000000000000000000000000
   attack:
   - {fileID: 139255833}
   - {fileID: 1587929670}
@@ -81371,6 +81397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   currentAttackState: 0
+  animationLength: 0
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1684755121
@@ -85461,6 +85488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 76df6c309f7dd9f4cbd1a39476c069a7, type: 2}
   currentAttackState: 0
+  animationLength: 0
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1732289622
@@ -88419,6 +88447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   currentAttackState: 0
+  animationLength: 0
   baseDamage: 0
   timeStun: 0
 --- !u!1 &1798359852
@@ -92033,8 +92062,8 @@ PrefabInstance:
         'root'\n\tTransform 'pinky_03_l'\n\tTransform 'neck_01'\n\tTransform 'pinky_03_r'\n\tTransform
         'ring_02_l'\n\tTransform 'hand_l'\n\tTransform 'middle_01_l'\n\tTransform
         'ring_01_r'\n\tand more ...\n\tFrom animation clip 'Jump_Loop'\n\tFrom animation
-        clip 'FallAttack'\n\tFrom animation clip 'Skill_G_2'\n\tFrom animation clip
-        'LandAttack'"
+        clip 'Jump_Loop'\n\tFrom animation clip 'FallAttack'\n\tFrom animation clip
+        'Skill_G_2'\n\tFrom animation clip 'LandAttack'"
       objectReference: {fileID: 0}
     - target: {fileID: 3488911439769833213, guid: 7c7aea1c9093ad5478fd05922836fcfe,
         type: 3}

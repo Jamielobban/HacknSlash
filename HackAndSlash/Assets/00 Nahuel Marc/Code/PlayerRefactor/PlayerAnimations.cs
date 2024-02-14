@@ -21,6 +21,12 @@ public class PlayerAnimations : MonoBehaviour
         _player = transform.parent.GetComponent<PlayerManager>();
     }
 
+
+    public void ConcatenateAttack()
+    {
+        _player.comboController.ConncatenateAttack();
+    }
+
     public void HandleMovingAnimations()
     {
         if(_player.movement.IsSprinting)

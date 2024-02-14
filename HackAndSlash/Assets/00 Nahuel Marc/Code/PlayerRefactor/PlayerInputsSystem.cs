@@ -81,25 +81,12 @@ public class PlayerInputsSystem : MonoBehaviour
     private float _timerHold = 2f;
     private void Square_performed(InputAction.CallbackContext context)
     {
-        _player.comboController.AddInputToSequence(context.action);
+        _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);      
 
-        //Do base attack
-
-        if(_player.comboController.CurrentSequence.Count > 1)
-        {
-            //Check use combo
-        }
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
-        _player.comboController.AddInputToSequence(context.action);
-
-        //Do base attack
-
-        if (_player.comboController.CurrentSequence.Count > 1)
-        {
-            //Check use combo
-        }
+        _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
     }
 
     private void Select_performed(InputAction.CallbackContext context)

@@ -6,10 +6,6 @@ public class PlayerCollision : MonoBehaviour
 {
     private List<GameObject> _touchingInteractables = new List<GameObject>();
 
-    private void Awake()
-    {
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Interactable")
