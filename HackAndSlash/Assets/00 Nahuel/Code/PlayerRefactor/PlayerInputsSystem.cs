@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerInputsSystem : MonoBehaviour
 {
@@ -87,10 +88,20 @@ public class PlayerInputsSystem : MonoBehaviour
     private float _timerHold = 2f;
     private void Square_performed(InputAction.CallbackContext context)
     {
-        if(!_isL2Performed)
+        if(context.interaction is HoldInteraction)
+        {
+            Debug.Log("hold interaction");
+            // https://forum.unity.com/threads/hold-and-press-on-the-same-button-path-without-performing-both-actions-when-holding.729887/ 
+        }
+        else
+        {
+            Debug.Log("Other itneraction");
+        }
+        if (!_isL2Performed)
         {
             _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
         }
+
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
