@@ -2,12 +2,18 @@ using System;
 
 public class Enums
 {
-    public enum EnemyAttackState
+    public enum CameraType
+    {
+        FreeLook,
+        Locked
+    };
+
+    public enum AttackState
     {
         ReadyToUse = 0,
         Casting,
         Cooldown
-    }
+    };
 
     public enum SpawnMethod 
     { 
@@ -21,10 +27,11 @@ public class Enums
         Idle,
         Moving,
         Dashing,
+        Air,
         Attacking
     };
 
-    public enum Abilities
+    public enum InputsAttack
     {
         Square,
         Triangle,

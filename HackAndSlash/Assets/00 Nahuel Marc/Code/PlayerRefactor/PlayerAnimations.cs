@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
     private Animator _anim;
-
     private PlayerManager _player;
+
+    public float idleDampTime = 0.1f;
+    public float timeChangeIdle = 5f;
+    public int maxIdleAnim;
+    private float _timer = 0f;
 
     public Animator GetAnimator
     {
@@ -19,17 +21,38 @@ public class PlayerAnimations : MonoBehaviour
         _player = transform.parent.GetComponent<PlayerManager>();
     }
 
-    void Start()
+
+    public void ConcatenateAttack()
     {
-        
+        _player.comboController.ConncatenateAttack();
     }
 
-    void Update()
+    public void HandleMovingAnimations()
     {
-        //Si player.movement.IsSprinting
-        _anim.SetFloat(Constants.ANIM_VAR_SPEED, 2f);
-        //Get dir
+        if(_player.movement.IsSprinting)
+        {
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, 2f);
+        }
+        else if(_player.inputs.GetDirectionLeftStick().magnitude > 0.125f)
+        {
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, _player.inputs.GetDirectionLeftStick().magnitude);
+        }
+    }
 
+    public void HandleIdleAnimations()
+    {
+        _timer += Time.deltaTime;
+        if(_timer >= timeChangeIdle)
+        {
+            SetRandomIdleAnimation();
+            _timer = 0;
+        }
+    }
+
+    private void SetRandomIdleAnimation()
+    {
+        int num = Random.Range(0, maxIdleAnim);
+        _anim.SetFloat(Constants.ANIM_VAR_IDLE, num, idleDampTime, Time.deltaTime);
     }
 
     public void PlayTargetAnimation(string targetAnimation, bool isInteracting)
@@ -37,4 +60,8 @@ public class PlayerAnimations : MonoBehaviour
         _anim.SetBool("isInteracting", isInteracting);
         _anim.CrossFade(targetAnimation, 0.2f);
     }
+
+    public void OnIdleAnimation() => _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);        
+    public void OnLandingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);                
+    public void OnFallingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
 }

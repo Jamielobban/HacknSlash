@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class PlayerStadistics : MonoBehaviour
 {
-       
-        
+    public float baseDamage;
+    
 }

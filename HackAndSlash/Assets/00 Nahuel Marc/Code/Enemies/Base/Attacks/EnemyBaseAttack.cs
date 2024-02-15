@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyBaseAttack : MonoBehaviour
 {
     public EnemyAttackData data;
-    public Enums.EnemyAttackState currentAttackState = Enums.EnemyAttackState.ReadyToUse;
+    public Enums.AttackState currentAttackState = Enums.AttackState.ReadyToUse;
     protected float _currentTime;
     public Enemy enemy;
     private bool _animationOver;
@@ -20,7 +20,7 @@ public class EnemyBaseAttack : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(currentAttackState == Enums.EnemyAttackState.Cooldown)
+        if(currentAttackState == Enums.AttackState.Cooldown)
         {
             _currentTime -= Time.deltaTime;
             if(!IsInCd())
@@ -40,13 +40,13 @@ public class EnemyBaseAttack : MonoBehaviour
 
     private IEnumerator HandleAttack()
     {
-        currentAttackState = Enums.EnemyAttackState.Casting;
+        currentAttackState = Enums.AttackState.Casting;
         PlayAttackAnimation();
         yield return new WaitForSeconds(data.castTime.Value);
         SetVisualEffects();
         AttackAction();
         _currentTime = data.cooldown.Value;
-        currentAttackState = Enums.EnemyAttackState.Cooldown;
+        currentAttackState = Enums.AttackState.Cooldown;
     }
 
     protected virtual void PlayAttackAnimation()
@@ -71,8 +71,8 @@ public class EnemyBaseAttack : MonoBehaviour
         return dist <= data.range.Value;
     }
 
-    public virtual bool IsReadToUse() => currentAttackState == Enums.EnemyAttackState.ReadyToUse;
+    public virtual bool IsReadToUse() => currentAttackState == Enums.AttackState.ReadyToUse;
     public virtual bool IsInCd() => _currentTime < data.cooldown.Value && _currentTime >= 0;
-    public virtual void ResetAbility() => currentAttackState = Enums.EnemyAttackState.ReadyToUse;
+    public virtual void ResetAbility() => currentAttackState = Enums.AttackState.ReadyToUse;
     public virtual bool IsAtkAnimaitonOver() => _animationOver;
 }

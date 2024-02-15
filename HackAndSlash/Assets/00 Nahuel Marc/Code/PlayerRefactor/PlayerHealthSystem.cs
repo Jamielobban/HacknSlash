@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
+    private PlayerManager _player;
     public float maxHealth;
     private float _currentHealth;
     public float CurrentHealth
@@ -13,6 +14,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     private void Awake()
     {
         _currentHealth = maxHealth;
+        _player = transform.parent.GetComponent<PlayerManager>();
     }
 
     public void AirDamageable()
@@ -28,6 +30,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         {
             _currentHealth = maxHealth;
         }
+        _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 
     public void TakeDamage(float damage)
@@ -36,18 +39,15 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
         if(_currentHealth <= 0)
         {
+            _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
             _currentHealth = 0;
-            //die
+            Die();
         }
+        _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 
-    void Start()
+    public void Die()
     {
-        
-    }
 
-    void Update()
-    {
-        
     }
 }
