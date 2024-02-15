@@ -35,6 +35,8 @@ public class Enums
     {
         Square,
         Triangle,
+        HoldSquare,
+        HoldTriangle,
         L2Square,
         L2Triangle
     };

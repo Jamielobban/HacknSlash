@@ -95,13 +95,11 @@ public class PlayerInputsSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("Other itneraction");
+            if (!_isL2Performed)
+            {
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
+            }
         }
-        if (!_isL2Performed)
-        {
-            _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
-        }
-
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
@@ -110,6 +108,7 @@ public class PlayerInputsSystem : MonoBehaviour
             _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
         }
     }
+
 
     private void Select_performed(InputAction.CallbackContext context)
     {
