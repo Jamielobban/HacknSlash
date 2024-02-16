@@ -103,6 +103,10 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
+        if(context.interaction is HoldInteraction)
+        {
+
+        }
         if(!_isL2Performed)
         {
             _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
