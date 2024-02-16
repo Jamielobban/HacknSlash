@@ -20,25 +20,25 @@ public class DeathEnemies : MonoBehaviour
         deathTime = Time.time;
         consecutiveDeaths++;
 
-        for(int i = 0; i < manager.currentChallenges.Count;i++)
-        {
-            switch (manager.currentChallenges[i].tipe)
-            {
-                case ChallengeTipe.CONSECUTIVE:
-                    if (((Challenges2)manager.currentChallenges[i]).Check(consecutiveDeaths))
-                    {
-                        manager.ChallengeComplete(i);
-                    }
-                    break;
-                case ChallengeTipe.DEATHATTACK:
-                    if (((Challenges1)manager.currentChallenges[i]).Check(attack))
-                    {
-                        manager.ChallengeComplete(i);
-                    }
-                    break;
-            }
+        //for(int i = 0; i < manager.currentChallenges.Count;i++)
+        //{
+        //    switch (manager.currentChallenges[i].tipe)
+        //    {
+        //        case ChallengeTipe.CONSECUTIVE:
+        //            if (((Challenges2)manager.currentChallenges[i]).Check(consecutiveDeaths))
+        //            {
+        //                manager.ChallengeComplete(i);
+        //            }
+        //            break;
+        //        case ChallengeTipe.DEATHATTACK:
+        //            if (((Challenges1)manager.currentChallenges[i]).Check(attack))
+        //            {
+        //                manager.ChallengeComplete(i);
+        //            }
+        //            break;
+        //    }
 
-        }
+        //}
 
         if (deathEnemiesLastAttack.Count > 20)
         {

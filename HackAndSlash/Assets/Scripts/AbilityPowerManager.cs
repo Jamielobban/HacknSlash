@@ -1,4 +1,3 @@
-using DarkPixelRPGUI.Scripts.UI.Equipment;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

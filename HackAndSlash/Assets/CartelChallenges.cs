@@ -6,7 +6,7 @@ public class CartelChallenges : MonoBehaviour
 {
 
 
-    public List<Challenges> Challenges;
+   // public List<Challenges> Challenges;
 
     ControllerManager controller;
     ChallengeManager manager;
@@ -24,6 +24,7 @@ public class CartelChallenges : MonoBehaviour
     {
         
     }
+    /*
     void GetRandomChallenge()
     {
         if (manager.currentChallenges.Count < 1 && Challenges.Count > 0)
@@ -57,5 +58,5 @@ public class CartelChallenges : MonoBehaviour
                 GetRandomChallenge();
             }
         }
-    }
+    }*/
 }

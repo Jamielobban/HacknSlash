@@ -6,7 +6,7 @@ using TMPro;
 
 public class ChallengeManager : MonoBehaviour
 {
-    public List<Challenges> currentChallenges;
+    //public List<Challenges> currentChallenges;
     ControllerManager controller;
 
     public GameObject menus;
@@ -23,7 +23,7 @@ public class ChallengeManager : MonoBehaviour
 
     public GameObject menusComplete;
 
-    bool active; 
+    bool active;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +36,7 @@ public class ChallengeManager : MonoBehaviour
     {
         menus.SetActive(false);
 
-        currentChallenges.RemoveAt(challenge);
+        // currentChallenges.RemoveAt(challenge);
         menusComplete.SetActive(true);
         Invoke("DesaparecerChallengeComplete", 2);
 
@@ -46,6 +46,7 @@ public class ChallengeManager : MonoBehaviour
         menusComplete.SetActive(false);
 
     }
+    /*
     public void ShowNewChallenge(Challenges challenge)
     {
         if(active)
@@ -55,12 +56,13 @@ public class ChallengeManager : MonoBehaviour
         descriptionShow.text = challenge.description.ToString();
 
         Invoke("DesaparecerNewChallenge",2);
-    }
+    }*/
     public void DesaparecerNewChallenge()
     {
         menusShow.SetActive(false);
 
     }
+    /*
     void UpdateMenus()
     {
         if (currentChallenges.Count <= 0)
@@ -86,31 +88,32 @@ public class ChallengeManager : MonoBehaviour
 
                 break;
         }
-    }
+    }*/
     // Update is called once per frame
     void Update()
     {
-        UpdateMenus();
+        //UpdateMenus();
 
-        if (controller.GetTabButton().action != null)
-        {
-            if (controller.GetTabButton().action.WasPressedThisFrame() && currentChallenges.Count > 0)
-            {
-                if (!active)
-                {
-                    active = true;
+        //    if (controller.GetTabButton().action != null)
+        //    {
+        //        if (controller.GetTabButton().action.WasPressedThisFrame() && currentChallenges.Count > 0)
+        //        {
+        //            if (!active)
+        //            {
+        //                active = true;
 
-                    menus.SetActive(true);
+        //                menus.SetActive(true);
 
-                }
-                else
-                {
-                    active = false;
-                    menus.SetActive(false);
+        //            }
+        //            else
+        //            {
+        //                active = false;
+        //                menus.SetActive(false);
 
 
-                }
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
