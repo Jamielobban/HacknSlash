@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PyramidTeleport : Interactive
+public class PyramidTeleport : Interactive, IInteractable
 {
     [SerializeField] float period, verticalMoveTime, verticaDistance;
 
@@ -14,8 +14,8 @@ public class PyramidTeleport : Interactive
         transform.DOMoveY(startPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
-    protected override void TriggerAction()
+    public void Interact()
     {
-        
+        if (!canInteract) return;
     }
 }

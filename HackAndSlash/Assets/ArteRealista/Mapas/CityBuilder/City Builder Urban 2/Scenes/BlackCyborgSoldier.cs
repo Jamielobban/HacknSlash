@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackCyborgSoldier :  Interactive
+public class BlackCyborgSoldier :  Interactive, IInteractable
 {
     [SerializeField] string[] dialogues;
     [SerializeField] SimpleRTVoiceExample voice;
     int currentDialogue = 0;
-    
-    protected override void TriggerAction()
+
+    public void Interact()
     {
+        if (!canInteract) return;
+
         voice.Speak(dialogues[currentDialogue]);
     }
 
