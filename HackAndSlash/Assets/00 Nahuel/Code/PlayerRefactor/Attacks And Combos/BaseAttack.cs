@@ -7,7 +7,6 @@ public class BaseAttack : MonoBehaviour
     public DataAttack data;
     public Enums.AttackState currentAttackState = Enums.AttackState.ReadyToUse;
     private float _currentTime = 0f;
-    public float animationLength;
 
     private void Awake()
     {

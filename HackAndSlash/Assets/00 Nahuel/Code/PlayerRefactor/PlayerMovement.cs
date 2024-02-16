@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     private bool _isSprinting;
     private bool _canMove;
-    private bool _isJumping = false;
+    public bool isJumping = false;
 
     public bool IsSprinting
     {
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting || _isJumping || !_canMove) { return; }
+        if (_player.isInteracting || isJumping || !_canMove) { return; }
 
         if (_isSprinting)
         {
@@ -71,36 +71,34 @@ public class PlayerMovement : MonoBehaviour
     public void HandleFallingAndLanding()
     {
         RaycastHit hit;
-        Vector3 raycastOrigin = transform.position;
-        Vector3 targetPosition;
-        raycastOrigin.y = raycastOrigin.y + raycastHeightOffset;
-        targetPosition = transform.position;
-
-        if (Physics.Raycast(raycastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
+        Vector3 rayCastOrigin = transform.position;
+        rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
+        if(!isGrounded && !isJumping)
         {
-            if (!isGrounded)
+            if(!_player.isInteracting)
+            {
+                _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
+            }
+            inAirTime = Time.deltaTime;
+            _player.rb.AddForce(transform.forward * leapingVelocity);
+            _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
+        }
+
+        if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
+        {
+            if(!isGrounded && !_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
-                _isJumping = false;
             }
-            Vector3 rayCastHitPoint = hit.point;
-            targetPosition.y = rayCastHitPoint.y;
             inAirTime = 0;
             isGrounded = true;
         }
         else
         {
-            if (!_player.isInteracting)
-            {
-                _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
-            }
-            inAirTime += Time.deltaTime;
-            _player.rb.AddForce(transform.forward * leapingVelocity);
-            _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
-
             isGrounded = false;
-        }
+        }        
     }
+
     public void HandleRotation()
     {
         Vector3 targetDirection = Vector3.zero;
@@ -139,11 +137,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        _isJumping = true;
-        float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
-        Vector3 playerVelocity = _moveDirection;
-        playerVelocity.y = jumpVelocity;
-        _player.rb.velocity = playerVelocity;
+        if(isGrounded)
+        {
+            _player.animations.GetAnimator.SetBool("isJumping", true);
+            _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
+            float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
+            Vector3 playerVelocity = _moveDirection;
+            playerVelocity.y = jumpVelocity;
+            _player.rb.velocity = playerVelocity;
+        }
     }
 
     public void Dash()
