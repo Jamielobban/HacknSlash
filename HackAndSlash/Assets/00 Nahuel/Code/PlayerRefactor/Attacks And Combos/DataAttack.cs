@@ -8,6 +8,7 @@ public class DataAttack : ScriptableObject
     public string attackName;
     public string animation;
     public float timeToChangeAnim;
+    public float animationLength;
     
     [Header("States")]
     public List<Enums.CharacterState> AllowedCharacterStates = new List<Enums.CharacterState>();
