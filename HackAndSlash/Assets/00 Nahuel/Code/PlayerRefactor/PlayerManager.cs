@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     public PlayerInputsSystem inputs { get; private set; }
     public CameraMovement cameraMovement { get; private set; }
 
+    public PlayerInventory inventory { get; private set; }
+
     public PlayerCollision collision;
 
     public ComboController comboController { get; private set; }
@@ -44,7 +46,7 @@ public class PlayerManager : MonoBehaviour
         _mainCamera = Camera.main;
 
         attackHolder = GetComponent<AttackHolder>();
-
+        inventory = GetComponent<PlayerInventory>();
         cameraMovement = GetComponent<CameraMovement>();   
         comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();

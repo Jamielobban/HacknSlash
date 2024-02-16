@@ -85,12 +85,11 @@ public class PlayerInputsSystem : MonoBehaviour
     {
         _player.movement.Dash();
     }
-    private float _timerHold = 2f;
     private void Square_performed(InputAction.CallbackContext context)
     {
         if(context.interaction is HoldInteraction)
         {
-            Debug.Log("hold interaction");
+            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
             // https://forum.unity.com/threads/hold-and-press-on-the-same-button-path-without-performing-both-actions-when-holding.729887/ 
         }
         else
@@ -99,20 +98,30 @@ public class PlayerInputsSystem : MonoBehaviour
             {
                 _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
             }
+            else
+            {
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Square);
+            }
         }
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
         if(context.interaction is HoldInteraction)
         {
-
+            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
         }
-        if(!_isL2Performed)
+        else
         {
-            _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+            if (!_isL2Performed)
+            {
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+            }
+            else
+            {
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Triangle);
+            }
         }
     }
-
 
     private void Select_performed(InputAction.CallbackContext context)
     {
