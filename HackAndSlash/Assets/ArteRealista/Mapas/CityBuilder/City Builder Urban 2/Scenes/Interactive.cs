@@ -15,7 +15,7 @@ public abstract class Interactive : MonoBehaviour
         int playerLayer = LayerMask.NameToLayer("Player");
         LayerMask allLayersExceptPlayer = ~(1 << playerLayer);
         col.excludeLayers = allLayersExceptPlayer;
-        col.includeLayers = LayerMask.NameToLayer("Player");
+        col.includeLayers = (1 << playerLayer);
     }
 
     
