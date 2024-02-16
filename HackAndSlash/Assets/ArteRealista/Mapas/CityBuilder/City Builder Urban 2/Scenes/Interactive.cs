@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactive : MonoBehaviour
+public abstract class Interactive : MonoBehaviour
 {
+    //InteractiveColor
     [SerializeField] Material triggerMat, normalMat;
     protected bool canInteract = true;
+
     public void ShowObjectInRange()
     {
         GetComponentInChildren<Renderer>().material = triggerMat;
@@ -16,5 +18,4 @@ public class Interactive : MonoBehaviour
     {
         GetComponentInChildren<Renderer>().material = normalMat;
     }
-
 }

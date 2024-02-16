@@ -128,6 +128,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Interact_performed(InputAction.CallbackContext context)
     {
+        _player.collision.InteractPerformed();
     }
 
     private void OnDestroy()

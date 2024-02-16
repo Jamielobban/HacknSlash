@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackCyborgSoldier :  Interactive, IInteractable
+public class BlackCyborgSoldier : Interactive, IInteractable
 {
     [SerializeField] string[] dialogues;
     [SerializeField] SimpleRTVoiceExample voice;
@@ -10,10 +10,9 @@ public class BlackCyborgSoldier :  Interactive, IInteractable
 
     public void Interact()
     {
-        if (!canInteract) return;
+       // if (!canInteract) return;
 
         voice.Speak(dialogues[currentDialogue]);
     }
-
-   
 }
+

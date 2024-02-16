@@ -48,6 +48,5 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Die()
     {
-
     }
 }
