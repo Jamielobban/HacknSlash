@@ -1391,14 +1391,14 @@ public class PlayerControl : MonoBehaviour
         StartCoroutine(CallItemUpdate());
     }
 
-    public void CallItemOnKill(EnemySkeletonSword enemy)
+    public void CallItemOnKill(Enemy enemy)
     {
         foreach (ItemList i in items)
         {
             i.item.OnKill(this, enemy, i.stacks);
         }
     }
-    public void CallItemOnCrit(EnemySkeletonSword enemy)
+    public void CallItemOnCrit(Enemy enemy)
     {
         foreach (ItemList i in items)
         {

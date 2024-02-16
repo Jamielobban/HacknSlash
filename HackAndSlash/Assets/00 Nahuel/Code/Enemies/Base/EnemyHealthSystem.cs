@@ -7,6 +7,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     protected float _currentHealth;
     public CharacterStat baseMaxHealth = new CharacterStat();
     public float currentMaxHealth;
+    public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
 
     #region Prefabs Effects
     private PlayerControl _player;

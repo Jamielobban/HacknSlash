@@ -153,10 +153,10 @@ public class GetEnemies : MonoBehaviour
         float distance = 100;
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].GetComponent<EnemySkeletonSword>().debil == true)
-            {
-                position = enemies[i];
-            }
+            //if (enemies[i].GetComponent<EnemySkeletonSword>().debil == true)
+            //{
+            //    position = enemies[i];
+            //}
 
         }
 

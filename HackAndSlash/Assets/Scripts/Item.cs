@@ -32,12 +32,12 @@ public abstract class Item
 
     }
 
-    public virtual void OnKill(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    public virtual void OnKill(PlayerControl player, Enemy enemy, int stacks)
     {
 
     }
 
-    public virtual void OnCrit(PlayerControl player, EnemySkeletonSword enemy, int stacks)
+    public virtual void OnCrit(PlayerControl player, Enemy enemy, int stacks)
     {
 
     }
@@ -481,7 +481,7 @@ public class FireDamage : Item
     }
 
 
-    public int GetDamage(PlayerControl player, Enemy1 enemy, int stacks)
+    public int GetDamage(PlayerControl player, int stacks)
     {
         return -3 * stacks;
     }
