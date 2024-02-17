@@ -10,7 +10,10 @@ public class PlayerCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "Interactable")
         {
-            other.GetComponent<Interactive>().ShowObjectInRange();
+            if(other.GetComponent<Interactive>())
+            {
+                other.GetComponent<Interactive>().ShowObjectInRange();
+            }
             if(!_touchingInteractables.Contains(other.gameObject))
             {
                 _touchingInteractables.Add(other.gameObject);
@@ -22,7 +25,10 @@ public class PlayerCollision : MonoBehaviour
     {
         if (other.gameObject.tag == "Interactable")
         {
-            other.GetComponent<Interactive>().HideObjectInRange();
+            if (other.GetComponent<Interactive>())
+            {
+                other.GetComponent<Interactive>().HideObjectInRange();
+            }
             if (_touchingInteractables.Contains(other.gameObject))
             {
                 _touchingInteractables.Remove(other.gameObject);
