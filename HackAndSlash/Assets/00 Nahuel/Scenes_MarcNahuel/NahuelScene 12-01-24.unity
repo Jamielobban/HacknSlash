@@ -7072,22 +7072,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 15f936b8eb5bc1149b4658c74277b1f7,
         type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: a7035355e75167e4f93aab55581f2db6, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 15f936b8eb5bc1149b4658c74277b1f7,
+        type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2b3376c151ca9e54cab3f87ead075e01, type: 2}
     - target: {fileID: 5866666021909216657, guid: 15f936b8eb5bc1149b4658c74277b1f7,
         type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'index_03_l'\n\tTransform 'lowerarm_l'\n\tTransform
-        'root'\n\tTransform 'pinky_03_l'\n\tTransform 'neck_01'\n\tTransform 'pinky_03_r'\n\tTransform
-        'ring_02_l'\n\tTransform 'ball_l'\n\tTransform 'hand_l'\n\tTransform 'middle_01_l'\n\tand
-        more ...\n\tFrom animation clip 'DB_Guard'\n\tFrom animation clip 'DB_JumpStart'\n\tFrom
-        animation clip 'DB_Combo3_1'\n\tFrom animation clip 'Triangle_Hold'\n\tFrom
-        animation clip 'DB_Combo1_1'\n\tFrom animation clip 'DB_Square'\n\tFrom animation
-        clip 'DB_Combo1_2'\n\tFrom animation clip 'DB_Triangle'\n\tFrom animation
-        clip 'DB_Combo1_3'\n\tFrom animation clip 'DB_Combo3_2'\n\tand more ..."
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13950,6 +13946,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &711119816 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2707054796494011859, guid: 15f936b8eb5bc1149b4658c74277b1f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 389123765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &717340235
 GameObject:
   m_ObjectHideFlags: 3
@@ -49101,7 +49103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleDampTime: 0.1
   timeChangeIdle: 5
-  maxIdleAnim: 2
+  maxIdleAnim: 3
 --- !u!1001 &1500881327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79456,6 +79458,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1931428773790119072, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2036648713901370195, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -79811,6 +79818,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.108679
       objectReference: {fileID: 0}
+    - target: {fileID: 5359834508197564110, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: lookAt
+      value: 
+      objectReference: {fileID: 711119816}
+    - target: {fileID: 5359834508197564110, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: trueLookAt
+      value: 
+      objectReference: {fileID: 711119816}
     - target: {fileID: 5454366732018397460, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

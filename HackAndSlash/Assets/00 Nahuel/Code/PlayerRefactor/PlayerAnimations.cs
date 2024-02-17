@@ -21,12 +21,6 @@ public class PlayerAnimations : MonoBehaviour
         _player = transform.parent.GetComponent<PlayerManager>();
     }
 
-
-    public void ConcatenateAttack()
-    {
-        _player.comboController.ConncatenateAttack();
-    }
-
     public void HandleMovingAnimations()
     {
         if(_player.movement.IsSprinting)
@@ -51,7 +45,7 @@ public class PlayerAnimations : MonoBehaviour
 
     private void SetRandomIdleAnimation()
     {
-        int num = Random.Range(0, maxIdleAnim);
+        float num = Random.Range(0, maxIdleAnim);
         _anim.SetFloat(Constants.ANIM_VAR_IDLE, num, idleDampTime, Time.deltaTime);
     }
 
