@@ -12,6 +12,7 @@ public class NaveMov : MonoBehaviour
     public float fadeInDuration;
     public float fadeOutDuration;
     public float timeToFadeOut;
+    public SimpleRTVoiceExample voice;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +31,13 @@ public class NaveMov : MonoBehaviour
     IEnumerator FadeIn()
     {
         yield return new WaitForSeconds(0.3f);
-        DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 0f, fadeInDuration).SetEase(Ease.Linear);
+        DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 0f, fadeInDuration).SetEase(Ease.Linear);        
 
     }
     IEnumerator FadeOut()
     {
         yield return new WaitForSeconds(timeToFadeOut);
-        DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 1f, fadeInDuration).SetEase(Ease.Linear);
+        DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 1f, fadeInDuration).SetEase(Ease.Linear);        
         yield return new WaitForSeconds(fadeInDuration + 0.3f);
         SceneManager.LoadScene(1);
 
