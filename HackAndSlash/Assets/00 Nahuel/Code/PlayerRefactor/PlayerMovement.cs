@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _canMove;
     public bool isJumping = false;
 
+
+
     public bool IsSprinting
     {
         get => _isSprinting;
@@ -70,15 +72,23 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleFallingAndLanding()
     {
+        if (_player.isUsingRootMotion)
+            return;
+
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
+        Vector3 targetPosition = transform.position;
+
         if(!isGrounded && !isJumping)
         {
             if(!_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
+
+            _player.animations.GetAnimator.SetBool("isUsingRootMotion", false);
+
             inAirTime = Time.deltaTime;
             _player.rb.AddForce(transform.forward * leapingVelocity);
             _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
@@ -90,13 +100,27 @@ public class PlayerMovement : MonoBehaviour
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
             }
+            Vector3 rayCastHitPoint = hit.point;
+            targetPosition.y = rayCastHitPoint.y;
             inAirTime = 0;
             isGrounded = true;
         }
         else
         {
             isGrounded = false;
-        }        
+        }   
+        
+        if(isGrounded && !isJumping)
+        {
+            if(_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
+            }
+            else
+            {
+                transform.position = targetPosition;
+            }
+        }
     }
 
     public void HandleRotation()
@@ -186,5 +210,6 @@ public class PlayerMovement : MonoBehaviour
     {
         return UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
     }
-    
+
+
 }

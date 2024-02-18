@@ -90,7 +90,7 @@ public class PlayerInputsSystem : MonoBehaviour
 
         if (context.interaction is HoldInteraction)
         {
-            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
+            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
             // https://forum.unity.com/threads/hold-and-press-on-the-same-button-path-without-performing-both-actions-when-holding.729887/ 
         }
         else

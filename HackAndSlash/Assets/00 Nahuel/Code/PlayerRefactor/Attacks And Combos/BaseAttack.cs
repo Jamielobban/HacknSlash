@@ -52,7 +52,7 @@ public class BaseAttack : MonoBehaviour
     private IEnumerator HandleAttack()
     {
         currentAttackState = Enums.AttackState.Casting;
-        _player.animations.PlayTargetAnimation(data.animation, true);
+        _player.animations.PlayTargetAnimation(data.animation, true, true);
         AddSoundEffects();
         yield return new WaitForSeconds(data.castTime);
         SetVisualEffects();
