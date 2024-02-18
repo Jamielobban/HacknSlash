@@ -91,7 +91,19 @@ public class SimpleRTVoiceExample : MonoBehaviour
         string showLetters = "";
         for(int i = 0; i < showText.Length; i++)
         {
-            showLetters += showText[i];
+            if(showText[i] != '\n')
+            {
+                showLetters += showText[i];
+            }
+            else
+            {
+                showLetters = "";
+                Pause();
+                yield return new WaitForSeconds(0.5f);
+                UnPause();
+            }
+
+
             dialogText.text = whoSpeaks + ": " + showLetters;
             yield return new WaitForSeconds(0.055f);
         }
