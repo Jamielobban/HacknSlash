@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerManager : MonoBehaviour
 {
     public PlayerAnimations animations { get; protected set; }
@@ -50,7 +48,7 @@ public class PlayerManager : MonoBehaviour
         cameraMovement = GetComponent<CameraMovement>();   
         comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();
-        animations = GetComponent<PlayerAnimations>();
+        animations = transform.GetChild(0).GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();
         hud = GetComponent<PlayerHUDSystem>();
         inputs = GetComponent<PlayerInputsSystem>();
@@ -94,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         switch (CurrentCharacterState)
         {
             case Enums.CharacterState.Idle:
-                animations.OnIdleAnimation();
+               // animations.OnIdleAnimation();
                 break;
             case Enums.CharacterState.Moving:
                 break;

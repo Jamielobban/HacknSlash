@@ -58,6 +58,7 @@ public class PlayerInputsSystem : MonoBehaviour
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
         _player.movement.DisableMovement();
+        //_player.animations.PlayTargetAnimation("DB_RunStop", true);
         _player.ChangeCharacterState(Enums.CharacterState.Idle);
     }
 

@@ -18,7 +18,7 @@ public class PlayerAnimations : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-        _player = GetComponent<PlayerManager>();
+        _player = transform.parent.GetComponent<PlayerManager>();
     }
 
     public void HandleMovingAnimations()
@@ -60,6 +60,7 @@ public class PlayerAnimations : MonoBehaviour
     public void OnIdleAnimation() => _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);        
     public void OnLandingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);                
     public void OnFallingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
+
     private void OnAnimatorMove()
     {
         if(_player.isUsingRootMotion)
@@ -68,27 +69,18 @@ public class PlayerAnimations : MonoBehaviour
             //Vector3 deltaPosition = _anim.deltaPosition;
             //Vector3 velocity = deltaPosition / Time.deltaTime;
             //_player.rb.velocity = velocity;
-
-            // what is the animation telling us to do?
-            Vector3 rootMotion = _anim.deltaPosition;
-
-            // preserve current velocity for later
-            Vector3 currentVelocity = _player.rb.velocity;
-
-            // derive new velocity
-            Vector3 animatorVelocity = rootMotion / Time.deltaTime;
-
-            // preserve effect of gravity
-          //  animatorVelocity.y = currentVelocity.y;
-
-            // apply our derived velocity
-            _player.rb.velocity = animatorVelocity;
-
-            // just apply angular velocity as is
-            Vector3 animatorAngularVelocity = _anim.angularVelocity;
-            _player.rb.angularVelocity = animatorAngularVelocity;
-
         }
     }
+
+    public void EventJump()
+    {
+        _player.movement.JumpAction(20);
+    }
+
+    public void EventDash()
+    {
+        _player.movement.Dash();
+    }
+
 
 }
