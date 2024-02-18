@@ -16,6 +16,12 @@ public class ComboController : MonoBehaviour
 
     private float _timer;
     private float _timeToReset;
+    private PlayerManager _player;
+
+    private void Awake()
+    {
+        _player = GetComponent<PlayerManager>();
+    }
 
     private void Update()
     {

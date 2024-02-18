@@ -1,9 +1,8 @@
+using DamageNumbersPro.Demo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerManager : MonoBehaviour
 {
     public PlayerAnimations animations { get; protected set; }
@@ -29,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     public bool isStun = false;
     public bool isInvulnerable = false;
     public bool isInteracting;
-
+    public bool isUsingRootMotion;
     private Camera _mainCamera;
     public Camera MainCamera { get => _mainCamera; }
 
@@ -44,7 +43,6 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
-
         attackHolder = GetComponent<AttackHolder>();
         inventory = GetComponent<PlayerInventory>();
         cameraMovement = GetComponent<CameraMovement>();   
@@ -53,13 +51,12 @@ public class PlayerManager : MonoBehaviour
         animations = transform.GetChild(0).GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();
         hud = GetComponent<PlayerHUDSystem>();
-        inputs = GetComponent<PlayerInputsSystem>();        
+        inputs = GetComponent<PlayerInputsSystem>();
+
     }
 
     void Update()
     {
-        //handleInputs
-
         if(CurrentCharacterState == Enums.CharacterState.Idle)
         {
             animations.HandleIdleAnimations();
@@ -68,6 +65,7 @@ public class PlayerManager : MonoBehaviour
         {
             animations.HandleMovingAnimations();
         }
+
     }
 
     private void FixedUpdate()
@@ -81,6 +79,7 @@ public class PlayerManager : MonoBehaviour
     private void LateUpdate()
     {
         isInteracting = animations.GetAnimator.GetBool("isInteracting");
+        isUsingRootMotion = animations.GetAnimator.GetBool("isUsingRootMotion");
         movement.isJumping = animations.GetAnimator.GetBool("isJumping");
         animations.GetAnimator.SetBool("isGrounded", movement.isGrounded);
     }

@@ -34,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     private bool _isSprinting;
     private bool _canMove;
     public bool isJumping = false;
+    public bool isDashing = false;
+
+
 
     public bool IsSprinting
     {
@@ -56,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting || isJumping || !_canMove) { return; }
+        if (_player.isInteracting || isJumping || !_canMove || isDashing) { return; }
 
         if (_isSprinting)
         {
@@ -70,15 +73,23 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleFallingAndLanding()
     {
+        if (_player.isUsingRootMotion)
+            return;
+
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
+        Vector3 targetPosition = transform.position;
+
         if(!isGrounded && !isJumping)
         {
             if(!_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
+
+            _player.animations.GetAnimator.SetBool("isUsingRootMotion", false);
+
             inAirTime = Time.deltaTime;
             _player.rb.AddForce(transform.forward * leapingVelocity);
             _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
@@ -90,13 +101,27 @@ public class PlayerMovement : MonoBehaviour
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
             }
+            Vector3 rayCastHitPoint = hit.point;
+            targetPosition.y = rayCastHitPoint.y;
             inAirTime = 0;
             isGrounded = true;
         }
         else
         {
             isGrounded = false;
-        }        
+        }   
+        
+        if(isGrounded && !isJumping && !isDashing)
+        {
+            if(_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
+            }
+            else
+            {
+                transform.position = targetPosition;
+            }
+        }
     }
 
     public void HandleRotation()
@@ -141,11 +166,16 @@ public class PlayerMovement : MonoBehaviour
         {
             _player.animations.GetAnimator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
-            float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
-            Vector3 playerVelocity = _moveDirection;
-            playerVelocity.y = jumpVelocity;
-            _player.rb.velocity = playerVelocity;
+            JumpAction(jumpHeight);
         }
+    }
+
+    public void JumpAction(float _jumpHeight)
+    {
+        float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * _jumpHeight);
+        Vector3 playerVelocity = _moveDirection;
+        playerVelocity.y = jumpVelocity;
+        _player.rb.velocity = playerVelocity;
     }
 
     public void Dash()
@@ -154,37 +184,37 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        Vector2 dashDir = _player.inputs.GetDirectionLeftStick();
-        if(dashDir.magnitude > 0.1f)
+        if(GetDirectionNormalized().magnitude > 0.1f)
         {
-            Vector3 dashVector = new Vector3(dashDir.x, 0, dashDir.y).normalized;
-
-            Vector3 dashDestination = transform.position + dashVector;
-
-            Vector3 dashDirectionNormalized = dashDestination - transform.position;
-            dashDirectionNormalized.y = 0f;
-            dashDirectionNormalized.Normalize();
-
-            _player.rb.velocity = dashDirectionNormalized * dashSpeed;
-
-            DisableMovement();
-            StartCoroutine(EnableMovementAfterDash(dashDelay));
+            _player.animations.PlayTargetAnimation("roll", true);
+            HandleDash();
         }
-        else
-        {
+    }
 
-        }
+    private void HandleDash()
+    {
+        isDashing = true;
+        DisableMovement();
+        _player.rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
+        StartCoroutine(EnableMovementAfterDash(dashDelay));
+    }
+
+    public void DashInAnimation()
+    {
+        HandleDash();
     }
 
     IEnumerator EnableMovementAfterDash(float delay)
     {
         yield return new WaitForSeconds(delay);
         EnableMovement();
+        isDashing = false;
     }
 
     private Vector3 GetDirectionNormalized()
     {
         return UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
     }
-    
+
+
 }
