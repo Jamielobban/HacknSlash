@@ -1,3 +1,5 @@
+using MoreMountains.Feedbacks;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
@@ -9,7 +11,6 @@ public class PlayerAnimations : MonoBehaviour
     public float timeChangeIdle = 5f;
     public int maxIdleAnim;
     private float _timer = 0f;
-
     public Animator GetAnimator
     {
         get { return _anim; }
@@ -25,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         if(_player.movement.IsSprinting)
         {
-            _anim.SetFloat(Constants.ANIM_VAR_SPEED, 2f);
+            StartCoroutine(IncreaseOverTime(_anim.GetFloat(Constants.ANIM_VAR_SPEED),2f));
         }
         else if(_player.inputs.GetDirectionLeftStick().magnitude > 0.125f)
         {
@@ -57,9 +58,44 @@ public class PlayerAnimations : MonoBehaviour
 
     }
 
-    public void OnIdleAnimation() => _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);        
     public void OnLandingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);                
     public void OnFallingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
+
+    public void OnIdleAnimation()
+    {
+        StartCoroutine(DecreaseSpeedOverTime(0f));
+    }
+
+    public IEnumerator DecreaseSpeedOverTime(float targetValue)
+    {
+        float currentSpeed = _anim.GetFloat(Constants.ANIM_VAR_SPEED);
+        float elapsedTime = 0f;
+        float duration = 0.5f; 
+
+        while (elapsedTime < duration)
+        {
+            float newSpeed = Mathf.Lerp(currentSpeed, targetValue, elapsedTime / duration);
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, newSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        _anim.SetFloat(Constants.ANIM_VAR_SPEED, targetValue);
+    }
+
+    private IEnumerator IncreaseOverTime(float currentSpeed, float targetValue)
+    {
+        float elapsedTIme = 0f;
+        float duration = 0.5f;
+        while (elapsedTIme < duration)
+        {
+            float newSpeed = Mathf.Lerp(currentSpeed, targetValue, elapsedTIme / duration);
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, newSpeed);
+            elapsedTIme += Time.deltaTime;
+            yield return null;
+        }
+        _anim.SetFloat(Constants.ANIM_VAR_SPEED, targetValue);
+    }
 
     private void OnAnimatorMove()
     {
@@ -79,7 +115,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void EventDash()
     {
-        _player.movement.Dash();
+        _player.movement.DashInAnimation();
     }
 
 

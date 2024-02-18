@@ -186,13 +186,22 @@ public class PlayerMovement : MonoBehaviour
         }
         if(GetDirectionNormalized().magnitude > 0.1f)
         {
-            isDashing = true;
-            DisableMovement();
             _player.animations.PlayTargetAnimation("roll", true);
-
-            _player.rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
-            StartCoroutine(EnableMovementAfterDash(dashDelay));
+            HandleDash();
         }
+    }
+
+    private void HandleDash()
+    {
+        isDashing = true;
+        DisableMovement();
+        _player.rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
+        StartCoroutine(EnableMovementAfterDash(dashDelay));
+    }
+
+    public void DashInAnimation()
+    {
+        HandleDash();
     }
 
     IEnumerator EnableMovementAfterDash(float delay)

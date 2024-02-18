@@ -92,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         switch (CurrentCharacterState)
         {
             case Enums.CharacterState.Idle:
-               // animations.OnIdleAnimation();
+                animations.OnIdleAnimation();
                 break;
             case Enums.CharacterState.Moving:
                 break;
