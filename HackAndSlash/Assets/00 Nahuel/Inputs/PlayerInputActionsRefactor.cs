@@ -386,10 +386,10 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
                 {
                     ""name"": """",
                     ""id"": ""9f417d90-b345-4cd8-bd9a-384bd394d185"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Game Pad"",
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
