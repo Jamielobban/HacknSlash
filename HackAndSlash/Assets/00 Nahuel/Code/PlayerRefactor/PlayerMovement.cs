@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
 
-            _player.animations.GetAnimator.SetBool("isUsingRootMotion", false);
+            _player.animations.Animator.SetBool("isUsingRootMotion", false);
 
             inAirTime = Time.deltaTime;
             _player.rb.AddForce(transform.forward * leapingVelocity);
@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded)
         {
-            _player.animations.GetAnimator.SetBool("isJumping", true);
+            _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
             JumpAction(jumpHeight);
         }

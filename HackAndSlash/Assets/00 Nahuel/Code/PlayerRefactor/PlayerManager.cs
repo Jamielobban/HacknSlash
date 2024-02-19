@@ -74,10 +74,10 @@ public class PlayerManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        isInteracting = animations.GetAnimator.GetBool("isInteracting");
-        isUsingRootMotion = animations.GetAnimator.GetBool("isUsingRootMotion");
-        movement.isJumping = animations.GetAnimator.GetBool("isJumping");
-        animations.GetAnimator.SetBool("isGrounded", movement.isGrounded);
+        isInteracting = animations.Animator.GetBool("isInteracting");
+        isUsingRootMotion = animations.Animator.GetBool("isUsingRootMotion");
+        movement.isJumping = animations.Animator.GetBool("isJumping");
+        animations.Animator.SetBool("isGrounded", movement.isGrounded);
     }
 
     public void ChangeCharacterState(Enums.CharacterState newState)

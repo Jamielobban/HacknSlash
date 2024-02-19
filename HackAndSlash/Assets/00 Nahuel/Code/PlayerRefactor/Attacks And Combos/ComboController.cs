@@ -64,7 +64,7 @@ public class ComboController : MonoBehaviour
         DoAttack();
     }
 
-    public BaseAttack GetNextAttack() 
+    private BaseAttack GetNextAttack() 
     {
         foreach (Combo combo in combos)
         {
@@ -74,7 +74,7 @@ public class ComboController : MonoBehaviour
         }
         return null;
     }
-    public bool IsCorrectInput(Enums.InputsAttack action) 
+    private bool IsCorrectInput(Enums.InputsAttack action) 
     {
         foreach (Combo combo in combos)
         {
@@ -85,7 +85,7 @@ public class ComboController : MonoBehaviour
         }
         return false;
     }
-    public void ClearComboSequence()
+    private void ClearComboSequence()
     {
         _currentSequence.Clear();
         currentActionIndex = 0;
