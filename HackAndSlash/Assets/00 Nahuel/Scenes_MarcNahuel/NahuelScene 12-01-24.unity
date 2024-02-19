@@ -879,7 +879,7 @@ MonoBehaviour:
     FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 2500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -901,7 +901,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219357130}
-  m_LocalRotation: {x: 0.32326588, y: 0.0000000113384, z: -0.0000000038732813, w: 0.9463082}
+  m_LocalRotation: {x: 0.03163855, y: -0.0000000030723246, z: 9.725256e-11, w: 0.9994994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6193,6 +6193,7 @@ GameObject:
   - component: {fileID: 345314781}
   - component: {fileID: 345314780}
   - component: {fileID: 345314779}
+  - component: {fileID: 345314782}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -6241,7 +6242,7 @@ MonoBehaviour:
     FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 2500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -6287,7 +6288,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertInput: 1
+    m_InvertInput: 0
     m_MinValue: -180
     m_MaxValue: 180
     m_Wrap: 1
@@ -6310,12 +6311,12 @@ MonoBehaviour:
   m_BindingMode: 5
   m_SplineCurvature: 0.2
   m_Orbits:
-  - m_Height: 4.5
-    m_Radius: 1.75
-  - m_Height: 2.5
-    m_Radius: 3
-  - m_Height: 0.4
-    m_Radius: 1.3
+  - m_Height: 3
+    m_Radius: 8
+  - m_Height: 0.8
+    m_Radius: 8
+  - m_Height: -3
+    m_Radius: 8
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 1674500633}
@@ -6329,7 +6330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345314778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0000000066355383, y: 3.8945765, z: 0.63502073}
+  m_LocalPosition: {x: 0.000000045611074, y: 2.1945765, z: -4.3649793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6339,6 +6340,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 91
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345314782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345314778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 128
+  m_IgnoreTag: Player
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0
+  m_Damping: 0.15
+  m_DampingWhenOccluded: 0.15
+  m_OptimalTargetDistance: 0
 --- !u!1 &347819256
 GameObject:
   m_ObjectHideFlags: 3
@@ -10341,7 +10372,7 @@ MonoBehaviour:
     FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 2500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -10363,7 +10394,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656376880}
-  m_LocalRotation: {x: 0.30604526, y: 0.000000018191939, z: -0.00000000584817, w: 0.952017}
+  m_LocalRotation: {x: 0.013500973, y: -0.000000006375258, z: 8.6080025e-11, w: 0.99990886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14731,7 +14762,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000
+  far clip plane: 2500
   field of view: 40
   orthographic: 0
   orthographic size: 10
@@ -14757,8 +14788,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743992067}
-  m_LocalRotation: {x: 0.32326594, y: 0.000000027620942, z: -0.000000009435519, w: 0.9463082}
-  m_LocalPosition: {x: -0.0000000066355383, y: 3.8945765, z: 0.63502073}
+  m_LocalRotation: {x: 0.031638548, y: -9.2260327e-10, z: 2.9204496e-11, w: 0.9994994}
+  m_LocalPosition: {x: 0.000000045611074, y: 2.1945765, z: -4.3649793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25065,7 +25096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
+  m_FollowOffset: {x: 0, y: 0.8, z: -8}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -29511,7 +29542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
+  m_FollowOffset: {x: 0, y: 0.8, z: -8}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -52836,7 +52867,7 @@ MonoBehaviour:
     FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 2500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -52858,7 +52889,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674500632}
-  m_LocalRotation: {x: 0.34042525, y: -0.000000027792698, z: 0.000000010062344, w: 0.9402716}
+  m_LocalRotation: {x: 0.049813695, y: -0.000000005218175, z: 2.602597e-10, w: 0.99875855}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -69509,7 +69540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
+  m_FollowOffset: {x: 0, y: 0.8, z: -8}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -77201,7 +77232,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5359834508197564110, guid: cc261640dcfa5e84a9d141e255d10b3b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

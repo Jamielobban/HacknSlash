@@ -41,4 +41,25 @@ public class Enums
         L2Triangle
     };
 
+    public enum GameState
+    {
+        Menu,
+        StartPlaying,
+        Playing,
+        Pause,
+        ReturningMenu,
+        Exit
+
+    };
+
+    public enum Music
+    {
+    };
+    public enum Effects
+    {
+    };
+    public enum MusicEffects
+    {
+    };
 }
+

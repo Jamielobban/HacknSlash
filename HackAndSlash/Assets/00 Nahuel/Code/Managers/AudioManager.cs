@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    private static AudioManager _instance;
+
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("Audio Manager");
+                go.AddComponent<AudioManager>();
+                DontDestroyOnLoad(go);
+            }
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayAudio(AudioSource audioSource, AudioClip audioToPlay)
