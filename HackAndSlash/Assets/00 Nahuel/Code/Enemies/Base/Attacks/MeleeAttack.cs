@@ -16,6 +16,6 @@ public class MeleeAttack : EnemyBaseAttack
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerControl>()?.GetDamage(data.damage.Value);
+        other.GetComponent<IDamageable>()?.TakeDamage(data.damage.Value);
     }
 }

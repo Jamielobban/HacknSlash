@@ -6,7 +6,6 @@ public class PlayerAnimations : MonoBehaviour
 {
     private Animator _anim;
     private PlayerManager _player;
-
     public float idleDampTime = 0.1f;
     public float timeChangeIdle = 5f;
     public int maxIdleAnim;

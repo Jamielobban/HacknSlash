@@ -13,16 +13,13 @@ public class PlayerManager : MonoBehaviour
     public PlayerHealthSystem healthSystem { get; protected set; }
     public PlayerInputsSystem inputs { get; private set; }
     public CameraMovement cameraMovement { get; private set; }
-
     public PlayerInventory inventory { get; private set; }
 
     public PlayerCollision collision;
 
     public ComboController comboController { get; private set; }
 
-    //temporal
-    public AttackHolder attackHolder { get; private set; }
-
+    public GameObject playerHandRight;
 
     public bool isDead = false;
     public bool isStun = false;
@@ -43,7 +40,6 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
-        attackHolder = GetComponent<AttackHolder>();
         inventory = GetComponent<PlayerInventory>();
         cameraMovement = GetComponent<CameraMovement>();   
         comboController = GetComponent<ComboController>();

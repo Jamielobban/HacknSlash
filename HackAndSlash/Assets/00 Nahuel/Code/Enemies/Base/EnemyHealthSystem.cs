@@ -75,9 +75,9 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
         //*** Particle Effects ***//
 
-        SpawnWhiteSplash(collisionPoint);
-        SpawnBloodSplash(collisionPoint);
-        SpawnHitLine(collisionPoint);
+        //SpawnWhiteSplash(collisionPoint);
+        //SpawnBloodSplash(collisionPoint);
+        //SpawnHitLine(collisionPoint);
     }
     public virtual void AirDamageable()
     {
@@ -92,25 +92,25 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         _enemy.hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }
 
-    private void SpawnEffect(GameObject effect, Vector3 spawnPoint)
-    {
-        GameObject playerCenter = GameObject.FindGameObjectWithTag("PlayerCenter");
-        GameObject hitToLook = Instantiate(effect, spawnPoint, Quaternion.identity);
-        hitToLook.transform.LookAt(playerCenter.transform.position);
-    }
+    //private void SpawnEffect(GameObject effect, Vector3 spawnPoint)
+    //{
+    //    GameObject playerCenter = GameObject.FindGameObjectWithTag("PlayerCenter");
+    //    GameObject hitToLook = Instantiate(effect, spawnPoint, Quaternion.identity);
+    //    hitToLook.transform.LookAt(playerCenter.transform.position);
+    //}
 
-    private void SpawnWhiteSplash(Vector3 spawnPoint)
-    {
-        SpawnEffect(hitWhiteEffects[Random.Range(0, hitWhiteEffects.Length - 1)], spawnPoint + new Vector3(0f, 1f, 0f));
-    }
+    //private void SpawnWhiteSplash(Vector3 spawnPoint)
+    //{
+    //    SpawnEffect(hitWhiteEffects[Random.Range(0, hitWhiteEffects.Length - 1)], spawnPoint + new Vector3(0f, 1f, 0f));
+    //}
 
-    private void SpawnBloodSplash(Vector3 spawnPoint)
-    {
-        SpawnEffect(bloodEffects[Random.Range(0, bloodEffects.Length)], spawnPoint + new Vector3(0f, 1f, 0f));
-    }
+    //private void SpawnBloodSplash(Vector3 spawnPoint)
+    //{
+    //    SpawnEffect(bloodEffects[Random.Range(0, bloodEffects.Length)], spawnPoint + new Vector3(0f, 1f, 0f));
+    //}
 
-    private void SpawnHitLine(Vector3 spawnPoint)
-    {
-        SpawnEffect(hitEffect2, spawnPoint + new Vector3(Random.Range(0, 0.15f), Random.Range(0.85f, 1.15f), 0f));
-    }
+    //private void SpawnHitLine(Vector3 spawnPoint)
+    //{
+    //    SpawnEffect(hitEffect2, spawnPoint + new Vector3(Random.Range(0, 0.15f), Random.Range(0.85f, 1.15f), 0f));
+    //}
 }

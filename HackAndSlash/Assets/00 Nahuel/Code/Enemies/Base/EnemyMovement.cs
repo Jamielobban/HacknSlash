@@ -31,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _events = GetComponent<EnemyEvents>();
         _agent = GetComponent<NavMeshAgent>();
-        target = FindObjectOfType<PlayerControl>().transform;
+        target = FindObjectOfType<PlayerManager>().transform;
 
         _events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); } ;
         _events.OnIdle += DisableMovement;

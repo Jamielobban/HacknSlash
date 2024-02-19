@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class BaseAttack : MonoBehaviour
 {
-    private PlayerManager _player;
+    protected PlayerManager _player;
     public DataAttack data;
     public Enums.AttackState currentAttackState = Enums.AttackState.ReadyToUse;
     private float _currentTime = 0f;
+    public Vector3 instantiationPoint;
+    public Quaternion initialRotation;
 
     private void Awake()
     {

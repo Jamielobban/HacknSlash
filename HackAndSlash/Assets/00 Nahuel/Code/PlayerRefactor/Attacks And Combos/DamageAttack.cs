@@ -1,3 +1,4 @@
+using DamageNumbersPro.Demo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class DamageAttack : BaseAttack
 
         if (data.effect != null)
         {
-            GameObject go = Instantiate(data.effect, transform.position, Quaternion.identity);
+            GameObject go = Instantiate(data.effect, instantiationPoint, initialRotation);
             go.GetComponent<DealDamage>().attack = this;
         }
     }
