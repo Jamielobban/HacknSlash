@@ -58,7 +58,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public virtual void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-        _player.CallItemOnHit();
+        //_player.CallItemOnHit();
         _enemy.events.Hit();
        // DamageEffects(damage, isCrit, collisionPoint);
         if(_currentHealth <= 0)

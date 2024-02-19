@@ -102,7 +102,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             //_player.rb.drag = 0;
             //Vector3 deltaPosition = _anim.deltaPosition;
-            //Vector3 velocity = deltaPosition / Time.deltaTime;
+            //Vector3 velocity =    deltaPosition / Time.deltaTime;
             //_player.rb.velocity = velocity;
         }
     }
