@@ -1748,6 +1748,7 @@ GameObject:
   - component: {fileID: 4916640838537896346}
   - component: {fileID: 7019322076484470408}
   - component: {fileID: 7301155799598915863}
+  - component: {fileID: 120648776684903822}
   - component: {fileID: 5685519269032656637}
   - component: {fileID: 7127473314965164103}
   - component: {fileID: 7606065436709299514}
@@ -1755,6 +1756,7 @@ GameObject:
   - component: {fileID: 7529933948483472971}
   - component: {fileID: 6417761822419749738}
   - component: {fileID: 8678657482853821394}
+  - component: {fileID: 7051883071492548770}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1834,6 +1836,27 @@ CapsuleCollider:
   m_Height: 1.8097858
   m_Direction: 1
   m_Center: {x: 0, y: 0.893157, z: 0}
+--- !u!95 &120648776684903822
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931428773790119072}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a7035355e75167e4f93aab55581f2db6, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2b3376c151ca9e54cab3f87ead075e01, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5685519269032656637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1941,6 +1964,7 @@ MonoBehaviour:
   isGrounded: 0
   isJumping: 0
   isDashing: 0
+  isLanded: 1
 --- !u!114 &6417761822419749738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1975,6 +1999,22 @@ MonoBehaviour:
   - {fileID: 3139511484062424563}
   currentAttack: {fileID: 0}
   currentActionIndex: 0
+--- !u!114 &7051883071492548770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931428773790119072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d12ac6c96b39d54fb0a3e26ffae2275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleDampTime: 0.1
+  timeChangeIdle: 5
+  maxIdleAnim: 3
+  startJumpForce: 0
 --- !u!1 &1939840539501661210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6246,7 +6286,8 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 15f936b8eb5bc1149b4658c74277b1f7, type: 3}
     m_RemovedGameObjects:
     - {fileID: -2819432410674635891, guid: 15f936b8eb5bc1149b4658c74277b1f7, type: 3}
     - {fileID: -838338932240714159, guid: 15f936b8eb5bc1149b4658c74277b1f7, type: 3}
@@ -6304,11 +6345,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4941015585323860033}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15f936b8eb5bc1149b4658c74277b1f7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8330515286386752367}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f936b8eb5bc1149b4658c74277b1f7, type: 3}
 --- !u!4 &1459442195652733025 stripped
 Transform:
@@ -6316,28 +6353,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1426026503621414794}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2236928220193141467 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 15f936b8eb5bc1149b4658c74277b1f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1426026503621414794}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8330515286386752367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2236928220193141467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d12ac6c96b39d54fb0a3e26ffae2275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleDampTime: 0.1
-  timeChangeIdle: 5
-  maxIdleAnim: 3
-  startJumpForce: 0
 --- !u!1001 &2461399359050719229
 PrefabInstance:
   m_ObjectHideFlags: 0

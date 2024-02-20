@@ -53,13 +53,19 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void MoveLeftStick_performed(InputAction.CallbackContext context)
     {
-        _player.movement.EnableMovement();
+        if (_player.movement.isLanded)
+        {
+            _player.movement.EnableMovement();
+        }
+
     }
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
-        _player.movement.DisableMovement();
-        //_player.animations.PlayTargetAnimation("DB_RunStop", true);
-        _player.ChangeCharacterState(Enums.CharacterState.Idle);
+        if (_player.movement.isLanded)
+        {
+            _player.movement.DisableMovement();
+            _player.ChangeCharacterState(Enums.CharacterState.Idle);
+        }
     }
 
     private void R2_performed(InputAction.CallbackContext context)

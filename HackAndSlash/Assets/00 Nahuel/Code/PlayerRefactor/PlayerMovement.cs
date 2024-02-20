@@ -35,9 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _canMove;
     public bool isJumping = false;
     public bool isDashing = false;
-
-
-
+    public bool isLanded = true;
     public bool IsSprinting
     {
         get => _isSprinting;
@@ -59,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting || isJumping || !_canMove || isDashing) { return; }
+        if (_player.isInteracting || isJumping || !_canMove || isDashing) { 
+            return; }
 
         if (_isSprinting)
         {
@@ -73,9 +72,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleFallingAndLanding()
     {
-        if (_player.isUsingRootMotion)
-            return;
-
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
@@ -87,8 +83,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
-
-            _player.animations.Animator.SetBool("isUsingRootMotion", false);
 
             inAirTime = Time.deltaTime;
             _player.rb.AddForce(transform.forward * leapingVelocity);
@@ -109,11 +103,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isGrounded = false;
-        }   
-        
-        if(isGrounded && !isJumping && !isDashing)
+        }
+
+        if (isGrounded && !isJumping && !isDashing)
         {
-            if(_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
+            if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
             }
@@ -153,7 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void DisableMovement()
     {
-        _canMove = false;
         _player.ChangeCharacterState(Enums.CharacterState.Idle);
         _moveDirection = Vector3.zero;
         _player.rb.velocity = Vector3.zero;
@@ -164,6 +157,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded)
         {
+            isLanded = false;
+            _player.animations.Animator.SetBool("isLanded", isLanded);
             _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
             JumpAction(jumpHeight);

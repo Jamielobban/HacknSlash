@@ -901,7 +901,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219357130}
-  m_LocalRotation: {x: 0.03163855, y: 0.0000000015422938, z: -4.882039e-11, w: 0.9994994}
+  m_LocalRotation: {x: 0.03163855, y: -0.000000002149721, z: 6.804812e-11, w: 0.9994994}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10400,7 +10400,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656376880}
-  m_LocalRotation: {x: 0.013500971, y: -7.084928e-17, z: 1.4676238e-18, w: 0.99990886}
+  m_LocalRotation: {x: 0.013500972, y: 9.312378e-10, z: -1.25737615e-11, w: 0.99990886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14794,7 +14794,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743992067}
-  m_LocalRotation: {x: 0.031638548, y: 0.0000000040302073, z: -1.2757377e-10, w: 0.9994994}
+  m_LocalRotation: {x: 0.031638548, y: -0.000000004299442, z: 1.3609625e-10, w: 0.9994994}
   m_LocalPosition: {x: 0, y: 2.264, z: -4.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52889,7 +52889,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674500632}
-  m_LocalRotation: {x: 0.0498137, y: 2.1366209e-16, z: 6.4929828e-18, w: 0.99875855}
+  m_LocalRotation: {x: 0.049813695, y: -1e-45, z: -0, w: 0.99875855}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -77077,6 +77077,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 120648776684903822, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1931428773790119072, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}
       propertyPath: m_Name
@@ -77142,11 +77147,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1209248548}
-    - target: {fileID: 7529933948483472971, guid: cc261640dcfa5e84a9d141e255d10b3b,
-        type: 3}
-      propertyPath: maxDistance
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

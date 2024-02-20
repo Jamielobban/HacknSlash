@@ -25,7 +25,6 @@ public class PlayerManager : MonoBehaviour
     public bool isStun = false;
     public bool isInvulnerable = false;
     public bool isInteracting;
-    public bool isUsingRootMotion;
     private Camera _mainCamera;
     public Camera MainCamera { get => _mainCamera; }
 
@@ -44,7 +43,7 @@ public class PlayerManager : MonoBehaviour
         cameraMovement = GetComponent<CameraMovement>();   
         comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();
-        animations = transform.GetChild(0).GetComponent<PlayerAnimations>();
+        animations = GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();
         hud = GetComponent<PlayerHUDSystem>();
         inputs = GetComponent<PlayerInputsSystem>();
@@ -75,7 +74,7 @@ public class PlayerManager : MonoBehaviour
     private void LateUpdate()
     {
         isInteracting = animations.Animator.GetBool("isInteracting");
-        isUsingRootMotion = animations.Animator.GetBool("isUsingRootMotion");
+        movement.isLanded = animations.Animator.GetBool("isLanded");
         movement.isJumping = animations.Animator.GetBool("isJumping");
         animations.Animator.SetBool("isGrounded", movement.isGrounded);
     }

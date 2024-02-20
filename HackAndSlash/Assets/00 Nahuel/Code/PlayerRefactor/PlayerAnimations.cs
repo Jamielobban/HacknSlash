@@ -17,7 +17,7 @@ public class PlayerAnimations : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-        _player = transform.parent.GetComponent<PlayerManager>();
+        _player = GetComponent<PlayerManager>();
     }
 
     public void HandleMovingAnimations()
@@ -26,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             StartCoroutine(IncreaseOverTime(_anim.GetFloat(Constants.ANIM_VAR_SPEED),2f));
         }
-        else if(_player.inputs.GetDirectionLeftStick().magnitude > 0.125f)
+        else if(_player.inputs.GetDirectionLeftStick().magnitude > 0.05f)
         {
             _anim.SetFloat(Constants.ANIM_VAR_SPEED, _player.inputs.GetDirectionLeftStick().magnitude);
         }
@@ -93,17 +93,6 @@ public class PlayerAnimations : MonoBehaviour
             yield return null;
         }
         _anim.SetFloat(Constants.ANIM_VAR_SPEED, targetValue);
-    }
-
-    private void OnAnimatorMove()
-    {
-        if(_player.isUsingRootMotion)
-        {
-            //_player.rb.drag = 0;
-            //Vector3 deltaPosition = _anim.deltaPosition;
-            //Vector3 velocity =    deltaPosition / Time.deltaTime;
-            //_player.rb.velocity = velocity;
-        }
     }
 
     public void EventJump()
