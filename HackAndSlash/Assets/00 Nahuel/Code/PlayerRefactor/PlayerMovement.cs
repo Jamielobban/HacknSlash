@@ -28,14 +28,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump stats:")]
     public float jumpHeight = 3;
     public float gravityIntensity = -15;
+    public const int maxJumps = 2;
+    private int _currentJumps = 0;
 
     [Header("Movement flags:")]
     public bool isGrounded;
     private bool _isSprinting;
-    private bool _canMove;
     public bool isJumping = false;
     public bool isDashing = false;
-    public bool isLanded = true;
+    //public bool isLanded = true;
     public bool IsSprinting
     {
         get => _isSprinting;
@@ -57,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting || isJumping || !_canMove || isDashing) { 
+        if (_player.isInteracting || isJumping || isDashing) { 
             return; }
 
         if (_isSprinting)
@@ -99,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
             targetPosition.y = rayCastHitPoint.y;
             inAirTime = 0;
             isGrounded = true;
+            ResetJumps();
         }
         else
         {
@@ -141,7 +143,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void EnableMovement()
     {
-        _canMove = true;
         _player.ChangeCharacterState(Enums.CharacterState.Moving);
     }
 
@@ -155,14 +156,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        if(isGrounded)
+        if(CanJump())
         {
-            isLanded = false;
-            _player.animations.Animator.SetBool("isLanded", isLanded);
+            _currentJumps++;
+            //isLanded = false;
+            //_player.animations.Animator.SetBool("isLanded", isLanded);
             _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
-            JumpAction(jumpHeight);
         }
+    }
+
+    private void ResetJumps()
+    {
+        _currentJumps = 0;
     }
 
     public void JumpAction(float _jumpHeight)
@@ -175,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash()
     {
-        if(!_canMove || _player.isInteracting)
+        if(_player.isInteracting)
         {
             return;
         }
@@ -194,11 +200,6 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(EnableMovementAfterDash(dashDelay));
     }
 
-    public void DashInAnimation()
-    {
-        HandleDash();
-    }
-
     IEnumerator EnableMovementAfterDash(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -211,5 +212,6 @@ public class PlayerMovement : MonoBehaviour
         return UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
     }
 
+    private bool CanJump() => _currentJumps <= maxJumps;
 
 }

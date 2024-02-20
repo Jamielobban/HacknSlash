@@ -7,7 +7,6 @@ public class PlayerAnimations : MonoBehaviour
     public float idleDampTime = 0.1f;
     public float timeChangeIdle = 5f;
     public int maxIdleAnim;
-    public float startJumpForce;
 
     private PlayerManager _player;
     private Animator _anim;
@@ -26,7 +25,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             StartCoroutine(IncreaseOverTime(_anim.GetFloat(Constants.ANIM_VAR_SPEED),2f));
         }
-        else if(_player.inputs.GetDirectionLeftStick().magnitude > 0.05f)
+        else if(_player.inputs.GetDirectionLeftStick().magnitude > 0f)
         {
             _anim.SetFloat(Constants.ANIM_VAR_SPEED, _player.inputs.GetDirectionLeftStick().magnitude);
         }
@@ -94,16 +93,5 @@ public class PlayerAnimations : MonoBehaviour
         }
         _anim.SetFloat(Constants.ANIM_VAR_SPEED, targetValue);
     }
-
-    public void EventJump()
-    {
-        _player.movement.JumpAction(startJumpForce);
-    }
-
-    public void EventDash()
-    {
-        _player.movement.DashInAnimation();
-    }
-
 
 }
