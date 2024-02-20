@@ -43,12 +43,12 @@ public class Enums
 
     public enum TutorialState 
     { 
-        INACTIVE, 
         JUMPS, 
         SPRINT,
         ROLLS, 
         COMBOS,
-        FINISHED
+        FINISHED,
+        INACTIVE 
     }
 
 
