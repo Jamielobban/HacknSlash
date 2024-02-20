@@ -4,22 +4,14 @@ using UnityEngine;
 
 public class DealDamage : MonoBehaviour
 {
-    public DamageAttack attack;
-    protected PlayerManager _player;
-
+    public float damage;
+    public bool canStun;
     protected virtual void Start()
     {
-        _player = FindObjectOfType<PlayerManager>();
     }
 
     protected virtual void Update()
     {
-    }
-
-    // --- Ability Damage + Player Damage ?? --- //
-    protected virtual void DoDamage(IDamageable entity)
-    {
-        entity.TakeDamage(attack.baseDamage + _player.stats.baseDamage);
     }
 
     protected virtual void Stun(IDamageable entity)
@@ -29,6 +21,18 @@ public class DealDamage : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        IDamageable damageableEntity = other.GetComponent<IDamageable>();
+
+        if (damageableEntity != null)
+        {
+            damageableEntity.TakeDamage(damage);
+
+            if(canStun)
+            {
+                //Stun
+            }
+
+        }
     }
     protected virtual void OnTriggerExit(Collider other)
     {

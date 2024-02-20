@@ -5,5 +5,5 @@ using UnityEngine;
 public class PlayerStadistics : MonoBehaviour
 {
     public float baseDamage;
-    
+    public float thrustDamage;
 }

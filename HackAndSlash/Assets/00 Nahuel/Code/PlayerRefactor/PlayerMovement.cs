@@ -1,13 +1,12 @@
-using MoreMountains.FeedbacksForThirdParty;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerManager _player;
     private Vector3 _moveDirection;
+
+    #region Stats
 
     [Header("Movement stats:")]
     public float rotationSpeed = 15f;
@@ -31,12 +30,13 @@ public class PlayerMovement : MonoBehaviour
     public const int maxJumps = 2;
     private int _currentJumps = 0;
 
+    #endregion
+
     [Header("Movement flags:")]
     public bool isGrounded;
     private bool _isSprinting;
     public bool isJumping = false;
     public bool isDashing = false;
-    //public bool isLanded = true;
     public bool IsSprinting
     {
         get => _isSprinting;
@@ -47,11 +47,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _player = GetComponent<PlayerManager>();
         runSpeed = maxSpeed * 0.5f;
-    }
-
-    void Start()
-    {
-        EnableMovement();   
     }
 
     public void HandleAllMovement()
@@ -141,11 +136,6 @@ public class PlayerMovement : MonoBehaviour
         _player.rb.velocity = _moveDirection;
     }
 
-    public void EnableMovement()
-    {
-        _player.ChangeCharacterState(Enums.CharacterState.Moving);
-    }
-
     public void DisableMovement()
     {
         _player.ChangeCharacterState(Enums.CharacterState.Idle);
@@ -159,8 +149,6 @@ public class PlayerMovement : MonoBehaviour
         if(CanJump())
         {
             _currentJumps++;
-            //isLanded = false;
-            //_player.animations.Animator.SetBool("isLanded", isLanded);
             _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
         }
@@ -195,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleDash()
     {
         isDashing = true;
+        _player.isInvulnerable = true;
         DisableMovement();
         _player.rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
         StartCoroutine(EnableMovementAfterDash(dashDelay));
@@ -203,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator EnableMovementAfterDash(float delay)
     {
         yield return new WaitForSeconds(delay);
-        EnableMovement();
+        _player.isInvulnerable = false;
         isDashing = false;
     }
 

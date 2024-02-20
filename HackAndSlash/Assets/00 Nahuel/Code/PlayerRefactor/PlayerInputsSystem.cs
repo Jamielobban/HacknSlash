@@ -53,19 +53,15 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void MoveLeftStick_performed(InputAction.CallbackContext context)
     {
-        //if (_player.movement.isLanded)
-        //{
-            _player.movement.EnableMovement();
-        //}
-
+        _player.ChangeCharacterState(Enums.CharacterState.Moving);
     }
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
-        //if (_player.movement.isLanded)
-        //{
+        if(_player.movement.isGrounded)
+        {
             _player.movement.DisableMovement();
             _player.ChangeCharacterState(Enums.CharacterState.Idle);
-        //}
+        }
     }
 
     private void R2_performed(InputAction.CallbackContext context)
@@ -94,39 +90,74 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Square_performed(InputAction.CallbackContext context)
     {
-
-        if (context.interaction is HoldInteraction)
+        if(_player.movement.isGrounded)
         {
-            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
-            // https://forum.unity.com/threads/hold-and-press-on-the-same-button-path-without-performing-both-actions-when-holding.729887/ 
-        }
-        else
-        {
-            if (!_isL2Performed)
+            if (context.interaction is HoldInteraction)
             {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
             }
             else
             {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Square);
+                if (!_isL2Performed)
+                {
+                    _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
+                }
+                else
+                {
+                    _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Square);
+                }
             }
         }
+        else
+        {
+            if (context.interaction is HoldInteraction)
+            {
+            }
+            else
+            {
+                if (!_isL2Performed)
+                {
+                }
+                else
+                {
+                }
+            }
+        }
+
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
-        if (context.interaction is HoldInteraction)
+        if (_player.movement.isGrounded)
         {
-            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
-        }
-        else
-        {
-            if (!_isL2Performed)
+            if (context.interaction is HoldInteraction)
             {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+                _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
             }
             else
             {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Triangle);
+                if (!_isL2Performed)
+                {
+                    _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+                }
+                else
+                {
+                    _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Triangle);
+                }
+            }
+        }
+        else
+        {
+            if (context.interaction is HoldInteraction)
+            {
+            }
+            else
+            {
+                if (!_isL2Performed)
+                {
+                }
+                else
+                {
+                }
             }
         }
     }

@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         hud = GetComponent<PlayerHUDSystem>();
         inputs = GetComponent<PlayerInputsSystem>();
-
+        stats = GetComponent<PlayerStadistics>();
     }
 
     void Update()

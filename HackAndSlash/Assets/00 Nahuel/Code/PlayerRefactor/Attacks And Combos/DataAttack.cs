@@ -13,11 +13,6 @@ public class DataAttack : ScriptableObject
     [Header("States")]
     public List<Enums.CharacterState> AllowedCharacterStates = new List<Enums.CharacterState>();
 
-    [Header("Base Stats")]
-    public float cooldown;
-    public float castTime;
-
     [Header("References")]
-    public GameObject effect;
     public AudioSource audio;
 }
