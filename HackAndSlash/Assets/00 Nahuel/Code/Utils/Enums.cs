@@ -41,4 +41,15 @@ public class Enums
         L2Triangle
     };
 
+    public enum TutorialState 
+    { 
+        INACTIVE, 
+        JUMPS, 
+        SPRINT,
+        ROLLS, 
+        COMBOS,
+        FINISHED
+    }
+
+
 }
