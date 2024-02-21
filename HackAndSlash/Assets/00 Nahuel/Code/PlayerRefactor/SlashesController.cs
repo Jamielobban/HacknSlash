@@ -18,11 +18,11 @@ public class SlashesController : MonoBehaviour
 
     public void SpawnSlash(float value)
     {
-        (int angulo, int isRightHand) = GetNumber(value);
+        (int anguloX, int isRightHand) = GetNumber(value);
         GameObject go = Instantiate(slashNormalFX, isRightHand == 1 ? rightHand.transform.position : leftHand.transform.position, Quaternion.identity);
 
         //go.transform.rotation = isRightHand == 1 ? rightHand.transform.rotation : leftHand.transform.rotation;
-        go.transform.rotation = Quaternion.Euler(new Vector3(angulo, -180, transform.rotation.z));
+        go.transform.rotation = Quaternion.Euler(new Vector3(anguloX, -180, transform.rotation.z));
         go.AddComponent<DealDamage>().damage = _player.stats.baseDamage;
     }
     private Vector3 GetPosToInstantiate(float height)
@@ -30,6 +30,8 @@ public class SlashesController : MonoBehaviour
         return new Vector3(transform.position.x, transform.position.y + height, transform.position.z);  
     }
 
+    // This function given a float number returns two separated numbers int part and decimal part
+    // Example: Given 50.1 returns 50 and 1, given 37.5 returns 37 and 5
     private (int, int) GetNumber(float value)
     {
         int entero = Mathf.FloorToInt(value);
