@@ -6,6 +6,7 @@ public class SlashesController : MonoBehaviour
 
     public GameObject slashNormalFX;
     public GameObject slash360FX;
+    public GameObject yingYangFX;
     public GameObject thrustFX, thrustFxBig;
     private PlayerManager _player;
 
@@ -40,5 +41,10 @@ public class SlashesController : MonoBehaviour
     {
         GameObject go = Instantiate(thrustFxBig, isRightHand == 1 ? rightHand.transform.position : leftHand.transform.position, Quaternion.LookRotation(transform.forward));
         go.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+    }
+
+    public void SpawnYingYang()
+    {
+        GameObject go = Instantiate(yingYangFX, transform.position, Quaternion.identity);
     }
 }
