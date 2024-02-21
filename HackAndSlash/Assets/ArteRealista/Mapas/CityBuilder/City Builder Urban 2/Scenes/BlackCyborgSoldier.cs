@@ -12,10 +12,12 @@ using MoreMountains.Tools;
 
 public class BlackCyborgSoldier : Interactive, IInteractable
 {
+    //DIALOGUE 
     [TextArea]
     [SerializeField] string[] dialogues;
+
     [SerializeField] List<Combo>combosToPractice = new List<Combo>();
-    [SerializeField] List<Sprite> uiCombos = new List<Sprite>();
+    [SerializeField] List<Sprite> uiTutorialButtons = new List<Sprite>();
     [SerializeField] SimpleRTVoiceExample voice;
     [SerializeField] bool intro, hasSprinted = false, walking = false;
     [SerializeField] Image[] uiCombosImage = new Image[4];
@@ -23,7 +25,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
 
     readonly string name = "Cyborg Sergeant";
-    int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1;
+    int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
     bool _isL2Performed, resetImages = false;
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
@@ -44,13 +46,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             return;
         }
 
-        matchKeyWithUI.Add(Enums.InputsAttack.Square, uiCombos[3]);
-        matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiCombos[4]);
-        matchKeyWithUI.Add(Enums.InputsAttack.Triangle, uiCombos[5]);
-        matchKeyWithUI.Add(Enums.InputsAttack.HoldTriangle, uiCombos[6]);
-        matchKeyWithUI.Add(Enums.InputsAttack.L2Square, uiCombos[7]);
-        matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiCombos[8]);
-        //combosToPractice.AddRange(FindObjectOfType<PlayerMovement>().GetComponentsInChildren<Combo>().Select(c => c.sequence).ToList());
+        matchKeyWithUI.Add(Enums.InputsAttack.Square, uiTutorialButtons[3]);
+        matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiTutorialButtons[4]);
+        matchKeyWithUI.Add(Enums.InputsAttack.Triangle, uiTutorialButtons[5]);
+        matchKeyWithUI.Add(Enums.InputsAttack.HoldTriangle, uiTutorialButtons[6]);
+        matchKeyWithUI.Add(Enums.InputsAttack.L2Square, uiTutorialButtons[7]);
+        matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiTutorialButtons[8]);        
        
     }
 
@@ -58,9 +59,11 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         if (intro || currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
             return;
-               
+
+
         
-        if(currentState == Enums.TutorialState.COMBOS && currentComboLevel > combosToPractice.Count)
+
+        if (currentState == Enums.TutorialState.COMBOS && currentComboLevel > combosToPractice.Count)
         {
             ChangeTutorialPhase(Enums.TutorialState.FINISHED);
             _playerActions.Player.Square.performed -= SquarePerformed;
@@ -71,19 +74,21 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         }
         else if (currentState == Enums.TutorialState.COMBOS)
         {
-            if (inputsBuffer.Count() <= 0)
+            if (inputsBuffer.Count() <= 0 || lastBufferSize == inputsBuffer.Count())
                 return;
 
             if (inputsBuffer.Last() != combosToPractice[currentComboLevel].sequence[inputsBuffer.Count() - 1])
-                StepFailed();
+                ComboFailed();
             else
             {
-                StepCompleted();
+                StepDone();
                 if (inputsBuffer.Count() == combosToPractice[currentComboLevel].sequence.Count())
                     ComboCompleted();
             }
 
         }
+
+        lastBufferSize = inputsBuffer.Count();
     }
 
 
@@ -112,41 +117,147 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             currentText++;
     }
 
-    void TrianglePerformed(InputAction.CallbackContext context)
+    //UI MANAGEMENT COROUTINES
+
+    IEnumerator IntroSpeach()
     {
-        if (context.interaction is HoldInteraction)        
-            inputsBuffer.Add(Enums.InputsAttack.HoldTriangle);        
-        else
+        yield return new WaitForSeconds(1.5f);
+        voice.Speak(dialogues[0], name);
+    }
+
+    IEnumerator ResetImages()
+    {
+
+        foreach (Image image in uiCombosImage)
         {
-            if(_isL2Performed)
-                inputsBuffer.Add(Enums.InputsAttack.L2Triangle);
-            else
-                inputsBuffer.Add(Enums.InputsAttack.Triangle);
-        }
-    }
+            DOVirtual.Color(image.color, Color.white, 0.80f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
 
-    void SquarePerformed(InputAction.CallbackContext context)
-    {
-        if (context.interaction is HoldInteraction)
-            inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
-        else
+        }
+
+        yield return new WaitForSeconds(0.8f);
+
+        Color color = Color.white;
+        color.a = 0;
+
+        foreach (Image image in uiCombosImage)
         {
-            if (_isL2Performed)
-                inputsBuffer.Add(Enums.InputsAttack.L2Square);
-            else
-                inputsBuffer.Add(Enums.InputsAttack.Square);
+            DOVirtual.Color(image.color, color, 0.5f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
+
         }
+
+        yield return new WaitForSeconds(1f);
     }
 
-    private void L2_performed(InputAction.CallbackContext context)
+    IEnumerator StartPhase(Enums.TutorialState newPhase, int imagesNeeded, System.Action onFinishCurrentAction, System.Action onStartNewAction, float delayOnEnter)
     {
-        _isL2Performed = true;
-    }
-    private void L2_canceled(InputAction.CallbackContext context)
-    {
-        _isL2Performed = false;
+        onFinishCurrentAction();
+
+        yield return new WaitForSeconds(delayOnEnter);
+
+        yield return StartCoroutine(ResetImages());
+
+        for (int i = 0; i < 4; i++)
+        {
+            uiCombosImage[i].sprite = uiTutorialButtons[(int)newPhase];
+            uiCombosImage[i].enabled = false;
+            uiCombosImage[i].gameObject.SetActive(false);
+        }
+
+        //Appear new images, enabled only necessary ones and transparent to 1
+
+        for (int i = 3; i >= 0; i--)
+        {
+            if (i <= imagesNeeded - 1)
+            {
+                if (newPhase != Enums.TutorialState.COMBOS)
+                    uiCombosImage[i].sprite = uiTutorialButtons[(int)newPhase];
+                else
+                    uiCombosImage[i].sprite = matchKeyWithUI[combosToPractice[currentComboLevel].sequence[i]];
+
+                if (!uiCombosImage[i].enabled)
+                    uiCombosImage[i].enabled = true;
+
+                if (!uiCombosImage[i].gameObject.activeSelf)
+                    uiCombosImage[i].gameObject.SetActive(true);
+
+                DOVirtual.Color(uiCombosImage[i].color, Color.white, 0.6f, (col) =>
+                {
+                    uiCombosImage[i].color = col;
+                }).SetEase(Ease.InOutSine);
+
+                yield return new WaitForSeconds(0.6f);
+            }
+
+        }
+
+        ChangeTutorialPhase(newPhase);
+
+        onStartNewAction();
+
     }
 
+    IEnumerator RestartCombo()
+    {
+        yield return new WaitForSeconds(1.3f);
+
+        foreach (Image image in uiCombosImage)
+        {
+            DOVirtual.Color(image.color, Color.red, 0.80f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
+
+        }
+
+        yield return new WaitForSeconds(0.8f);
+
+        Color color = Color.white;
+        color.a = 0;
+
+        foreach (Image image in uiCombosImage)
+        {
+            DOVirtual.Color(image.color, color, 0.5f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
+
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        foreach (Image image in uiCombosImage)
+        {
+            DOVirtual.Color(image.color, Color.white, 0.80f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
+
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        _playerActions.Player.Square.performed += SquarePerformed;
+        _playerActions.Player.Triangle.performed += TrianglePerformed;
+        _playerActions.Player.L2.performed += L2_performed;
+        _playerActions.Player.L2.canceled += L2_canceled;
+    }
+
+    //HANDLE MOVEMENT INPUT
+
+    private void MoveLeftStick_performed(InputAction.CallbackContext context)
+    {
+        walking = true;
+    }
+    private void MoveLeftStick_canceled(InputAction.CallbackContext context)
+    {
+        walking = false;
+    }
     private void Jump_performed(InputAction.CallbackContext context)
     {
         jumpsDone += 1;
@@ -180,7 +291,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (rollsDone >= 2)
         {
-            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, 1, () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
             {
                 _playerActions.Player.Dash.performed -= RollPerformed;
             }, () =>
@@ -190,13 +301,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.L2.performed += L2_performed;
                 _playerActions.Player.L2.canceled += L2_canceled;
                 _playerActions.Player.Dash.performed -= RollPerformed;
-            }, 1));           
+            }, 1));
         }
 
     }
-
     private void SprintPerformed(InputAction.CallbackContext context)
-    {       
+    {
 
         if (walking)
         {
@@ -217,123 +327,81 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         }
     }
 
-    private void MoveLeftStick_performed(InputAction.CallbackContext context)
+    //HANDLE COMBOS INPUT
+
+    void TrianglePerformed(InputAction.CallbackContext context)
     {
-        walking = true;
+        if (context.interaction is HoldInteraction)        
+            inputsBuffer.Add(Enums.InputsAttack.HoldTriangle);        
+        else
+        {
+            if(_isL2Performed)
+                inputsBuffer.Add(Enums.InputsAttack.L2Triangle);
+            else
+                inputsBuffer.Add(Enums.InputsAttack.Triangle);
+        }
     }
-    private void MoveLeftStick_canceled(InputAction.CallbackContext context)
+    void SquarePerformed(InputAction.CallbackContext context)
     {
-        walking = false;
+        if (context.interaction is HoldInteraction)
+            inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
+        else
+        {
+            if (_isL2Performed)
+                inputsBuffer.Add(Enums.InputsAttack.L2Square);
+            else
+                inputsBuffer.Add(Enums.InputsAttack.Square);
+        }
+        
+    }
+    private void L2_performed(InputAction.CallbackContext context)
+    {
+        _isL2Performed = true;
+    }
+    private void L2_canceled(InputAction.CallbackContext context)
+    {
+        _isL2Performed = false;
     }
 
+    //EXTRA
+
+    void StepDone()
+    {
+        int index = inputsBuffer.Count() - 1;
+        DOVirtual.Color(uiCombosImage[index].color, Color.green, 1f, (color) =>
+        {
+            uiCombosImage[index].color = color;
+        }).SetEase(Ease.InOutSine);
+    }
+
+    void ComboCompleted()
+    {
+        Debug.Log("Completed");
+        inputsBuffer.Clear();
+        currentComboLevel++;
+    }
+
+    void ComboFailed()
+    {
+        _playerActions.Player.Square.performed -= SquarePerformed;
+        _playerActions.Player.Triangle.performed -= TrianglePerformed;
+        _playerActions.Player.L2.performed -= L2_performed;
+        _playerActions.Player.L2.canceled -= L2_canceled;
+
+        int index = inputsBuffer.Count() - 1;
+        DOVirtual.Color(uiCombosImage[index].color, Color.red, 1f, (color) =>
+        {
+            uiCombosImage[index].color = color;
+        }).SetEase(Ease.InOutSine);
+
+        inputsBuffer.Clear();
+
+        StartCoroutine(RestartCombo());
+    } 
 
     void ChangeTutorialPhase(Enums.TutorialState newState)
     {
         currentState = newState;
     }
-
-    void StepCompleted()
-    {
-
-    }
-
-    void ComboCompleted()
-    {
-        inputsBuffer.Clear();
-        currentComboLevel++;
-    }
-
-    void StepFailed()
-    {
-        inputsBuffer.Clear();
-    }
-
-    IEnumerator IntroSpeach()
-    {
-        yield return new WaitForSeconds(1.5f);
-        voice.Speak(dialogues[0], name);
-    }
-
-    IEnumerator ResetImages()
-    {       
-
-        foreach (Image image in uiCombosImage)
-        {            
-            DOVirtual.Color(image.color, Color.white, 0.80f, (col) =>
-            {
-                image.color = col;
-            }).SetEase(Ease.InOutSine);            
-           
-        }
-
-        yield return new WaitForSeconds(0.8f);
-
-        Color color = Color.white;
-        color.a = 0;
-
-        foreach (Image image in uiCombosImage)
-        {
-            DOVirtual.Color(image.color, color, 0.5f, (col) =>
-            {
-                image.color = col;
-            }).SetEase(Ease.InOutSine);
-
-        }
-
-        yield return new WaitForSeconds(1f);
-    }  
-
-    IEnumerator StartPhase(Enums.TutorialState newPhase, int imagesNeeded, System.Action onFinishCurrentAction, System.Action onStartNewAction, float delayOnEnter)
-    {
-        onFinishCurrentAction();
-
-        yield return new WaitForSeconds(delayOnEnter);        
-
-        yield return StartCoroutine(ResetImages());
-
-        for (int i = 0; i < 4; i++)
-        {
-            uiCombosImage[i].sprite = uiCombos[(int)newPhase];
-            uiCombosImage[i].enabled = false;
-            uiCombosImage[i].gameObject.SetActive(false);
-        }
-
-        //Appear new images, enabled only necessary ones and transparent to 1
-
-        for (int i = 3; i >= 0; i--)
-        {
-            if (i <= imagesNeeded - 1)            
-            {
-                uiCombosImage[i].sprite = uiCombos[(int)newPhase];
-                if (!uiCombosImage[i].enabled)
-                    uiCombosImage[i].enabled = true;
-
-                if (!uiCombosImage[i].gameObject.activeSelf)
-                    uiCombosImage[i].gameObject.SetActive(true);
-
-                DOVirtual.Color(uiCombosImage[i].color, Color.white, 0.6f, (col) =>
-                {
-                    uiCombosImage[i].color = col;
-                }).SetEase(Ease.InOutSine);
-
-                yield return new WaitForSeconds(0.6f);
-            }
-
-        }
-
-        ChangeTutorialPhase(newPhase);
-
-        onStartNewAction();
-
-    }
-
 }
 
-//SetEase((float time, float duration, float overshootOrAmplitude, float period) =>
-//{
-//    // Ajustar la fuerza de la función de ease
-//    float linearEase = time / duration;
-//    float easedValue = Mathf.Sin(linearEase * Mathf.PI * 0.5f); // Ease.InOutSine
-//    float poweredValue = Mathf.Pow(easedValue, 10f); // Aplicar potencia para exagerar el efecto
-//    return poweredValue;
-//});
