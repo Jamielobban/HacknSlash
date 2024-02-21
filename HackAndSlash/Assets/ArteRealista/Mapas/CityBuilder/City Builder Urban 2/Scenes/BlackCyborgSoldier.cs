@@ -7,6 +7,8 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using MoreMountains.Tools;
 
 public class BlackCyborgSoldier : Interactive, IInteractable
 {
@@ -22,12 +24,11 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     readonly string name = "Cyborg Sergeant";
     int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1;
-    bool _isL2Performed;
+    bool _isL2Performed, resetImages = false;
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
     PlayerInputActionsRefactor _playerActions;
-
     
     private void Awake()
     {
@@ -57,9 +58,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         if (intro || currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
             return;
-
-        
-        
+               
         
         if(currentState == Enums.TutorialState.COMBOS && currentComboLevel > combosToPractice.Count)
         {
@@ -97,13 +96,17 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (!intro && currentState == Enums.TutorialState.INACTIVE)
         {
             Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
-            StartPhase(Enums.TutorialState.JUMPS, 3, () => {
-                DOVirtual.Color(parentImage.color, new Color(1,1,1,0.38f), 0.5f, (color) =>
+            StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 3, 
+            () => {
+
+                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
                 {
                     parentImage.color = color;
                 }).SetEase(Ease.Linear);
-                uiCombosImage[0].transform.parent.GetComponent<Image>(); 
-            }, () => { _playerActions.Player.Jump.performed += Jump_performed; }, 0.15f);            
+            }, 
+            () => { 
+                _playerActions.Player.Jump.performed += Jump_performed; 
+            },0));            
         }
         else if(!intro)
             currentText++;
@@ -154,7 +157,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (jumpsDone >= 2)
         {
-            StartPhase(Enums.TutorialState.SPRINT, 1, () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.SPRINT, 1, () =>
             {
                 _playerActions.Player.Jump.performed -= Jump_performed;
             }, () =>
@@ -162,7 +165,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.R2.performed += SprintPerformed;
                 _playerActions.Player.Movement.performed += MoveLeftStick_performed;
                 _playerActions.Player.Movement.canceled += MoveLeftStick_canceled;
-            }, 1);
+            }, 1));
         }
 
     }
@@ -177,7 +180,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (rollsDone >= 2)
         {
-            StartPhase(Enums.TutorialState.COMBOS, 1, () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, 1, () =>
             {
                 _playerActions.Player.Dash.performed -= RollPerformed;
             }, () =>
@@ -187,7 +190,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.L2.performed += L2_performed;
                 _playerActions.Player.L2.canceled += L2_canceled;
                 _playerActions.Player.Dash.performed -= RollPerformed;
-            }, 1);           
+            }, 1));           
         }
 
     }
@@ -202,7 +205,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 uiCombosImage[0].color = color;
             }).SetEase(Ease.InOutSine);
 
-            StartPhase(Enums.TutorialState.ROLLS, 3, () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.ROLLS, 3, () =>
             {
                 _playerActions.Player.R2.performed -= SprintPerformed;
                 _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
@@ -210,7 +213,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             }, () =>
             {
                 _playerActions.Player.Dash.performed += RollPerformed;
-            }, 1);
+            }, 1));
         }
     }
 
@@ -251,57 +254,69 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         voice.Speak(dialogues[0], name);
     }
 
-    //async void ResetImages()
-    //{
-        
+    IEnumerator ResetImages()
+    {       
 
-    //    await Task.Delay(400);
-    //}
-
-    async void StartPhase(Enums.TutorialState newPhase, int imagesNeeded, System.Action onFinishCurrentAction, System.Action onStartNewAction, float delayOnEnter)
-    {
-
-        onFinishCurrentAction();
-
-        await Task.Delay((int)delayOnEnter * 1000);
-        //Disappear old images, color to white and transparent
-
-        for (int i = 0; i < 4; i++)
-        {
-            DOVirtual.Color(uiCombosImage[i].color, new Color(1, 1, 1, 0), 0.40f, (col) =>
+        foreach (Image image in uiCombosImage)
+        {            
+            DOVirtual.Color(image.color, Color.white, 0.80f, (col) =>
             {
-                uiCombosImage[i].color = col;
-            }).SetEase(Ease.InOutSine);
+                image.color = col;
+            }).SetEase(Ease.InOutSine);            
+           
         }
 
-        await Task.Delay((int)3000);
+        yield return new WaitForSeconds(0.8f);
+
+        Color color = Color.white;
+        color.a = 0;
+
+        foreach (Image image in uiCombosImage)
+        {
+            DOVirtual.Color(image.color, color, 0.5f, (col) =>
+            {
+                image.color = col;
+            }).SetEase(Ease.InOutSine);
+
+        }
+
+        yield return new WaitForSeconds(1f);
+    }  
+
+    IEnumerator StartPhase(Enums.TutorialState newPhase, int imagesNeeded, System.Action onFinishCurrentAction, System.Action onStartNewAction, float delayOnEnter)
+    {
+        onFinishCurrentAction();
+
+        yield return new WaitForSeconds(delayOnEnter);        
+
+        yield return StartCoroutine(ResetImages());
 
         for (int i = 0; i < 4; i++)
         {
             uiCombosImage[i].sprite = uiCombos[(int)newPhase];
+            uiCombosImage[i].enabled = false;
+            uiCombosImage[i].gameObject.SetActive(false);
         }
 
         //Appear new images, enabled only necessary ones and transparent to 1
 
         for (int i = 3; i >= 0; i--)
         {
-            if (i > imagesNeeded - 1)
-            {
-                if (uiCombosImage[i].enabled)
-                    uiCombosImage[i].enabled = false;
-            }
-            else
+            if (i <= imagesNeeded - 1)            
             {
                 uiCombosImage[i].sprite = uiCombos[(int)newPhase];
                 if (!uiCombosImage[i].enabled)
                     uiCombosImage[i].enabled = true;
+
+                if (!uiCombosImage[i].gameObject.activeSelf)
+                    uiCombosImage[i].gameObject.SetActive(true);
 
                 DOVirtual.Color(uiCombosImage[i].color, Color.white, 0.6f, (col) =>
                 {
                     uiCombosImage[i].color = col;
                 }).SetEase(Ease.InOutSine);
 
-                await Task.Delay((int)600);
+                yield return new WaitForSeconds(0.6f);
             }
 
         }
@@ -311,52 +326,6 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         onStartNewAction();
 
     }
-
-    //IEnumerator StartPhase(Enums.TutorialState newPhase, int imagesNeeded, System.Action onFinishCurrentAction, System.Action onStartNewAction, float delayOnEnter)
-    //{
-
-    //    onFinishCurrentAction();
-
-    //    yield return new WaitForSeconds(delayOnEnter);
-    //    //Disappear old images, color to white and transparent
-
-    //    Task.Run(() => ResetImages());         
-
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        uiCombosImage[i].sprite = uiCombos[(int)newPhase];
-    //    }
-
-    //    //Appear new images, enabled only necessary ones and transparent to 1
-
-    //    for (int i = 3; i >= 0; i--)
-    //    {
-    //        if(i > imagesNeeded - 1)
-    //        {
-    //            if(uiCombosImage[i].enabled)
-    //                uiCombosImage[i].enabled = false;
-    //        }
-    //        else
-    //        {
-    //            uiCombosImage[i].sprite = uiCombos[(int)newPhase];               
-    //            if (!uiCombosImage[i].enabled)
-    //                uiCombosImage[i].enabled = true;
-
-    //            DOVirtual.Color(uiCombosImage[i].color, Color.white, 0.6f, (col) =>
-    //            {
-    //                uiCombosImage[i].color = col;
-    //            }).SetEase(Ease.InOutSine);
-
-    //            yield return new WaitForSeconds(0.6f);
-    //        }
-
-    //    }
-
-    //    ChangeTutorialPhase(newPhase);
-
-    //    onStartNewAction();
-
-    //}
 
 }
 
