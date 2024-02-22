@@ -26,11 +26,13 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     readonly string name = "Cyborg Sergeant";
     int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
+    float lastAttackTime = 0;
     bool _isL2Performed, resetImages = false;
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
     PlayerInputActionsRefactor _playerActions;
+
     
     private void Awake()
     {
@@ -60,31 +62,29 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (intro || currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
             return;
 
-
-        
-
-        if (currentState == Enums.TutorialState.COMBOS && currentComboLevel > combosToPractice.Count)
+        if (currentState == Enums.TutorialState.COMBOS)
         {
-            ChangeTutorialPhase(Enums.TutorialState.FINISHED);
-            _playerActions.Player.Square.performed -= SquarePerformed;
-            _playerActions.Player.Triangle.performed -= TrianglePerformed;
-            _playerActions.Player.L2.performed -= L2_performed;
-            _playerActions.Player.L2.canceled -= L2_canceled;
-            _playerActions.Player.Disable();
-        }
-        else if (currentState == Enums.TutorialState.COMBOS)
-        {
-            if (inputsBuffer.Count() <= 0 || lastBufferSize == inputsBuffer.Count())
+            if (lastAttackTime == 0 || inputsBuffer.Count() > combosToPractice[currentComboLevel].sequence.Count() || inputsBuffer.Count == 0)
                 return;
 
-            if (inputsBuffer.Last() != combosToPractice[currentComboLevel].sequence[inputsBuffer.Count() - 1])
-                ComboFailed();
+            if(Time.time - lastAttackTime >= combosToPractice[currentComboLevel].attack[inputsBuffer.Count() - 1].data.animationLength + 0.25f)
+                ComboFailed(1);
             else
             {
-                StepDone();
-                if (inputsBuffer.Count() == combosToPractice[currentComboLevel].sequence.Count())
-                    ComboCompleted();
-            }
+                if (inputsBuffer.Count() <= 0 || lastBufferSize == inputsBuffer.Count() || lastAttackTime == 0)
+                    return;
+
+                if (inputsBuffer.Last() != combosToPractice[currentComboLevel].sequence[inputsBuffer.Count() - 1])
+                {
+                    ComboFailed();
+                }
+                else
+                {
+                    StepDone();
+                    if (inputsBuffer.Count() == combosToPractice[currentComboLevel].sequence.Count())
+                        ComboCompleted();
+                }
+            }            
 
         }
 
@@ -282,6 +282,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     }
     private void RollPerformed(InputAction.CallbackContext context)
     {
+        if (!walking)
+            return;
+
         rollsDone += 1;
 
         DOVirtual.Color(uiCombosImage[rollsDone].color, Color.green, 1f, (color) =>
@@ -294,6 +297,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
             {
                 _playerActions.Player.Dash.performed -= RollPerformed;
+                _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
+                _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
             }, () =>
             {
                 _playerActions.Player.Square.performed += SquarePerformed;
@@ -301,6 +306,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.L2.performed += L2_performed;
                 _playerActions.Player.L2.canceled += L2_canceled;
                 _playerActions.Player.Dash.performed -= RollPerformed;
+                inputsBuffer.Clear();
             }, 1));
         }
 
@@ -317,9 +323,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
             StartCoroutine(StartPhase(Enums.TutorialState.ROLLS, 3, () =>
             {
-                _playerActions.Player.R2.performed -= SprintPerformed;
-                _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
-                _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
+                _playerActions.Player.R2.performed -= SprintPerformed;               
             }, () =>
             {
                 _playerActions.Player.Dash.performed += RollPerformed;
@@ -331,6 +335,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     void TrianglePerformed(InputAction.CallbackContext context)
     {
+        Debug.Log("Triangle");
         if (context.interaction is HoldInteraction)        
             inputsBuffer.Add(Enums.InputsAttack.HoldTriangle);        
         else
@@ -340,9 +345,11 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             else
                 inputsBuffer.Add(Enums.InputsAttack.Triangle);
         }
+        lastAttackTime = Time.time;
     }
     void SquarePerformed(InputAction.CallbackContext context)
     {
+        Debug.Log("Square");
         if (context.interaction is HoldInteraction)
             inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
         else
@@ -352,7 +359,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             else
                 inputsBuffer.Add(Enums.InputsAttack.Square);
         }
-        
+        lastAttackTime = Time.time;
     }
     private void L2_performed(InputAction.CallbackContext context)
     {
@@ -379,19 +386,50 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         Debug.Log("Completed");
         inputsBuffer.Clear();
         currentComboLevel++;
+        
+        if(currentComboLevel > combosToPractice.Count)
+            StartCoroutine(StartPhase(Enums.TutorialState.FINISHED, combosToPractice[currentComboLevel].sequence.Count(), () =>
+            {
+                _playerActions.Player.Square.performed -= SquarePerformed;
+                _playerActions.Player.Triangle.performed -= TrianglePerformed;
+                _playerActions.Player.L2.performed -= L2_performed;
+                _playerActions.Player.L2.canceled -= L2_canceled;
+                _playerActions.Player.Disable();
+            }, () =>
+            {
+
+            }, 1));
+        else
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
+            {
+                _playerActions.Player.Square.performed -= SquarePerformed;
+                _playerActions.Player.Triangle.performed -= TrianglePerformed;
+                _playerActions.Player.L2.performed -= L2_performed;
+                _playerActions.Player.L2.canceled -= L2_canceled;
+            }, () =>
+            {
+                _playerActions.Player.Square.performed += SquarePerformed;
+                _playerActions.Player.Triangle.performed += TrianglePerformed;
+                _playerActions.Player.L2.performed += L2_performed;
+                _playerActions.Player.L2.canceled += L2_canceled;
+            }, 1));
+
+
+
     }
 
-    void ComboFailed()
+    void ComboFailed(int extra = 0)
     {
         _playerActions.Player.Square.performed -= SquarePerformed;
         _playerActions.Player.Triangle.performed -= TrianglePerformed;
         _playerActions.Player.L2.performed -= L2_performed;
         _playerActions.Player.L2.canceled -= L2_canceled;
 
-        int index = inputsBuffer.Count() - 1;
-        DOVirtual.Color(uiCombosImage[index].color, Color.red, 1f, (color) =>
+        int ind = inputsBuffer.Count() - 1 + extra;
+        
+        DOVirtual.Color(uiCombosImage[ind].color, Color.red, 1f, (color) =>
         {
-            uiCombosImage[index].color = color;
+            uiCombosImage[ind].color = color;
         }).SetEase(Ease.InOutSine);
 
         inputsBuffer.Clear();
