@@ -4,12 +4,10 @@ using UnityEngine;
 public class DB_SlashesController : SlashesController
 {
     public GameObject slashNormalToRight;
-
-    public GameObject slash360FX, slashL2Square360FX;
+    public GameObject slashL2Square360FX;
     public GameObject yingYangFX;
     public GameObject thrustFX, thrustFxBig;
 
-    public GameObject SlashSquare;
 
     public List<GameObject> slashesSquare = new List<GameObject>();
     public List<GameObject> slashesL2Square = new List<GameObject>();
@@ -17,6 +15,11 @@ public class DB_SlashesController : SlashesController
     public List<GameObject> slashesAnother = new List<GameObject>();
 
     public GameObject dragon;
+    protected override void Start()
+    {
+        base.Start();
+        InitializeDamages();
+    }
 
     public void SpawnSquareSlash(int index)
     {
@@ -48,7 +51,8 @@ public class DB_SlashesController : SlashesController
 
     public void SpawnDragon()
     {
-        GameObject go = Instantiate(dragon, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+        GameObject go = Instantiate(dragon, new Vector3(transform.position.x + 0.5f, transform.position.y + 1, transform.position.z), transform.rotation);
+        go.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
     }
 
     //public void SpawnSlash(float value)
@@ -89,12 +93,24 @@ public class DB_SlashesController : SlashesController
     public void SpawnYingYang()
     {
         GameObject go = Instantiate(yingYangFX, transform.position, Quaternion.identity);
-        go.transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, -90, transform.rotation.z));
     }
 
-    public void Spawn360Slash()
+    private void InitializeDamages()
     {
-        InstantiateMiddleBody(slash360FX);
+        foreach (GameObject slash in slashesSquare)
+        {
+            slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+        }
+
+        foreach (GameObject slash in slashesL2Square)
+        {
+            slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+        }
+
+        foreach (GameObject slash in slashesL2Triangle)
+        {
+            slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+        }
     }
 
 }

@@ -35,7 +35,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     protected virtual void Start()
     {
         _enemy.events.OnHeal += ChangeLife;
-        _enemy.events.OnHit += () => { ChangeLife(); AbilityPowerManager.instance.IncreaseCombo(); };
+        //AbilityPowerManager.instance.IncreaseCombo();
+        _enemy.events.OnHit += () => { ChangeLife();  };
     }
 
     public virtual void Stun(float stunTime)

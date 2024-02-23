@@ -28,13 +28,16 @@ public class ComboController : MonoBehaviour
         if(_currentSequence.Count >= 1)
         {
             _timer += Time.deltaTime;
-            if (_timer >= currentAttack.data.timeToChangeAnim )
+            if(currentAttack != null)
             {
-                ConncatenateAttack();
-            }
-            if (_timer >= currentAttack.data.animationLength + 0.25f) 
-            {
-                 ClearComboSequence();
+                if (_timer >= currentAttack.data.timeToChangeAnim)
+                {
+                    ConncatenateAttack();
+                }
+                if (_timer >= currentAttack.data.animationLength + 0.25f)
+                {
+                    ClearComboSequence();
+                }
             }
         }
     }
