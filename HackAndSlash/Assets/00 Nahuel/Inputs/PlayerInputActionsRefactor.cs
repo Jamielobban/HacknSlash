@@ -96,7 +96,7 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
                     ""id"": ""36ff1a79-77d8-4ec0-8a1b-2374a2a3d72e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold,Press"",
                     ""initialStateCheck"": false
                 },
                 {

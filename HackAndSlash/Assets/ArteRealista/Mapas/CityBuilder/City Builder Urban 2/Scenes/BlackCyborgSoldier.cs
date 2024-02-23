@@ -388,17 +388,13 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         currentComboLevel++;
         
         if(currentComboLevel > combosToPractice.Count)
-            StartCoroutine(StartPhase(Enums.TutorialState.FINISHED, combosToPractice[currentComboLevel].sequence.Count(), () =>
-            {
-                _playerActions.Player.Square.performed -= SquarePerformed;
-                _playerActions.Player.Triangle.performed -= TrianglePerformed;
-                _playerActions.Player.L2.performed -= L2_performed;
-                _playerActions.Player.L2.canceled -= L2_canceled;
-                _playerActions.Player.Disable();
-            }, () =>
-            {
-
-            }, 1));
+        {
+            _playerActions.Player.Square.performed -= SquarePerformed;
+            _playerActions.Player.Triangle.performed -= TrianglePerformed;
+            _playerActions.Player.L2.performed -= L2_performed;
+            _playerActions.Player.L2.canceled -= L2_canceled;
+            ChangeTutorialPhase(Enums.TutorialState.FINISHED);
+        }            
         else
             StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
             {
