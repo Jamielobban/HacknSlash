@@ -61,7 +61,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
 
     private void voicesReady()
     {
-      Debug.Log($"RT-Voice: {Speaker.Instance.Voices.Count} voices are ready to use!");
+      //Debug.Log($"RT-Voice: {Speaker.Instance.Voices.Count} voices are ready to use!");
 
       //if (SpeakWhenReady) //Speak after the voices are ready
          //Speak();
@@ -70,7 +70,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
    private void speakStart(Wrapper wrapper)
    {
       if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
-         Debug.Log($"RT-Voice: speak started: {wrapper}");
+         //Debug.Log($"RT-Voice: speak started: {wrapper}");
 
         if (!textPanelTransform.gameObject.activeSelf)
             textPanelTransform.gameObject.SetActive(true);
@@ -79,7 +79,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
    private void speakComplete(Wrapper wrapper)
    {
       if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
-         Debug.Log($"RT-Voice: speak completed: {wrapper}");
+        // Debug.Log($"RT-Voice: speak completed: {wrapper}");
 
         if (textPanelTransform.gameObject.activeSelf)
             textPanelTransform.gameObject.SetActive(false);
