@@ -40,7 +40,15 @@ public class Enums
         L2Square,
         L2Triangle
     };
-
+    public enum TutorialState
+    {
+        JUMPS,
+        SPRINT,
+        ROLLS,
+        COMBOS,
+        FINISHED,
+        INACTIVE
+    }
     public enum GameState
     {
         Menu,
