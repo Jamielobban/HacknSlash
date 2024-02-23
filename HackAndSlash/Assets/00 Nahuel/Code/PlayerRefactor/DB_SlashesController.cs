@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,10 @@ public class DB_SlashesController : SlashesController
 
     public List<GameObject> slashesSquare = new List<GameObject>();
     public List<GameObject> slashesL2Square = new List<GameObject>();
+    public List<GameObject> slashesL2Triangle = new List<GameObject>();
     public List<GameObject> slashesAnother = new List<GameObject>();
+
+    public GameObject dragon;
 
     public void SpawnSquareSlash(int index)
     {
@@ -31,10 +33,22 @@ public class DB_SlashesController : SlashesController
             slashesL2Square[index].SetActive(true);
         }
     }
+    public void SpawnL2TriangleSlash(int index)
+    {
+        if (slashesL2Triangle[index] != null)
+        {
+            slashesL2Triangle[index].SetActive(true);
+        }
+    }
 
     public void SpawnAnotherSlash(int index)
     {
 
+    }
+
+    public void SpawnDragon()
+    {
+        GameObject go = Instantiate(dragon, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
     }
 
     //public void SpawnSlash(float value)
