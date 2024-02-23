@@ -1,14 +1,11 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using MoreMountains.Tools;
+using UnityEngine.UI;
 
 public class BlackCyborgSoldier : Interactive, IInteractable
 {
@@ -21,7 +18,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] SimpleRTVoiceExample voice;
     [SerializeField] bool intro, hasSprinted = false, walking = false;
     [SerializeField] Image[] uiCombosImage = new Image[4];
-    //[SerializeField] List<List<Enums.InputsAttack>> combosToPractice = new List<List<Enums.InputsAttack>>();
+    [SerializeField] Sprite emptySprite;
 
 
     readonly string name = "Cyborg Sergeant";
@@ -94,16 +91,17 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     public void Interact()
     {
-       // if (!canInteract) return;
+        if (!canInteract || intro) return;
 
-        voice.Speak(dialogues[currentText], name);
+        voice.Speak(dialogues[currentText], name);        
+       
+        Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
 
-        if (!intro && currentState == Enums.TutorialState.INACTIVE)
-        {
-            Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
+        if(currentState == Enums.TutorialState.INACTIVE)
             StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 3, 
             () => {
-
+                canInteract = false;
+                currentText++;
                 DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
                 {
                     parentImage.color = color;
@@ -112,9 +110,24 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             () => { 
                 _playerActions.Player.Jump.performed += Jump_performed; 
             },0));            
-        }
-        else if(!intro)
-            currentText++;
+        else if(currentState == Enums.TutorialState.ROLLS)
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(),
+            () => {
+                canInteract = false;
+                currentText++;
+                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
+                {
+                    parentImage.color = color;
+                }).SetEase(Ease.Linear);
+            },
+            () => {
+                _playerActions.Player.Square.performed += SquarePerformed;
+                _playerActions.Player.Triangle.performed += TrianglePerformed;
+                _playerActions.Player.L2.performed += L2_performed;
+                _playerActions.Player.L2.canceled += L2_canceled;
+            }, 0));
+
+
     }
 
     //UI MANAGEMENT COROUTINES
@@ -248,6 +261,32 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         _playerActions.Player.L2.canceled += L2_canceled;
     }
 
+    IEnumerator HideTutorial(System.Action onTutorialHided)
+    {
+        yield return new WaitForSeconds(1);
+
+        yield return StartCoroutine(ResetImages());
+
+        Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();        
+
+        DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0), 1.5f, (color) =>
+        {
+            parentImage.color = color;
+        }).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(1.6f);
+
+        for(int i = 0; i < uiCombosImage.Length - 1; i++)
+        {
+            uiCombosImage[i].enabled = false;
+            uiCombosImage[i].gameObject.SetActive(false);
+        }
+        uiCombosImage[uiCombosImage.Length-1].sprite = emptySprite;
+        uiCombosImage[uiCombosImage.Length-1].color = Color.white;
+
+        onTutorialHided();
+    }
+
     //HANDLE MOVEMENT INPUT
 
     private void MoveLeftStick_performed(InputAction.CallbackContext context)
@@ -294,21 +333,32 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (rollsDone >= 2)
         {
-            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
-            {
-                _playerActions.Player.Dash.performed -= RollPerformed;
-                _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
-                _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
-            }, () =>
-            {
-                _playerActions.Player.Square.performed += SquarePerformed;
-                _playerActions.Player.Triangle.performed += TrianglePerformed;
-                _playerActions.Player.L2.performed += L2_performed;
-                _playerActions.Player.L2.canceled += L2_canceled;
-                _playerActions.Player.Dash.performed -= RollPerformed;
-                inputsBuffer.Clear();
-            }, 1));
+            _playerActions.Player.Dash.performed -= RollPerformed;
+            _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
+            _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
+
+
+            StartCoroutine(HideTutorial(() => { canInteract = true; }));
+            inputsBuffer.Clear();
         }
+        
+        //if (rollsDone >= 2)
+        //{
+        //    StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
+        //    {
+        //        _playerActions.Player.Dash.performed -= RollPerformed;
+        //        _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
+        //        _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
+        //    }, () =>
+        //    {
+        //        _playerActions.Player.Square.performed += SquarePerformed;
+        //        _playerActions.Player.Triangle.performed += TrianglePerformed;
+        //        _playerActions.Player.L2.performed += L2_performed;
+        //        _playerActions.Player.L2.canceled += L2_canceled;
+        //        _playerActions.Player.Dash.performed -= RollPerformed;
+        //        inputsBuffer.Clear();
+        //    }, 1));
+        //}
 
     }
     private void SprintPerformed(InputAction.CallbackContext context)
@@ -387,13 +437,14 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         inputsBuffer.Clear();
         currentComboLevel++;
         
-        if(currentComboLevel > combosToPractice.Count)
+        if(currentComboLevel >= combosToPractice.Count)
         {
+            ChangeTutorialPhase(Enums.TutorialState.FINISHED);
             _playerActions.Player.Square.performed -= SquarePerformed;
             _playerActions.Player.Triangle.performed -= TrianglePerformed;
             _playerActions.Player.L2.performed -= L2_performed;
             _playerActions.Player.L2.canceled -= L2_canceled;
-            ChangeTutorialPhase(Enums.TutorialState.FINISHED);
+            StartCoroutine(HideTutorial(() => { canInteract = true; }));
         }            
         else
             StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
