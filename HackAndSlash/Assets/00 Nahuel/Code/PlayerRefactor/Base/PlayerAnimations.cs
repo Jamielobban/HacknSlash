@@ -31,21 +31,21 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    public void HandleIdleAnimations()
-    {
-        _timer += Time.deltaTime;
-        if(_timer >= timeChangeIdle)
-        {
-            SetRandomIdleAnimation();
-            _timer = 0;
-        }
-    }
+    //public void HandleIdleAnimations()
+    //{
+    //    _timer += Time.deltaTime;
+    //    if(_timer >= timeChangeIdle)
+    //    {
+    //        SetRandomIdleAnimation();
+    //        _timer = 0;
+    //    }
+    //}
 
-    private void SetRandomIdleAnimation()
-    {
-        float num = Random.Range(0, maxIdleAnim);
-        _anim.SetFloat(Constants.ANIM_VAR_IDLE, num, idleDampTime, Time.deltaTime);
-    }
+    //private void SetRandomIdleAnimation()
+    //{
+    //    float num = Random.Range(0, maxIdleAnim);
+    //    _anim.SetFloat(Constants.ANIM_VAR_IDLE, num, idleDampTime, Time.deltaTime);
+    //}
 
     public void PlayTargetAnimation(string targetAnimation, bool isInteracting, bool useRootMotion = false)
     {

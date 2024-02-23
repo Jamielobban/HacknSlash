@@ -52,15 +52,10 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        if(CurrentCharacterState == Enums.CharacterState.Idle)
-        {
-            animations.HandleIdleAnimations();
-        }
         if(CurrentCharacterState == Enums.CharacterState.Moving)
         {
             animations.HandleMovingAnimations();
         }
-
     }
 
     private void FixedUpdate()
@@ -74,7 +69,6 @@ public class PlayerManager : MonoBehaviour
     private void LateUpdate()
     {
         isInteracting = animations.Animator.GetBool("isInteracting");
-       // movement.isLanded = animations.Animator.GetBool("isLanded");
         movement.isJumping = animations.Animator.GetBool("isJumping");
         animations.Animator.SetBool("isGrounded", movement.isGrounded);
     }
