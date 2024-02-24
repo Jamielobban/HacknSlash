@@ -6,6 +6,9 @@ using DG.Tweening;
 public class PyramidTeleport : Interactive, IInteractable
 {
     [SerializeField] float period, verticalMoveTime, verticaDistance;
+    [SerializeField] BlackCyborgSoldier soldier;
+    [SerializeField] GameObject objectiveMarker;
+    bool firstTeleportDone = false;
 
     private void Start()
     {
@@ -14,8 +17,20 @@ public class PyramidTeleport : Interactive, IInteractable
         transform.DOMoveY(startPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
+    private void Update()
+    {
+        if (!objectiveMarker.activeSelf && !firstTeleportDone && soldier.TutorialState == Enums.TutorialState.FINISHED)
+            objectiveMarker.SetActive(true);
+    }
+
     public void Interact()
     {
         if (!canInteract) return;
+
+        if (!firstTeleportDone)
+        {
+            firstTeleportDone = true;
+            objectiveMarker.SetActive(false);
+        }
     }
 }

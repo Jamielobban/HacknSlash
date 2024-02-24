@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.UIElements;
 using System.Linq;
 using UnityEditor.Rendering;
+using MoreMountains.Tools;
 
 /// <summary>
 /// Simple example to demonstrate the basic usage of RT-Voice.
@@ -18,6 +19,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
     public RectTransform textPanelTransform;
     public TextMeshProUGUI dialogText; 
    private string uid; //Unique id of the speech
+    public bool playing = false;
 
    private void OnEnable()
    {
@@ -69,6 +71,8 @@ public class SimpleRTVoiceExample : MonoBehaviour
 
    private void speakStart(Wrapper wrapper)
    {
+        playing = true;
+
       if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
          //Debug.Log($"RT-Voice: speak started: {wrapper}");
 
@@ -78,7 +82,9 @@ public class SimpleRTVoiceExample : MonoBehaviour
 
    private void speakComplete(Wrapper wrapper)
    {
-      if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
+        playing = false;
+
+        if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
         // Debug.Log($"RT-Voice: speak completed: {wrapper}");
 
         if (textPanelTransform.gameObject.activeSelf)

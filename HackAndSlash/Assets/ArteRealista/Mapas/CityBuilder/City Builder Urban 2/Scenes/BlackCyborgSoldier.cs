@@ -19,12 +19,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] bool intro, hasSprinted = false, walking = false;
     [SerializeField] Image[] uiCombosImage = new Image[4];
     [SerializeField] Sprite emptySprite;
-
+    [SerializeField] GameObject objectiveMarker;
 
     readonly string name = "Cyborg Sergeant";
     int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
     float lastAttackTime = 0;
-    bool _isL2Performed, resetImages = false;
+    bool _isL2Performed;
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
@@ -45,6 +45,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             return;
         }
 
+        
+
         matchKeyWithUI.Add(Enums.InputsAttack.Square, uiTutorialButtons[3]);
         matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiTutorialButtons[4]);
         matchKeyWithUI.Add(Enums.InputsAttack.Triangle, uiTutorialButtons[5]);
@@ -56,6 +58,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     private void Update()
     {
+        if (canInteract && currentState != Enums.TutorialState.FINISHED)
+            objectiveMarker.SetActive(true);
+
         if (intro || currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
             return;
 
@@ -91,10 +96,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     public void Interact()
     {
-        if (!canInteract || intro) return;
+        if (!canInteract || intro || voice.playing) return;
 
-        voice.Speak(dialogues[currentText], name);        
-       
+        voice.Speak(dialogues[currentText], name);      
+
+        objectiveMarker.SetActive(false);
+
         Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
 
         if(currentState == Enums.TutorialState.INACTIVE)
@@ -269,12 +276,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();        
 
-        DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0), 1.5f, (color) =>
+        DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0), 1f, (color) =>
         {
             parentImage.color = color;
         }).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(1.6f);
+        yield return new WaitForSeconds(1.1f);
 
         for(int i = 0; i < uiCombosImage.Length - 1; i++)
         {
@@ -300,12 +307,14 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     private void Jump_performed(InputAction.CallbackContext context)
     {
         jumpsDone += 1;
-        DOVirtual.Color(uiCombosImage[jumpsDone].color, Color.green, 1f, (color) =>
+        int ind = jumpsDone;
+
+        DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
         {
-            uiCombosImage[jumpsDone].color = color;
+            uiCombosImage[ind].color = color;
         }).SetEase(Ease.InOutSine);
 
-        if (jumpsDone >= 2)
+        if (ind >= 2)
         {
             StartCoroutine(StartPhase(Enums.TutorialState.SPRINT, 1, () =>
             {
@@ -325,41 +334,23 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             return;
 
         rollsDone += 1;
+        int ind = rollsDone;
 
-        DOVirtual.Color(uiCombosImage[rollsDone].color, Color.green, 1f, (color) =>
+        DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
         {
-            uiCombosImage[rollsDone].color = color;
+            uiCombosImage[ind].color = color;
         }).SetEase(Ease.InOutSine);
 
-        if (rollsDone >= 2)
+        if (ind >= 2)
         {
             _playerActions.Player.Dash.performed -= RollPerformed;
             _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
             _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
 
 
-            StartCoroutine(HideTutorial(() => { canInteract = true; }));
+            StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); }));
             inputsBuffer.Clear();
-        }
-        
-        //if (rollsDone >= 2)
-        //{
-        //    StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
-        //    {
-        //        _playerActions.Player.Dash.performed -= RollPerformed;
-        //        _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
-        //        _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
-        //    }, () =>
-        //    {
-        //        _playerActions.Player.Square.performed += SquarePerformed;
-        //        _playerActions.Player.Triangle.performed += TrianglePerformed;
-        //        _playerActions.Player.L2.performed += L2_performed;
-        //        _playerActions.Player.L2.canceled += L2_canceled;
-        //        _playerActions.Player.Dash.performed -= RollPerformed;
-        //        inputsBuffer.Clear();
-        //    }, 1));
-        //}
-
+        }        
     }
     private void SprintPerformed(InputAction.CallbackContext context)
     {
@@ -444,7 +435,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             _playerActions.Player.Triangle.performed -= TrianglePerformed;
             _playerActions.Player.L2.performed -= L2_performed;
             _playerActions.Player.L2.canceled -= L2_canceled;
-            StartCoroutine(HideTutorial(() => { canInteract = true; }));
+            StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); }));
         }            
         else
             StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
@@ -488,5 +479,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         currentState = newState;
     }
+
+    public Enums.TutorialState TutorialState { get { return currentState; } }
 }
 
