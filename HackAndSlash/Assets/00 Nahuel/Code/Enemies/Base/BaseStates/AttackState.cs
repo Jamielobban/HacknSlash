@@ -5,7 +5,6 @@ public class AttackState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        Debug.Log("Enter Attack");
         enemy.attackHolder.UseAbility(0);
     }
     public override void UpdateState(Enemy enemy)

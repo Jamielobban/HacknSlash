@@ -11,10 +11,6 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
     #region Prefabs Effects
     private PlayerControl _player;
-    public DamageNumber critPrefab, normalPrefab;
-    public GameObject[] hitWhiteEffects;
-    public GameObject[] bloodEffects;
-    public GameObject hitEffect2;
 
     #endregion
     public void ResetHealthEnemy()
@@ -72,7 +68,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     {
         //*** Text Effects ***//
 
-        DamageNumber damageNumber = critical ? critPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg) : normalPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg);
+      //  DamageNumber damageNumber = critical ? critPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg) : normalPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg);
 
         //*** Particle Effects ***//
 
@@ -92,26 +88,4 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     {
         _enemy.hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }
-
-    //private void SpawnEffect(GameObject effect, Vector3 spawnPoint)
-    //{
-    //    GameObject playerCenter = GameObject.FindGameObjectWithTag("PlayerCenter");
-    //    GameObject hitToLook = Instantiate(effect, spawnPoint, Quaternion.identity);
-    //    hitToLook.transform.LookAt(playerCenter.transform.position);
-    //}
-
-    //private void SpawnWhiteSplash(Vector3 spawnPoint)
-    //{
-    //    SpawnEffect(hitWhiteEffects[Random.Range(0, hitWhiteEffects.Length - 1)], spawnPoint + new Vector3(0f, 1f, 0f));
-    //}
-
-    //private void SpawnBloodSplash(Vector3 spawnPoint)
-    //{
-    //    SpawnEffect(bloodEffects[Random.Range(0, bloodEffects.Length)], spawnPoint + new Vector3(0f, 1f, 0f));
-    //}
-
-    //private void SpawnHitLine(Vector3 spawnPoint)
-    //{
-    //    SpawnEffect(hitEffect2, spawnPoint + new Vector3(Random.Range(0, 0.15f), Random.Range(0.85f, 1.15f), 0f));
-    //}
 }

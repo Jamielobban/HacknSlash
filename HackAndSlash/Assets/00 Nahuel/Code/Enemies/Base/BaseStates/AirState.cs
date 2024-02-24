@@ -41,7 +41,6 @@ public class AirState : EnemyState
     } 
     public override void ExitState(Enemy enemy)
     {
-        Debug.Log("Exit Air State");
         enemy.animations.Animator.SetTrigger("endAir");
         enemy.events.OnHit -= ResetGravity;
         base.ExitState(enemy);

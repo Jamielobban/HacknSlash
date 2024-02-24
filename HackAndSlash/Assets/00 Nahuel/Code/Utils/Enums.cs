@@ -38,7 +38,9 @@ public class Enums
         HoldSquare,
         HoldTriangle,
         L2Square,
-        L2Triangle
+        L2Triangle,
+        AirSquare,
+        AirTriangle
     };
     public enum TutorialState
     {

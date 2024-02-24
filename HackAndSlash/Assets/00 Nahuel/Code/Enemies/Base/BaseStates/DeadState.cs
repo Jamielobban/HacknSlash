@@ -6,7 +6,6 @@ public class DeadState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        Debug.Log("Enter Dead");
     }
 
     public override void UpdateState(Enemy enemy)

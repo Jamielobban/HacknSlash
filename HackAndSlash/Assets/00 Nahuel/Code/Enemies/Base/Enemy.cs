@@ -3,7 +3,7 @@ using UnityEngine;
 // -- Base Class for each enemy -- //
 public class Enemy : PoolableObject
 {
-    public IState currentState;
+    #region Enemy Scripts References
     public EnemyEvents events { get; private set; }
     public EnemyHud hud { get; private set; }
     public EnemyMovement movements { get; private set; }
@@ -12,20 +12,15 @@ public class Enemy : PoolableObject
     public EnemyAttackHolder attackHolder { get; private set; }
     public EnemyHealthSystem healthSystem { get; private set; }
 
+    #endregion
+
+    public IState currentState;
+
+    public bool isPooleable = true;
     public bool isDead = false;
     public bool isGrounded = false;
     public bool canAttack = true;
     public bool onAir = false;
-    public virtual void SetState(IState newState)
-    {
-        if(currentState == newState)
-        {
-            return;
-        }
-        currentState?.ExitState(this);
-        currentState = newState;
-        currentState.EnterState(this);
-    }
 
     protected virtual void Awake()
     {
@@ -45,7 +40,6 @@ public class Enemy : PoolableObject
         events.OnPatrolling += () => SetState(gameObject.AddComponent<PatrollState>());
         events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
-        //events.OnStun += () => SetState(new StunState(0f));
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
@@ -70,5 +64,16 @@ public class Enemy : PoolableObject
     private void UpgradeEnemy(float scaleFactor)
     {
         healthSystem.currentMaxHealth *= scaleFactor;
+    }
+
+    public virtual void SetState(IState newState)
+    {
+        if (currentState == newState)
+        {
+            return;
+        }
+        currentState?.ExitState(this);
+        currentState = newState;
+        currentState.EnterState(this);
     }
 }

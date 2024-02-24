@@ -45,7 +45,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         float currentSpeed = _anim.GetFloat(Constants.ANIM_VAR_SPEED);
         float elapsedTime = 0f;
-        float duration = 0.5f; 
+        float duration = 0.3f; 
 
         while (elapsedTime < duration)
         {
@@ -61,7 +61,7 @@ public class PlayerAnimations : MonoBehaviour
     private IEnumerator IncreaseOverTime(float currentSpeed, float targetValue)
     {
         float elapsedTIme = 0f;
-        float duration = 0.5f;
+        float duration = 0.3f;
         while (elapsedTIme < duration)
         {
             float newSpeed = Mathf.Lerp(currentSpeed, targetValue, elapsedTIme / duration);

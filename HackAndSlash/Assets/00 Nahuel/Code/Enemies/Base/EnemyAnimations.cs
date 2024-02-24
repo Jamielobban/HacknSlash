@@ -32,7 +32,7 @@ public class EnemyAnimations : MonoBehaviour
         this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
             //Respawn?
-            RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
+           // RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
             _enemy.ResetEnemy();
             _enemy.gameObject.SetActive(false);
         });

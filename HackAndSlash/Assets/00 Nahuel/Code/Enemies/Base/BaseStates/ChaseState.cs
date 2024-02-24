@@ -5,8 +5,6 @@ public class ChaseState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        Debug.Log("Enter Chase");
-
     }
     public override void UpdateState(Enemy enemy)
     {
@@ -15,9 +13,12 @@ public class ChaseState : EnemyState
         {
             enemy.events.Idle();
         }
-        if(enemy.attackHolder.attacks[0].IsInRangeToAttack(_enemy.movements.DistanceToPlayer()) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
+        if(enemy.attackHolder.attacks.Count > 0)
         {
-            enemy.events.Attacking();
+            if (enemy.attackHolder.attacks[0].IsInRangeToAttack(_enemy.movements.DistanceToPlayer()) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
+            {
+                enemy.events.Attacking();
+            }
         }
     }
     public override void ExitState(Enemy enemy)

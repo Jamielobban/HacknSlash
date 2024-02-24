@@ -110,13 +110,18 @@ public class PlayerInputsSystem : MonoBehaviour
         }
         else
         {
+            _player.isAirAttacking = true;
+            _player.animations.Animator.SetBool("isAirAttacking", true);
             if (context.interaction is HoldInteraction)
             {
+                //Chupamela
             }
             else
             {
                 if (!_isL2Performed)
                 {
+                    _player.comboController.AddInputToSequence(Enums.InputsAttack.AirSquare);
+
                 }
                 else
                 {

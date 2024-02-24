@@ -35,6 +35,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if(_player.isInvulnerable)
+        {
+            return;
+        }
+
         _currentHealth -= damage;
 
         if(_currentHealth <= 0)

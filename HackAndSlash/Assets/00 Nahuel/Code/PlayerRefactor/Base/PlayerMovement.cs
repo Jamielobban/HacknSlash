@@ -49,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
         runSpeed = maxSpeed * 0.5f;
     }
 
+    private void Update()
+    {
+
+    }
+
     public void HandleAllMovement()
     {
         HandleFallingAndLanding();
@@ -73,24 +78,28 @@ public class PlayerMovement : MonoBehaviour
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
         Vector3 targetPosition = transform.position;
 
-        if(!isGrounded && !isJumping)
+       // if(!isGrounded && !isJumping)
+        if(!isGrounded)
         {
             if(!_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
-
-            inAirTime = Time.deltaTime;
-            _player.rb.AddForce(transform.forward * leapingVelocity);
-            _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
+            if(_player.isInteracting && !_player.isAirAttacking)
+            {
+                inAirTime += Time.deltaTime;
+                _player.rb.AddForce(transform.forward * leapingVelocity);
+                _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
+            }
+            else if(_player.isAirAttacking)
+            {
+                _player.rb.velocity = Vector3.zero;
+            }
+            
         }
 
         if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
-            if(!isGrounded && !_player.isInteracting)
-            {
-                _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
-            }
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
             inAirTime = 0;

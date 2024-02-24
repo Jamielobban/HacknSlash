@@ -8,7 +8,6 @@ public class DB_SlashesController : SlashesController
     public GameObject yingYangFX;
     public GameObject thrustFX, thrustFxBig;
 
-
     public List<GameObject> slashesSquare = new List<GameObject>();
     public List<GameObject> slashesL2Square = new List<GameObject>();
     public List<GameObject> slashesL2Triangle = new List<GameObject>();

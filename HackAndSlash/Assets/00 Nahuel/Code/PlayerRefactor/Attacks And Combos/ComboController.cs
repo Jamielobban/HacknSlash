@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ComboController : MonoBehaviour
 {
@@ -15,13 +13,6 @@ public class ComboController : MonoBehaviour
     public int currentActionIndex;
 
     private float _timer;
-    private float _timeToReset;
-    private PlayerManager _player;
-
-    private void Awake()
-    {
-        _player = GetComponent<PlayerManager>();
-    }
 
     private void Update()
     {

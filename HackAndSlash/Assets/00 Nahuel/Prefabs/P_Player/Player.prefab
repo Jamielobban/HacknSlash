@@ -28,7 +28,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6828731650936505637}
   m_Father: {fileID: 8166294533293292200}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44,9 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7746924a197654abd7d389b8d444c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequence: 02000000
+  sequence: 02000000060000000600000006000000
   attack:
   - {fileID: 8928217440746070508}
+  - {fileID: 8089579062964250075}
+  - {fileID: 5883307145805221834}
+  - {fileID: 9023702186550285845}
 --- !u!1 &33147879666073761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1262,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7036937914941179778}
-  - component: {fileID: 1128320903045702061}
   m_Layer: 0
   m_Name: Combo1
   m_TagString: Untagged
@@ -1284,23 +1287,6 @@ Transform:
   m_Father: {fileID: 5282541506293383558}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1128320903045702061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491150595007509313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7746924a197654abd7d389b8d444c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sequence: 000000000000000000000000
-  attack:
-  - {fileID: 8089579062964250075}
-  - {fileID: 5883307145805221834}
-  - {fileID: 9023702186550285845}
 --- !u!1 &1558270354926833218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1618,7 @@ Transform:
   - {fileID: 8348404403313030907}
   - {fileID: 4730517833637921858}
   m_Father: {fileID: 0}
-  m_RootOrder: 95
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -85.622, z: 0}
 --- !u!54 &7019322076484470408
 Rigidbody:
@@ -1754,7 +1740,9 @@ MonoBehaviour:
   isDead: 0
   isStun: 0
   isInvulnerable: 0
+  isInAir: 0
   isInteracting: 0
+  isAirAttacking: 0
 --- !u!114 &7606065436709299514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1824,7 +1812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d30af614cd0875488a7a95e5c5f62f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
+  progressBar: {fileID: 0}
 --- !u!114 &8678657482853821394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2128,12 +2116,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2572595112193083613}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6062007435708539033}
+  m_Father: {fileID: 7079088892719952706}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8928217440746070508
@@ -2474,7 +2462,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1948521990389742173}
   m_Father: {fileID: 8166294533293292200}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4233,7 +4222,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1948521990389742173}
   - {fileID: 8607275045005623075}
   m_Father: {fileID: 5701919688208885046}
   m_RootOrder: -1
@@ -4688,7 +4676,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6828731650936505637}
   - {fileID: 5094256985776783861}
   m_Father: {fileID: 5701919688208885046}
   m_RootOrder: -1
@@ -5142,7 +5129,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5691193259813116593}
+  m_Father: {fileID: 907089664013966637}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7362890710925357503

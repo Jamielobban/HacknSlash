@@ -5,7 +5,6 @@ public class EnemyMovement : MonoBehaviour
 {
     public Transform target;
     protected NavMeshAgent _agent;
-    protected EnemyEvents _events;
     protected Rigidbody _rb;
     protected Enemy _enemy;
     public NavMeshAgent Agent => _agent;
@@ -25,20 +24,20 @@ public class EnemyMovement : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _enemy = GetComponent<Enemy>();
         respawnPoint = transform.position;
         patrollPoint = GetRandomNavmeshPoint();
+
+        _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody>();
-        _events = GetComponent<EnemyEvents>();
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerManager>().transform;
 
-        _events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); } ;
-        _events.OnIdle += DisableMovement;
-        _events.OnAttacking += DisableMovement;
-        _events.OnPatrolling += EnableMovement;
-        _events.OnFollowing += EnableMovement;
-        _events.OnStun += DisableMovement;
+        _enemy.events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); } ;
+        _enemy.events.OnIdle += DisableMovement;
+        _enemy.events.OnAttacking += DisableMovement;
+        _enemy.events.OnPatrolling += EnableMovement;
+        _enemy.events.OnFollowing += EnableMovement;
+        _enemy.events.OnStun += DisableMovement;
     }
     public Rigidbody GetRigidBody() => _rb;
     public void EnableGravity() => _rb.useGravity = true;
@@ -113,7 +112,6 @@ public class EnemyMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(e.transform.position, Vector3.down, out hit, 1f, LayerMask.GetMask("Suelo")))
         {
-            //return hit.collider.GetComponent<TerrainCollider>() != null;
             return true;
         }
         return false;
@@ -126,11 +124,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _events.OnIdle -= DisableMovement;
-        _events.OnAttacking -= DisableMovement;
-        _events.OnPatrolling -= EnableMovement;
-        _events.OnFollowing -= EnableMovement;
-        _events.OnAir -= DisableMovement;
-        _events.OnStun -= DisableMovement;
+        _enemy.events.OnIdle -= DisableMovement;
+        _enemy.events.OnAttacking -= DisableMovement;
+        _enemy.events.OnPatrolling -= EnableMovement;
+        _enemy.events.OnFollowing -= EnableMovement;
+        _enemy.events.OnAir -= DisableMovement;
+        _enemy.events.OnStun -= DisableMovement;
     }
 }
