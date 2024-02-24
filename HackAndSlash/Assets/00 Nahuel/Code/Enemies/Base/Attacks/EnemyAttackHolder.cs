@@ -6,6 +6,6 @@ public class EnemyAttackHolder : MonoBehaviour
     public List<EnemyBaseAttack> attacks = new List<EnemyBaseAttack>();
     public void UseAbility(int attack)
     {
-       attacks[attack].Use();
+        attacks[attack].Use();
     }
 }

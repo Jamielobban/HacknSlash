@@ -5,9 +5,8 @@ public class IdleState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        Debug.Log("Enter Idle");
-
     }
+
     public override void UpdateState(Enemy enemy)
     {
         if(enemy.movements.InRangeToChase())

@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    public float idleDampTime = 0.1f;
-    public float timeChangeIdle = 5f;
-    public int maxIdleAnim;
-
     private PlayerManager _player;
     private Animator _anim;
-    private float _timer = 0f;
     public Animator Animator => _anim;
 
     private void Awake()
@@ -31,28 +26,11 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    //public void HandleIdleAnimations()
-    //{
-    //    _timer += Time.deltaTime;
-    //    if(_timer >= timeChangeIdle)
-    //    {
-    //        SetRandomIdleAnimation();
-    //        _timer = 0;
-    //    }
-    //}
-
-    //private void SetRandomIdleAnimation()
-    //{
-    //    float num = Random.Range(0, maxIdleAnim);
-    //    _anim.SetFloat(Constants.ANIM_VAR_IDLE, num, idleDampTime, Time.deltaTime);
-    //}
-
     public void PlayTargetAnimation(string targetAnimation, bool isInteracting, bool useRootMotion = false)
     {
         _anim.SetBool("isInteracting", isInteracting);
         _anim.SetBool("isUsingRootMotion", useRootMotion);
         _anim.CrossFade(targetAnimation, 0.2f);
-
     }
 
     public void OnLandingAnimation() => _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);                

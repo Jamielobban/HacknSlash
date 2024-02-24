@@ -62,7 +62,7 @@ public class Enemy : PoolableObject
 
     public virtual void ResetEnemy()
     {
-        UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
+       // UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
         healthSystem.ResetHealthEnemy();
         events.Idle();
     }
