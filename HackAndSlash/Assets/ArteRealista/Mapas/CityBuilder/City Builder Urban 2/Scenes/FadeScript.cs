@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public class Fade : MonoBehaviour
+public class FadeScript : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
     Image blackIMage;
-    void Start()
+    void OnEnable()
     {
         blackIMage.gameObject.SetActive(true);
         Color col = Color.black;
         col.a = 0;
-        DOVirtual.Color(blackIMage.color, col, 0.5f, (col) =>
+        DOVirtual.Color(blackIMage.color, col, 1.8f, (col) =>
         {
             blackIMage.color = col;
         }).SetEase(Ease.InOutSine);
@@ -24,7 +24,7 @@ public class Fade : MonoBehaviour
     public void DoTransition()
     {
         Color col = Color.black;
-        DOVirtual.Color(blackIMage.color, col, 0.5f, (col) =>
+        DOVirtual.Color(blackIMage.color, col, 0.8f, (col) =>
         {
             blackIMage.color = col;
         }).SetEase(Ease.InOutSine);
@@ -34,7 +34,7 @@ public class Fade : MonoBehaviour
 
     IEnumerator ChangeScene()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.9f);
         SceneManager.LoadScene(2);
     }
 }

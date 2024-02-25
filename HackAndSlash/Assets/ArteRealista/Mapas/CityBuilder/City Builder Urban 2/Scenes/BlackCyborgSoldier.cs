@@ -19,10 +19,10 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] bool intro, hasSprinted = false, walking = false;
     [SerializeField] Image[] uiCombosImage = new Image[4];
     [SerializeField] Sprite emptySprite;
-    [SerializeField] GameObject objectiveMarker;
     [SerializeField] GameObject enemyHealthUI;
     [SerializeField] BoxCollider enemyDamageableCol;
 
+    public GameObject objectiveMarker;
     readonly string name = "Cyborg Sergeant";
     int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
     float lastAttackTime = 0;
