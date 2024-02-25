@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     private List<GameObject> _touchingInteractables = new List<GameObject>();
-
+    public bool canInteract;
     private void OnTriggerEnter(Collider other)
     {
+        canInteract = true;
         if(other.gameObject.tag == "Interactable")
         {
             if(other.GetComponent<Interactive>())
@@ -23,6 +24,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        canInteract = false;
         if (other.gameObject.tag == "Interactable")
         {
             if (other.GetComponent<Interactive>())

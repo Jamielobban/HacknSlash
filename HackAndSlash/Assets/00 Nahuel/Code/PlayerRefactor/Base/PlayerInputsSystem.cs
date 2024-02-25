@@ -82,7 +82,10 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Jump_performed(InputAction.CallbackContext context)
     {
-        _player.movement.HandleJumping();
+        if(!_player.collision.canInteract)
+        {
+            _player.movement.HandleJumping();
+        }
     }
     private void Dash_performed(InputAction.CallbackContext context)
     {
