@@ -35,6 +35,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     private PlayerManager _player;
     private void Awake()
     {
+        if (intro)
+            return;
+
         _playerActions = new PlayerInputActionsRefactor();
         _playerActions.Player.Enable();
         
@@ -60,10 +63,10 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            currentState = Enums.TutorialState.FINISHED;
-        }
+        Debug.Log(voice.playing);
+
+        if (intro)
+            return;        
 
         if(currentState == Enums.TutorialState.FINISHED)
         {
@@ -77,7 +80,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (canInteract && currentState != Enums.TutorialState.FINISHED)
             objectiveMarker.SetActive(true);
 
-        if (intro || currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
+        if (currentState == Enums.TutorialState.INACTIVE || currentState == Enums.TutorialState.FINISHED)
             return;
 
         if (currentState == Enums.TutorialState.COMBOS)
@@ -158,7 +161,13 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     IEnumerator IntroSpeach()
     {
         yield return new WaitForSeconds(1.5f);
-        voice.Speak(dialogues[0], name);
+
+        for (int i = 0; i < dialogues.Length; i++)
+        {
+            voice.Speak(dialogues[i], name);            
+            yield return new WaitUntil(() => voice.playing == false);
+            yield return new WaitForSeconds(0.8f);
+        }
     }
 
     IEnumerator ResetImages()
@@ -468,7 +477,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         Debug.Log("Completed");
         inputsBuffer.Clear();
         currentComboLevel++;
-        
+        _isL2Performed = false;        
+
+
         if(currentComboLevel >= combosToPractice.Count)
         {
             ChangeTutorialPhase(Enums.TutorialState.FINISHED);

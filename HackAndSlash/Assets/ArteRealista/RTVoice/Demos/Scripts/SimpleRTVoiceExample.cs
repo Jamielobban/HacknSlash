@@ -27,7 +27,8 @@ public class SimpleRTVoiceExample : MonoBehaviour
       Speaker.Instance.OnVoicesReady += voicesReady;
       Speaker.Instance.OnSpeakStart += speakStart;
       Speaker.Instance.OnSpeakComplete += speakComplete;
-   }
+
+    }
 
    private void OnDisable()
    {
@@ -42,6 +43,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
 
    public void Speak(string text, string whoSpeaks)
    {
+        playing = true;
         uid = Speaker.Instance.Speak(text, null, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f); //Speak with the first voice matching the given culture
         StartCoroutine(ShowText(text, whoSpeaks));
    }
@@ -73,7 +75,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
    {
         playing = true;
 
-      if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
+      //if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
          //Debug.Log($"RT-Voice: speak started: {wrapper}");
 
         if (!textPanelTransform.gameObject.activeSelf)
@@ -84,34 +86,28 @@ public class SimpleRTVoiceExample : MonoBehaviour
    {
         playing = false;
 
-        if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
+        //if (wrapper.Uid == uid) //Only write the log message if it's "our" speech
         // Debug.Log($"RT-Voice: speak completed: {wrapper}");
 
+        StartCoroutine(HideText());
+   }
+
+    IEnumerator HideText()
+    {
+        yield return  new WaitForSeconds(0.5f);
         if (textPanelTransform.gameObject.activeSelf)
             textPanelTransform.gameObject.SetActive(false);
-   }
+    }
 
     IEnumerator ShowText(string text, string whoSpeaks)
     {
         string showText = text;
         string showLetters = "";
         for(int i = 0; i < showText.Length; i++)
-        {
-            if(showText[i] != '\n')
-            {
-                showLetters += showText[i];
-            }
-            else
-            {
-                showLetters = "";
-                Pause();
-                yield return new WaitForSeconds(0.5f);
-                UnPause();
-            }
-
-
+        {  
+            showLetters += showText[i];
             dialogText.text = whoSpeaks + ": " + showLetters;
-            yield return new WaitForSeconds(0.055f);
+            yield return new WaitForSeconds(0.045f);
         }
         
     }
