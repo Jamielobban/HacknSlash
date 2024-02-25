@@ -66,16 +66,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         Debug.Log(voice.playing);
 
         if (intro)
-            return;        
-
-        if(currentState == Enums.TutorialState.FINISHED)
-        {
-            if (enemyDamageableCol != null && !enemyDamageableCol.enabled)
-                enemyDamageableCol.enabled = true;
-
-            if(enemyHealthUI != null && !enemyHealthUI.activeSelf)
-                enemyHealthUI.SetActive(true);
-        }
+            return;               
 
         if (canInteract && currentState != Enums.TutorialState.FINISHED)
             objectiveMarker.SetActive(true);
@@ -153,6 +144,15 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.L2.canceled += L2_canceled;
             }, 0));
 
+
+        if (currentState == Enums.TutorialState.FINISHED)
+        {
+            if (enemyDamageableCol != null && !enemyDamageableCol.enabled)
+                enemyDamageableCol.enabled = true;
+
+            if (enemyHealthUI != null && !enemyHealthUI.activeSelf)
+                enemyHealthUI.SetActive(true);
+        }
 
     }
 

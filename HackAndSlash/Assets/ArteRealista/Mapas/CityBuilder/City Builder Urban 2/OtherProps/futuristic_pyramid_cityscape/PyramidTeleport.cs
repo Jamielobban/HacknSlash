@@ -8,6 +8,7 @@ public class PyramidTeleport : Interactive, IInteractable
     [SerializeField] float period, verticalMoveTime, verticaDistance;
     [SerializeField] BlackCyborgSoldier soldier;
     [SerializeField] GameObject objectiveMarker;
+    [SerializeField] Fade fade;
     bool firstTeleportDone = false;
 
     private void Start()
@@ -31,6 +32,7 @@ public class PyramidTeleport : Interactive, IInteractable
         {
             firstTeleportDone = true;
             objectiveMarker.SetActive(false);
+            fade.DoTransition();
         }
     }
 }
