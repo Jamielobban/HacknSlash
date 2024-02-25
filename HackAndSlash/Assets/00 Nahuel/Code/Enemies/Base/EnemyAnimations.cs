@@ -20,6 +20,14 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
     }
+    protected virtual void Start()
+    {
+
+    }
+    protected virtual void Update()
+    {
+
+    }
 
     public virtual void PlayTargetAnimation(string targetAnimation, bool isInteracting)
     {

@@ -1623,7 +1623,7 @@ Transform:
   - {fileID: 8348404403313030907}
   - {fileID: 4730517833637921858}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -85.622, z: 0}
 --- !u!54 &7019322076484470408
 Rigidbody:
@@ -3783,7 +3783,7 @@ GameObject:
   - component: {fileID: 2522702188532585692}
   - component: {fileID: 1452854316153321712}
   - component: {fileID: 3596510498968300782}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PlayerCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3817,6 +3817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a8121a95e30e54a94df38ec1b3d656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteract: 0
 --- !u!65 &3596510498968300782
 BoxCollider:
   m_ObjectHideFlags: 0
