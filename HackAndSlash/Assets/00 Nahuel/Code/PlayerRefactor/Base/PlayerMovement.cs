@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(!_player.isInteracting)
             {
-                _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
+               // _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
             if(_player.isInteracting && !_player.isAirAttacking)
             {
