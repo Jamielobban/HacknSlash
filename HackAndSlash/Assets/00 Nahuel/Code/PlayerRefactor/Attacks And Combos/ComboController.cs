@@ -25,9 +25,12 @@ public class ComboController : MonoBehaviour
                 {
                     ConncatenateAttack();
                 }
-                if (_timer >= currentAttack.data.animationLength + 0.25f)
+                if(currentAttack != null)
                 {
-                    ClearComboSequence();
+                    if (_timer >= currentAttack.data.animationLength + 0.25f)
+                    {
+                        ClearComboSequence();
+                    }
                 }
             }
         }

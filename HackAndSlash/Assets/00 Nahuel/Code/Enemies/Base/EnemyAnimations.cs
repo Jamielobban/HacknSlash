@@ -26,7 +26,7 @@ public class EnemyAnimations : MonoBehaviour
         _anim.SetBool("isInteracting", isInteracting);
         _anim.CrossFade(targetAnimation, 0.2f);
     }
-    private void DeadAnimEnd()
+    protected virtual void DeadAnimEnd()
     {
         PlayTargetAnimation("Die", true);
         this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>

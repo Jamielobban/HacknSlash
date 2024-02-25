@@ -32,13 +32,19 @@ public class EnemyMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<PlayerManager>().transform;
 
-        _enemy.events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); } ;
+
+    }
+
+    private void Start()
+    {
+        _enemy.events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); };
         _enemy.events.OnIdle += DisableMovement;
         _enemy.events.OnAttacking += DisableMovement;
         _enemy.events.OnPatrolling += EnableMovement;
         _enemy.events.OnFollowing += EnableMovement;
         _enemy.events.OnStun += DisableMovement;
     }
+
     public Rigidbody GetRigidBody() => _rb;
     public void EnableGravity() => _rb.useGravity = true;
     public void DisableGravity() => _rb.useGravity = false;

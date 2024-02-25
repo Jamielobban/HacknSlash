@@ -32,11 +32,12 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
     PlayerInputActionsRefactor _playerActions;
 
-    
+    private PlayerManager _player;
     private void Awake()
     {
         _playerActions = new PlayerInputActionsRefactor();
         _playerActions.Player.Enable();
+        
     }
 
     private void Start()
@@ -45,17 +46,16 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         {
             StartCoroutine(IntroSpeach());
             return;
-        }
-
-        
+        }        
 
         matchKeyWithUI.Add(Enums.InputsAttack.Square, uiTutorialButtons[3]);
-        matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiTutorialButtons[4]);
+        matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiTutorialButtons[4]); // air combo
         matchKeyWithUI.Add(Enums.InputsAttack.Triangle, uiTutorialButtons[5]);
         matchKeyWithUI.Add(Enums.InputsAttack.HoldTriangle, uiTutorialButtons[6]);
         matchKeyWithUI.Add(Enums.InputsAttack.L2Square, uiTutorialButtons[7]);
-        matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiTutorialButtons[8]);        
-       
+        matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiTutorialButtons[8]);
+        matchKeyWithUI.Add(Enums.InputsAttack.AirSquare, uiTutorialButtons[9]);
+        _player = FindObjectOfType<PlayerManager>();
     }
 
     private void Update()
@@ -407,16 +407,41 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     void SquarePerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Square");
-        if (context.interaction is HoldInteraction)
-            inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
+
+        if (_player.movement.isGrounded)
+        {
+            if (context.interaction is HoldInteraction)
+            {
+                inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
+            }
+            else
+            {
+                if (!_isL2Performed)
+                {
+                    inputsBuffer.Add(Enums.InputsAttack.Square);
+                }
+                else
+                {
+                    inputsBuffer.Add(Enums.InputsAttack.L2Square);
+                }
+            }
+        }
         else
         {
-            if (_isL2Performed)
-                inputsBuffer.Add(Enums.InputsAttack.L2Square);
+            if (context.interaction is HoldInteraction)
+            {
+                //Chupamela
+            }
             else
-                inputsBuffer.Add(Enums.InputsAttack.Square);
+            {
+                if (!_isL2Performed)
+                {
+                    inputsBuffer.Add(Enums.InputsAttack.AirSquare);
+                }
+            }
         }
         lastAttackTime = Time.time;
+
     }
     private void L2_performed(InputAction.CallbackContext context)
     {
