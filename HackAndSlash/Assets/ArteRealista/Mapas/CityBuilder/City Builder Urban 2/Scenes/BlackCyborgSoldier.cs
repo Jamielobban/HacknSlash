@@ -20,6 +20,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] Image[] uiCombosImage = new Image[4];
     [SerializeField] Sprite emptySprite;
     [SerializeField] GameObject objectiveMarker;
+    [SerializeField] GameObject enemyHealthUI;
+    [SerializeField] BoxCollider enemyDamageableCol;
 
     readonly string name = "Cyborg Sergeant";
     int currentText = 0, currentComboLevel = 0, jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
@@ -58,6 +60,20 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            currentState = Enums.TutorialState.FINISHED;
+        }
+
+        if(currentState == Enums.TutorialState.FINISHED)
+        {
+            if (enemyDamageableCol != null && !enemyDamageableCol.enabled)
+                enemyDamageableCol.enabled = true;
+
+            if(enemyHealthUI != null && !enemyHealthUI.activeSelf)
+                enemyHealthUI.SetActive(true);
+        }
+
         if (canInteract && currentState != Enums.TutorialState.FINISHED)
             objectiveMarker.SetActive(true);
 
