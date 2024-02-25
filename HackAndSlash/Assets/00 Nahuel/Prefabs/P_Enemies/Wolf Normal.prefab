@@ -1100,17 +1100,17 @@ PrefabInstance:
     - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_Speed
-      value: 7.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_Acceleration
-      value: 12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8053254695706785313, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 1.7
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 8667008309283285799, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
@@ -1292,6 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e155ab7dc6b254d90b79a596014ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPooleable: 1
   isDead: 0
   isGrounded: 0
   canAttack: 1

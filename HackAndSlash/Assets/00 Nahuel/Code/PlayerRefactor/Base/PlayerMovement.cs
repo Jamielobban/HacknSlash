@@ -81,18 +81,16 @@ public class PlayerMovement : MonoBehaviour
        // if(!isGrounded && !isJumping)
         if(!isGrounded)
         {
-            if(!_player.isInteracting)
-            {
-                _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
-            }
             if(_player.isInteracting && !_player.isAirAttacking)
             {
+                _player.rb.useGravity = true;
                 inAirTime += Time.deltaTime;
                 _player.rb.AddForce(transform.forward * leapingVelocity);
                 _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
             }
             else if(_player.isAirAttacking)
             {
+                _player.rb.useGravity = false;
                 _player.rb.velocity = Vector3.zero;
             }
             

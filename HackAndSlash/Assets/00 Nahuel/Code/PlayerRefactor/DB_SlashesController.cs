@@ -11,6 +11,7 @@ public class DB_SlashesController : SlashesController
     public List<GameObject> slashesSquare = new List<GameObject>();
     public List<GameObject> slashesL2Square = new List<GameObject>();
     public List<GameObject> slashesL2Triangle = new List<GameObject>();
+    public List<GameObject> slashesAir = new List<GameObject>();
     public List<GameObject> slashesAnother = new List<GameObject>();
 
     public GameObject dragon;
@@ -40,6 +41,13 @@ public class DB_SlashesController : SlashesController
         if (slashesL2Triangle[index] != null)
         {
             slashesL2Triangle[index].SetActive(true);
+        }
+    }
+    public void SpawnAirSlash(int index)
+    {
+        if (slashesAir[index] != null)
+        {
+            slashesAir[index].SetActive(true);
         }
     }
 
@@ -105,8 +113,12 @@ public class DB_SlashesController : SlashesController
         {
             slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
         }
-
+        
         foreach (GameObject slash in slashesL2Triangle)
+        {
+            slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+        }
+        foreach (GameObject slash in slashesAir)
         {
             slash.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
         }

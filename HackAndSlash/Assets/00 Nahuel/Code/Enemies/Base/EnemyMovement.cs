@@ -52,7 +52,6 @@ public class EnemyMovement : MonoBehaviour
     private void EnableMovement() => _agent.isStopped = false;
     public void DisableMovement() => _agent.isStopped = true;
 
-
     public void HandleFollow()
     {
         _agent.destination = target.position;

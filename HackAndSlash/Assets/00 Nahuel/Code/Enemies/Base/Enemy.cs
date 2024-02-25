@@ -1,3 +1,4 @@
+using DamageNumbersPro.Demo;
 using UnityEngine;
 
 // -- Base Class for each enemy -- //
@@ -56,7 +57,10 @@ public class Enemy : PoolableObject
 
     public virtual void ResetEnemy()
     {
-       // UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
+        if(isPooleable)
+        {
+            UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
+        }
         healthSystem.ResetHealthEnemy();
         events.Idle();
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5870929663654139760}
   - component: {fileID: 3898660151583529673}
   - component: {fileID: 6404257819949344554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4927,7 +4927,7 @@ GameObject:
   - component: {fileID: 4711985650045346198}
   - component: {fileID: 309784360183350372}
   - component: {fileID: 530714612344179008}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Aura2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9843,7 +9843,7 @@ GameObject:
   - component: {fileID: 1284246106831110259}
   - component: {fileID: 2958235561424976968}
   - component: {fileID: 2096683702685194554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SubSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14683,7 +14683,7 @@ GameObject:
   - component: {fileID: 4538626875155397966}
   - component: {fileID: 7385098702020137193}
   - component: {fileID: 4694181397158452089}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShockWave2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19581,7 +19581,9 @@ GameObject:
   - component: {fileID: 5432883311893245956}
   - component: {fileID: 4686111321131201132}
   - component: {fileID: 3230551285122113218}
-  m_Layer: 0
+  - component: {fileID: 6770069948506264700}
+  - component: {fileID: 1450982382346637264}
+  m_Layer: 9
   m_Name: Dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19612,7 +19614,7 @@ Transform:
   - {fileID: 3856613747231350687}
   - {fileID: 6491119274465374076}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &4686111321131201132
 ParticleSystem:
@@ -24511,6 +24513,41 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &6770069948506264700
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4926075978475202569}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2954803, y: 2.3871813, z: 7.752346}
+  m_Center: {x: 0.038929224, y: 0.09688306, z: 2.8761735}
+--- !u!114 &1450982382346637264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4926075978475202569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3475766639dda08429dabe185e4332a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  canStun: 0
 --- !u!1 &5313392717606222996
 GameObject:
   m_ObjectHideFlags: 0
@@ -24522,7 +24559,7 @@ GameObject:
   - component: {fileID: 2960320286639519138}
   - component: {fileID: 1000334570259813040}
   - component: {fileID: 7057624231215513864}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29420,7 +29457,7 @@ GameObject:
   - component: {fileID: 7365812462133110020}
   - component: {fileID: 1007898532435123603}
   - component: {fileID: 2884817184487287313}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SubSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34269,7 +34306,7 @@ GameObject:
   - component: {fileID: 8485584683852265566}
   - component: {fileID: 2685894052473251939}
   - component: {fileID: 6321715791949917473}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Magic circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39176,7 +39213,7 @@ GameObject:
   - component: {fileID: 6491119274465374076}
   - component: {fileID: 8699581386356695122}
   - component: {fileID: 8925548823283750387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44101,7 +44138,7 @@ GameObject:
   - component: {fileID: 6591992720938970849}
   - component: {fileID: 7071125249271394919}
   - component: {fileID: 3332801772249128005}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48999,7 +49036,7 @@ GameObject:
   - component: {fileID: 1569510651693953284}
   - component: {fileID: 65972240781880531}
   - component: {fileID: 6610920162907685829}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RayWaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53857,7 +53894,7 @@ GameObject:
   - component: {fileID: 5365907414214282744}
   - component: {fileID: 4121436843823480514}
   - component: {fileID: 5909804876307012258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58764,7 +58801,7 @@ GameObject:
   - component: {fileID: 3856613747231350687}
   - component: {fileID: 4980320663380892511}
   - component: {fileID: 3481309122207234776}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
