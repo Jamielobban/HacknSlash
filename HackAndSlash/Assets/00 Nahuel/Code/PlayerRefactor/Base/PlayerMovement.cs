@@ -183,16 +183,16 @@ public class PlayerMovement : MonoBehaviour
         if(GetDirectionNormalized().magnitude > 0.1f)
         {
             _player.animations.PlayTargetAnimation("roll", true);
-            HandleDash();
+            HandleDash(dashSpeed);
         }
     }
 
-    private void HandleDash()
+    private void HandleDash(float _dashSpeed)
     {
         isDashing = true;
         _player.isInvulnerable = true;
         DisableMovement();
-        _player.rb.AddForce(transform.forward * dashSpeed, ForceMode.Impulse);
+        _player.rb.AddForce(transform.forward * _dashSpeed, ForceMode.Impulse);
         StartCoroutine(EnableMovementAfterDash(dashDelay));
     }
 
