@@ -99,7 +99,7 @@ public class DB_SlashesController : SlashesController
 
     public void SpawnYingYang()
     {
-        GameObject go = Instantiate(yingYangFX, transform.position, Quaternion.identity);
+      //  GameObject go = Instantiate(yingYangFX, transform.position, Quaternion.identity);
     }
 
     private void InitializeDamages()
