@@ -1622,8 +1622,9 @@ Transform:
   - {fileID: 7146523990885305630}
   - {fileID: 8348404403313030907}
   - {fileID: 4730517833637921858}
+  - {fileID: 1326537479304087374}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -85.622, z: 0}
 --- !u!54 &7019322076484470408
 Rigidbody:
@@ -1740,6 +1741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collision: {fileID: 1452854316153321712}
+  groundCheck: {fileID: 3020432870173202997}
   playerHandRight: {fileID: 3855479087715357377}
   _currentCharacterState: 0
   isDead: 0
@@ -1787,8 +1789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 15
-  runSpeed: 0
-  maxSpeed: 10
+  runSpeed: 8
+  maxSpeed: 12
   jumpForce: 20
   dashSpeed: 25
   dashDelay: 0.5
@@ -2148,6 +2150,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 76df6c309f7dd9f4cbd1a39476c069a7, type: 2}
+--- !u!1 &2715133012748509642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326537479304087374}
+  - component: {fileID: 8532688085259914348}
+  - component: {fileID: 3020432870173202997}
+  m_Layer: 17
+  m_Name: GroundDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1326537479304087374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715133012748509642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4916640838537896346}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8532688085259914348
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715133012748509642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7126913, y: 0.9090537, z: 0.7050754}
+  m_Center: {x: -0.00041604042, y: 0.04547316, z: -0.004427612}
+--- !u!114 &3020432870173202997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715133012748509642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5544133bcee20a4daeb8261bcfacfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrounded: 0
 --- !u!1 &2927757011313754850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,7 +2727,7 @@ GameObject:
   - component: {fileID: 3382745691949009938}
   - component: {fileID: 438700845146822572}
   - component: {fileID: 1403218775413640036}
-  m_Layer: 16
+  m_Layer: 11
   m_Name: PlayerGetDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

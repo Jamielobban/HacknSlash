@@ -14,6 +14,8 @@ public class ComboController : MonoBehaviour
 
     private float _timer;
 
+    public bool inAirCombo = false;
+
     private void Update()
     {
         if(_currentSequence.Count >= 1)
@@ -87,6 +89,7 @@ public class ComboController : MonoBehaviour
         _currentSequence.Clear();
         currentActionIndex = 0;
         _timer = 0;
+        inAirCombo = false;
     }
 
 }

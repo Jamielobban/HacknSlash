@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
-        runSpeed = maxSpeed * 0.5f;
+        //runSpeed = maxSpeed * 0.5f;
     }
 
     private void Update()
@@ -78,8 +78,12 @@ public class PlayerMovement : MonoBehaviour
         rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
         Vector3 targetPosition = transform.position;
 
-       // if(!isGrounded && !isJumping)
-        if(!isGrounded)
+        if(_player.groundCheck.isGrounded)
+        {
+            inAirTime = 0;
+            ResetJumps();
+        }
+        else
         {
             if(_player.isInteracting && !_player.isAirAttacking)
             {
@@ -88,25 +92,17 @@ public class PlayerMovement : MonoBehaviour
                 _player.rb.AddForce(transform.forward * leapingVelocity);
                 _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
             }
-            else if(_player.isAirAttacking)
+            else if (_player.isAirAttacking)
             {
                 _player.rb.useGravity = false;
                 _player.rb.velocity = Vector3.zero;
             }
-            
         }
 
         if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
-            inAirTime = 0;
-            isGrounded = true;
-            ResetJumps();
-        }
-        else
-        {
-            isGrounded = false;
         }
 
         if (isGrounded && !isJumping && !isDashing)

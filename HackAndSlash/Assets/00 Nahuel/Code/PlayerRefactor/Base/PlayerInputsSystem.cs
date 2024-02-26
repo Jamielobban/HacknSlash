@@ -57,7 +57,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
-        if(_player.movement.isGrounded)
+        if(_player.groundCheck.isGrounded)
         {
             _player.movement.DisableMovement();
             _player.ChangeCharacterState(Enums.CharacterState.Idle);
@@ -93,11 +93,12 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Square_performed(InputAction.CallbackContext context)
     {
-        if(_player.movement.isGrounded)
+        if(_player.groundCheck.isGrounded)
         {
             if (context.interaction is HoldInteraction)
             {
                 _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
+                _player.comboController.inAirCombo = true;
             }
             else
             {
@@ -113,16 +114,16 @@ public class PlayerInputsSystem : MonoBehaviour
         }
         else
         {
-            _player.isAirAttacking = true;
-            _player.animations.Animator.SetBool("isAirAttacking", true);
             if (context.interaction is HoldInteraction)
             {
                 //Chupamela
             }
             else
             {
-                if (!_isL2Performed)
+                if (!_isL2Performed && _player.comboController.inAirCombo)
                 {
+                    _player.isAirAttacking = true;
+                    _player.animations.Animator.SetBool("isAirAttacking", true);
                     _player.comboController.AddInputToSequence(Enums.InputsAttack.AirSquare);
                 }
                 else
@@ -134,7 +135,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Triangle_performed(InputAction.CallbackContext context)
     {
-        if (_player.movement.isGrounded)
+        if (_player.groundCheck.isGrounded)
         {
             if (context.interaction is HoldInteraction)
             {

@@ -17,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerCollision collision;
     public ComboController comboController { get; private set; }
 
+    public CheckGround groundCheck;
     #endregion
 
     public Rigidbody rb { get; protected set; }
@@ -74,7 +75,7 @@ public class PlayerManager : MonoBehaviour
         isInteracting = animations.Animator.GetBool("isInteracting");
         isAirAttacking = animations.Animator.GetBool("isAirAttacking");
         movement.isJumping = animations.Animator.GetBool("isJumping");
-        animations.Animator.SetBool("isGrounded", movement.isGrounded);
+        animations.Animator.SetBool("isGrounded", groundCheck.isGrounded);
     }
 
     public void ChangeCharacterState(Enums.CharacterState newState)
