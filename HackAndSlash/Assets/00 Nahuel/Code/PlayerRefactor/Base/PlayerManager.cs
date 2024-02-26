@@ -36,7 +36,6 @@ public class PlayerManager : MonoBehaviour
     public bool isDead = false;
     public bool isStun = false;
     public bool isInvulnerable = false;
-    public bool isInAir = false;
     public bool isInteracting;
     public bool isAirAttacking = false;
 

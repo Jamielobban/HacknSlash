@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     [Header("Movement flags:")]
-    public bool isGrounded;
     private bool _isSprinting;
     public bool isJumping = false;
     public bool isDashing = false;
@@ -105,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
             targetPosition.y = rayCastHitPoint.y;
         }
 
-        if (isGrounded && !isJumping && !isDashing)
+        if (_player.groundCheck.isGrounded && !isJumping && !isDashing)
         {
             if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
             {

@@ -417,7 +417,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         Debug.Log("Square");
 
-        if (_player.movement.isGrounded)
+        if (_player.groundCheck.isGrounded)
         {
             if (context.interaction is HoldInteraction)
             {
