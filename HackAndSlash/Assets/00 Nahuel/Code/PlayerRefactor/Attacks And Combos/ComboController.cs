@@ -27,12 +27,9 @@ public class ComboController : MonoBehaviour
                 {
                     ConncatenateAttack();
                 }
-                if(currentAttack != null)
+                if (_timer >= currentAttack.data.animationLength + 0.25f)
                 {
-                    if (_timer >= currentAttack.data.animationLength + 0.25f)
-                    {
-                        ClearComboSequence();
-                    }
+                    ClearComboSequence();
                 }
             }
         }
@@ -44,6 +41,10 @@ public class ComboController : MonoBehaviour
             _currentSequence.Add(action);
             if (currentActionIndex <= 0)
                 DoAttack();
+        }
+        else
+        {
+            ClearComboSequence();
         }
     }
     public void DoAttack() 

@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float inAirTime;
     public float leapingVelocity;
     public float fallingSpeed;
+    public float maxGravitySpeed;
     public float raycastHeightOffset = 0.5f;
     public LayerMask groundLayer;
     public float maxDistance;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump stats:")]
     public float jumpHeight = 3;
     public float gravityIntensity = -15;
-    public const int maxJumps = 2;
+    public const int maxJumps = 1;
     private int _currentJumps = 0;
 
     #endregion
@@ -82,8 +83,13 @@ public class PlayerMovement : MonoBehaviour
 
         if(_player.groundCheck.isGrounded)
         {
+            if(inAirTime >= 1.5f)
+            {
+                _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
+            }
+
             inAirTime = 0;
-            ResetJumps();
+            _currentJumps = 0;
         }
         else
         {
@@ -97,7 +103,8 @@ public class PlayerMovement : MonoBehaviour
                 _player.rb.useGravity = true;
                 inAirTime += Time.deltaTime;
                 _player.rb.AddForce(transform.forward * leapingVelocity);
-                _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
+                float forceCap = Mathf.Clamp(fallingSpeed * inAirTime, 5f, maxGravitySpeed);                
+                _player.rb.AddForce(-Vector3.up * forceCap);
             }
             else if (_player.isAirAttacking)
             {
@@ -162,17 +169,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        if(CanJump())
+        _currentJumps++;
+
+        if (CanJump())
         {
-            _currentJumps++;
             _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
         }
-    }
-
-    private void ResetJumps()
-    {
-        _currentJumps = 0;
     }
 
     public void JumpAction(float _jumpHeight)

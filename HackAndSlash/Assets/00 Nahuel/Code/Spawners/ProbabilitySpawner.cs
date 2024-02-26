@@ -19,9 +19,7 @@ public class ProbabilitySpawner : SpawnerBase
         foreach (var enemyProbability in _enemyProbabilities)
         {
             _enemiesDict.Add(enemyProbability.enemy, enemyProbability.probability);
-        }
-
-        StartCoroutine(SpawnEnemies());
+        }        
     }
 
     protected override void SpawnProbabilityEnemy()

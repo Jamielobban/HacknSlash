@@ -5,6 +5,12 @@ using UnityEngine.AI;
 
 public class NavMeshProbabilitySpawner : ProbabilitySpawner
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        StartCoroutine(SpawnEnemies());
+    }
+
     protected override Vector3 ChooseRandomPositionOnNavMesh()
     {
         if (_triangulation.vertices == null)
