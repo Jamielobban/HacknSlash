@@ -6,6 +6,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
 
+
     public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
 
     public float scaleDivision = 4;
