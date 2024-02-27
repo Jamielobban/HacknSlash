@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d5f9599cd1a80594cbd59e345c448dd6, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &136837296978705520
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f1fe2d923e351ed4482fbf8b0418a734, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &437641772189061253
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ba17137445b58424491b20a75ff68715, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &599826317068362853
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1ab45b5efe3bbc546938888f71ecbb5c, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &1071019466750682611
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,6 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 93902bfe67aaa4840a0a0e6cd2c7a716, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &1081196635342255365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,15 +1621,14 @@ Transform:
   m_Children:
   - {fileID: 1459442195652733025}
   - {fileID: 3382745691949009938}
+  - {fileID: 3761246521640231951}
   - {fileID: 5701919688208885046}
-  - {fileID: 2522702188532585692}
   - {fileID: 5394769492907499188}
   - {fileID: 7146523990885305630}
   - {fileID: 8348404403313030907}
   - {fileID: 4730517833637921858}
-  - {fileID: 1326537479304087374}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -85.622, z: 0}
 --- !u!54 &7019322076484470408
 Rigidbody:
@@ -1747,7 +1751,6 @@ MonoBehaviour:
   isDead: 0
   isStun: 0
   isInvulnerable: 0
-  isInAir: 0
   isInteracting: 0
   isAirAttacking: 0
 --- !u!114 &7606065436709299514
@@ -1789,6 +1792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 15
+  airSpeed: 0.3
   runSpeed: 8
   maxSpeed: 12
   jumpForce: 20
@@ -1796,15 +1800,15 @@ MonoBehaviour:
   dashDelay: 0.5
   inAirTime: 0
   leapingVelocity: 3
-  fallingSpeed: 66
+  fallingSpeed: 40
+  maxGravitySpeed: 55
   raycastHeightOffset: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  maxDistance: 1
-  jumpHeight: 5
-  gravityIntensity: -7
-  isGrounded: 0
+  maxDistance: 0.8
+  jumpHeight: 15
+  gravityIntensity: -10
   isJumping: 0
   isDashing: 0
 --- !u!114 &6417761822419749738
@@ -1841,6 +1845,7 @@ MonoBehaviour:
   - {fileID: 2417205116265043812}
   currentAttack: {fileID: 0}
   currentActionIndex: 0
+  inAirCombo: 0
 --- !u!114 &7051883071492548770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,6 +2047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1131d2db61ef305459a97f413acb5668, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &2460553790861302084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,6 +2156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 76df6c309f7dd9f4cbd1a39476c069a7, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &2715133012748509642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,12 +2182,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2715133012748509642}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4916640838537896346}
+  m_Father: {fileID: 3761246521640231951}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8532688085259914348
@@ -2202,8 +2209,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7126913, y: 0.9090537, z: 0.7050754}
-  m_Center: {x: -0.00041604042, y: 0.04547316, z: -0.004427612}
+  m_Size: {x: 0.7126913, y: 0.2972031, z: 0.7050754}
+  m_Center: {x: -0.00041604045, y: 0.061245695, z: -0.004427612}
 --- !u!114 &3020432870173202997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2639,6 +2646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0981b96e2510e464da0bcca039395b43, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &3676688582226366407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,6 +2692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 62483657593a81c4c95392b4b06c187a, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &3729730389532247722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,6 +3218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9f77c92e3e73e274f9384357075b6a34, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &4209103142181080537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,6 +3264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 810a9b6affed3934e9f87da7fdebb343, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &4272246208023149737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3866,12 +3877,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5462612126473347449}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4916640838537896346}
+  m_Father: {fileID: 3761246521640231951}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1452854316153321712
@@ -3953,6 +3964,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9abc5ef6f3aa30a4886e643d675b2956, type: 2}
+  currentNearEnemy: {fileID: 0}
+--- !u!1 &5510029013181843335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3761246521640231951}
+  m_Layer: 3
+  m_Name: Collisioners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3761246521640231951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510029013181843335}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2522702188532585692}
+  - {fileID: 1326537479304087374}
+  m_Father: {fileID: 4916640838537896346}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5651532157819262930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4503,6 +4548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9b6e8ae7deebfd74eb1a92fd0ab4a30c, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &6933146789118687764
 GameObject:
   m_ObjectHideFlags: 0
@@ -4902,6 +4948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 24dce502e6d1720459e90213dcab301a, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &7756295177543537335
 GameObject:
   m_ObjectHideFlags: 0
@@ -5041,6 +5088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f0c74db0f612b844f96e0147ed26b403, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &7971617771874637225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5181,6 +5229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c7882da743e422f4499b12f93a17f9ae, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &8209774503788797977
 GameObject:
   m_ObjectHideFlags: 0
@@ -5226,6 +5275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 49391ab1d0a50e646b45e42a2cf073f3, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &8218633859974591947
 GameObject:
   m_ObjectHideFlags: 0
@@ -5271,6 +5321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 25db29a0b03e2464094af48fa75fb9e6, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &8377305025320731741
 GameObject:
   m_ObjectHideFlags: 0
@@ -5475,6 +5526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7b6dc34784a1ec74bad76f98aacf0bac, type: 2}
+  currentNearEnemy: {fileID: 0}
 --- !u!1 &8583980023365014547
 GameObject:
   m_ObjectHideFlags: 0

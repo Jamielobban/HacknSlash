@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement stats:")]
     public float rotationSpeed = 15f;
+    public float airSpeed;
     public float runSpeed;
     public float maxSpeed;
     public float jumpForce;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float inAirTime;
     public float leapingVelocity;
     public float fallingSpeed;
+    public float maxGravitySpeed;
     public float raycastHeightOffset = 0.5f;
     public LayerMask groundLayer;
     public float maxDistance;
@@ -27,13 +29,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump stats:")]
     public float jumpHeight = 3;
     public float gravityIntensity = -15;
-    public const int maxJumps = 2;
+    public const int maxJumps = 1;
     private int _currentJumps = 0;
 
     #endregion
 
     [Header("Movement flags:")]
-    public bool isGrounded;
     private bool _isSprinting;
     public bool isJumping = false;
     public bool isDashing = false;
@@ -46,20 +47,23 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
-        //runSpeed = maxSpeed * 0.5f;
-    }
-
-    private void Update()
-    {
-
     }
 
     public void HandleAllMovement()
     {
         HandleFallingAndLanding();
 
-        if (_player.isInteracting || isJumping || isDashing) { 
-            return; }
+        if(!_player.groundCheck.isGrounded)
+        {
+            HandleAirMovement();
+        }
+
+        HandleRotation();
+
+        if (_player.isInteracting || isJumping || isDashing || !_player.groundCheck.isGrounded) 
+        { 
+            return; 
+        }
 
         if (_isSprinting)
         {
@@ -69,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(runSpeed);
         }
-        HandleRotation();
     }
     public void HandleFallingAndLanding()
     {
@@ -80,17 +83,28 @@ public class PlayerMovement : MonoBehaviour
 
         if(_player.groundCheck.isGrounded)
         {
+            if(inAirTime >= 1.5f)
+            {
+                _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
+            }
+
             inAirTime = 0;
-            ResetJumps();
+            _currentJumps = 0;
         }
         else
         {
+            if(!_player.isInteracting)
+            {
+                _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
+            }
+
             if(_player.isInteracting && !_player.isAirAttacking)
             {
                 _player.rb.useGravity = true;
                 inAirTime += Time.deltaTime;
                 _player.rb.AddForce(transform.forward * leapingVelocity);
-                _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
+                float forceCap = Mathf.Clamp(fallingSpeed * inAirTime, 5f, maxGravitySpeed);                
+                _player.rb.AddForce(-Vector3.up * forceCap);
             }
             else if (_player.isAirAttacking)
             {
@@ -101,11 +115,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
-            Vector3 rayCastHitPoint = hit.point;
-            targetPosition.y = rayCastHitPoint.y;
+            targetPosition.y = hit.point.y;
         }
 
-        if (isGrounded && !isJumping && !isDashing)
+        if (_player.groundCheck.isGrounded && !isJumping && !isDashing)
         {
             if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
             {
@@ -139,6 +152,13 @@ public class PlayerMovement : MonoBehaviour
         _player.rb.velocity = _moveDirection;
     }
 
+    public void HandleAirMovement()
+    {
+        _moveDirection = GetDirectionNormalized();
+        _moveDirection *= airSpeed;
+        _player.rb.velocity += _moveDirection;
+    }
+
     public void DisableMovement()
     {
         _player.ChangeCharacterState(Enums.CharacterState.Idle);
@@ -149,17 +169,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        if(CanJump())
+        _currentJumps++;
+
+        if (CanJump())
         {
-            _currentJumps++;
             _player.animations.Animator.SetBool("isJumping", true);
             _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
         }
-    }
-
-    private void ResetJumps()
-    {
-        _currentJumps = 0;
     }
 
     public void JumpAction(float _jumpHeight)

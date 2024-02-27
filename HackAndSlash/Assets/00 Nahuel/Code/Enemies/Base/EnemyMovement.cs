@@ -54,7 +54,11 @@ public class EnemyMovement : MonoBehaviour
     }
     public void DisableAgent() => _agent.enabled = false;
     private void EnableMovement() => _agent.isStopped = false;
-    public void DisableMovement() => _agent.isStopped = true;
+    public void DisableMovement()
+    {
+        _agent.velocity = Vector3.zero;
+        _agent.isStopped = true;
+    }
 
     public void HandleFollow()
     {
@@ -88,7 +92,7 @@ public class EnemyMovement : MonoBehaviour
         });
     }
 
-    private void HandleRotation()
+    public void HandleRotation()
     {
         if(_agent.path.corners.Length > 0 && _agent.velocity.magnitude > 0)
         {
