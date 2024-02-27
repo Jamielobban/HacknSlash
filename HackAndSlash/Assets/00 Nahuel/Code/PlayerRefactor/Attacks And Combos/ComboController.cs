@@ -36,15 +36,18 @@ public class ComboController : MonoBehaviour
     }
     public void AddInputToSequence(Enums.InputsAttack action)
     {
-        if (IsCorrectInput(action)) 
+        if(!CheckComboComplete())
         {
-            _currentSequence.Add(action);
-            if (currentActionIndex <= 0)
-                DoAttack();
-        }
-        else
-        {
-            ClearComboSequence();
+            if (IsCorrectInput(action))
+            {
+                _currentSequence.Add(action);
+                if (currentActionIndex <= 0)
+                    DoAttack();
+            }
+            else
+            {
+                ClearComboSequence();
+            }
         }
     }
     public void DoAttack() 
@@ -85,6 +88,24 @@ public class ComboController : MonoBehaviour
         }
         return false;
     }
+
+    private bool CheckComboComplete()
+    {
+        foreach(Combo combo in combos)
+        {
+            if (UtilsNagu.DoListsMatch(combo.sequence, _currentSequence))
+            {
+                Debug.Log("Mathc");
+                return true;
+
+            }
+
+        }
+        return false;
+    }
+
+
+
     private void ClearComboSequence()
     {
         _currentSequence.Clear();

@@ -14,6 +14,10 @@ public class CheckGround : MonoBehaviour
     {
         isGrounded = true;
     }
+    private void OnTriggerStay(Collider other)
+    {
+        isGrounded = true;
+    }
 
     private void OnTriggerExit(Collider other)
     {

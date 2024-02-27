@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public static class UtilsNagu 
 {
@@ -37,6 +38,28 @@ public static class UtilsNagu
 
         return true; 
     }
+
+    public static bool DoListsMatch<T>(List<T> list1, List<T> list2)
+    {
+        var areListsEqual = true;
+
+        if (list1.Count != list2.Count)
+            return false;
+
+        //list1.Sort(); // Sort list one
+        //list2.Sort(); // Sort list two
+
+        for (var i = 0; i < list1.Count; i++)
+        {
+            if (!EqualityComparer<T>.Default.Equals(list2[i], list1[i]))
+            {
+                areListsEqual = false;
+            }
+        }
+
+        return areListsEqual;
+    }
+
 
     public static void RemoveAllNulls<T>(ref List<T> list)
     {

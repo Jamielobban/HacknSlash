@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement stats:")]
     public float rotationSpeed = 15f;
+    public float airRotationSpeed = 15f;
+    public float interactingRotationSpeed = 10f;
+
     public float airSpeed;
     public float runSpeed;
     public float maxSpeed;
-    public float jumpForce;
     public float dashSpeed;
     public float dashDelay; //delay for reactive movement;
 
@@ -27,11 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxDistance;
 
     [Header("Jump stats:")]
-    public float jumpHeight = 3;
-    public float gravityIntensity = -15;
-    public const int maxJumps = 1;
-    private int _currentJumps = 0;
-
+     public float jumpHeight = 3;
     #endregion
 
     [Header("Movement flags:")]
@@ -56,9 +54,12 @@ public class PlayerMovement : MonoBehaviour
         if(!_player.groundCheck.isGrounded)
         {
             HandleAirMovement();
+            //Handles rotation if pj is falling
+            HandleRotation(rotationSpeed);
         }
 
-        HandleRotation();
+        //Handles rotation while attacking
+        HandleRotation(interactingRotationSpeed);
 
         if (_player.isInteracting || isJumping || isDashing || !_player.groundCheck.isGrounded) 
         { 
@@ -73,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(runSpeed);
         }
+        //Handles normal rotation while moving
+        HandleRotation(rotationSpeed);
     }
     public void HandleFallingAndLanding()
     {
@@ -89,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             inAirTime = 0;
-            _currentJumps = 0;
         }
         else
         {
@@ -103,8 +105,7 @@ public class PlayerMovement : MonoBehaviour
                 _player.rb.useGravity = true;
                 inAirTime += Time.deltaTime;
                 _player.rb.AddForce(transform.forward * leapingVelocity);
-                float forceCap = Mathf.Clamp(fallingSpeed * inAirTime, 5f, maxGravitySpeed);                
-                _player.rb.AddForce(-Vector3.up * forceCap);
+                _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
             }
             else if (_player.isAirAttacking)
             {
@@ -131,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void HandleRotation()
+    public void HandleRotation(float rotSpeed)
     {
         Vector3 targetDirection = Vector3.zero;
         targetDirection = GetDirectionNormalized();
@@ -139,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         if(targetDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
             transform.rotation = playerRotation;
         }
     }
@@ -169,21 +170,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void HandleJumping()
     {
-        _currentJumps++;
-
-        if (CanJump())
+        if(!_player.groundCheck.isGrounded)
         {
-            _player.animations.Animator.SetBool("isJumping", true);
-            _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
+            return;
         }
+        _player.animations.Animator.SetBool("isJumping", true);
+        _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
     }
 
-    public void JumpAction(float _jumpHeight)
+    public void JumpAction(float _jumpHeight = 20)
     {
-        float jumpVelocity = Mathf.Sqrt(-2 * gravityIntensity * _jumpHeight);
-        Vector3 playerVelocity = _moveDirection;
-        playerVelocity.y = jumpVelocity;
-        _player.rb.velocity = playerVelocity;
+        _player.rb.AddForce(Vector3.up * _jumpHeight , ForceMode.Impulse);
     }
 
     public void Dash()
@@ -220,6 +217,5 @@ public class PlayerMovement : MonoBehaviour
         return UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
     }
 
-    private bool CanJump() => _currentJumps <= maxJumps;
 
 }

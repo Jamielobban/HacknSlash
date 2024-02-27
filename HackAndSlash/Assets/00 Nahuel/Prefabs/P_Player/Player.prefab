@@ -1792,10 +1792,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 15
+  airRotationSpeed: 8
+  interactingRotationSpeed: 0.8
   airSpeed: 0.3
   runSpeed: 8
   maxSpeed: 12
-  jumpForce: 20
   dashSpeed: 25
   dashDelay: 0.5
   inAirTime: 0
@@ -1807,8 +1808,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   maxDistance: 0.8
-  jumpHeight: 15
-  gravityIntensity: -10
+  jumpHeight: 20
   isJumping: 0
   isDashing: 0
 --- !u!114 &6417761822419749738
@@ -2209,8 +2209,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7126913, y: 0.2972031, z: 0.7050754}
-  m_Center: {x: -0.00041604045, y: 0.061245695, z: -0.004427612}
+  m_Size: {x: 0.7126913, y: 0.5082283, z: 0.7050754}
+  m_Center: {x: -0.00041604045, y: 0.12597847, z: -0.004427612}
 --- !u!114 &3020432870173202997
 MonoBehaviour:
   m_ObjectHideFlags: 0

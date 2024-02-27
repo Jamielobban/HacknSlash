@@ -26,10 +26,9 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    public void PlayTargetAnimation(string targetAnimation, bool isInteracting, bool useRootMotion = false)
+    public void PlayTargetAnimation(string targetAnimation, bool isInteracting)
     {
         _anim.SetBool("isInteracting", isInteracting);
-        _anim.SetBool("isUsingRootMotion", useRootMotion);
         _anim.CrossFade(targetAnimation, 0.2f);
     }
 
