@@ -26,6 +26,7 @@ public class ManagerEnemies : MonoBehaviour
     // Spawning enemies all the time each X seg, with enemies cap
     // If enemies are to far from player deactive and respawn
     //-//-//-//-//-//
+
     private float _enemiesKilled = 0;
     private float _enemiesScore = 0;
     private float _timer = 0f;
@@ -33,6 +34,8 @@ public class ManagerEnemies : MonoBehaviour
     public int timeToGetItem = 2;
 
     public TextMeshProUGUI textTime;
+    public TextMeshProUGUI currentSpawnedEnemies;
+    public TextMeshProUGUI score;
 
 
     [Header("Spawn Stats:")]

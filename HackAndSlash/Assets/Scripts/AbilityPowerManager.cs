@@ -212,7 +212,7 @@ public class AbilityPowerManager : MonoBehaviour
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
         player.GetComponent<PlayerInventory>().enabled = false;
-        //EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
+        EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         Time.timeScale = 0.0f;
         // Generate new items for options
         Debug.Log(_itemManager.gameObject);
