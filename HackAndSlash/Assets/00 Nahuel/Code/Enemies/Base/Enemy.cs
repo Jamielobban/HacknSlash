@@ -17,7 +17,6 @@ public class Enemy : PoolableObject
 
     public IState currentState;
 
-    public bool isPooleable = true;
     public bool isDead = false;
     public bool isGrounded = false;
     public bool canAttack = true;

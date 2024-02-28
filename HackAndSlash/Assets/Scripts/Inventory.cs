@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
     [Space]
     public int inventorySize = 14;
 
-    public PlayerStats playerStats;
+    //public PlayerStats playerStats;
     public GameObject backdrop;
     public GameObject itemDescription;
     ControllerManager controller;
@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
+        //controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
 
         for (int i = 0; i < inventorySize; i++)
         {
@@ -43,15 +43,15 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (controller.GetTabButton().action != null)
+        if (/*controller.GetTabButton().action != null*/ Input.GetKeyDown(KeyCode.Tab))
         {
-            if (controller.GetTabButton().action.WasPressedThisFrame())
-            {
+            //if (controller.GetTabButton().action.WasPressedThisFrame())
+            //{
                 if (inventorymenu.activeSelf)
                 {
                     inventorymenu.SetActive(false);
-                    backdrop.SetActive(false);
-                    itemDescription.SetActive(false);
+                    //backdrop.SetActive(false);
+                    //itemDescription.SetActive(false);
                     if (!AbilityPowerManager.instance.isOpen) { 
                         Time.timeScale = 1.0f;
                     }
@@ -59,15 +59,15 @@ public class Inventory : MonoBehaviour
                 else
                 {
                     inventorymenu.SetActive(true);
-                    backdrop.SetActive(true);
-                    itemDescription.SetActive(true);
+                    //backdrop.SetActive(true);
+                    //itemDescription.SetActive(true);
                     //AddItem(new HealingItem(), 1);
                     //Debug.Log("Hola");
                     RefreshInventory();
                     
                     Time.timeScale = 0.0f;
                 }
-            }
+            //}
         }
         //if(Input.GetKeyDown(KeyCode.K))
         //{
@@ -80,7 +80,7 @@ public class Inventory : MonoBehaviour
 
     public void RefreshInventory()
     {
-        playerStats.RefreshStats();
+        //playerStats.RefreshStats();
         existingPanels = itemPanelGrid.GetComponentsInChildren<ItemPanel>().ToList();
 
         if (existingPanels.Count < inventorySize)

@@ -37,28 +37,38 @@ public class ItemManager : MonoBehaviour
             //DontDestroyOnLoad(ItemTooltip);
         }
         // Initialize other manager-specific setup here
-
+        AddItemsToList();
+        
     }
 
     void Start()
     {
-
+        //foreach (var item in itemList)
+        //{
+        //    Debug.Log(item.GiveName());
+        //}
     }
 
     void Update()
     {
-        Debug.Log(itemList.Count);
+        //Debug.Log(itemList.Count);
     }
 
     public Item GetRandomItem()
     {
-        if (itemPool.Count == 0)
+        Item itemToReturn;
+        //if (itemPool.Count == 0)
+        //{
+        //    Debug.LogWarning("Item pool is empty. Add items to the pool.");
+        //    return null;
+        //}
+        foreach (var item in itemList)
         {
-            Debug.LogWarning("Item pool is empty. Add items to the pool.");
-            return null;
+            Debug.Log(item.GiveName());
         }
-
-        return itemList[Random.Range(0, itemList.Count)];
+        itemToReturn = itemList[Random.Range(0, itemList.Count)];
+        //Debug.Log(itemToReturn.GiveName());
+        return itemToReturn;
     }
 
 
@@ -104,14 +114,15 @@ public class ItemManager : MonoBehaviour
 
     public void AddItemsToList()
     {
-        itemList.Add(new CritItem());
-        itemList.Add(new CritDamageItem());
+        //itemList.Add(new CritItem());
+        //itemList.Add(new CritDamageItem());
         itemList.Add(new AttackDamge());
         itemList.Add(new Meat());
-        itemList.Add(new BoosterShot());
-        itemList.Add(new MonsterTooth());
-        itemList.Add(new Slashes());
-        itemList.Add(new DoubleHit());
+        //itemList.Add(new BoosterShot());
+        //itemList.Add(new MonsterTooth());
+        //itemList.Add(new Slashes());
+        //itemList.Add(new DoubleHit());
+        //
     }
 
 }

@@ -65,6 +65,6 @@ public class PlayerStats : MonoBehaviour
         critDamMultiText.text = "Crit Damage:" + playerStats.critDamageMultiplier.ToString();
         attackDamageText.text = "Attack Damage:" + playerStats.attackDamage.ToString();
         healthRegenText.text = "Health Regen:" + playerStats.healthRegen.ToString();
-        levelText.text = $"{ap.slider1.value:F2}/{ap.slider1.maxValue:F0}";
+        //levelText.text = $"{ap.slider1.value:F2}/{ap.slider1.maxValue:F0}";
     }
 }
