@@ -11,8 +11,14 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
         base.Awake();
         Collider _collider = GetComponent<Collider>();
         _bounds = _collider.bounds;
+    }
+    protected override void Start()
+    {
+        base.Start();
         StartCoroutine(SpawnEnemies());
     }
+        
+
     // Si quieres que se active al entrar a un sitio concreto
     private void OnTriggerEnter(Collider other)
     {

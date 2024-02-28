@@ -117,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
             targetPosition.y = hit.point.y;
+            _player.animations.Animator.SetBool("isGrounded", true);
         }
 
         if (_player.groundCheck.isGrounded && !isJumping && !isDashing)
