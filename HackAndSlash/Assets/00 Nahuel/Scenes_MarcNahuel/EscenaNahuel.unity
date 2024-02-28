@@ -10649,11 +10649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4856936322613840, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.63307905
+      value: -0.5565053
       objectReference: {fileID: 0}
     - target: {fileID: 4856936322613840, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7740872
+      value: 0.830844
       objectReference: {fileID: 0}
     - target: {fileID: 4871190566861668, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_RootOrder
@@ -10701,11 +10701,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4922897015711938, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.63307905
+      value: -0.5565053
       objectReference: {fileID: 0}
     - target: {fileID: 4922897015711938, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7740872
+      value: 0.830844
       objectReference: {fileID: 0}
     - target: {fileID: 114826045513551038, guid: 96c2388d3a717254c918608a033b4bf3,
         type: 3}
@@ -26075,12 +26075,12 @@ PrefabInstance:
     - target: {fileID: 4380627919234290497, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00029672773
+      value: -0.00029669376
       objectReference: {fileID: 0}
     - target: {fileID: 4380627919234290497, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000047886533
+      value: -0.00004788105
       objectReference: {fileID: 0}
     - target: {fileID: 5689747074759997763, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
@@ -26215,17 +26215,17 @@ PrefabInstance:
     - target: {fileID: 8506525456158266596, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.1593207
+      value: -0.15932068
       objectReference: {fileID: 0}
     - target: {fileID: 8506525456158266596, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00029671067
+      value: -0.0002966937
       objectReference: {fileID: 0}
     - target: {fileID: 8506525456158266596, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00004788378
+      value: -0.000047881043
       objectReference: {fileID: 0}
     - target: {fileID: 9186728678783009327, guid: 5e303a74f8d519f47b622276c12a6cdb,
         type: 3}
@@ -38041,6 +38041,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToGetItem: 2
   textTime: {fileID: 2124301598}
+  currentSpawnedEnemies: {fileID: 0}
+  score: {fileID: 0}
   spawner: {fileID: 0}
   enemiesCap: 100
   timeMinToSpawn: 0.8
