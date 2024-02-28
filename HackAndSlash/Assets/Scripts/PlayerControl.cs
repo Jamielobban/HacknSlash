@@ -238,7 +238,7 @@ public class PlayerControl : MonoBehaviour
         attackDamage = 1;
         //HealingArea item = new HealingArea();
         //items.Add(new ItemList(item, item.GiveName(), 1));
-        StartCoroutine(CallItemUpdate());
+        //StartCoroutine(CallItemUpdate());
         dashCount = 0;
         attackFinished = false;
         attackFinished = false;
@@ -1282,7 +1282,7 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             landVFX.PlayDustVFX(this.transform.position);
-                            CallItemOnJump();
+                            //CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
@@ -1381,58 +1381,58 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    IEnumerator CallItemUpdate()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.Update(this, i.stacks);
-        }
-        yield return new WaitForSeconds(1);
-        StartCoroutine(CallItemUpdate());
-    }
+    //IEnumerator CallItemUpdate()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.Update(this, i.stacks);
+    //    }
+    //    yield return new WaitForSeconds(1);
+    //    StartCoroutine(CallItemUpdate());
+    //}
 
-    public void CallItemOnKill(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnKill(this, enemy, i.stacks);
-        }
-    }
-    public void CallItemOnCrit(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnCrit(this, enemy, i.stacks);
-        }
-    }
+    //public void CallItemOnKill(Enemy enemy)
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnKill(this, enemy, i.stacks);
+    //    }
+    //}
+    //public void CallItemOnCrit(Enemy enemy)
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnCrit(this, enemy, i.stacks);
+    //    }
+    //}
 
-    public void CallItemOnPickup(StatType desiredStatType)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.statType == desiredStatType)
-            {
-                i.item.OnItemPickup(this, i.stacks, i.statType);
-            }
-        }
-    }
+    //public void CallItemOnPickup(StatType desiredStatType)
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        if (i.statType == desiredStatType)
+    //        {
+    //            i.item.OnItemPickup(this, i.stacks, i.statType);
+    //        }
+    //    }
+    //}
 
-    public void CallItemOnHit()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnHit(this, i.stacks);
-        }
-    }
+    //public void CallItemOnHit()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnHit(this, i.stacks);
+    //    }
+    //}
 
 
-    public void CallItemOnJump()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnJump(this, i.stacks);
-        }
-    }
+    //public void CallItemOnJump()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnJump(this, i.stacks);
+    //    }
+    //}
     //public void CallItemOnPickup()
     //{
     //    foreach (ItemList i in items)

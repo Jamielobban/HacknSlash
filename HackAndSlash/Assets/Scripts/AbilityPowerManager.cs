@@ -8,21 +8,21 @@ using UnityEngine.UI;
 
 public class AbilityPowerManager : MonoBehaviour
 {
-    public Slider slider1;
-    public Slider comboSlider;
+    //public Slider slider1;
+    //public Slider comboSlider;
 
     // Combo thresholds
-    private float slider1AddRate = 0.05f;
-    private float comboSliderDecayRateMultiplier = 0.05f;
+    //private float slider1AddRate = 0.05f;
+    //private float comboSliderDecayRateMultiplier = 0.05f;
     // Decay rate for sliders
-    private float decayRate = 0.00001f;
+    //private float decayRate = 0.00001f;
 
-    bool Combo = false;
-    int ComboHabilitiCout = 0;
+    //bool Combo = false;
+    //int ComboHabilitiCout = 0;
 
-    public int comboCount;
+    //public int comboCount;
 
-    public TMP_Text comboNumber;
+    //public TMP_Text comboNumber;
     private static AbilityPowerManager _instance;
     public static AbilityPowerManager instance
     {
@@ -41,13 +41,14 @@ public class AbilityPowerManager : MonoBehaviour
             return _instance;
         }
     }
-
+    private ItemManager _itemManager;
     public GameObject itemChoice;
     private Animator itemChoiceAnim;
     private Inventory inventory;
     private Item item1;
     private Item item2;
-    private PlayerControl player;
+    private PlayerManager playerStats;
+    private PlayerInventory player;
     private ControllerManager controllerManager;
 
     private Dictionary<RarityColor, Color> rarityColorMap;
@@ -84,8 +85,10 @@ public class AbilityPowerManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        comboCount = 0;
-        player = FindObjectOfType<PlayerControl>();
+        //comboCount = 0;
+        _itemManager = GetComponent<ItemManager>();
+        playerStats = FindObjectOfType<PlayerManager>();
+        player = FindObjectOfType<PlayerInventory>();
         inventory = FindObjectOfType<Inventory>();
         controllerManager = FindObjectOfType<ControllerManager>();
         option1Button.onClick.AddListener(OnOption1Clicked);
@@ -138,22 +141,22 @@ public class AbilityPowerManager : MonoBehaviour
             }
         }
 
-        float comboSliderDynamicDecayRate = decayRate + comboCount * comboSliderDecayRateMultiplier;
-        DecaySlider(ref comboSlider, comboSliderDynamicDecayRate);
-        if (comboSlider.value <= 0)
-        {
-            comboCount = 0;
-            comboSlider.gameObject.SetActive(false);
-        }
-        else
-        {
-            comboSlider.gameObject.SetActive(true);
-        }
+        //float comboSliderDynamicDecayRate = decayRate + comboCount * comboSliderDecayRateMultiplier;
+        //DecaySlider(ref comboSlider, comboSliderDynamicDecayRate);
+        //if (comboSlider.value <= 0)
+        //{
+        //    comboCount = 0;
+        //    comboSlider.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    comboSlider.gameObject.SetActive(true);
+        //}
     }
 
     public void OnOption1Clicked()
     {
-        player.GetComponent<PlayerControl>().enabled = true;
+        //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item1);
 
 
@@ -162,7 +165,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void OnOption2Clicked()
     {
-        player.GetComponent<PlayerControl>().enabled = true;
+        //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item2);
 
 
@@ -182,8 +185,8 @@ public class AbilityPowerManager : MonoBehaviour
         Time.timeScale = 1.0f;
         isOpen = false;
         //itemChoiceAnim.SetTrigger("Close");
-        item1 = null;
-        item2 = null;
+        //item1 = null;
+        //item2 = null;
         menuActive = false;
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -208,17 +211,38 @@ public class AbilityPowerManager : MonoBehaviour
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
-        player.GetComponent<PlayerControl>().enabled = false;
-        EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
+        player.GetComponent<PlayerInventory>().enabled = false;
+        //EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         Time.timeScale = 0.0f;
         // Generate new items for options
-        item1 = ItemManager.instance.GetRandomItem();
-        item2 = ItemManager.instance.GetRandomItem();
-
-        while(item1.GiveName() == item2.GiveName())
+        Debug.Log(_itemManager.gameObject);
+        if (_itemManager != null)
         {
-            item2 = ItemManager.instance.GetRandomItem();
+            item1 = _itemManager.GetRandomItem();
+            if(item1 != null)
+            {
+                Debug.Log(item1.GiveName());
+            }
+            else
+            {
+                Debug.Log("Item 1 is null");
+            }
+            item2 = _itemManager.GetRandomItem();
+            if (item2 != null)
+            {
+                Debug.Log(item2.GiveName());
+            }
+            else
+            {
+                Debug.Log("Item 2 is null");
+            }
+
+            //while (item1.GiveName() == item2.GiveName())
+            //{
+            //    item2 = ItemManager.instance.GetRandomItem();
+            //}
         }
+        
 
 
         int colorBox1;
@@ -247,7 +271,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     }
 
-    public void AddItemHere(PlayerControl player, Item item)
+    public void AddItemHere(PlayerInventory player, Item item)
     {
         foreach (ItemList i in player.items)
         {
@@ -269,8 +293,8 @@ public class AbilityPowerManager : MonoBehaviour
 
     void DesaparecerCombo()
     {
-        Combo = false;
-        ComboHabilitiCout = comboCount;
+        //Combo = false;
+        //ComboHabilitiCout = comboCount;
     }
 
     private void SetUpControllerNavigation()
@@ -290,16 +314,16 @@ public class AbilityPowerManager : MonoBehaviour
     // Function to increase the combo count
     public void IncreaseCombo()
     {
-        comboCount++;
-        comboNumber.text = comboCount.ToString();
-        comboSlider.value = comboSlider.maxValue;
+        //comboCount++;
+        //comboNumber.text = comboCount.ToString();
+        //comboSlider.value = comboSlider.maxValue;
 
-        slider1AddRate += 0.005f;
+        //slider1AddRate += 0.005f;
 
-        if (slider1.value <= slider1.maxValue)
-        {
-            slider1.value += 0.05f;
-        }
+        //if (slider1.value <= slider1.maxValue)
+        //{
+        //    slider1.value += 0.05f;
+        //}
     }
 
     private void InitializeRarityColorMap()

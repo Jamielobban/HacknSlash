@@ -36,7 +36,7 @@ public class ItemPickup : MonoBehaviour
             AddItem(player);
             inventory.AddItem(item, currentstacks / 2);
             inventory.RefreshInventory();
-            player.CallItemOnPickup(item.GetAssociatedStatType());
+            //player.CallItemOnPickup(item.GetAssociatedStatType());
             ItemPopupManager.Instance.ShowItemTooltip(item.GiveSprite(), item.GiveDescription());
             currentstacks = 0;
             Instantiate(audioClip, this.transform.position, Quaternion.identity);

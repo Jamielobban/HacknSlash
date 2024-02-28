@@ -17,32 +17,32 @@ public abstract class Item
     public abstract RarityType GetRarity();
 
 
-    public virtual void Update(PlayerControl player, int stacks)
+    public virtual void Update(PlayerInventory player, int stacks)
     {
 
     }
 
-    public virtual void OnHit(PlayerControl player, int stacks)
+    public virtual void OnHit(PlayerInventory player, int stacks)
     {
 
     }
 
-    public virtual void OnJump(PlayerControl player, int stacks)
+    public virtual void OnJump(PlayerInventory player, int stacks)
     {
 
     }
 
-    public virtual void OnKill(PlayerControl player, Enemy enemy, int stacks)
+    public virtual void OnKill(PlayerInventory player, Enemy enemy, int stacks)
     {
 
     }
 
-    public virtual void OnCrit(PlayerControl player, Enemy enemy, int stacks)
+    public virtual void OnCrit(PlayerInventory player, Enemy enemy, int stacks)
     {
 
     }
 
-    public virtual void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public virtual void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
 
     }
@@ -98,12 +98,12 @@ public class CritItem : Item
     {
         return Resources.Load<Sprite>("Item Images/Glasses");
     }
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
-        if (statType == StatType.CritChance)
-        {
-            player.critChance += 2;
-        }
+        //if (statType == StatType.CritChance)
+        //{
+        //    player.critChance += 2;
+        //}
     }
 }
 
@@ -133,12 +133,12 @@ public class CritDamageItem : Item
     {
         return Resources.Load<Sprite>("Item Images/Glasses");
     }
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
-        if (statType == StatType.CritDamage)
-        {
-            player.critDamageMultiplier += 2;
-        }
+        //if (statType == StatType.CritDamage)
+        //{
+        //    player.critDamageMultiplier += 2;
+        //}
     }
 }
 
@@ -168,11 +168,11 @@ public class AttackDamge : Item
     {
         return Resources.Load<Sprite>("Item Images/Damage");
     }
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
         if (statType == StatType.Damage)
         {
-            player.attackDamage += 0.2f;
+            player.stats.baseDamage += 0.2f;
         }
     }
 }
@@ -203,13 +203,13 @@ public class Meat : Item
         return Resources.Load<Sprite>("Item Images/Meat");
     }
 
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
-        if (statType == StatType.MaxHealth)
-        {
-            player.maxHealth += 5 + (1 * stacks);
-            player.SetHealth();
-        }
+        //if (statType == StatType.MaxHealth)
+        //{
+        //    player.maxHealth += 5 + (1 * stacks);
+        //    player.SetHealth();
+        //}
     }
 }
 
@@ -240,16 +240,16 @@ public class BoosterShot : Item
         return Resources.Load<Sprite>("Item Images/Meat");
     }
 
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
-        if (statType == StatType.Health)
-        {
-            if(player.currentHealth < player.maxHealth)
-            {
-                player.currentHealth += 40;
-                player.SetHealth();
-            }
-        }
+        //if (statType == StatType.Health)
+        //{
+        //    if(player.currentHealth < player.maxHealth)
+        //    {
+        //        player.currentHealth += 40;
+        //        player.SetHealth();
+        //    }
+        //}
     }
 }
 
@@ -281,13 +281,13 @@ public class MonsterTooth : Item
         return Resources.Load<Sprite>("Item Images/Tooth");
     }
 
-    public override void OnHit(PlayerControl player, int stacks)
+    public override void OnHit(PlayerInventory player, int stacks)
     {
-        int heal = 3;
-        player.currentHealth += heal;
+        //int heal = 3;
+        //player.currentHealth += heal;
 
-        player.healPixel.Spawn(player.transform.position + new Vector3(0f,2f,0f), heal);
-        player.SetHealth();
+        //player.healPixel.Spawn(player.transform.position + new Vector3(0f,2f,0f), heal);
+        //player.SetHealth();
     }
 }
 
@@ -406,17 +406,17 @@ public class DoubleHit : Item
     {
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    public override void OnItemPickup(PlayerManager player, int stacks, StatType statType)
     {
-        if (statType == StatType.DoubleHit)
-        {
-            Debug.Log("added");
-            for (int i = 0; i < player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks.Length; i++)
-            {
-                player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
-                player.GetAttacks(PlayerControl.ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
-            }
-        }
+        //if (statType == StatType.DoubleHit)
+        //{
+        //    Debug.Log("added");
+        //    for (int i = 0; i < player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks.Length; i++)
+        //    {
+        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
+        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
+        //    }
+        //}
     }
 }
 
@@ -444,9 +444,9 @@ public class HealingItem : Item
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
 
-    public override void Update(PlayerControl player, int stacks)
+    public override void Update(PlayerInventory player, int stacks)
     {
-        player.maxHealth += 3 + (2 * stacks);
+        //player.maxHealth += 3 + (2 * stacks);
     }
 }
 
@@ -475,7 +475,7 @@ public class FireDamage : Item
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
 
-    public override void OnHit(PlayerControl player, int stacks)
+    public override void OnHit(PlayerInventory player, int stacks)
     {
         //enemy.health -= 3 * stacks;
     }
@@ -512,11 +512,11 @@ public class HealingArea : Item
     {
         return Resources.Load<Sprite>("Item Images/Gasoline");
     }
-    public override void Update(PlayerControl player, int stacks)
+    public override void Update(PlayerInventory player, int stacks)
     {
         internalCooldown -= 1;
     }
-    public override void OnJump(PlayerControl player, int stacks)
+    public override void OnJump(PlayerInventory player, int stacks)
     {
         if (internalCooldown <= 0)
         {

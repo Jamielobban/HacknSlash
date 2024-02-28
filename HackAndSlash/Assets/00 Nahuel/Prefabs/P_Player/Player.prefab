@@ -1600,6 +1600,7 @@ GameObject:
   - component: {fileID: 8678657482853821394}
   - component: {fileID: 7051883071492548770}
   - component: {fileID: 1614576634013803876}
+  - component: {fileID: 2819490630287947124}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1628,7 +1629,7 @@ Transform:
   - {fileID: 8348404403313030907}
   - {fileID: 4730517833637921858}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -85.622, z: 0}
 --- !u!54 &7019322076484470408
 Rigidbody:
@@ -1901,6 +1902,18 @@ MonoBehaviour:
   - {fileID: 4517261409982551869}
   slashesAnother: []
   dragon: {fileID: 4926075978475202569, guid: 33866f658393ada46b5865861c1dfbca, type: 3}
+--- !u!114 &2819490630287947124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931428773790119072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97b968034aa7304789125c631d13d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1939840539501661210
 GameObject:
   m_ObjectHideFlags: 0
