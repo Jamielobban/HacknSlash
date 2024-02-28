@@ -117,7 +117,7 @@ public class AbilityPowerManager : MonoBehaviour
             }
             else
             {
-                itemChoice.SetActive(true);
+                //itemChoice.SetActive(true);
                 ShowNewOptions();
 
             }
@@ -207,6 +207,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        itemChoice.SetActive(true);
         isOpen = true;
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
