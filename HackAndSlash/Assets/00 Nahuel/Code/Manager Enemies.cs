@@ -34,10 +34,25 @@ public class ManagerEnemies : MonoBehaviour
 
     public TextMeshProUGUI textTime;
 
+
+    [Header("Spawn Stats:")]
+    public SpawnerBase spawner;
+    public float enemiesCap = 100f;
+    public float timeMinToSpawn = .8f;
+    public float timeMaxToSpawn = 2.5f;
+    private float _timeToSpawnEnemy;
+
+    public List<Enemy> enemies = new List<Enemy>();
+    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+
+
     private void Awake()
     {
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        InitializePools();
+        _timeToSpawnEnemy = Random.Range(timeMinToSpawn, timeMaxToSpawn);
     }
 
     void Start()
@@ -53,9 +68,19 @@ public class ManagerEnemies : MonoBehaviour
 
         if(_timer >= timeToGetItem)
         {
+            Debug.Log("item get");
+            _timeToSpawnEnemy = Random.Range(timeMinToSpawn, timeMaxToSpawn);
             _enemiesScore = 0;
             _enemiesKilled = 0;
             timeToGetItem += 2;
+        }
+    }
+
+    private void InitializePools()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 0));
         }
     }
 

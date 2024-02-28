@@ -3,8 +3,12 @@ using UnityEngine;
 public class PoolableObject : MonoBehaviour
 {
     public ObjectPool parent;
+    public bool isPooleable = true;
     public virtual void OnDisable()
     {
-        parent.ReturnObjectToPool(this);
+        if(isPooleable)
+        {
+            parent.ReturnObjectToPool(this);
+        }
     }
 }
