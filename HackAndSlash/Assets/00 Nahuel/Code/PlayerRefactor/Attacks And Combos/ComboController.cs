@@ -95,7 +95,6 @@ public class ComboController : MonoBehaviour
         {
             if (UtilsNagu.DoListsMatch(combo.sequence, _currentSequence))
             {
-                Debug.Log("Mathc");
                 return true;
 
             }
