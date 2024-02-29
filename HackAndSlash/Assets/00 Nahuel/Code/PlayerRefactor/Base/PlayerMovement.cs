@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,9 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float airSpeed;
     public float runSpeed;
-    public float dashSpeed;
     public float maxSpeed;
-    public float dashDelay; //delay for reactive movement;
 
     [Header("Falling stats:")]
     public float inAirTime;
@@ -43,6 +42,12 @@ public class PlayerMovement : MonoBehaviour
         set => _isSprinting = value;
     }
 
+    [Header("Dash stats:")]
+    public float dashForce;
+    public float dashUpwardForce;
+    public float dashDuration;
+    public float dashDelay; //delay for reactive movement;
+
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
@@ -67,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
                 // Apply force down if on slope 
                 if (_player.rb.velocity.y > 0)
                 {
-                    _player.rb.AddForce(Vector3.down * 100f, ForceMode.Force);
+                    _player.rb.AddForce(Vector3.down * 150f, ForceMode.Force);
                 }
             }
         }
@@ -186,6 +191,15 @@ public class PlayerMovement : MonoBehaviour
     {
         _player.rb.AddForce(GetDirectionNormalized() * airSpeed * 10f, ForceMode.Force);
         HandleRotation(airRotationSpeed);
+
+        //Velocity flat
+        Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
+
+        if (velocity.magnitude > airSpeed)
+        {
+            Vector3 limitedVelocity = velocity.normalized * airSpeed;
+            _player.rb.velocity = new Vector3(limitedVelocity.x, _player.rb.velocity.y, limitedVelocity.z);
+        }
     }
 
     public void DisableMovement()
@@ -222,17 +236,18 @@ public class PlayerMovement : MonoBehaviour
         if(GetDirectionNormalized().magnitude > 0.1f)
         {
             _player.animations.PlayTargetAnimation("roll", true);
-            DashAction(dashSpeed);
+            //DashAction(dashForce);
+            DashAction(dashForce);
         }
     }
-
+    public float val = 0.7f;
     private void DashAction(float _dashSpeed)
     {
         isDashing = true;
         _player.isInvulnerable = true;
         DisableMovement();
 
-        if(OnSlope())
+        if (OnSlope())
         {
             _player.rb.AddForce(GetSlopeMoveDirection() * _dashSpeed, ForceMode.Impulse);
         }
@@ -243,6 +258,27 @@ public class PlayerMovement : MonoBehaviour
 
         StartCoroutine(EnableMovementAfterDash(dashDelay));
     }
+
+    //public void Dash()
+    //{
+    //    isDashing = true;
+    //    _player.isInvulnerable = true;
+    //    Vector3 forceToApply = GetDirectionNormalized() * dashForce + transform.up * dashUpwardForce;
+    //    delayedForceToApply = forceToApply;
+    //    Invoke(nameof(DelayedDashForce), 0.025f);
+    //    Invoke(nameof(ResetDash), dashDuration);
+
+    //}
+    //private Vector3 delayedForceToApply;
+    //private void DelayedDashForce()
+    //{
+    //    _player.rb.AddForce(delayedForceToApply, ForceMode.Impulse);
+
+    //}
+    //public void ResetDash()
+    //{
+
+    //}
 
     IEnumerator EnableMovementAfterDash(float delay)
     {
