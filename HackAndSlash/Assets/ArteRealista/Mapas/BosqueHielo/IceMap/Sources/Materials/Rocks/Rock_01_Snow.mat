@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3623120423888021908
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,14 +7,17 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RockEnchMat
-  m_Shader: {fileID: -6465566751694194690, guid: 5cb79e1f292f7964490869a7f5b39fb8,
-    type: 3}
+  m_Name: Rock_01_Snow
+  m_Shader: {fileID: 4800000, guid: 0c3d28458eaf76547876a357c3a9fd5f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _RENDERENCHANMENT
-  m_InvalidKeywords: []
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _DETAIL_MULX2
+  - _EMISSION
+  - _FLOAT2_ON
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -146,20 +136,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _EmissionTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EnchanmentTexture:
-        m_Texture: {fileID: 2800000, guid: c60dfa036ad268c42a9d01f22d36db84, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 2589706e462c17d4ea504be07e114988, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 4441917bbecbf834bb1216ec06fda5b0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskAlbedo:
@@ -176,10 +154,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MaskNormalMap:
         m_Texture: {fileID: 2800000, guid: 89eb836d4f5589a4b85fec53cb922f2e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetRoughnessText:
-        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metalic:
@@ -212,10 +186,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: 46ecf051ae1cb254faf0e8be101e5332, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NromalTexture:
-        m_Texture: {fileID: 2800000, guid: 0276a0a2cec600d4fbcc15cee1470141, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -320,8 +290,6 @@ Material:
     - _DetailWorldMapping: 0
     - _Detail_Contrast: 1
     - _DstBlend: 0
-    - _EmissiveEnchanmentForce: 2.5
-    - _EmissiveMapForce: 0
     - _Float0: -2
     - _Float1: 4.15
     - _Float2: 0.623
@@ -351,14 +319,12 @@ Material:
     - _OcclusionStrength: 0.5
     - _Offset: 0.5
     - _Parallax: 0.02
-    - _QueueControl: 0
+    - _QueueControl: -1
     - _QueueOffset: 0
-    - _RENDERENCHANMENT: 1
     - _Range: 1
     - _Scale: 2
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
-    - _Smothness: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TessMax: 25

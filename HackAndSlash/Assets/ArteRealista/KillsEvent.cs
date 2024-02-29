@@ -15,4 +15,9 @@ public class KillsEvent : Event
     {
 
     }
+
+    protected override void Start()
+    {
+        
+    }
 }

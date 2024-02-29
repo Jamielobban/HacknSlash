@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SurviveEvent : Event
 {
+    protected override void Start()
+    {
+        
+    }
     protected override void StartEvent()
     {
 

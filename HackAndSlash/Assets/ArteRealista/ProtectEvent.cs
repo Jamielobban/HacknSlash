@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ProtectEvent : Event
 {
+    protected override void Start()
+    {
+        
+    }
     protected override void StartEvent()
     {
 
