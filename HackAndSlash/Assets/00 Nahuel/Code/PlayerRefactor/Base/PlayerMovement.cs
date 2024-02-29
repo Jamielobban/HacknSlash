@@ -249,11 +249,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (OnSlope())
         {
-            _player.rb.AddForce(GetSlopeMoveDirection() * _dashSpeed, ForceMode.Impulse);
+            _player.rb.AddForce(GetForwardSlopeDirection() * _dashSpeed, ForceMode.Impulse);
         }
         else
         {
-            _player.rb.AddForce(GetDirectionNormalized() * _dashSpeed, ForceMode.Impulse);
+            _player.rb.AddForce(transform.forward * _dashSpeed, ForceMode.Impulse);
         }
 
         StartCoroutine(EnableMovementAfterDash(dashDelay));
@@ -289,6 +289,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 GetDirectionNormalized() => UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
     private Vector3 GetSlopeMoveDirection() => Vector3.ProjectOnPlane(GetDirectionNormalized(), slopeHit.normal).normalized;
+    private Vector3 GetForwardSlopeDirection() => Vector3.ProjectOnPlane(transform.forward, slopeHit.normal).normalized;
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, -Vector3.up, out slopeHit, maxDistance, groundLayer))
