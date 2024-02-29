@@ -11,25 +11,26 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement stats:")]
     public float rotationSpeed = 15f;
     public float airRotationSpeed = 15f;
-    public float interactingRotationSpeed = 10f;
+    public float interactingRotationSpeed = 10f; // Attacking rot speed
 
     public float airSpeed;
     public float runSpeed;
-    public float maxSpeed;
     public float dashSpeed;
+    public float maxSpeed;
     public float dashDelay; //delay for reactive movement;
 
     [Header("Falling stats:")]
     public float inAirTime;
-    public float leapingVelocity;
-    public float fallingSpeed;
-    public float maxGravitySpeed;
     public float raycastHeightOffset = 0.5f;
     public LayerMask groundLayer;
     public float maxDistance;
 
     [Header("Jump stats:")]
      public float jumpHeight = 3;
+
+    [Header("Slope stats:")]
+    public float maxSlopeAngle = 60f;
+    private RaycastHit slopeHit;
     #endregion
 
     [Header("Movement flags:")]
@@ -54,14 +55,24 @@ public class PlayerMovement : MonoBehaviour
         if(!_player.groundCheck.isGrounded)
         {
             HandleAirMovement();
-            //Handles rotation if pj is falling
-            HandleRotation(rotationSpeed);
         }
 
         //Handles rotation while attacking
         HandleRotation(interactingRotationSpeed);
 
-        if (_player.isInteracting || isJumping || isDashing || !_player.groundCheck.isGrounded) 
+        if(isDashing)
+        {
+            if (OnSlope())
+            {
+                // Apply force down if on slope 
+                if (_player.rb.velocity.y > 0)
+                {
+                    _player.rb.AddForce(Vector3.down * 100f, ForceMode.Force);
+                }
+            }
+        }
+
+        if (_player.isInteracting || isJumping || isDashing) 
         { 
             return; 
         }
@@ -74,8 +85,6 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(runSpeed);
         }
-        //Handles normal rotation while moving
-        HandleRotation(rotationSpeed);
     }
     public void HandleFallingAndLanding()
     {
@@ -86,26 +95,20 @@ public class PlayerMovement : MonoBehaviour
 
         if(_player.groundCheck.isGrounded)
         {
-            if(inAirTime >= 1.5f)
-            {
-                _player.animations.PlayTargetAnimation(Constants.ANIMATION_LAND, true);
-            }
-
             inAirTime = 0;
         }
         else
         {
-            if(!_player.isInteracting)
+            //If it falls not from jumping set anim fall
+            if (!_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
 
-            if(_player.isInteracting && !_player.isAirAttacking)
+            if (_player.isInteracting && !_player.isAirAttacking)
             {
                 _player.rb.useGravity = true;
                 inAirTime += Time.deltaTime;
-                _player.rb.AddForce(transform.forward * leapingVelocity);
-                _player.rb.AddForce(-Vector3.up * fallingSpeed * inAirTime);
             }
             else if (_player.isAirAttacking)
             {
@@ -117,9 +120,13 @@ public class PlayerMovement : MonoBehaviour
         if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
         {
             targetPosition.y = hit.point.y;
-            _player.animations.Animator.SetBool("isGrounded", true);
+            if(!_player.groundCheck.isGrounded)
+            {
+                _player.animations.Animator.SetBool("isGrounded", true);
+            }
         }
 
+        // Anchors the player to the ground if the raycast is hiting so won't bounce in slopes, etc.
         if (_player.groundCheck.isGrounded && !isJumping && !isDashing)
         {
             if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
@@ -147,18 +154,38 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void HandleMovement(float speed)
-    {
-        _moveDirection = GetDirectionNormalized();
-        _moveDirection.y = 0;
-        _moveDirection *= speed;
-        _player.rb.velocity = _moveDirection;
+    {       
+        if(OnSlope())
+        {
+            _moveDirection = GetSlopeMoveDirection();
+            // Apply force down if on slope 
+            if (_player.rb.velocity.y > 0)
+            {
+                _player.rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+        }
+        else
+        {
+            _moveDirection = GetDirectionNormalized();
+        }
+
+        if(_player.groundCheck.isGrounded)
+        {
+            _player.rb.AddForce(_moveDirection * speed * 10f, ForceMode.Force);
+            //Handles normal rotation while moving
+            HandleRotation(rotationSpeed);
+            if (_player.rb.velocity.magnitude > speed)
+            {
+                _player.rb.velocity = _player.rb.velocity.normalized * speed;
+            }
+        }
+        _player.rb.useGravity = !OnSlope();
     }
 
-    public void HandleAirMovement()
+    private void HandleAirMovement()
     {
-        _moveDirection = GetDirectionNormalized();
-        _moveDirection *= airSpeed;
-        _player.rb.velocity += _moveDirection;
+        _player.rb.AddForce(GetDirectionNormalized() * airSpeed * 10f, ForceMode.Force);
+        HandleRotation(airRotationSpeed);
     }
 
     public void DisableMovement()
@@ -177,14 +204,16 @@ public class PlayerMovement : MonoBehaviour
         }
         _player.animations.Animator.SetBool("isJumping", true);
         _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
+        JumpAction(jumpHeight);
     }
 
-    public void JumpAction(float _jumpHeight = 20)
+    public void JumpAction(float _jumpForce = 20)
     {
-        _player.rb.AddForce(Vector3.up * _jumpHeight , ForceMode.Impulse);
+        _player.rb.velocity = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
+        _player.rb.AddForce(Vector3.up * _jumpForce * 10f, ForceMode.Impulse);
     }
 
-    public void Dash()
+    public void HandleDash()
     {
         if(_player.isInteracting)
         {
@@ -193,16 +222,25 @@ public class PlayerMovement : MonoBehaviour
         if(GetDirectionNormalized().magnitude > 0.1f)
         {
             _player.animations.PlayTargetAnimation("roll", true);
-            HandleDash(dashSpeed);
+            DashAction(dashSpeed);
         }
     }
 
-    private void HandleDash(float _dashSpeed)
+    private void DashAction(float _dashSpeed)
     {
         isDashing = true;
         _player.isInvulnerable = true;
         DisableMovement();
-        _player.rb.AddForce(transform.forward * _dashSpeed, ForceMode.Impulse);
+
+        if(OnSlope())
+        {
+            _player.rb.AddForce(GetSlopeMoveDirection() * _dashSpeed, ForceMode.Impulse);
+        }
+        else
+        {
+            _player.rb.AddForce(GetDirectionNormalized() * _dashSpeed, ForceMode.Impulse);
+        }
+
         StartCoroutine(EnableMovementAfterDash(dashDelay));
     }
 
@@ -213,10 +251,15 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
-    private Vector3 GetDirectionNormalized()
+    private Vector3 GetDirectionNormalized() => UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
+    private Vector3 GetSlopeMoveDirection() => Vector3.ProjectOnPlane(GetDirectionNormalized(), slopeHit.normal).normalized;
+    private bool OnSlope()
     {
-        return UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
+        if (Physics.Raycast(transform.position, -Vector3.up, out slopeHit, maxDistance, groundLayer))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+        return false;
     }
-
-
 }

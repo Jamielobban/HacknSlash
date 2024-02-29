@@ -89,7 +89,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Dash_performed(InputAction.CallbackContext context)
     {
-        _player.movement.Dash();
+        _player.movement.HandleDash();
     }
     private void Square_performed(InputAction.CallbackContext context)
     {
