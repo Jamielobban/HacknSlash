@@ -1799,6 +1799,7 @@ MonoBehaviour:
   rotationSpeed: 15
   interactingRotationSpeed: 0.45
   keepMomentum: 0
+  lastState: 0
   inAirTime: 0
   maxDistance: 1.5
   groundLayer:
@@ -1938,22 +1939,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaded1360dab743448efcc916791d135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distToClamp: 2.5
+  distToLookAtEnemy: 2.5
   _targetLayers:
     serializedVersion: 2
     m_Bits: 64
   _enemyTargetLocator: {fileID: 0}
+  selectedEnemy: {fileID: 0}
+  _camera: {fileID: 0}
   _cinemachineAnimator: {fileID: 0}
+  lockOnCanvas: {fileID: 0}
   zeroVert_Look: 0
   _areaZone: 10
-  lookAtSmoothing: 2
   maxNoticeAngle: 60
   _canvasScale: 0.1
-  _camera: {fileID: 0}
-  selectedEnemy: {fileID: 0}
   isLockedOn: 0
-  lockOnCanvas: {fileID: 0}
-  lookAtEnemy: {fileID: 0}
+  freeFlowRangeDetection: 5
 --- !u!1 &1939840539501661210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,7 +2275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
-  distToGround: 1
+  distToGround: 1.5
   groundDrag: 4
   groundMask:
     serializedVersion: 2

@@ -22,16 +22,23 @@ public class BaseAttack : MonoBehaviour
         if(_player.lockCombat.isLockedOn)
         {
             _player.lockCombat.LookAtEnemySelected();
+            _player.animations.PlayTargetAnimation(data.animation, true);
         }
         else
         {
             if(_player.lockCombat.selectedEnemy != null)
             {
+                _player.animations.PlayTargetAnimation("roll", true);
                 _player.transform.DOLookAt(_player.lockCombat.selectedEnemy.transform.position, .2f);
-                _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .5f);
+                _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .5f).OnComplete(() => _player.animations.PlayTargetAnimation(data.animation, true));
+            }
+            else
+            {
+                _player.animations.PlayTargetAnimation(data.animation, true);
             }
         }
-        _player.animations.PlayTargetAnimation(data.animation, true);
+
+
         AddSoundEffects();
     }
 
