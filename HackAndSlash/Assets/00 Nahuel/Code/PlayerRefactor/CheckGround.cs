@@ -20,9 +20,11 @@ public class CheckGround : MonoBehaviour
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround, groundMask);
         
-        if (isGrounded)
+        if (CanApplyDrag())
             _player.rb.drag = groundDrag;
-        else if(!isGrounded && !_player.movement.isDashing)
+        else
             _player.rb.drag = 0;
     }
+
+    private bool CanApplyDrag() => _player.movement.moveState == Enums.PlayerMovementState.Walking || _player.movement.moveState == Enums.PlayerMovementState.Sprinting;
 }

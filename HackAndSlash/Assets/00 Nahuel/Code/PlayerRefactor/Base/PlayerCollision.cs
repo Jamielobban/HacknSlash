@@ -6,7 +6,6 @@ public class PlayerCollision : MonoBehaviour
 {
     private List<GameObject> _touchingInteractables = new List<GameObject>();
     private List<GameObject> _touchingEnemies = new List<GameObject>();
-
     public List<GameObject> TouchingEnemies => _touchingEnemies;
 
     public bool canInteract;

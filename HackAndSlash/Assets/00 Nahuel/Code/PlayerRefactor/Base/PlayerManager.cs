@@ -16,6 +16,9 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerCollision collision;
     public ComboController comboController { get; private set; }
+    public PlayerDash dash { get; private set; }
+
+    public PlayerCombatLockFeel lockCombat { get; private set; }
 
     public CheckGround groundCheck;
     #endregion
@@ -51,6 +54,8 @@ public class PlayerManager : MonoBehaviour
         hud = GetComponent<PlayerHUDSystem>();
         inputs = GetComponent<PlayerInputsSystem>();
         stats = GetComponent<PlayerStadistics>();
+        dash = GetComponent<PlayerDash>();
+        lockCombat = GetComponent<PlayerCombatLockFeel>();
     }
 
     void Update()

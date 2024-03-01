@@ -38,6 +38,9 @@ public class PlayerInputsSystem : MonoBehaviour
         _action.Player.Rotation.canceled += MoveRightStick_canceled;
         _action.Player.Select.performed += Select_performed;
         _action.Player.Interact.performed += Interact_performed;
+
+
+        _action.Player.LockOn.performed += LockOn_performed;
     }
 
     public Vector2 GetDirectionLeftStick() => _action.Player.Movement.ReadValue<Vector2>();
@@ -89,7 +92,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Dash_performed(InputAction.CallbackContext context)
     {
-        _player.movement.HandleDash();
+        _player.dash.HandleDash();
     }
     private void Square_performed(InputAction.CallbackContext context)
     {
@@ -177,6 +180,10 @@ public class PlayerInputsSystem : MonoBehaviour
     {
         _player.collision.InteractPerformed();
     }
+    private void LockOn_performed(InputAction.CallbackContext context)
+    {
+        _player.lockCombat.SetLockCombat();
+    }
 
     private void OnDestroy()
     {
@@ -193,6 +200,8 @@ public class PlayerInputsSystem : MonoBehaviour
         _action.Player.Rotation.canceled -= MoveLeftStick_canceled;
         _action.Player.Select.performed -= Select_performed;
         _action.Player.Interact.performed -= Interact_performed;
+        _action.Player.LockOn.performed -= LockOn_performed;
+
         _action.Player.Disable();
     }
 

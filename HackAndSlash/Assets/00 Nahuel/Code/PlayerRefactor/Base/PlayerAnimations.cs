@@ -37,7 +37,8 @@ public class PlayerAnimations : MonoBehaviour
 
     public void OnIdleAnimation()
     {
-        StartCoroutine(DecreaseSpeedOverTime(0f));
+        if(!_player.movement.IsSprinting)
+            StartCoroutine(DecreaseSpeedOverTime(0f));
     }
 
     public IEnumerator DecreaseSpeedOverTime(float targetValue)
