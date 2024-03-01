@@ -5,9 +5,6 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     private List<GameObject> _touchingInteractables = new List<GameObject>();
-    private List<GameObject> _touchingEnemies = new List<GameObject>();
-    public List<GameObject> TouchingEnemies => _touchingEnemies;
-
     public bool canInteract;
 
     private void OnTriggerEnter(Collider other)
@@ -24,13 +21,6 @@ public class PlayerCollision : MonoBehaviour
                 _touchingInteractables.Add(other.gameObject);
             }
         }
-        if (other.gameObject.tag == "Enemy")
-        {
-            if(!_touchingEnemies.Contains(other.gameObject))
-            {
-                _touchingEnemies.Add(other.gameObject);
-            }
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -45,13 +35,6 @@ public class PlayerCollision : MonoBehaviour
             if (_touchingInteractables.Contains(other.gameObject))
             {
                 _touchingInteractables.Remove(other.gameObject);
-            }
-        }
-        if(other.gameObject.tag == "Enemy")
-        {
-            if(_touchingEnemies.Contains(other.gameObject))
-            {
-                _touchingEnemies.Remove(other.gameObject);
             }
         }
     }

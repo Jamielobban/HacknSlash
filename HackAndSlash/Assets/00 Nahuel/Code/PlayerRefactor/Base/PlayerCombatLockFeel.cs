@@ -1,37 +1,37 @@
 using Cinemachine;
+using DG.Tweening;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerCombatLockFeel : MonoBehaviour
 {
-    public float distToClamp = 2.5f;
+    private PlayerManager _player;
+    private Transform _cam;
+    public float distToLookAtEnemy = 2.5f; //Dist to Look At Enemy 
     [SerializeField] private LayerMask _targetLayers;
     [SerializeField] private Transform _enemyTargetLocator;
-    [SerializeField] private Animator _cinemachineAnimator;
-
-    [Header("Settings")]
-    [SerializeField] private bool zeroVert_Look;
-    [SerializeField] private float _areaZone = 10; 
-    [SerializeField] private float lookAtSmoothing = 2;
-    [SerializeField] private float maxNoticeAngle = 60; // Angle degree to see forwd
-    [SerializeField] private float _canvasScale = 0.1f; //Canvas scale
-
-    private Transform cam;
-    private float currentYOffset;
-    private Vector3 pos;
-
-    [SerializeField] private CinemachineVirtualCamera _camera;
-
     public GameObject selectedEnemy;
 
-    public bool isLockedOn = false;
+    [Header("Settings Lock On Camera: ")]
+    [SerializeField] private CinemachineVirtualCamera _camera;
+    [SerializeField] private Animator _cinemachineAnimator;
     [SerializeField] private Transform lockOnCanvas;
-    public GameObject lookAtEnemy;
-    private PlayerManager _player;
+    [SerializeField] private bool zeroVert_Look;
+    [SerializeField] private float _areaZone = 10; 
+    [SerializeField] private float maxNoticeAngle = 60; // Angle degree to see forwd
+    [SerializeField] private float _canvasScale = 0.1f; //Canvas scale
+    private float currentYOffset;
+    public bool isLockedOn = false;
+
+    [Header("Settings Free Flow: ")]
+    public float freeFlowRangeDetection = 5f;
+
+    RaycastHit hitInfoFreeFlow;
+
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
-        cam = Camera.main.transform;
+        _cam = Camera.main.transform;
         lockOnCanvas.gameObject.SetActive(false);
     }
 
@@ -46,6 +46,21 @@ public class PlayerCombatLockFeel : MonoBehaviour
             }
             LookAtTarget();
         }
+        else
+        {
+            if(_player.movement.GetDirectionNormalized().magnitude > .05f)
+            {
+                if (Physics.SphereCast(transform.position, 3f, _player.movement.GetDirectionNormalized(), out hitInfoFreeFlow, freeFlowRangeDetection, _targetLayers))
+                {
+                    selectedEnemy = hitInfoFreeFlow.collider.gameObject;
+                }
+            }
+            else
+            {
+                selectedEnemy = null;
+            }
+
+        }
     }
 
     private void LookAtTarget()
@@ -55,10 +70,8 @@ public class PlayerCombatLockFeel : MonoBehaviour
             ResetTarget();
             return;
         }
-        Vector3 dir = (selectedEnemy.transform.position + transform.position) * 0.5f;
-        lookAtEnemy.transform.position = dir;
         lockOnCanvas.position = selectedEnemy.transform.position;
-        lockOnCanvas.localScale = Vector3.one * ((cam.position - selectedEnemy.transform.position).magnitude * _canvasScale);
+        lockOnCanvas.localScale = Vector3.one * ((_cam.position - selectedEnemy.transform.position).magnitude * _canvasScale);
     }
 
 
@@ -144,9 +157,9 @@ public class PlayerCombatLockFeel : MonoBehaviour
         // Check the near target by angle
         foreach (var target in nearbyTargets)
         {
-            Vector3 dir = target.transform.position - cam.position;
+            Vector3 dir = target.transform.position - _cam.position;
             dir.y = 0;
-            float _ang = Vector3.Angle(cam.forward, dir);
+            float _ang = Vector3.Angle(_cam.forward, dir);
 
             if (_ang < closestAngle)
             {
@@ -202,13 +215,19 @@ public class PlayerCombatLockFeel : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, _areaZone);
+        Gizmos.color = Color.black;
+        Gizmos.DrawRay(transform.position, _player.movement.GetDirectionNormalized());
+        Gizmos.DrawWireSphere(transform.position, 1);
+        if (selectedEnemy != null)
+            Gizmos.DrawSphere(selectedEnemy.transform.position, .5f);
+
     }
     public bool LookAtEnemySelected()
     {
         float dist = GetDistanceToSelectedEnemy();
-        if (dist < distToClamp && dist != -1)
+        if (dist < distToLookAtEnemy && dist != -1)
         {
-            transform.LookAt(selectedEnemy.transform.position);
+            transform.DOLookAt(selectedEnemy.transform.position, .2f);
             return true;
         }
         else
