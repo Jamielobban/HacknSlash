@@ -12,10 +12,8 @@ public class PlayerMovement : MonoBehaviour
         set => _moveDirection = value;
     }
     #region Stats
-
     [Header("Speed stats:")]
     private float moveSpeed;
-    public float airSpeed;
     public float runSpeed;
     public float sprintSpeed;
 
@@ -30,8 +28,6 @@ public class PlayerMovement : MonoBehaviour
     public float airRotationSpeed = 15f;
     public float interactingRotationSpeed = 10f; // Attacking rot speed
 
-    // public float speedIncreaseMultiplier;
-    // public float slopeIncreaseMultiplier;
     // -- Momentum Stats -- //
     private float _desiredVelocity;
     private float _lastDesiredVelocity;
@@ -101,10 +97,6 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
     }
 
-    public float testAirTIme = .5f;
-    public float testMaxDist = 3;
-    public float testMinDist = .7f;
-
     public void HandleFallingAndLanding()
     {
         if(_player.groundCheck.isGrounded)
@@ -114,15 +106,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inAirTime += Time.deltaTime;
-
-            if (inAirTime >= testAirTIme)
-            {
-                maxDistance = testMaxDist;
-            }
-            else
-            {
-                maxDistance = testMinDist;
-            }
 
             if(isDashing)
             {
