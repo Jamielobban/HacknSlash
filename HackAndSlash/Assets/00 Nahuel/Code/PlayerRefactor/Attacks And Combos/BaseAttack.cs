@@ -37,7 +37,7 @@ public class BaseAttack : MonoBehaviour
         {
             return;
         }
-
+        _player.movement.keepMomentum = true;
         _player.animations.PlayTargetAnimation(data.animation, true);
         AddSoundEffects();
     }

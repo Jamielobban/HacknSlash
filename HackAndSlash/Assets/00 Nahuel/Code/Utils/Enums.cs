@@ -36,6 +36,7 @@ public class Enums
         Walking,
         Sprinting,
         Dashing,
+        Attacking,
         Air
     }
 

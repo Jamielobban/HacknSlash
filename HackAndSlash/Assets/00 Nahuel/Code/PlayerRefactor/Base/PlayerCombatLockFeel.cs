@@ -32,7 +32,6 @@ public class PlayerCombatLockFeel : MonoBehaviour
     {
         cam = Camera.main.transform;
         lockOnCanvas.gameObject.SetActive(false);
-        _camera.LookAt = lookAtEnemy.transform;
     }
 
 
@@ -58,7 +57,7 @@ public class PlayerCombatLockFeel : MonoBehaviour
         Vector3 dir = (selectedEnemy.transform.position + transform.position) * 0.5f;
         lookAtEnemy.transform.position = dir;
         lockOnCanvas.position = selectedEnemy.transform.position;
-        lockOnCanvas.localScale = Vector3.one * ((cam.position - pos).magnitude * _canvasScale);
+        lockOnCanvas.localScale = Vector3.one * ((cam.position - selectedEnemy.transform.position).magnitude * _canvasScale);
     }
 
 
@@ -88,7 +87,9 @@ public class PlayerCombatLockFeel : MonoBehaviour
             lockOnCanvas.gameObject.SetActive(true);
             _cinemachineAnimator.Play("TargetCamera");
             isLockedOn = true;
-        }        
+        }
+        _camera.LookAt = selectedEnemy.transform;
+
     }
 
     private GameObject OnLockOn()

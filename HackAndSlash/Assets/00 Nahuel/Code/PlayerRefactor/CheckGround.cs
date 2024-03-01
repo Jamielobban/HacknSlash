@@ -23,7 +23,7 @@ public class CheckGround : MonoBehaviour
         if (CanApplyDrag())
             _player.rb.drag = groundDrag;
         else
-            _player.rb.drag = 0;
+            _player.rb.drag = 2;
     }
 
     private bool CanApplyDrag() => _player.movement.moveState == Enums.PlayerMovementState.Walking || _player.movement.moveState == Enums.PlayerMovementState.Sprinting;

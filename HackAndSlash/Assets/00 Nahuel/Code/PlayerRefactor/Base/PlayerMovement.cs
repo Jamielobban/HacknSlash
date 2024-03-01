@@ -33,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
     // public float speedIncreaseMultiplier;
     // public float slopeIncreaseMultiplier;
     // -- Momentum Stats -- //
-    private float desiredVelocity;
-    private float lastDesiredVelocity;
-    private bool keepMomentum;
+    private float _desiredVelocity;
+    private float _lastDesiredVelocity;
+    public bool keepMomentum;
     private Enums.PlayerMovementState lastState;
 
     [Header("Falling stats:")]
@@ -264,45 +264,28 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SmoothlyLerpMoveSpeed()
     {
         float t = 0;
-        float difference = Mathf.Abs(desiredVelocity - moveSpeed);
-        float startValue = moveSpeed;
+        float difference = Mathf.Abs(_desiredVelocity - moveSpeed);
+        float startValue;
+        if(_player.rb.velocity.magnitude > _desiredVelocity)
+        {
+            startValue = moveSpeed;
+        }
+        else
+        {
+            startValue = _player.rb.velocity.magnitude;
+        }
 
         float boostFactor = speedChangeFactor;
 
         while (t < difference)
         {
-            moveSpeed = Mathf.Lerp(startValue, desiredVelocity, t / difference);
+            moveSpeed = Mathf.Lerp(startValue, _desiredVelocity, t / difference);
             t += Time.deltaTime * boostFactor;
-            //if (OnSlope())
-            //{
-            //    float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            //    float slopeAngleIncrease = 1 + (slopeAngle / 90f);
-
-            //    t += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
-            //}
-            //else
-            //    t += Time.deltaTime * speedIncreaseMultiplier;
 
             yield return null;
         }
-        //while (t < difference)
-        //{
-        //    moveSpeed = Mathf.Lerp(startValue, desiredVelocity, t / difference);
 
-        //    if (OnSlope())
-        //    {
-        //        float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-        //        float slopeAngleIncrease = 1 + (slopeAngle / 90f);
-
-        //        t += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
-        //    }
-        //    else
-        //        t += Time.deltaTime * speedIncreaseMultiplier;
-
-        //    yield return null;
-        //}
-
-        moveSpeed = desiredVelocity;
+        moveSpeed = _desiredVelocity;
         speedChangeFactor = 1f;
         keepMomentum = false;
     }
@@ -312,28 +295,30 @@ public class PlayerMovement : MonoBehaviour
         if(isDashing)
         {
             moveState = Enums.PlayerMovementState.Dashing;
-            desiredVelocity = dashSpeed;
+            _desiredVelocity = dashSpeed;
             speedChangeFactor = dashSpeedChangeFactor;
         }
         else if(_player.groundCheck.isGrounded && _isSprinting)
         {
             moveState = Enums.PlayerMovementState.Sprinting;
-            desiredVelocity = sprintSpeed;
+            _desiredVelocity = sprintSpeed;
         }
         else if(_player.groundCheck.isGrounded)
         {
             moveState = Enums.PlayerMovementState.Walking;
-            desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
         }
         else
         {
             moveState = Enums.PlayerMovementState.Air;
-            desiredVelocity = airSpeed;
+            _desiredVelocity = airSpeed;
         }
 
-        bool desiredMoveSpeedHasChanged = desiredVelocity != lastDesiredVelocity;
+        bool desiredMoveSpeedHasChanged = _desiredVelocity != _lastDesiredVelocity;
 
-        if(lastState == Enums.PlayerMovementState.Dashing)
+        // == Enums.PlayerMovementState.Attacking
+
+        if (lastState == Enums.PlayerMovementState.Dashing)
         {
             keepMomentum = true;
         }
@@ -348,10 +333,10 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 StopAllCoroutines();
-                moveSpeed = desiredVelocity;
+                moveSpeed = _desiredVelocity;
             }
         }
-        lastDesiredVelocity = desiredVelocity;
+        _lastDesiredVelocity = _desiredVelocity;
         lastState = moveState;
     }
 }
