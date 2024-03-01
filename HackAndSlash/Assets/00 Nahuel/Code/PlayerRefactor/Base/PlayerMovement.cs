@@ -71,13 +71,15 @@ public class PlayerMovement : MonoBehaviour
 
         StateHandler();
 
-        if (!_player.groundCheck.isGrounded)
+        if (!_player.groundCheck.isGrounded && inAirTime > .15f)
         {
             HandleAirMovement();
         }
-
-        //Handles rotation while attacking
-        HandleRotation(interactingRotationSpeed);
+        else
+        {
+            //Handles rotation while attacking
+            HandleAttackingRotation();
+        }
 
         if(isDashing)
         {
@@ -109,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
             if(isDashing)
             {
+                lastState = Enums.PlayerMovementState.Air;
                 _player.dash.ResetDash();
             }
 
@@ -152,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         _player.rb.useGravity = !OnSlope() && !_player.isAirAttacking && !isDashing;
     }
 
-    public void HandleRotation(float rotSpeed)
+    public void HandleRotation()
     {
         Vector3 targetDirection = Vector3.zero;
         targetDirection = GetDirectionNormalized();
@@ -160,9 +163,44 @@ public class PlayerMovement : MonoBehaviour
         if (targetDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
+            Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
             transform.rotation = playerRotation;
         }
+    }
+    public float rotSpeedToTarget = 5f;
+    public void HandleAttackingRotation()
+    {
+        Vector3 targetDirection = GetDirectionNormalized();
+        targetDirection.y = 0;
+        Quaternion targetRotation;
+        Quaternion playerRotation = transform.rotation;
+
+        if (_player.lockCombat.isLockedOn && _player.lockCombat.selectedEnemy != null && _player.isAttacking)
+        {
+            float dist = _player.lockCombat.GetDistanceToSelectedEnemy();
+            if (dist < _player.dash.distToClamp && dist != -1)
+            {
+                targetRotation = Quaternion.LookRotation(_player.lockCombat.selectedEnemy.transform.position);
+                playerRotation = targetRotation;
+            }
+            else
+            {
+                if (targetDirection != Vector3.zero)
+                {
+                    targetRotation = Quaternion.LookRotation(targetDirection);
+                    playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
+                }
+            }
+        }
+        else
+        {
+            if (targetDirection != Vector3.zero)
+            {
+                targetRotation = Quaternion.LookRotation(targetDirection);
+                playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
+            }
+        }
+        transform.rotation = playerRotation;
     }
 
     public void HandleMovement()
@@ -186,14 +224,14 @@ public class PlayerMovement : MonoBehaviour
         {
             _player.rb.AddForce(_moveDirection * moveSpeed * 10f, ForceMode.Force);
             //Handles normal rotation while moving
-            HandleRotation(rotationSpeed);
+            HandleRotation();
         }        
     }
 
     private void HandleAirMovement()
     {
         _player.rb.AddForce(GetDirectionNormalized() * moveSpeed * 10f, ForceMode.Force);
-        HandleRotation(airRotationSpeed);
+        HandleRotation();
 
         //Velocity flat
         Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
@@ -313,7 +351,7 @@ public class PlayerMovement : MonoBehaviour
 
         // == Enums.PlayerMovementState.Attacking
 
-        if (lastState == Enums.PlayerMovementState.Dashing || lastState == Enums.PlayerMovementState.Attacking)
+        if ((lastState == Enums.PlayerMovementState.Dashing || lastState == Enums.PlayerMovementState.Attacking))
         {
             keepMomentum = true;
         }

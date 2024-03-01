@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 // -- Enemy base class for movements and displacements -- //
@@ -8,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     protected Rigidbody _rb;
     protected Enemy _enemy;
     public NavMeshAgent Agent => _agent;
-
+    public bool knockback = false;
     #region Stats
 
     public CharacterStat chaseSight = new CharacterStat();
@@ -35,7 +36,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        _enemy.events.OnHit += () => { if (_agent.isActiveAndEnabled) { DisableMovement(); } HitStopEffect(); };
+        //if (_agent.isActiveAndEnabled) { DisableMovement(); }
+        _enemy.events.OnHit += () => { HitStopEffect(); };
         _enemy.events.OnIdle += DisableMovement;
         _enemy.events.OnAttacking += DisableMovement;
         _enemy.events.OnPatrolling += EnableMovement;
@@ -62,8 +64,12 @@ public class EnemyMovement : MonoBehaviour
 
     public void HandleFollow()
     {
-        _agent.destination = target.position;
-        HandleRotation();
+        if(!knockback)
+        {
+            _agent.destination = target.position;
+            HandleRotation();
+        }
+
     }
 
     public void HandlePatrollInArea()
@@ -82,14 +88,29 @@ public class EnemyMovement : MonoBehaviour
     public void HitStopEffect()
     {
         _enemy.canAttack = false;
-        this.Wait(_enemy.animations.Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        knockback = true;
+        DisableMovement();
+        DisableAgent();
+        _rb.AddForce((transform.position - _enemy._player.transform.position) * .75f, ForceMode.Impulse);
+        Invoke(nameof(ResetKnockBack), .1f);
+        //this.Wait(_enemy.animations.Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        //{
+
+        //});
+    }
+
+    private void ResetKnockBack()
+    {
+        knockback = false;
+        _agent.velocity = Vector3.zero;
+        _rb.velocity = Vector3.zero;
+        EnableAgent();
+        if (_agent.isActiveAndEnabled)
         {
-            if (_agent.isActiveAndEnabled)
-            {
-                EnableMovement();
-            }
-            _enemy.canAttack = true;
-        });
+            EnableMovement();
+        }
+        _enemy.canAttack = true;
+        _enemy.events.Idle();
     }
 
     public void HandleRotation()

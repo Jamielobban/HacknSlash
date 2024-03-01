@@ -43,20 +43,38 @@ public class PlayerDash : MonoBehaviour
         delayedForceToApply = forceToApply;
         Invoke(nameof(DelayedForceToApply), 0.025f);
     }
-
+    public float distToClamp = 1f;
     public void Dash(float force)
     {
         _player.rb.velocity = Vector3.zero;
         _player.rb.drag = 0;
         Vector3 forceToApply;
-        // si hay un enemigo cerca hace el dash direction enemy y rota hacia el ??
-        if (_player.movement.OnSlope())
+        Vector3 direction;
+
+        if(_player.lockCombat.isLockedOn && _player.lockCombat.selectedEnemy != null)
         {
-            forceToApply = _player.movement.GetForwardSlopeDirection() * force;
+            float dist = _player.lockCombat.GetDistanceToSelectedEnemy();
+            if(dist < distToClamp && dist != -1)
+            {
+                direction = _player.lockCombat.selectedEnemy.transform.position - transform.position;
+            }
+            else
+            {
+                direction = transform.forward;
+            }
         }
         else
         {
-            forceToApply = transform.forward * force;
+            direction = transform.forward;
+        }
+        // si hay un enemigo cerca hace el dash direction enemy y rota hacia el ??
+        if (_player.movement.OnSlope())
+        {
+            forceToApply = _player.movement.GetSlopeMoveDirection(direction) * force;
+        }
+        else
+        {
+            forceToApply = direction * force;
         }
 
         delayedForceToApply = forceToApply;

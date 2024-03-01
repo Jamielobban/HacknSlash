@@ -11098,11 +11098,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4856936322613840, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.35586655
+      value: -0.99732953
       objectReference: {fileID: 0}
     - target: {fileID: 4856936322613840, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9345368
+      value: 0.07303321
       objectReference: {fileID: 0}
     - target: {fileID: 4871190566861668, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_RootOrder
@@ -11150,11 +11150,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4922897015711938, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.35586655
+      value: -0.99732953
       objectReference: {fileID: 0}
     - target: {fileID: 4922897015711938, guid: 96c2388d3a717254c918608a033b4bf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9345368
+      value: 0.07303321
       objectReference: {fileID: 0}
     - target: {fileID: 114826045513551038, guid: 96c2388d3a717254c918608a033b4bf3,
         type: 3}
@@ -14353,6 +14353,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2308795739972149479, guid: 1f915ac68a55fec47831d53927a47170,
+        type: 3}
+      propertyPath: baseMaxHealth.baseValue
+      value: 2500
+      objectReference: {fileID: 0}
     - target: {fileID: 3725836235020998514, guid: 1f915ac68a55fec47831d53927a47170,
         type: 3}
       propertyPath: m_RootOrder
@@ -16827,6 +16832,11 @@ PrefabInstance:
       propertyPath: _cinemachineAnimator
       value: 
       objectReference: {fileID: 1375028103}
+    - target: {fileID: 3020432870173202997, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: distToGround
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4916640838537896346, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}
       propertyPath: m_RootOrder
@@ -16887,6 +16897,11 @@ PrefabInstance:
       propertyPath: progressBar
       value: 
       objectReference: {fileID: 92564465}
+    - target: {fileID: 6813399429973184852, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: distToClamp
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7529933948483472971, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}
       propertyPath: airSpeed
@@ -16906,6 +16921,11 @@ PrefabInstance:
         type: 3}
       propertyPath: testMinDist
       value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529933948483472971, guid: cc261640dcfa5e84a9d141e255d10b3b,
+        type: 3}
+      propertyPath: rotSpeedToTarget
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7529933948483472971, guid: cc261640dcfa5e84a9d141e255d10b3b,
         type: 3}

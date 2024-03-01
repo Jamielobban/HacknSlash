@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerCombatLockFeel : MonoBehaviour
 {
-   // private Animator _anim;
-
     [SerializeField] private LayerMask _targetLayers;
     [SerializeField] private Transform _enemyTargetLocator;
     [SerializeField] private Animator _cinemachineAnimator;
@@ -94,7 +92,7 @@ public class PlayerCombatLockFeel : MonoBehaviour
 
     private GameObject OnLockOn()
     {
-        GameObject nearEnemy = CheckNearEnemy();
+        GameObject nearEnemy = CheckNearEnemyByAngle();
         if (nearEnemy != null)
         {
             return nearEnemy;
@@ -102,7 +100,33 @@ public class PlayerCombatLockFeel : MonoBehaviour
         return null;
     }
 
-    private GameObject CheckNearEnemy()
+    private GameObject CheckNearEnemyByDistance()
+    {
+        Collider[] nearbyTargets = Physics.OverlapSphere(transform.position, _areaZone * .75f, _targetLayers);
+        float nearestDistance = 50f;
+        GameObject closestTarget = null;
+        if (nearbyTargets.Length <= 0)
+        {
+            return null;
+        }
+
+        foreach (var target in nearbyTargets)
+        {
+            float dist = Vector3.Distance(transform.position, target.transform.position);
+            if(dist < nearestDistance)
+            {
+                nearestDistance = dist;
+                closestTarget = target.gameObject;
+            }
+        }
+        if(!closestTarget)
+        { 
+            return null;
+        }
+        return closestTarget.gameObject;
+    }
+
+    private GameObject CheckNearEnemyByAngle()
     {
         Collider[] nearbyTargets = Physics.OverlapSphere(transform.position, _areaZone, _targetLayers);
         float closestAngle = maxNoticeAngle;
@@ -174,4 +198,14 @@ public class PlayerCombatLockFeel : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, _areaZone);
     }
+
+    public float GetDistanceToSelectedEnemy()
+    {
+        if(selectedEnemy != null)
+        {
+            return Mathf.Abs(Vector3.Distance(transform.position, selectedEnemy.transform.position));
+        }
+        return -1;
+    }
+
 }

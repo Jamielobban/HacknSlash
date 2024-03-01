@@ -103,8 +103,6 @@ public class ComboController : MonoBehaviour
         return false;
     }
 
-
-
     private void ClearComboSequence()
     {
         _currentSequence.Clear();
