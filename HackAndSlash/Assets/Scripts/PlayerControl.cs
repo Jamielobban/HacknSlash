@@ -786,6 +786,7 @@ public class PlayerControl : MonoBehaviour
 
         attackStartTime = Time.time;
     }
+
     void AttackMovement()
     {
         if (currentComboAttack == -1)
@@ -816,6 +817,9 @@ public class PlayerControl : MonoBehaviour
         player.transform.GetChild(3).transform.localPosition = new Vector3();
 
     }
+
+
+    #region Funcion que devuelve true si estas cayendo (por un bordillo, al acabar un ataque en el aire, o cualquier cosa) y se encarga de hacer todas las cosas al empezar a caer, cambia al estado JUMP y dentro de JUMP al estado FALL
 
     bool CheckIfIsFalling()
     {
@@ -860,7 +864,10 @@ public class PlayerControl : MonoBehaviour
 
 
     }
-    // SUPER IMPORTANT LES SEGUENTS 3 FUNCIONS
+    #endregion
+
+    #region Cosas de items del Jamie
+
     public int GetItemStacks(string itemName)
     {
         foreach (ItemList i in items)
@@ -919,12 +926,17 @@ public class PlayerControl : MonoBehaviour
         }
         return 0;
     }
-    //ASDAS
+    #endregion
+
+    #region Funcion que devuelve el ataque actual que estas haciendo (enum ComboAtaques)
 
     ComboAtaques GetCurrentAttackCombo()
     {
         return currentComboAttacks.combo;
     }
+    #endregion
+
+    #region Funcion que devuelve true si pulsas saltar, se encarga de hacer todas las cosas al empezar el salto, cambia al estado JUMP y dentro de JUMP cambia al estado JUMP tambien
     bool CheckIfJump()
     {
 
@@ -959,7 +971,7 @@ public class PlayerControl : MonoBehaviour
                 states = States.JUMP;
                 jump = Jump.JUMP;
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.5f, ForceMode.Impulse);
+                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.25f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
                 doubleJumpFeedback.PlayFeedbacks();
 
@@ -972,6 +984,9 @@ public class PlayerControl : MonoBehaviour
 
         return false;
     }
+    #endregion
+
+    #region Funcion que devuelve true si el player aterriza
     bool CheckIfLand()
     {
         RaycastHit hit;
@@ -999,11 +1014,20 @@ public class PlayerControl : MonoBehaviour
         }
         return false;
     }
-    private IEnumerator DashEffectDisable(float time, int dash)
-    {
-        yield return new WaitForSeconds(time);
-    }
-    // Update is called once per frame
+    #endregion
+
+    ////////////
+
+    ////////////
+
+    //       UPDATE
+
+    ////////////
+
+    ////////////
+    
+    #region En general no hay que tocar nada del UPDATE casi todo lo que hay que tocar es de las funciones
+
     void Update()
     {
         if (!controller.GetController())
@@ -1159,7 +1183,7 @@ public class PlayerControl : MonoBehaviour
 
                             if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
                             {
-                                if ((hit.distance > 0.5f))
+                                if ((hit.distance > 2f))
                                 {
                                     this.GetComponent<Rigidbody>().AddForce(-this.transform.up * 15000 * Time.fixedDeltaTime, ForceMode.Force);
                                 }
@@ -1361,6 +1385,18 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    ////////////
+
+    ////////////
+
+    //       UPDATE
+
+    ////////////
+
+    ////////////
+
 
     IEnumerator CallItemUpdate()
     {
