@@ -151,7 +151,6 @@ public class PlayerControl : MonoBehaviour
     public GetEnemies attackTeleport2;
     public GetEnemies remate;
 
-    public GameObject[] dashEffects;
 
     bool dashDown;
 
@@ -1003,7 +1002,6 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator DashEffectDisable(float time, int dash)
     {
         yield return new WaitForSeconds(time);
-        dashEffects[dash].SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -1113,15 +1111,7 @@ public class PlayerControl : MonoBehaviour
                         if ((Time.time - delayDash) > 0.05f)
                         {
                             playerAnim.speed = 1;
-                            for (int i = 0; i < dashEffects.Length; i++)
-                            {
-                                if (dashEffects[i].activeSelf == false)
-                                {
-                                    dashEffects[i].SetActive(true);
-                                    StartCoroutine(DashEffectDisable(2, i));
-                                    break;
-                                }
-                            }
+
 
 
 
@@ -1185,16 +1175,7 @@ public class PlayerControl : MonoBehaviour
                     case Dash.END:
                         if ((Time.time - delayDash) > 0.05f)
                         {
-                            for (int i = 0; i < dashEffects.Length; i++)
-                            {
-                                if (dashEffects[i].activeSelf == false)
-                                {
-                                    dashEffects[i].SetActive(true);
-                                    StartCoroutine(DashEffectDisable(2, i));
-                                    break;
-
-                                }
-                            }
+       
                             this.gameObject.layer = 3;
 
                             delayDash = Time.time;
