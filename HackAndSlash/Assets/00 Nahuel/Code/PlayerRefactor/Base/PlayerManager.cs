@@ -17,7 +17,6 @@ public class PlayerManager : MonoBehaviour
     public PlayerCollision collision;
     public ComboController comboController { get; private set; }
     public PlayerDash dash { get; private set; }
-
     public PlayerCombatLockFeel lockCombat { get; private set; }
 
     public CheckGround groundCheck;
@@ -57,7 +56,6 @@ public class PlayerManager : MonoBehaviour
         dash = GetComponent<PlayerDash>();
         lockCombat = GetComponent<PlayerCombatLockFeel>();
     }
-
     void Update()
     {
         if(CurrentCharacterState == Enums.CharacterState.Moving)
@@ -103,4 +101,5 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+
 }

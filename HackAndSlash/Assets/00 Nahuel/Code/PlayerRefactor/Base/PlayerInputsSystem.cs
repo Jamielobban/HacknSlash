@@ -60,11 +60,7 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void MoveLeftStick_canceled(InputAction.CallbackContext context)
     {
-        if(_player.groundCheck.isGrounded)
-        {
-            _player.movement.DisableMovement();
-            _player.ChangeCharacterState(Enums.CharacterState.Idle);
-        }
+
     }
 
     private void R2_performed(InputAction.CallbackContext context)
@@ -178,6 +174,10 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Interact_performed(InputAction.CallbackContext context)
     {
+        if(AbilityPowerManager.instance.menuActive)
+        {
+            AbilityPowerManager.instance.SetOptionClicked();
+        }
         _player.collision.InteractPerformed();
     }
     private void LockOn_performed(InputAction.CallbackContext context)

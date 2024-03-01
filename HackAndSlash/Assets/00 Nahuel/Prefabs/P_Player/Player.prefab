@@ -1662,7 +1662,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931428773790119072}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6888c641b18c66149833ac722144fdd4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1791,14 +1791,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveState: 0
-  airSpeed: 5
-  runSpeed: 5
+  moveSpeed: 0
+  runSpeed: 6
   sprintSpeed: 8
   dashSpeed: 15
   dashSpeedChangeFactor: 50
   rotationSpeed: 15
-  airRotationSpeed: 10
-  interactingRotationSpeed: 1
+  interactingRotationSpeed: 0.45
   keepMomentum: 0
   inAirTime: 0
   maxDistance: 1.5
@@ -1809,9 +1808,7 @@ MonoBehaviour:
   maxSlopeAngle: 45
   isJumping: 0
   isDashing: 0
-  testAirTIme: 0.5
-  testMaxDist: 2.25
-  testMinDist: 0.25
+  smoothTransTemp: 0.3
 --- !u!114 &6417761822419749738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,6 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d12ac6c96b39d54fb0a3e26ffae2275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToDeactive: 0.25
 --- !u!114 &1614576634013803876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1940,6 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaded1360dab743448efcc916791d135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distToClamp: 2.5
   _targetLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -2276,7 +2275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
-  distToGround: 0.75
+  distToGround: 1
   groundDrag: 4
   groundMask:
     serializedVersion: 2

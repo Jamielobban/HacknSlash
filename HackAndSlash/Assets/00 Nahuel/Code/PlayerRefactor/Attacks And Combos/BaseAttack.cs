@@ -18,6 +18,10 @@ public class BaseAttack : MonoBehaviour
         }
         _player.animations.Animator.SetBool("isAttacking", true);
         _player.isAttacking = true;
+        if(_player.lockCombat.isLockedOn)
+        {
+            _player.lockCombat.LookAtEnemySelected();
+        }
         _player.animations.PlayTargetAnimation(data.animation, true);
         AddSoundEffects();
     }

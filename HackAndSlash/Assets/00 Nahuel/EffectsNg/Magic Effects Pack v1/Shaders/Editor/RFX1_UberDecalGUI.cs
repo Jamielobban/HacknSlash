@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.Graphs;
 
 public class RFX1_UberDecalGUI : ShaderGUI
 {

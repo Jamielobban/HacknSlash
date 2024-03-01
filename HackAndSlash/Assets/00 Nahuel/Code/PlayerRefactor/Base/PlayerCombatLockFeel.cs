@@ -1,8 +1,10 @@
 using Cinemachine;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerCombatLockFeel : MonoBehaviour
 {
+    public float distToClamp = 2.5f;
     [SerializeField] private LayerMask _targetLayers;
     [SerializeField] private Transform _enemyTargetLocator;
     [SerializeField] private Animator _cinemachineAnimator;
@@ -25,9 +27,10 @@ public class PlayerCombatLockFeel : MonoBehaviour
     public bool isLockedOn = false;
     [SerializeField] private Transform lockOnCanvas;
     public GameObject lookAtEnemy;
-
+    private PlayerManager _player;
     private void Awake()
     {
+        _player = GetComponent<PlayerManager>();
         cam = Camera.main.transform;
         lockOnCanvas.gameObject.SetActive(false);
     }
@@ -86,8 +89,10 @@ public class PlayerCombatLockFeel : MonoBehaviour
             _cinemachineAnimator.Play("TargetCamera");
             isLockedOn = true;
         }
-        _camera.LookAt = selectedEnemy.transform;
-
+        if(_camera != null && selectedEnemy != null)
+        {
+            _camera.LookAt = selectedEnemy.transform;
+        }
     }
 
     private GameObject OnLockOn()
@@ -197,6 +202,19 @@ public class PlayerCombatLockFeel : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, _areaZone);
+    }
+    public bool LookAtEnemySelected()
+    {
+        float dist = GetDistanceToSelectedEnemy();
+        if (dist < distToClamp && dist != -1)
+        {
+            transform.LookAt(selectedEnemy.transform.position);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public float GetDistanceToSelectedEnemy()

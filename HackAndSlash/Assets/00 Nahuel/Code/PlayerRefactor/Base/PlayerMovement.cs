@@ -1,4 +1,6 @@
+using MoreMountains.Tools;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #region Stats
     [Header("Speed stats:")]
-    private float moveSpeed;
+    public float moveSpeed;
     public float runSpeed;
     public float sprintSpeed;
 
@@ -25,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Rotation stats:")]
     public float rotationSpeed = 15f;
-    public float airRotationSpeed = 15f;
     public float interactingRotationSpeed = 10f; // Attacking rot speed
 
     // -- Momentum Stats -- //
@@ -63,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
+        moveSpeed = 7;
     }
 
     public void HandleAllMovement()
@@ -71,16 +73,18 @@ public class PlayerMovement : MonoBehaviour
 
         StateHandler();
 
-        if (!_player.groundCheck.isGrounded && inAirTime > .15f)
+        if (!_player.groundCheck.isGrounded && inAirTime > .15f && lastState != Enums.PlayerMovementState.Dashing)
         {
             HandleAirMovement();
         }
-        else
+        
+        if(!isDashing && _player.isAttacking)
         {
             //Handles rotation while attacking
             HandleAttackingRotation();
         }
 
+        //Limit dash speed OnSlope
         if(isDashing)
         {
             if (OnSlope())
@@ -111,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
             if(isDashing)
             {
-                lastState = Enums.PlayerMovementState.Air;
+               // lastState = Enums.PlayerMovementState.Air;
                 _player.dash.ResetDash();
             }
 
@@ -124,23 +128,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 _player.rb.velocity = Vector3.zero;
             }
-        }
+        }            
 
-        _targetPosition = transform.position;
-
-        if (Physics.Raycast(_player.groundCheck.transform.position, -Vector3.up, out _hit, maxDistance, groundLayer))
-        {
-            _targetPosition.y = _hit.point.y;
-            if(!_player.groundCheck.isGrounded)
-            {
-                _player.animations.Animator.SetBool("isGrounded", true);
-            }
-        }
         // Anchors the player to the ground if the raycast is hiting so won't bounce in slopes, etc.
         if (_player.groundCheck.isGrounded && !isJumping)
         {
             if(inAirTime == 0f || isDashing)
             {
+                _targetPosition = transform.position;
+                _targetPosition.y = _player.groundCheck.GetHit().point.y;
                 if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
                 {
                     transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime / 0.1f);
@@ -155,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
         _player.rb.useGravity = !OnSlope() && !_player.isAirAttacking && !isDashing;
     }
 
-    public void HandleRotation()
+    public void HandleRotation(float rotSpeed)
     {
         Vector3 targetDirection = Vector3.zero;
         targetDirection = GetDirectionNormalized();
@@ -167,7 +163,6 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = playerRotation;
         }
     }
-    public float rotSpeedToTarget = 5f;
     public void HandleAttackingRotation()
     {
         Vector3 targetDirection = GetDirectionNormalized();
@@ -175,32 +170,28 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation;
         Quaternion playerRotation = transform.rotation;
 
-        if (_player.lockCombat.isLockedOn && _player.lockCombat.selectedEnemy != null && _player.isAttacking)
+        if (_player.lockCombat.isLockedOn && _player.isAttacking)
         {
-            float dist = _player.lockCombat.GetDistanceToSelectedEnemy();
-            if (dist < _player.dash.distToClamp && dist != -1)
-            {
-                targetRotation = Quaternion.LookRotation(_player.lockCombat.selectedEnemy.transform.position);
-                playerRotation = targetRotation;
-            }
-            else
+            if(!_player.lockCombat.LookAtEnemySelected())
             {
                 if (targetDirection != Vector3.zero)
                 {
                     targetRotation = Quaternion.LookRotation(targetDirection);
-                    playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
+                    playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, interactingRotationSpeed * Time.deltaTime);
                 }
-            }
+                transform.rotation = playerRotation;
+            }          
         }
         else
         {
             if (targetDirection != Vector3.zero)
             {
                 targetRotation = Quaternion.LookRotation(targetDirection);
-                playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, moveSpeed * Time.deltaTime);
+                playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, interactingRotationSpeed * Time.deltaTime);
             }
+            transform.rotation = playerRotation;
         }
-        transform.rotation = playerRotation;
+        
     }
 
     public void HandleMovement()
@@ -219,19 +210,17 @@ public class PlayerMovement : MonoBehaviour
                 _player.rb.velocity = _player.rb.velocity.normalized * moveSpeed;
             }
         }
-
-        if(_player.groundCheck.isGrounded)
+        else if(_player.groundCheck.isGrounded)
         {
             _player.rb.AddForce(_moveDirection * moveSpeed * 10f, ForceMode.Force);
-            //Handles normal rotation while moving
-            HandleRotation();
-        }        
+        }
+        HandleRotation(rotationSpeed);       
     }
 
     private void HandleAirMovement()
     {
         _player.rb.AddForce(GetDirectionNormalized() * moveSpeed * 10f, ForceMode.Force);
-        HandleRotation();
+        HandleRotation(moveSpeed);
 
         //Velocity flat
         Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
@@ -309,34 +298,50 @@ public class PlayerMovement : MonoBehaviour
         speedChangeFactor = 1f;
         keepMomentum = false;
     }
-
+    public float smoothTransTemp = 0.3f;
     private void StateHandler()
     {
-        if(isDashing)
+       // lastState = moveState;
+        if (isDashing)
         {
-            moveState = Enums.PlayerMovementState.Dashing;
+            ChangeMoveState(Enums.PlayerMovementState.Dashing);
             _desiredVelocity = dashSpeed;
             speedChangeFactor = dashSpeedChangeFactor;
         }
         else if(_player.groundCheck.isGrounded && _isSprinting)
         {
-            moveState = Enums.PlayerMovementState.Sprinting;
+            ChangeMoveState(Enums.PlayerMovementState.Sprinting);
             _desiredVelocity = sprintSpeed;
         }
         else if(_player.groundCheck.isGrounded)
         {
-            moveState = Enums.PlayerMovementState.Walking;
-            _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            ChangeMoveState(Enums.PlayerMovementState.Walking);
+            if (GetDirectionNormalized().magnitude > smoothTransTemp)
+            {
+                _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            }
+            else
+            {
+                _desiredVelocity = runSpeed * smoothTransTemp;
+            }
         }
         else if(_player.isAttacking)
         {
-            moveState = Enums.PlayerMovementState.Attacking;
-            moveSpeed = runSpeed * GetDirectionNormalized().magnitude;
+            ChangeMoveState(Enums.PlayerMovementState.Attacking);
+            if (GetDirectionNormalized().magnitude > smoothTransTemp)
+            {
+                _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            }
+            else
+            {
+                _desiredVelocity = runSpeed * smoothTransTemp;
+            }
         }
         else
         {
-            moveState = Enums.PlayerMovementState.Air;
-            if(lastState == Enums.PlayerMovementState.Walking)
+            ChangeMoveState(Enums.PlayerMovementState.Air);
+
+            if (lastState == Enums.PlayerMovementState.Walking)
             {
                 _desiredVelocity = runSpeed;
             }
@@ -349,7 +354,6 @@ public class PlayerMovement : MonoBehaviour
 
         bool desiredMoveSpeedHasChanged = _desiredVelocity != _lastDesiredVelocity;
 
-        // == Enums.PlayerMovementState.Attacking
 
         if ((lastState == Enums.PlayerMovementState.Dashing || lastState == Enums.PlayerMovementState.Attacking))
         {
@@ -370,6 +374,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         _lastDesiredVelocity = _desiredVelocity;
-        lastState = moveState;
+
     }
+
+    private void ChangeMoveState(Enums.PlayerMovementState newState)
+    {
+        if(moveState == newState)
+        {
+            return;
+        }
+
+        lastState = moveState;
+
+        moveState = newState;
+    }
+
 }
