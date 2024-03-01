@@ -25,7 +25,7 @@ public class PlayerCombatLockFeel : MonoBehaviour
 
     [Header("Settings Free Flow: ")]
     public float freeFlowRangeDetection = 5f;
-
+    public float distanceToAnimMove = 3f;
     RaycastHit hitInfoFreeFlow;
 
     private void Awake()
@@ -50,7 +50,7 @@ public class PlayerCombatLockFeel : MonoBehaviour
         {
             if(_player.movement.GetDirectionNormalized().magnitude > .05f)
             {
-                if (Physics.SphereCast(transform.position, 3f, _player.movement.GetDirectionNormalized(), out hitInfoFreeFlow, freeFlowRangeDetection, _targetLayers))
+                if (Physics.SphereCast(transform.position, 4.5f, _player.movement.GetDirectionNormalized(), out hitInfoFreeFlow, freeFlowRangeDetection, _targetLayers))
                 {
                     selectedEnemy = hitInfoFreeFlow.collider.gameObject;
                 }

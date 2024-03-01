@@ -28,10 +28,18 @@ public class BaseAttack : MonoBehaviour
         {
             if(_player.lockCombat.selectedEnemy != null)
             {
-                _player.animations.PlayTargetAnimation("roll", true);
-                _player.transform.DOLookAt(_player.lockCombat.selectedEnemy.transform.position, .2f);
-                _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .5f).OnComplete(() => _player.animations.PlayTargetAnimation(data.animation, true));
-            }
+                if (_player.lockCombat.distanceToAnimMove < Mathf.Abs(Vector3.Distance(_player.lockCombat.selectedEnemy.transform.position, _player.transform.position)))
+                {
+                    _player.animations.PlayTargetAnimation("roll", true);
+                    _player.transform.DOLookAt(_player.lockCombat.selectedEnemy.transform.position, .2f);
+                    _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .40f).OnComplete(() => _player.animations.PlayTargetAnimation(data.animation, true));
+                }
+                else
+                {
+                    _player.transform.DOLookAt(_player.lockCombat.selectedEnemy.transform.position, .2f);
+                    _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .3f).OnComplete(() => _player.animations.PlayTargetAnimation(data.animation, true));
+                }
+            }                
             else
             {
                 _player.animations.PlayTargetAnimation(data.animation, true);
@@ -53,7 +61,7 @@ public class BaseAttack : MonoBehaviour
     {
         Vector3 position;
         position = target.position;
-        return Vector3.MoveTowards(position, _player.transform.position, .95f);
+        return Vector3.MoveTowards(position, _player.transform.position, 1.5f);
     }
     private bool CharacterIsOnAllowedState()
     {

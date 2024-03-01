@@ -47,6 +47,10 @@ public class PlayerDash : MonoBehaviour
 
     public void Dash(float force)
     {
+        if(_player.lockCombat.selectedEnemy != null && !_player.lockCombat.isLockedOn)
+        {
+            return;
+        }
         _player.rb.velocity = Vector3.zero;
         _player.rb.drag = 0;
         Vector3 forceToApply;
