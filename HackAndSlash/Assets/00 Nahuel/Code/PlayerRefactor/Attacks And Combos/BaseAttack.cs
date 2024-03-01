@@ -10,34 +10,14 @@ public class BaseAttack : MonoBehaviour
         _player = FindObjectOfType<PlayerManager>();
     }
 
-    public GameObject currentNearEnemy;
-    private float _nearDistance;
-
-    protected virtual GameObject CheckNearEnemy()
-    {
-        if(_player.collision.TouchingEnemies.Count > 0)
-        {
-            _nearDistance = 50.0f;
-            foreach (var enemy in _player.collision.TouchingEnemies)
-            {
-                if(Vector3.Distance(_player.gameObject.transform.position, enemy.transform.position) < _nearDistance)
-                {
-                    _nearDistance = Vector3.Distance(_player.gameObject.transform.position, enemy.transform.position);
-                    currentNearEnemy = enemy;
-                }
-            }
-            return currentNearEnemy;
-        }
-        return null;
-    }
-
     public void Use()
     {
         if(!CharacterIsOnAllowedState())
         {
             return;
         }
-        _player.movement.keepMomentum = true;
+        _player.animations.Animator.SetBool("isAttacking", true);
+        _player.isAttacking = true;
         _player.animations.PlayTargetAnimation(data.animation, true);
         AddSoundEffects();
     }

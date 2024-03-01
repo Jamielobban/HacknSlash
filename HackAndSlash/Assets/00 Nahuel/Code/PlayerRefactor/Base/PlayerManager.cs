@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     public bool isInvulnerable = false;
     public bool isInteracting;
     public bool isAirAttacking = false;
-
+    public bool isAttacking = false;
 
     private void Awake()
     {
@@ -78,6 +78,7 @@ public class PlayerManager : MonoBehaviour
     {
         isInteracting = animations.Animator.GetBool("isInteracting");
         isAirAttacking = animations.Animator.GetBool("isAirAttacking");
+        isAttacking = animations.Animator.GetBool("isAttacking");
         movement.isJumping = animations.Animator.GetBool("isJumping");
         animations.Animator.SetBool("isGrounded", groundCheck.isGrounded);
     }

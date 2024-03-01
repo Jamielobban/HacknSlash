@@ -238,7 +238,6 @@ public class PlayerMovement : MonoBehaviour
         }
         _player.animations.Animator.SetBool("isJumping", true);
         _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
-        JumpAction(jumpHeight);
     }
 
     public void JumpAction(float _jumpForce = 20)
@@ -308,17 +307,30 @@ public class PlayerMovement : MonoBehaviour
             moveState = Enums.PlayerMovementState.Walking;
             _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
         }
+        else if(_player.isAttacking)
+        {
+            moveState = Enums.PlayerMovementState.Attacking;
+            moveSpeed = runSpeed * GetDirectionNormalized().magnitude;
+        }
         else
         {
             moveState = Enums.PlayerMovementState.Air;
-            _desiredVelocity = airSpeed;
+            if(lastState == Enums.PlayerMovementState.Walking)
+            {
+                _desiredVelocity = runSpeed;
+            }
+            else if(lastState == Enums.PlayerMovementState.Sprinting)
+            {
+                _desiredVelocity = sprintSpeed;
+            }
+
         }
 
         bool desiredMoveSpeedHasChanged = _desiredVelocity != _lastDesiredVelocity;
 
         // == Enums.PlayerMovementState.Attacking
 
-        if (lastState == Enums.PlayerMovementState.Dashing)
+        if (lastState == Enums.PlayerMovementState.Dashing || lastState == Enums.PlayerMovementState.Attacking)
         {
             keepMomentum = true;
         }

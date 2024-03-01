@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteractingBool: 
   isInteractingStatus: 0
+  isAirAttackingBool: 
+  isAirAttackingStatus: 0
   isAttackingBool: 
   isAttackingStatus: 0
 --- !u!1101 &-8407915289388103693
@@ -915,6 +917,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteractingBool: 
   isInteractingStatus: 0
+  isAirAttackingBool: 
+  isAirAttackingStatus: 0
   isAttackingBool: 
   isAttackingStatus: 0
 --- !u!1102 &-1863670723622321552
@@ -1129,43 +1133,43 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Dash
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isInteracting
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isGrounded
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isJumping
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: isLanded
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isAirAttacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: isAttacking
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Locomotion
@@ -1303,6 +1307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteractingBool: 
   isInteractingStatus: 0
+  isAirAttackingBool: 
+  isAirAttackingStatus: 0
   isAttackingBool: 
   isAttackingStatus: 0
 --- !u!1102 &852235760177301571
@@ -1395,6 +1401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteractingBool: isInteracting
   isInteractingStatus: 1
+  isAirAttackingBool: 
+  isAirAttackingStatus: 0
   isAttackingBool: isAirAttacking
   isAttackingStatus: 0
 --- !u!1101 &1570834524477255827
@@ -1637,7 +1645,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInteractingBool: isInteracting
   isInteractingStatus: 0
-  isAttackingBool: isAirAttacking
+  isAirAttackingBool: isAirAttacking
+  isAirAttackingStatus: 0
+  isAttackingBool: isAttacking
   isAttackingStatus: 0
 --- !u!1101 &4302501441014487999
 AnimatorStateTransition:

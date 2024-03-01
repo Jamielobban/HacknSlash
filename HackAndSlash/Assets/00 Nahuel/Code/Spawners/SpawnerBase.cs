@@ -88,7 +88,9 @@ public class SpawnerBase : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
-            _roomManager.AddEnemy(enemy.gameObject);
+
+            _roomManager.AddEnemy(enemy.gameObject); // Mete los enemigos que instancio en Enemies to Kill
+
             if(!_roomManager.firstEnemySpawned)
             {
                 _roomManager.firstEnemySpawned = true;

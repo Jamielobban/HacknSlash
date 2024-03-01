@@ -48,8 +48,6 @@ public class PlayerDash : MonoBehaviour
     {
         _player.rb.velocity = Vector3.zero;
         _player.rb.drag = 0;
-        _player.movement.isDashing = true;
-        _player.isInvulnerable = true;
         Vector3 forceToApply;
         // si hay un enemigo cerca hace el dash direction enemy y rota hacia el ??
         if (_player.movement.OnSlope())

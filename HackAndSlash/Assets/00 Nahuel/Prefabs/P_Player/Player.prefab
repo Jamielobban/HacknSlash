@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d5f9599cd1a80594cbd59e345c448dd6, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &136837296978705520
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +321,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f1fe2d923e351ed4482fbf8b0418a734, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &437641772189061253
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: ba17137445b58424491b20a75ff68715, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &599826317068362853
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +880,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1ab45b5efe3bbc546938888f71ecbb5c, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &1071019466750682611
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 93902bfe67aaa4840a0a0e6cd2c7a716, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &1081196635342255365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,6 +1597,7 @@ GameObject:
   - component: {fileID: 1614576634013803876}
   - component: {fileID: 2819490630287947124}
   - component: {fileID: 6813399429973184852}
+  - component: {fileID: 2742756537909036011}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1755,6 +1751,7 @@ MonoBehaviour:
   isInvulnerable: 0
   isInteracting: 0
   isAirAttacking: 0
+  isAttacking: 0
 --- !u!114 &7606065436709299514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,23 +1791,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveState: 0
-  airSpeed: 8
-  runSpeed: 7
-  sprintSpeed: 10
+  airSpeed: 5
+  runSpeed: 5
+  sprintSpeed: 8
   dashSpeed: 15
   dashSpeedChangeFactor: 50
   rotationSpeed: 15
   airRotationSpeed: 10
-  interactingRotationSpeed: 5
+  interactingRotationSpeed: 1
+  keepMomentum: 0
   inAirTime: 0
   maxDistance: 1.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  jumpHeight: 3.5
+  jumpHeight: 3
   maxSlopeAngle: 45
   isJumping: 0
   isDashing: 0
+  testAirTIme: 0.5
+  testMaxDist: 2.25
+  testMinDist: 0.25
 --- !u!114 &6417761822419749738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1927,6 +1928,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashForce: 10
+--- !u!114 &2742756537909036011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931428773790119072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaded1360dab743448efcc916791d135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  _enemyTargetLocator: {fileID: 0}
+  _cinemachineAnimator: {fileID: 0}
+  zeroVert_Look: 0
+  _areaZone: 10
+  lookAtSmoothing: 2
+  maxNoticeAngle: 60
+  _canvasScale: 0.1
+  _camera: {fileID: 0}
+  selectedEnemy: {fileID: 0}
+  isLockedOn: 0
+  lockOnCanvas: {fileID: 0}
+  lookAtEnemy: {fileID: 0}
 --- !u!1 &1939840539501661210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1131d2db61ef305459a97f413acb5668, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &2460553790861302084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,7 +2209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 76df6c309f7dd9f4cbd1a39476c069a7, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &2715133012748509642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,7 +2276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
-  distToGround: 1
+  distToGround: 0.75
   groundDrag: 4
   groundMask:
     serializedVersion: 2
@@ -2677,7 +2703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0981b96e2510e464da0bcca039395b43, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &3676688582226366407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2723,7 +2748,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 62483657593a81c4c95392b4b06c187a, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &3729730389532247722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3249,7 +3273,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9f77c92e3e73e274f9384357075b6a34, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &4209103142181080537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3295,7 +3318,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 810a9b6affed3934e9f87da7fdebb343, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &4272246208023149737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3995,7 +4017,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9abc5ef6f3aa30a4886e643d675b2956, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &5510029013181843335
 GameObject:
   m_ObjectHideFlags: 0
@@ -4026,6 +4047,7 @@ Transform:
   m_Children:
   - {fileID: 2522702188532585692}
   - {fileID: 1326537479304087374}
+  - {fileID: 1394044014251493310}
   m_Father: {fileID: 4916640838537896346}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4502,6 +4524,59 @@ MonoBehaviour:
   - {fileID: 2448403788092311508}
   - {fileID: 3843032823170887767}
   - {fileID: 4584123359675415528}
+--- !u!1 &6719545776499526594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394044014251493310}
+  - component: {fileID: 5177769572124739548}
+  m_Layer: 3
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1394044014251493310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719545776499526594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.068, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3761246521640231951}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5177769572124739548
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719545776499526594}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0747609, y: 1.4817039, z: 4.415346}
+  m_Center: {x: 0.010375503, y: -0.240852, z: 1.7076745}
 --- !u!1 &6791319174581932069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4579,7 +4654,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9b6e8ae7deebfd74eb1a92fd0ab4a30c, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &6933146789118687764
 GameObject:
   m_ObjectHideFlags: 0
@@ -4979,7 +5053,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 24dce502e6d1720459e90213dcab301a, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &7756295177543537335
 GameObject:
   m_ObjectHideFlags: 0
@@ -5119,7 +5192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f0c74db0f612b844f96e0147ed26b403, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &7971617771874637225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5260,7 +5332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c7882da743e422f4499b12f93a17f9ae, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &8209774503788797977
 GameObject:
   m_ObjectHideFlags: 0
@@ -5306,7 +5377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 49391ab1d0a50e646b45e42a2cf073f3, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &8218633859974591947
 GameObject:
   m_ObjectHideFlags: 0
@@ -5352,7 +5422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 25db29a0b03e2464094af48fa75fb9e6, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &8377305025320731741
 GameObject:
   m_ObjectHideFlags: 0
@@ -5557,7 +5626,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7b6dc34784a1ec74bad76f98aacf0bac, type: 2}
-  currentNearEnemy: {fileID: 0}
 --- !u!1 &8583980023365014547
 GameObject:
   m_ObjectHideFlags: 0
