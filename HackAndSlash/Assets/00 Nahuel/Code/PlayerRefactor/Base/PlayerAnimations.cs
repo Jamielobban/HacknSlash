@@ -17,18 +17,18 @@ public class PlayerAnimations : MonoBehaviour
     public float timeToDeactive = .25f;
     public void HandleMovingAnimations()
     {
-        if (_player.inputs.GetDirectionLeftStick().magnitude < 0f)
+        if (_player.inputs.GetDirectionLeftStick().magnitude < 0.1f)
         {
             _timer += Time.deltaTime;
             if (_timer > timeToDeactive && _player.groundCheck.isGrounded)
             {
                 Debug.Log("canceled");
-                _player.movement.DisableMovement();
                 _player.ChangeCharacterState(Enums.CharacterState.Idle);
+               // _player.movement.DisableMovement();
                 _timer = 0f;
             }
         }
-        if(_player.inputs.GetDirectionLeftStick().magnitude > 0 && _player.movement.moveSpeed > 0)
+        if(_player.inputs.GetDirectionLeftStick().magnitude >= 0.1f && _player.movement.moveSpeed > 0)
         {
             if (_player.movement.IsSprinting)
             {
@@ -54,14 +54,30 @@ public class PlayerAnimations : MonoBehaviour
     {
         if (!_player.movement.IsSprinting)
         {
-            StopAllCoroutines();
-            StartCoroutine(DecreaseSpeedOverTime(0f, .45f));
+            if(_player.movement.lastState != Enums.PlayerMovementState.Dashing)
+            {
+                StopAllCoroutines();
+                StartCoroutine(DecreaseSpeedOverTime(0f, 0.35f));
+            }
+            else
+            {
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);
+                _player.movement.moveSpeed = 0;
+            }
         }
         else
         {
-            StopAllCoroutines();
-            _anim.SetFloat(Constants.ANIM_VAR_SPEED, 1f);
-            StartCoroutine(DecreaseSpeedOverTime(0f, .15f));
+            if (_player.movement.lastState != Enums.PlayerMovementState.Dashing)
+            {
+                StopAllCoroutines();
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 1f);
+                StartCoroutine(DecreaseSpeedOverTime(0f, .15f));
+            }
+            else
+            {
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);
+                _player.movement.moveSpeed = 0;
+            }
         }
     }
 

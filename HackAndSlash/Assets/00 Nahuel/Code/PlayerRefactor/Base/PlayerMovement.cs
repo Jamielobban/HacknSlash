@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private float _desiredVelocity;
     private float _lastDesiredVelocity;
     public bool keepMomentum;
-    private Enums.PlayerMovementState lastState;
+    public Enums.PlayerMovementState lastState;
 
     [Header("Falling stats:")]
     public float inAirTime;
@@ -357,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
 
         if ((lastState == Enums.PlayerMovementState.Dashing || lastState == Enums.PlayerMovementState.Attacking))
         {
-            keepMomentum = true;
+           // keepMomentum = true;
         }
 
         if(desiredMoveSpeedHasChanged)

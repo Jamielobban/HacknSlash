@@ -21,6 +21,7 @@ public class PlayerDash : MonoBehaviour
             return;
         }
         _player.animations.PlayTargetAnimation("roll", true);
+        _player.movement.keepMomentum = true;
     }
 
     public void DashAction(float force)
