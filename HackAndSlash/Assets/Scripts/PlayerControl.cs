@@ -62,9 +62,12 @@ public class PlayerControl : MonoBehaviour
 
     public float delayIdleToMoveTime;
 
+
+
     public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, Teleport, run3, run4, air3, air4 };
 
     public int currentScroll;
+
     [System.Serializable]
     public struct Ataques
     {
@@ -72,9 +75,6 @@ public class PlayerControl : MonoBehaviour
         public float delay;
         public bool nextAttack;
         public MMFeedbacks effects;
-
-        public MMFeedbacks enemyFeedback;
-        public MMFeedbacks enemyFeedbackPotenciado;
 
         public string name;
 
@@ -89,31 +89,25 @@ public class PlayerControl : MonoBehaviour
         public float delayFinal;
 
         public GameObject collider;
-        public string colliderTag;
         public float delayGolpe;
 
-        public Vector2 EnemyKnockBackForce;
-        public string enemyHitAnim;
-
-        public bool EnemyStandUp;
         public int repeticionGolpes;
         public float delayRepeticionGolpes;
-        public int damage;
 
+        public HitState hitState;
         public GameObject slash;
 
-        //1 is light, 2 is heavy
-        //public GameObject BlessingToSpawnHeavy;
-        //public GameObject BlessingToSpawnHeavy;
-        //public GameObject BlessingToSpawnHeavy;
-        //pickup
     }
+
     [System.Serializable]
     public class ListaAtaques
     {
         public ComboAtaques combo;
         public Ataques[] attacks;
     }
+
+
+
     public Blessing[] blessing;
 
     public ListaAtaques[] ataques;
@@ -167,6 +161,7 @@ public class PlayerControl : MonoBehaviour
 
     float TeleportTime;
 
+    public enum HitState {DEBIL,MEDIO,FUERTE};
 
     public enum PassiveCombo
     {
@@ -613,6 +608,7 @@ public class PlayerControl : MonoBehaviour
             //    else
             //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedbackPotenciado);
 
+            currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState;
                 currentComboAttacks.attacks[golpe].collider.SetActive(true);
                 StartCoroutine(DesactivarCollisionGolpe(0.05f, golpe));
             //}
