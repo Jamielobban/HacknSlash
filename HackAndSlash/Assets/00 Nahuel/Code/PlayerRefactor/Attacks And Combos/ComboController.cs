@@ -15,6 +15,11 @@ public class ComboController : MonoBehaviour
     private float _timer;
 
     public bool inAirCombo = false;
+    private PlayerManager _player;
+    private void Awake()
+    {
+        _player = GetComponent<PlayerManager>();
+    }
 
     private void Update()
     {
@@ -109,6 +114,7 @@ public class ComboController : MonoBehaviour
         currentActionIndex = 0;
         _timer = 0;
         inAirCombo = false;
+        _player.canMoveToEnemy = true;
     }
 
 }

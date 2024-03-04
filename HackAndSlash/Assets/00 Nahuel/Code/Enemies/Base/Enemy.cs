@@ -49,9 +49,9 @@ public class Enemy : PoolableObject
 
         ResetEnemy();
     }
+
     protected virtual void FixedUpdate()
     {
-
     }
     protected virtual void Update()
     {

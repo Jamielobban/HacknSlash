@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     public bool isInteracting;
     public bool isAirAttacking = false;
     public bool isAttacking = false;
+    public bool canMoveToEnemy = true;
 
     private void Awake()
     {

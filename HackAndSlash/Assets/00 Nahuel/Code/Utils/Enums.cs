@@ -33,6 +33,7 @@ public class Enums
     };
     public enum PlayerMovementState
     {
+        Stop,
         Walking,
         Sprinting,
         Dashing,

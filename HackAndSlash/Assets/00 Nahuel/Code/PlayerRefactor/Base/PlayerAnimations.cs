@@ -32,11 +32,13 @@ public class PlayerAnimations : MonoBehaviour
         {
             if (_player.movement.IsSprinting)
             {
-                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 2f);
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 8f);
             }
             else
             {
-                _anim.SetFloat(Constants.ANIM_VAR_SPEED, _player.inputs.GetDirectionLeftStick().magnitude);
+                Vector3 vel = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
+                //_anim.SetFloat(Constants.ANIM_VAR_SPEED, _player.inputs.GetDirectionLeftStick().magnitude);
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, vel.magnitude);
             }
         }
     }
@@ -57,7 +59,7 @@ public class PlayerAnimations : MonoBehaviour
             if(_player.movement.lastState != Enums.PlayerMovementState.Dashing)
             {
                 StopAllCoroutines();
-                StartCoroutine(DecreaseSpeedOverTime(0f, 0.35f));
+                StartCoroutine(DecreaseSpeedOverTime(0f, 0.25f));
             }
             else
             {
@@ -70,7 +72,7 @@ public class PlayerAnimations : MonoBehaviour
             if (_player.movement.lastState != Enums.PlayerMovementState.Dashing)
             {
                 StopAllCoroutines();
-                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 1f);
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, .7f);
                 StartCoroutine(DecreaseSpeedOverTime(0f, .15f));
             }
             else

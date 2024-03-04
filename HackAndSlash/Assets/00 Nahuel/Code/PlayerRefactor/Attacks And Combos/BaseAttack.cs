@@ -28,9 +28,10 @@ public class BaseAttack : MonoBehaviour
         {
             if(_player.lockCombat.selectedEnemy != null)
             {
-                if (_player.lockCombat.distanceToAnimMove < Mathf.Abs(Vector3.Distance(_player.lockCombat.selectedEnemy.transform.position, _player.transform.position)))
+                if (_player.lockCombat.distanceToAnimMove < Mathf.Abs(Vector3.Distance(_player.lockCombat.selectedEnemy.transform.position, _player.transform.position)) && _player.canMoveToEnemy)
                 {
                     _player.animations.PlayTargetAnimation("roll", true);
+                    _player.canMoveToEnemy = false;
                     _player.transform.DOLookAt(_player.lockCombat.selectedEnemy.transform.position, .2f);
                     _player.transform.DOMove(TargetOffset(_player.lockCombat.selectedEnemy.transform), .40f).OnComplete(() => _player.animations.PlayTargetAnimation(data.animation, true));
                 }

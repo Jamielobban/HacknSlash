@@ -216,7 +216,7 @@ public class PlayerCombatLockFeel : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, _areaZone);
         Gizmos.color = Color.black;
-        Gizmos.DrawRay(transform.position, _player.movement.GetDirectionNormalized());
+       // Gizmos.DrawRay(transform.position, _player.movement.GetDirectionNormalized());
         Gizmos.DrawWireSphere(transform.position, 1);
         if (selectedEnemy != null)
             Gizmos.DrawSphere(selectedEnemy.transform.position, .5f);
