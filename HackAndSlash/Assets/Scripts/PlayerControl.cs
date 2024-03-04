@@ -322,6 +322,7 @@ public class PlayerControl : MonoBehaviour
 
         return null;
     }
+
     void AcabarAtaqueCaida()
     {
         CheckIfReturnIdle();
@@ -367,7 +368,6 @@ public class PlayerControl : MonoBehaviour
                         moveDirSaved = new Vector3();
                         landHeight = hit.point.y;
 
-                        //this.transform.position = new Vector3(this.transform.position.x, landHeight + 0.2f, this.transform.position.z);
 
                         return false;
                     }
@@ -426,14 +426,9 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 gravity = new Vector3(0, this.gravity * (Time.time - fallStartTime), 0);
 
-        //if((landHeight <= 0 && ((this.transform.position.y-landHeight) >= 0) && Mathf.Abs(this.transform.position.y - landHeight) < (4.5f* (((Time.time - fallStartTime))))) || (landHeight > 0 && ((this.transform.position.y - landHeight) > 0) && Mathf.Abs(this.transform.position.y - landHeight) < (4.5f * (((Time.time - fallStartTime))))))
-        //{
-        //    this.transform.position = new Vector3(this.transform.position.x, landHeight+0.1f, this.transform.position.z);
-        //}
-        //else
-        //{
+
         this.GetComponent<Rigidbody>().AddForce(gravity * Time.deltaTime, ForceMode.Force);
-        //}
+        
 
     }
     void moveInAir(float vel)
@@ -447,7 +442,6 @@ public class PlayerControl : MonoBehaviour
                 return;
             }
 
-            // Smoothly rotate towards the target point.
 
 
         }
@@ -512,106 +506,10 @@ public class PlayerControl : MonoBehaviour
 
             currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
-
-
-            //bool hasApplied = false;
-            //if (blessing != null)
-            //{
-            //    foreach (Blessing i in blessing)
-            //    {
-            //        if (AreListsEqual(i.passiveCombo, passiveCombo))
-            //        {
-            //            hasApplied = true;
-            //            SpawnObjectWithDelay(i.visualEffect.GetComponent<AttackCollider>().spawnDelay, i.visualEffect, i.visualEffect.GetComponent<AttackCollider>().spawnDistance,
-            //                i.visualEffect.GetComponent<AttackCollider>().upDistance, (spawnedObject) =>
-            //                {
-            //                    // Use the spawnedObject reference here
-            //                    //GameObject effect = spawnedObject;
-            //                    Collider effectCollider = spawnedObject.GetComponent<Collider>();
-            //                    spawnedObject.GetComponent<AttackCollider>().attack = passiveCombo.Last();
-
-            //                    spawnedObject.GetComponent<AttackCollider>().healthState = i.healthState;
-            //                    spawnedObject.GetComponent<AttackCollider>().enemyHitAnim = i.hit;
-            //                    spawnedObject.GetComponent<AttackCollider>().KnockbackY = i.knockback.y;
-            //                    spawnedObject.GetComponent<AttackCollider>().enemyStandUp = i.EnemyStandUp;
-
-
-            //                    spawnedObject.GetComponent<AttackCollider>().damage = GetCritOrDamage(i.damage * damageMult * potenciado);
-
-
-            //                    spawnedObject.GetComponent<AttackCollider>().Knockback = i.knockback.x;
-
-
-            //                    spawnedObject.GetComponent<AttackCollider>().SetFeedback(i.enemyFeedback);
-
-            //                    spawnedObject.tag = currentComboAttacks.attacks[golpe].colliderTag;
-            //                    effectCollider.enabled = true;
-            //                    StartCoroutine(DesactivarCollisionGolpeBlessing(0.05f, effectCollider));
-            //                });
-
-
-            //        }
-            //    }
-            //}
-            //if (!hasApplied)
-            //{
-            //    if (currentComboAttacks.combo == ComboAtaques.HoldTriangleL2 && repeticionGolpe == 1)
-            //    {
-            //        currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;
-
-            //        currentComboAttacks.attacks[golpe].slash.transform.GetChild(0).localEulerAngles += new Vector3(0, 0, 90);
-            //        //currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "GolpeSalto";
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = false;
-
-            //    }
-            //    else if (currentComboAttacks.combo == ComboAtaques.HoldTriangleL2 && repeticionGolpe == 2)
-            //    {
-            //        currentComboAttacks.attacks[golpe].collider.tag = "GolpeRebote";
-
-            //       // currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = "HitFuerte";
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = -currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = true;
-
-            //    }
-            //    else
-            //    {
-            //        currentComboAttacks.attacks[golpe].collider.tag = currentComboAttacks.attacks[golpe].colliderTag;
-
-            //        //currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyHitAnim = currentComboAttacks.attacks[golpe].enemyHitAnim;
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().KnockbackY = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.y;
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().enemyStandUp = currentComboAttacks.attacks[golpe].EnemyStandUp;
-
-            //    }
-            //    if(currentComboAttacks.combo == ComboAtaques.HoldQuadrat)
-            //    {
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().toAir = true;
-            //    }
-            //    else
-            //    {
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().toAir = false;
-
-            //    }
-
-            //    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().attack = passiveCombo.Last();
-            //    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().healthState = HealthState.NORMAL;
-            //    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().Knockback = currentComboAttacks.attacks[golpe].EnemyKnockBackForce.x;
-
-
-
-
-            //    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().damage = GetCritOrDamage(currentComboAttacks.attacks[golpe].damage * damageMult * potenciado);
-            //    currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().isCrit = IsCriticalHit();
-
-            //    if (potenciado == 1)
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedback);
-            //    else
-            //        currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().SetFeedback(currentComboAttacks.attacks[golpe].enemyFeedbackPotenciado);
-
             currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState;
                 currentComboAttacks.attacks[golpe].collider.SetActive(true);
                 StartCoroutine(DesactivarCollisionGolpe(0.05f, golpe));
-            //}
+            
         }
 
 
@@ -634,7 +532,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     Vector3 enemy;
-
+    public Collider[] colliders;
     void Aparecer()
     {
         playerAnim.Play("Aparecer", 1);
@@ -674,95 +572,37 @@ public class PlayerControl : MonoBehaviour
                 dir.y = player.transform.position.y;
 
             RaycastHit hit;
+            RaycastHit hit2;
 
             if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7))
             {
-                if (currentComboAttacks.combo != ComboAtaques.air1 && currentComboAttacks.combo != ComboAtaques.air2 && currentComboAttacks.combo != ComboAtaques.air3 && currentComboAttacks.combo != ComboAtaques.air4)
-                    dir.y = hit.point.y;
+                colliders = Physics.OverlapSphere(dir + new Vector3(0, 1, 0), 0.01f, 1 << 7);
+
+                // Comprueba si hay colliders intersectando la esfera
 
 
-                playerAnim.Play("Desaparecer", 1);
-                Invoke("Aparecer", 0.1f);
+                if (!(colliders.Length > 0))
+                {
+                   if (currentComboAttacks.combo != ComboAtaques.air1 && currentComboAttacks.combo != ComboAtaques.air2 && currentComboAttacks.combo != ComboAtaques.air3 && currentComboAttacks.combo != ComboAtaques.air4)
+                        dir.y = hit.point.y;
 
-                enemy = attackTeleport.GetEnemie(this.transform.position);
-                enem = enemy;
-                enem.y = dir.y;
-                enemy += (enem - dir).normalized * 3f;
-                this.GetComponent<Rigidbody>().DOMove(dir, 0.1f, false);
+
+                    playerAnim.Play("Desaparecer", 1);
+                    Invoke("Aparecer", 0.1f);
+
+                    enemy = attackTeleport.GetEnemie(this.transform.position);
+                    enem = enemy;
+                    enem.y = dir.y;
+                    enemy += (enem - dir).normalized * 3f;
+
+
+                    this.GetComponent<Rigidbody>().DOMove(dir, 0.3f, false);
+                }
 
             }
 
 
         }
-        /*
-        if (remate.GetEnemyDebil(this.transform.position) != null && (currentComboAttacks.combo == ComboAtaques.HoldTriangle || currentComboAttacks.combo == ComboAtaques.HoldQuadrat))
-        {
-            GameObject enemyObject = remate.GetEnemyDebil(this.transform.position);
-            enemyObject.GetComponent<EnemySkeletonSword>().EndDebil();
-
-            Vector3 pos = new Vector3(enemyObject.transform.position.x, player.transform.position.y, enemyObject.transform.position.z);
-            damageMultiplier = 5;
-            enemy = pos;
-            Vector3 enem = enemy;
-            enem.y = player.transform.position.y;
-            enemy += (enem - player.transform.position).normalized * 0.5f;
-            Vector3 dir = new Vector3(0, 0, 0);
-
-            if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
-            {
-                dir = -(enem - player.transform.position);
-            }
-            else
-            {
-                dir = (camera.transform.position - (camera.transform.position + (camera.transform.forward * -controller.LeftStickValue().y) + (camera.transform.right * -controller.LeftStickValue().x)));
-
-            }
-            dir.Normalize();
-            if (currentComboAttacks.combo == ComboAtaques.HoldTriangle)
-                dir = pos + (dir * 7);
-            else
-                dir = pos + (dir * 3);
-
-            if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
-                dir.y = player.transform.position.y;
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7))
-            {
-                if (currentComboAttacks.combo != ComboAtaques.air1 && currentComboAttacks.combo != ComboAtaques.air2 && currentComboAttacks.combo != ComboAtaques.air3 && currentComboAttacks.combo != ComboAtaques.air4)
-                    dir.y = hit.point.y;
-
-
-                playerAnim.Play("Desaparecer", 1);
-                Invoke("Aparecer", 0.1f);
-
-                enemy = attackTeleport.GetEnemie(this.transform.position);
-                enem = enemy;
-                enem.y = dir.y;
-                enemy += (enem - dir).normalized * 3f;
-                this.GetComponent<Rigidbody>().DOMove(dir, 0.1f, false);
-
-            }
-
-            switch (currentComboAttacks.combo)
-            {
-                case ComboAtaques.HoldQuadrat:
-                    camera.GetComponent<Remate>().remate("HoldQuadrat");
-
-                    break;
-                case ComboAtaques.HoldTriangle:
-                    camera.GetComponent<Remate>().remate("HoldTriangle");
-
-                    break;
-
-            }
-
-            camera.transform.DORotate(player.transform.eulerAngles, 0.1f);
-            camera.transform.GetChild(0).DOLocalRotate(new Vector3(360, 0, 0), 0.1f);
-        }
-
-        */
 
         playerAnim.speed = 1.75f;
         currentComboAttack++;
@@ -816,6 +656,7 @@ public class PlayerControl : MonoBehaviour
     }
 
 
+
     #region Funcion que devuelve true si estas cayendo (por un bordillo, al acabar un ataque en el aire, o cualquier cosa) y se encarga de hacer todas las cosas al empezar a caer, cambia al estado JUMP y dentro de JUMP al estado FALL
 
     bool CheckIfIsFalling()
@@ -826,6 +667,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (hit.distance > distanceFloor)
             {
+
                 fallStartTime = Time.time;
                 states = States.JUMP;
                 jump = Jump.FALL;
@@ -1461,6 +1303,7 @@ public class PlayerControl : MonoBehaviour
     float damageMult = 1;
     public float delayDamage = 0.5f;
     bool atackPress = false;
+
     void CheckPerfectHit()
     {
         if (currentComboAttacks == null || currentComboAttack == -1 || currentComboAttack >= currentComboAttacks.attacks.Length)
@@ -1523,20 +1366,8 @@ public class PlayerControl : MonoBehaviour
     }
     bool CheckAtaques()
     {
-        //if(controller.Box.action != null)
-        //{
-        //    if (controller.Box.action.WasPressedThisFrame() && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Cargar") && (states == States.IDLE|| states == States.MOVE))
-        //    {
-        //        playerAnim.CrossFadeInFixedTime("Cargar", 0.1f);
-        //    }
-        //}
-        //if (controller.Triangle.action != null)
-        //{
-        //    if (controller.Triangle.action.WasPressedThisFrame() && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Cargar") && (states == States.IDLE || states == States.MOVE))
-        //    {
-        //        playerAnim.CrossFadeInFixedTime("Cargar", 0.1f);
-        //    }
-        //}
+
+
         float delay = 0;
         if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
         {
@@ -1627,6 +1458,7 @@ public class PlayerControl : MonoBehaviour
         if ((Time.time - attackStartTime) >= delay)
         {
             enemy = Vector3.zero;
+
 
 
             if (controller.ataqueCuadradoCargado)
@@ -1884,54 +1716,6 @@ public class PlayerControl : MonoBehaviour
                     currentComboAttacks = GetAttacks(ComboAtaques.air2);
                     PlayAttack();
                 }
-                //else if (states == States.MOVE || currentComboAttacks.combo == ComboAtaques.run2)
-                //{
-                //    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                //        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                //    if (moves == Moves.RUN || currentComboAttacks.combo == ComboAtaques.run2)
-                //    {
-                //        if ((Time.time - attackStartTime) >= delay + delayDamage)
-                //        {
-                //            damageMult = 1;
-
-                //            currentComboAttack = -1;
-                //            passiveCombo.Clear();
-                //        }
-                //        else if (GetAttacks(ComboAtaques.run2).attacks.Length - 1 <= currentComboAttack)
-                //        {
-                //            currentComboAttack = GetAttacks(ComboAtaques.run2).attacks.Length - 1;
-
-                //        }
-                //        if (currentComboAttack == -1)
-                //            passiveCombo.Add(PassiveCombo.TRIANGLERUN);
-                //        else
-                //            passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-
-                //        attacks = Attacks.RUN;
-
-                //        currentComboAttacks = GetAttacks(ComboAtaques.run2);
-                //        PlayAttack();
-                //    }
-                //    else
-                //    {
-                //        if ((Time.time - attackStartTime) >= delay + delayDamage)
-                //        {
-                //            damageMult = 1;
-
-                //            currentComboAttack = -1;
-                //            passiveCombo.Clear();
-                //        }
-                //        else if (GetAttacks(ComboAtaques.Triangle).attacks.Length - 1 <= currentComboAttack)
-                //        {
-                //            currentComboAttack = GetAttacks(ComboAtaques.Triangle).attacks.Length - 1;
-                //        }
-                //        passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-                //        attacks = Attacks.GROUND;
-                //        currentComboAttacks = GetAttacks(ComboAtaques.Triangle);
-                //        PlayAttack();
-                //    }
-
-                //}
                 else if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
                 {
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1959,220 +1743,7 @@ public class PlayerControl : MonoBehaviour
                 return true;
             }
 
-            //    if (controller.ataqueCuadradoCargadoL2 && states != States.JUMP)
-            //    {
-            //        this.gameObject.layer = 10;
-            //        if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //        {
-            //            //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //            //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //            //this.transform.position = pos;
-            //            player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //        }
-
-            //        if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //        {
-            //            damageMult = 1;
-
-            //            currentComboAttack = -1;
-            //            passiveCombo.Clear();
-            //        }
-            //        else if (GetAttacks(ComboAtaques.HoldQuadratL2).attacks.Length - 1 <= currentComboAttack)
-            //        {
-            //            currentComboAttack = GetAttacks(ComboAtaques.HoldQuadratL2).attacks.Length - 2;
-            //        }
-            //        if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //        moveDirSaved = new Vector3();
-            //        states = States.ATTACK;
-            //        passiveCombo.Add(PassiveCombo.HOLDQUADRATFLOORL2);
-            //        attacks = Attacks.GROUND;
-            //        currentComboAttacks = GetAttacks(ComboAtaques.HoldQuadratL2);
-            //        PlayAttack();
-            //        controller.ResetBotonesAtaques();
-            //        return true;
-
-            //    }
-
-            //    if (controller.ataqueCuadradoCargado)
-            //    {
-            //        if (states != States.JUMP)
-            //        {
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            {
-            //                //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //                //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //                //this.transform.position = pos;
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //            }
-
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //            {
-            //                damageMult = 1;
-
-            //                currentComboAttack = -1;
-            //                passiveCombo.Clear();
-            //            }
-            //            else if (GetAttacks(ComboAtaques.HoldQuadrat).attacks.Length - 1 <= currentComboAttack)
-            //            {
-            //                currentComboAttack = GetAttacks(ComboAtaques.HoldQuadrat).attacks.Length - 2;
-            //            }
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //            moveDirSaved = new Vector3();
-            //            states = States.ATTACK;
-            //            passiveCombo.Add(PassiveCombo.HOLDQUADRATFLOOR);
-            //            attacks = Attacks.GROUND;
-            //            currentComboAttacks = GetAttacks(ComboAtaques.HoldQuadrat);
-            //            PlayAttack();
-            //            controller.ResetBotonesAtaques();
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            {
-            //                //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //                //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //                //this.transform.position = pos;
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //            }
-
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //            {
-            //                damageMult = 1;
-
-            //                currentComboAttack = -1;
-            //                passiveCombo.Clear();
-            //            }
-            //            else if (GetAttacks(ComboAtaques.air3).attacks.Length - 1 <= currentComboAttack)
-            //            {
-            //                currentComboAttack = GetAttacks(ComboAtaques.air3).attacks.Length - 2;
-            //            }
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //            moveDirSaved = new Vector3();
-            //            states = States.ATTACK;
-            //            passiveCombo.Add(PassiveCombo.HOLDQUADRATAIR);
-            //            attacks = Attacks.AIR;
-            //            currentComboAttacks = GetAttacks(ComboAtaques.air3);
-            //            PlayAttack();
-            //            controller.ResetBotonesAtaques();
-            //            return true;
-            //        }
-            //    }
-            //    if (controller.ataqueTrianguloCargadoL2 && states != States.JUMP)
-            //    {
-            //        repeticionGolpe = 0;
-            //        if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //        {
-            //            //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //            //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //            //this.transform.position = pos;
-            //            player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //        }
-
-            //        if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //        {
-            //            damageMult = 1;
-
-            //            currentComboAttack = -1;
-            //            passiveCombo.Clear();
-            //        }
-            //        else if (GetAttacks(ComboAtaques.HoldTriangleL2).attacks.Length - 1 <= currentComboAttack)
-            //        {
-            //            currentComboAttack = GetAttacks(ComboAtaques.HoldTriangleL2).attacks.Length - 2;
-            //        }
-
-            //        if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //        moveDirSaved = new Vector3();
-            //        passiveCombo.Add(PassiveCombo.HOLDTRIANGLEFLOORL2);
-            //        states = States.ATTACK;
-            //        attacks = Attacks.GROUND;
-            //        currentComboAttacks = GetAttacks(ComboAtaques.HoldTriangleL2);
-            //        PlayAttack();
-            //        controller.ResetBotonesAtaques();
-            //        return true;
-            //    }
-            //    if (controller.ataqueTrianguloCargado)
-            //    {
-            //        if (states != States.JUMP)
-            //        {
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            {
-            //                //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //                //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //                //this.transform.position = pos;
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //            }
-
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //            {
-            //                damageMult = 1;
-
-            //                currentComboAttack = -1;
-            //                passiveCombo.Clear();
-            //            }
-            //            else if (GetAttacks(ComboAtaques.HoldTriangle).attacks.Length - 1 <= currentComboAttack)
-            //            {
-            //                currentComboAttack = GetAttacks(ComboAtaques.HoldTriangle).attacks.Length - 2;
-            //            }
-
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //            moveDirSaved = new Vector3();
-            //            passiveCombo.Add(PassiveCombo.HOLDTRIANGLEFLOOR);
-            //            states = States.ATTACK;
-            //            attacks = Attacks.GROUND;
-            //            currentComboAttacks = GetAttacks(ComboAtaques.HoldTriangle);
-            //            PlayAttack();
-            //            controller.ResetBotonesAtaques();
-            //            return true;
-
-
-            //            enemy = Vector3.zero;
-            //        }
-            //        else
-            //        {
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //            {
-            //                //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-            //                //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-            //                //this.transform.position = pos;
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
-            //            }
-
-            //            if ((Time.time - attackStartTime) >= delay + delayDaño)
-            //            {
-            //                damageMult = 1;
-
-            //                currentComboAttack = -1;
-            //                passiveCombo.Clear();
-            //            }
-            //            else if (GetAttacks(ComboAtaques.air4).attacks.Length - 1 <= currentComboAttack)
-            //            {
-            //                currentComboAttack = GetAttacks(ComboAtaques.air4).attacks.Length - 2;
-            //            }
-
-            //            if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-            //                player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-            //            moveDirSaved = new Vector3();
-            //            passiveCombo.Add(PassiveCombo.HOLDTRIANGLEAIR);
-            //            states = States.ATTACK;
-            //            attacks = Attacks.AIR;
-            //            currentComboAttacks = GetAttacks(ComboAtaques.air4);
-            //            PlayAttack();
-            //            controller.ResetBotonesAtaques();
-            //            return true;
-            //        }
-            //    }
+     
         }
 
 
@@ -2231,7 +1802,6 @@ public class PlayerControl : MonoBehaviour
         if (controller.StartMove())
         {
             delayMove = Time.time;
-            //playerAnim.CrossFadeInFixedTime("StartMoving", 0.1f);
             states = States.DELAYMOVE;
         }
     }
@@ -2485,7 +2055,6 @@ public class PlayerControl : MonoBehaviour
             {
                 camera.transform.GetChild(0).localEulerAngles = new Vector3(390, 0, 0);
             }
-            //camera.transform.GetChild(2).Rotate(new Vector3(0, 0, controller.RightStickValue().y) * Time.deltaTime * CameraRotatSpeed);
 
         }
     }

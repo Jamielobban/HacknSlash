@@ -29,7 +29,7 @@ public class AttackState : EnemyState
         }
     }
 
-    private void HandleRotationFacePlayer()
+    protected void HandleRotationFacePlayer()
     {
         Quaternion rotation = Quaternion.LookRotation((_enemy.movements.target.transform.position - _enemy.transform.position));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5f * Time.deltaTime);
