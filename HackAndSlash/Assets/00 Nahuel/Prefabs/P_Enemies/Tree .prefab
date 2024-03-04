@@ -68,8 +68,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 3.9005127, y: 2.5040665, z: 4.22782}
-  m_Center: {x: 0.022125244, y: -0.07357025, z: 1.6242797}
+  m_Size: {x: 3.9005127, y: 4.10672, z: 3.578308}
+  m_Center: {x: 0.022125244, y: 0.7277565, z: 2.4026184}
 --- !u!1 &5792519604314012824
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +395,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7384589997025220330, guid: ebc6146f535a1804e88df22517a43ca8,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384589997025220330, guid: ebc6146f535a1804e88df22517a43ca8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384589997025220330, guid: ebc6146f535a1804e88df22517a43ca8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384589997025220330, guid: ebc6146f535a1804e88df22517a43ca8,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -442,6 +457,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384589997025220330, guid: ebc6146f535a1804e88df22517a43ca8,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -537,7 +557,7 @@ PrefabInstance:
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
@@ -801,8 +821,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.57852364, y: 1.058659, z: 1.5656223}
-  m_Center: {x: 0.026735306, y: 0.43021876, z: 0.16934109}
+  m_Size: {x: 1.2177734, y: 7.3251657, z: 1.2267818}
+  m_Center: {x: 0.061523438, y: 3.5634723, z: -0.00007915497}
 --- !u!224 &6912727830764266367 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1664970933569651369, guid: b6fe7b0dd033c294ea7f78bb3985c314,
@@ -883,14 +903,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39480984
-  m_Height: 1.320909
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.39044, z: 0.21901727}
+  m_Radius: 1.41
+  m_Height: 8.13633
+  m_Direction: 1
+  m_Center: {x: 0, y: 3.8982544, z: 0.00999999}
 --- !u!114 &3441910430522070975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,6 +924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPooleable: 0
+  lookAtEnemy: {fileID: 0}
   isDead: 0
   isGrounded: 0
   canAttack: 1
