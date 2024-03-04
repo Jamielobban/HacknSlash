@@ -6,7 +6,7 @@ public class AttackState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
-        enemy.attackHolder.UseAbility(0);
+       // enemy.attackHolder.UseAbility(0);
         _player = FindObjectOfType<PlayerManager>().gameObject;
     }
     public override void UpdateState(Enemy enemy)

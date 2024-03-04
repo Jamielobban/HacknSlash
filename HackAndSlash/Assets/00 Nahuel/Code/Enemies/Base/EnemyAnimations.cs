@@ -19,6 +19,7 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnHit += () => { if (!_enemy.onAir) { PlayTargetAnimation("Hit", true); } };
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
+
     }
     protected virtual void Start()
     {

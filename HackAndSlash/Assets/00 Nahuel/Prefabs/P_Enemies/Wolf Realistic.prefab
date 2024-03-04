@@ -370,6 +370,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8893963376972120047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7971869704380289058}
+  m_Layer: 6
+  m_Name: LookAtEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7971869704380289058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893963376972120047}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.454, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351385999170865273}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1857583639540731675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1982,7 +2013,7 @@ PrefabInstance:
     - target: {fileID: 1808685512434453169, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2104735075252864853, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
@@ -2187,6 +2218,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6423356433073124432}
+    - targetCorrespondingSourceObject: {fileID: 3974382600696371015, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7971869704380289058}
     - targetCorrespondingSourceObject: {fileID: 1664970933569651369, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       insertIndex: -1
@@ -2250,6 +2285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPooleable: 1
+  lookAtEnemy: {fileID: 8893963376972120047}
   isDead: 0
   isGrounded: 0
   canAttack: 1
@@ -2340,9 +2376,9 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39480984
-  m_Height: 1.320909
-  m_Direction: 2
+  m_Radius: 0.55
+  m_Height: 0.72
+  m_Direction: 1
   m_Center: {x: 0, y: 0.39044, z: 0.21901727}
 --- !u!224 &2656176419740392855 stripped
 RectTransform:

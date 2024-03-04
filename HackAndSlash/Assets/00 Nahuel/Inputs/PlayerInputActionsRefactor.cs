@@ -32,7 +32,7 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
                     ""type"": ""Value"",
                     ""id"": ""577c66f1-e4bc-4dad-bb6a-c71a87c33547"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""StickDeadzone(min=0.25)"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -112,6 +112,15 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""8f61c684-b78a-43ef-be3d-dd4ce25382a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""057d55be-545a-4c46-b364-c2c453e4d592"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -396,12 +405,12 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8bddbc3b-07a2-4835-9f18-25b69407c0f5"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""abb10de7-a0d9-4b2a-ab71-4e7ca3907cda"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
+                    ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -445,6 +454,7 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
         m_Player_Triangle = m_Player.FindAction("Triangle", throwIfNotFound: true);
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -516,6 +526,7 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
     private readonly InputAction m_Player_Triangle;
     private readonly InputAction m_Player_Select;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_LockOn;
     public struct PlayerActions
     {
         private @PlayerInputActionsRefactor m_Wrapper;
@@ -530,6 +541,7 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
         public InputAction @Triangle => m_Wrapper.m_Player_Triangle;
         public InputAction @Select => m_Wrapper.m_Player_Select;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -569,6 +581,9 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -603,6 +618,9 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -650,5 +668,6 @@ public partial class @PlayerInputActionsRefactor: IInputActionCollection2, IDisp
         void OnTriangle(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
     }
 }

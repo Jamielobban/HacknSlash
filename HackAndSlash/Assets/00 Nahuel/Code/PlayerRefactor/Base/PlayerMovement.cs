@@ -1,36 +1,56 @@
+using MoreMountains.Tools;
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerManager _player;
     private Vector3 _moveDirection;
-
+    public Enums.PlayerMovementState moveState;
+    public Vector3 MoveDirection
+    {
+        get => _moveDirection;
+        set => _moveDirection = value;
+    }
     #region Stats
+    [Header("Speed stats:")]
+    public float moveSpeed;
+    public float runSpeed;
+    public float sprintSpeed;
 
-    [Header("Movement stats:")]
+    // -- Dash Stats -- //
+    public float dashSpeed;
+    public float dashSpeedChangeFactor;
+    private float speedChangeFactor;
+
+
+    [Header("Rotation stats:")]
     public float rotationSpeed = 15f;
-    public float airRotationSpeed = 15f;
     public float interactingRotationSpeed = 10f; // Attacking rot speed
 
-    public float airSpeed;
-    public float runSpeed;
-    public float maxSpeed;
+    // -- Momentum Stats -- //
+    private float _desiredVelocity;
+    private float _lastDesiredVelocity;
+    public bool keepMomentum;
+    public Enums.PlayerMovementState lastState;
 
     [Header("Falling stats:")]
     public float inAirTime;
-    public float raycastHeightOffset = 0.5f;
-    public LayerMask groundLayer;
     public float maxDistance;
+    public LayerMask groundLayer;
+    private Vector3 _targetPosition;
 
     [Header("Jump stats:")]
      public float jumpHeight = 3;
 
     [Header("Slope stats:")]
     public float maxSlopeAngle = 60f;
-    private RaycastHit slopeHit;
+    private RaycastHit _slopeHit;
+
     #endregion
+
+    public float gravity = -10000;
 
     [Header("Movement flags:")]
     private bool _isSprinting;
@@ -42,37 +62,37 @@ public class PlayerMovement : MonoBehaviour
         set => _isSprinting = value;
     }
 
-    [Header("Dash stats:")]
-    public float dashForce;
-    public float dashUpwardForce;
-    public float dashDuration;
-    public float dashDelay; //delay for reactive movement;
-
     private void Awake()
     {
         _player = GetComponent<PlayerManager>();
+        moveSpeed = 7;
     }
 
     public void HandleAllMovement()
     {
         HandleFallingAndLanding();
 
-        if(!_player.groundCheck.isGrounded)
+        StateHandler();
+
+        if (!_player.groundCheck.isGrounded && inAirTime > .15f && lastState != Enums.PlayerMovementState.Dashing)
         {
             HandleAirMovement();
         }
+        
+        if(!isDashing && _player.isAttacking)
+        {
+            //Handles rotation while attacking
+            HandleAttackingRotation();
+        }
 
-        //Handles rotation while attacking
-        HandleRotation(interactingRotationSpeed);
-
+        //Limit dash speed OnSlope
         if(isDashing)
         {
             if (OnSlope())
-            {
-                // Apply force down if on slope 
-                if (_player.rb.velocity.y > 0)
+            { 
+                if (_player.rb.velocity.magnitude > dashSpeed)
                 {
-                    _player.rb.AddForce(Vector3.down * 150f, ForceMode.Force);
+                    _player.rb.velocity = _player.rb.velocity.normalized * moveSpeed;
                 }
             }
         }
@@ -81,68 +101,55 @@ public class PlayerMovement : MonoBehaviour
         { 
             return; 
         }
-
-        if (_isSprinting)
-        {
-            HandleMovement(maxSpeed);
-        }
-        else
-        {
-            HandleMovement(runSpeed);
-        }
+        HandleMovement();
     }
+
     public void HandleFallingAndLanding()
     {
-        RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position;
-        rayCastOrigin.y = rayCastOrigin.y + raycastHeightOffset;
-        Vector3 targetPosition = transform.position;
-
         if(_player.groundCheck.isGrounded)
         {
             inAirTime = 0;
+            _player.rb.useGravity = !OnSlope() && !isDashing;
+
         }
         else
         {
+            _player.rb.useGravity = !_player.isAirAttacking;
+            inAirTime += Time.deltaTime;
+            ApplyGravity();
+            if (isDashing)
+            {
+                _player.dash.ResetDash();
+            }
             //If it falls not from jumping set anim fall
             if (!_player.isInteracting)
             {
                 _player.animations.PlayTargetAnimation(Constants.ANIMATION_FALL, true);
             }
-
-            if (_player.isInteracting && !_player.isAirAttacking)
+            if(_player.isAirAttacking)
             {
-                _player.rb.useGravity = true;
-                inAirTime += Time.deltaTime;
-            }
-            else if (_player.isAirAttacking)
-            {
-                _player.rb.useGravity = false;
                 _player.rb.velocity = Vector3.zero;
             }
-        }
-
-        if(Physics.Raycast(rayCastOrigin, -Vector3.up, out hit, maxDistance, groundLayer))
-        {
-            targetPosition.y = hit.point.y;
-            if(!_player.groundCheck.isGrounded)
-            {
-                _player.animations.Animator.SetBool("isGrounded", true);
-            }
-        }
+        }            
 
         // Anchors the player to the ground if the raycast is hiting so won't bounce in slopes, etc.
-        if (_player.groundCheck.isGrounded && !isJumping && !isDashing)
+        if (_player.groundCheck.isGrounded && !isJumping)
         {
-            if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
-            {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
-            }
-            else
-            {
-                transform.position = targetPosition;
-            }
+            //if (!_player.animations.Animator.GetCurrentAnimatorStateInfo(0).IsName("land") || !_player.groundCheck.canLandAnimation)
+            //{
+                _targetPosition = transform.position;
+                _targetPosition.y = _player.groundCheck.GetHit().point.y;
+                if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
+                {
+                    transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime / 0.1f);
+                }
+                else
+                {
+                    transform.position = _targetPosition;
+                }
+            //}              
         }
+
     }
 
     public void HandleRotation(float rotSpeed)
@@ -150,54 +157,82 @@ public class PlayerMovement : MonoBehaviour
         Vector3 targetDirection = Vector3.zero;
         targetDirection = GetDirectionNormalized();
         targetDirection.y = 0;
-        if(targetDirection != Vector3.zero)
+        if (targetDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
             transform.rotation = playerRotation;
         }
     }
+    public void HandleAttackingRotation()
+    {
+        Vector3 targetDirection = GetDirectionNormalized();
+        targetDirection.y = 0;
+        Quaternion targetRotation;
+        Quaternion playerRotation = transform.rotation;
 
-    public void HandleMovement(float speed)
-    {       
-        if(OnSlope())
+        if (_player.lockCombat.isLockedOn && _player.isAttacking)
         {
-            _moveDirection = GetSlopeMoveDirection();
-            // Apply force down if on slope 
-            if (_player.rb.velocity.y > 0)
+            if(!_player.lockCombat.LookAtEnemySelected())
             {
-                _player.rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-            }
+                if (targetDirection != Vector3.zero)
+                {
+                    targetRotation = Quaternion.LookRotation(targetDirection);
+                    playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, interactingRotationSpeed * Time.deltaTime);
+                }
+                transform.rotation = playerRotation;
+            }          
         }
         else
         {
-            _moveDirection = GetDirectionNormalized();
-        }
-
-        if(_player.groundCheck.isGrounded)
-        {
-            _player.rb.AddForce(_moveDirection * speed * 10f, ForceMode.Force);
-            //Handles normal rotation while moving
-            HandleRotation(rotationSpeed);
-            if (_player.rb.velocity.magnitude > speed)
+            if (targetDirection != Vector3.zero)
             {
-                _player.rb.velocity = _player.rb.velocity.normalized * speed;
+                targetRotation = Quaternion.LookRotation(targetDirection);
+                playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, interactingRotationSpeed * Time.deltaTime);
+            }
+            transform.rotation = playerRotation;
+        }
+        
+    }
+
+    public void HandleMovement()
+    {
+        _moveDirection = GetDirectionNormalized();
+        _moveDirection.y = 0;
+
+        if (OnSlope())
+        {
+            _player.rb.velocity = GetSlopeMoveDirection(_moveDirection) * moveSpeed;
+            if (_player.rb.velocity.y > 0)
+            {
+               // _player.rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+            if(_player.rb.velocity.magnitude > moveSpeed)
+            {
+                _player.rb.velocity = _player.rb.velocity.normalized * moveSpeed;
             }
         }
-        _player.rb.useGravity = !OnSlope();
+        else if(_player.groundCheck.isGrounded)
+        {
+            _player.rb.velocity = _moveDirection * moveSpeed;
+            //_player.rb.AddForce(_moveDirection * moveSpeed * 10f, ForceMode.Force);
+        }
+        HandleRotation(rotationSpeed);
+
     }
 
     private void HandleAirMovement()
     {
-        _player.rb.AddForce(GetDirectionNormalized() * airSpeed * 10f, ForceMode.Force);
-        HandleRotation(airRotationSpeed);
+        _moveDirection = GetDirectionNormalized();
+        Vector3 directionMove = _moveDirection * moveSpeed;
+        _player.rb.velocity = new Vector3(directionMove.x, _player.rb.velocity.y, directionMove.z);
+        HandleRotation(moveSpeed);
 
-        //Velocity flat
         Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
 
-        if (velocity.magnitude > airSpeed)
+        if (velocity.magnitude > moveSpeed)
         {
-            Vector3 limitedVelocity = velocity.normalized * airSpeed;
+            Vector3 limitedVelocity = velocity.normalized * moveSpeed;
             _player.rb.velocity = new Vector3(limitedVelocity.x, _player.rb.velocity.y, limitedVelocity.z);
         }
     }
@@ -218,84 +253,147 @@ public class PlayerMovement : MonoBehaviour
         }
         _player.animations.Animator.SetBool("isJumping", true);
         _player.animations.PlayTargetAnimation(Constants.ANIMATION_JUMP, true);
-        JumpAction(jumpHeight);
     }
 
     public void JumpAction(float _jumpForce = 20)
     {
         _player.rb.velocity = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
-        _player.rb.AddForce(Vector3.up * _jumpForce * 10f, ForceMode.Impulse);
+        _player.rb.AddForce(transform.up * _jumpForce * 10f, ForceMode.Impulse);
     }
 
-    public void HandleDash()
+    private void ApplyGravity()
     {
-        if(_player.isInteracting)
-        {
-            return;
-        }
-        if(GetDirectionNormalized().magnitude > 0.1f)
-        {
-            _player.animations.PlayTargetAnimation("roll", true);
-            //DashAction(dashForce);
-            DashAction(dashForce);
-        }
-    }
-    public float val = 0.7f;
-    private void DashAction(float _dashSpeed)
-    {
-        isDashing = true;
-        _player.isInvulnerable = true;
-        DisableMovement();
-
-        if (OnSlope())
-        {
-            _player.rb.AddForce(GetSlopeMoveDirection() * _dashSpeed, ForceMode.Impulse);
-        }
-        else
-        {
-            _player.rb.AddForce(GetDirectionNormalized() * _dashSpeed, ForceMode.Impulse);
-        }
-
-        StartCoroutine(EnableMovementAfterDash(dashDelay));
+        Vector3 gravityVector = Vector3.up * gravity * Time.deltaTime;
+        _player.rb.AddForce(gravityVector, ForceMode.Acceleration);
     }
 
-    //public void Dash()
-    //{
-    //    isDashing = true;
-    //    _player.isInvulnerable = true;
-    //    Vector3 forceToApply = GetDirectionNormalized() * dashForce + transform.up * dashUpwardForce;
-    //    delayedForceToApply = forceToApply;
-    //    Invoke(nameof(DelayedDashForce), 0.025f);
-    //    Invoke(nameof(ResetDash), dashDuration);
+    public Vector3 GetDirectionNormalized() => UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
+    public Vector3 GetSlopeMoveDirection(Vector3 _direction) => Vector3.ProjectOnPlane(_direction, _slopeHit.normal).normalized;
+    public Vector3 GetForwardSlopeDirection() => Vector3.ProjectOnPlane(transform.forward, _slopeHit.normal).normalized;
 
-    //}
-    //private Vector3 delayedForceToApply;
-    //private void DelayedDashForce()
-    //{
-    //    _player.rb.AddForce(delayedForceToApply, ForceMode.Impulse);
-
-    //}
-    //public void ResetDash()
-    //{
-
-    //}
-
-    IEnumerator EnableMovementAfterDash(float delay)
+    public float GetAngleSlopeNormalForDash() => Vector3.Angle(Vector3.up, _slopeHit.normal);
+    public bool OnSlope()
     {
-        yield return new WaitForSeconds(delay);
-        _player.isInvulnerable = false;
-        isDashing = false;
-    }
-
-    private Vector3 GetDirectionNormalized() => UtilsNagu.GetCameraForward(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().y + UtilsNagu.GetCameraRight(_player.MainCamera) * _player.inputs.GetDirectionLeftStick().x;
-    private Vector3 GetSlopeMoveDirection() => Vector3.ProjectOnPlane(GetDirectionNormalized(), slopeHit.normal).normalized;
-    private bool OnSlope()
-    {
-        if (Physics.Raycast(transform.position, -Vector3.up, out slopeHit, maxDistance, groundLayer))
+        if (Physics.Raycast(transform.position, -Vector3.up, out _slopeHit, maxDistance, groundLayer))
         {
-            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
         return false;
     }
+    private IEnumerator SmoothlyLerpMoveSpeed()
+    {
+        float t = 0;
+        float difference = Mathf.Abs(_desiredVelocity - moveSpeed);
+        float startValue;
+        if(_player.rb.velocity.magnitude > _desiredVelocity)
+        {
+            startValue = moveSpeed;
+        }
+        else
+        {
+            startValue = _player.rb.velocity.magnitude;
+        }
+
+        float boostFactor = speedChangeFactor;
+
+        while (t < difference)
+        {
+            moveSpeed = Mathf.Lerp(startValue, _desiredVelocity, t / difference);
+            t += Time.deltaTime * boostFactor;
+
+            yield return null;
+        }
+
+        moveSpeed = _desiredVelocity;
+        speedChangeFactor = 1f;
+        keepMomentum = false;
+    }
+    public float smoothTransTemp = 0.3f;
+    private void StateHandler()
+    {
+        if (isDashing)
+        {
+            ChangeMoveState(Enums.PlayerMovementState.Dashing);
+            _desiredVelocity = dashSpeed;
+            speedChangeFactor = dashSpeedChangeFactor;
+        }
+        else if(_player.groundCheck.isGrounded && _isSprinting && _player.CurrentCharacterState != Enums.CharacterState.Idle)
+        {
+            ChangeMoveState(Enums.PlayerMovementState.Sprinting);
+            if(GetDirectionNormalized().magnitude > smoothTransTemp)
+            {
+                _desiredVelocity = sprintSpeed;
+            }
+        }
+        else if(_player.groundCheck.isGrounded)
+        {
+            ChangeMoveState(Enums.PlayerMovementState.Walking);
+            if (GetDirectionNormalized().magnitude > smoothTransTemp)
+            {
+                _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            }
+            else
+            {
+                _desiredVelocity = runSpeed * smoothTransTemp;
+            }
+        }
+        else if(_player.isAttacking)
+        {
+            ChangeMoveState(Enums.PlayerMovementState.Attacking);
+            if (GetDirectionNormalized().magnitude > smoothTransTemp)
+            {
+                _desiredVelocity = runSpeed * GetDirectionNormalized().magnitude;
+            }
+            else
+            {
+                _desiredVelocity = runSpeed * smoothTransTemp;
+            }
+        }
+        else
+        {
+            ChangeMoveState(Enums.PlayerMovementState.Air);
+
+            if (lastState == Enums.PlayerMovementState.Walking)
+            {
+                _desiredVelocity = runSpeed;
+            }
+            else if(lastState == Enums.PlayerMovementState.Sprinting)
+            {
+                _desiredVelocity = sprintSpeed;
+            }
+
+        }
+
+        bool desiredMoveSpeedHasChanged = _desiredVelocity != _lastDesiredVelocity;
+
+        if(desiredMoveSpeedHasChanged)
+        {
+            if(keepMomentum)
+            {
+                StopAllCoroutines();
+                StartCoroutine(SmoothlyLerpMoveSpeed());
+            }
+            else
+            {
+                StopAllCoroutines();
+                moveSpeed = _desiredVelocity;
+            }
+        }
+        _lastDesiredVelocity = _desiredVelocity;
+
+    }
+
+    private void ChangeMoveState(Enums.PlayerMovementState newState)
+    {
+        if(moveState == newState)
+        {
+            return;
+        }
+
+        lastState = moveState;
+
+        moveState = newState;
+    }
+
 }

@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerCollision collision;
     public ComboController comboController { get; private set; }
+    public PlayerDash dash { get; private set; }
+    public PlayerCombatLockFeel lockCombat { get; private set; }
 
     public CheckGround groundCheck;
     #endregion
@@ -38,7 +40,8 @@ public class PlayerManager : MonoBehaviour
     public bool isInvulnerable = false;
     public bool isInteracting;
     public bool isAirAttacking = false;
-
+    public bool isAttacking = false;
+    public bool canMoveToEnemy = true;
 
     private void Awake()
     {
@@ -51,8 +54,9 @@ public class PlayerManager : MonoBehaviour
         hud = GetComponent<PlayerHUDSystem>();
         inputs = GetComponent<PlayerInputsSystem>();
         stats = GetComponent<PlayerStadistics>();
+        dash = GetComponent<PlayerDash>();
+        lockCombat = GetComponent<PlayerCombatLockFeel>();
     }
-
     void Update()
     {
         if(CurrentCharacterState == Enums.CharacterState.Moving)
@@ -73,6 +77,7 @@ public class PlayerManager : MonoBehaviour
     {
         isInteracting = animations.Animator.GetBool("isInteracting");
         isAirAttacking = animations.Animator.GetBool("isAirAttacking");
+        isAttacking = animations.Animator.GetBool("isAttacking");
         movement.isJumping = animations.Animator.GetBool("isJumping");
         animations.Animator.SetBool("isGrounded", groundCheck.isGrounded);
     }
@@ -97,4 +102,5 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+
 }

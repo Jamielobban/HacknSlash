@@ -14,8 +14,10 @@ public class Enemy : PoolableObject
     public EnemyHealthSystem healthSystem { get; private set; }
 
     #endregion
-
+    public PlayerManager _player { get; private set; }
     public IState currentState;
+
+    public GameObject lookAtEnemy;
 
     public bool isDead = false;
     public bool isGrounded = false;
@@ -31,6 +33,7 @@ public class Enemy : PoolableObject
         events = GetComponent<EnemyEvents>();
         hud = GetComponent<EnemyHud>();
         movements = GetComponent<EnemyMovement>();
+        _player = FindObjectOfType<PlayerManager>();
     }
 
     protected virtual void Start()
@@ -41,13 +44,14 @@ public class Enemy : PoolableObject
         events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
+        events.OnHit += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
         ResetEnemy();
     }
+
     protected virtual void FixedUpdate()
     {
-
     }
     protected virtual void Update()
     {

@@ -2,6 +2,7 @@ using System;
 
 public class Enums
 {
+
     public enum CameraType
     {
         FreeLook,
@@ -30,6 +31,15 @@ public class Enums
         Air,
         Attacking
     };
+    public enum PlayerMovementState
+    {
+        Stop,
+        Walking,
+        Sprinting,
+        Dashing,
+        Attacking,
+        Air
+    }
 
     public enum InputsAttack
     {

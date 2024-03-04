@@ -10,7 +10,7 @@
                     "type": "Value",
                     "id": "577c66f1-e4bc-4dad-bb6a-c71a87c33547",
                     "expectedControlType": "Vector2",
-                    "processors": "StickDeadzone(min=0.25)",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -90,6 +90,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "8f61c684-b78a-43ef-be3d-dd4ce25382a9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "057d55be-545a-4c46-b364-c2c453e4d592",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -374,12 +383,12 @@
                 },
                 {
                     "name": "",
-                    "id": "8bddbc3b-07a2-4835-9f18-25b69407c0f5",
-                    "path": "<Keyboard>/space",
+                    "id": "abb10de7-a0d9-4b2a-ab71-4e7ca3907cda",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "LockOn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

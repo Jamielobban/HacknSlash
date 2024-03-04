@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,35 +26,39 @@ public class DB_SlashesController : SlashesController
     {
         if (slashesSquare[index] != null)
         {
-            slashesSquare[index].SetActive(true);
+            InstantiateSlash(slashesSquare[index]);
         }
     }
 
     public void SpawnL2SquareSlash(int index)
     {
-        if (slashesL2Square[index] != null)
+        if (slashesL2Square[index] != null)   
         {
-            slashesL2Square[index].SetActive(true);
+            InstantiateSlash(slashesL2Square[index]);
         }
     }
     public void SpawnL2TriangleSlash(int index)
     {
         if (slashesL2Triangle[index] != null)
         {
-            slashesL2Triangle[index].SetActive(true);
+            InstantiateSlash(slashesL2Triangle[index]);
         }
     }
     public void SpawnAirSlash(int index)
     {
         if (slashesAir[index] != null)
         {
-            slashesAir[index].SetActive(true);
+            InstantiateSlash(slashesAir[index]);
         }
     }
-
+    private void InstantiateSlash(GameObject slash)
+    {
+        GameObject go = Instantiate(slash, slash.transform.position, slash.transform.rotation);
+        go.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
+        go.SetActive(true);
+    }
     public void SpawnAnotherSlash(int index)
     {
-
     }
 
     public void SpawnDragon()
@@ -61,20 +66,6 @@ public class DB_SlashesController : SlashesController
         GameObject go = Instantiate(dragon, new Vector3(transform.position.x + 0.5f, transform.position.y + 1, transform.position.z), transform.rotation);
         go.GetComponent<DealDamage>().damage = _player.stats.baseDamage;
     }
-
-    //public void SpawnSlash(float value)
-    //{
-    //    (int anguloZ, int isRightHand) = GetNumber(value);
-    //    GameObject go = Instantiate(slashNormalToRight, isRightHand == 1 ? rightHand.transform.position : leftHand.transform.position, transform.rotation);
-
-    //    go.AddComponent<DealDamage>().damage = _player.stats.baseDamage;
-    //}
-    //public void SpawnToLeftSlash(float value)
-    //{
-    //    (int anguloZ, int isRightHand) = GetNumber(value);
-    //    GameObject go = Instantiate(slashNormalToRight, isRightHand == 1 ? rightHand.transform.position : leftHand.transform.position, transform.rotation);
-    //    go.AddComponent<DealDamage>().damage = _player.stats.baseDamage;
-    //}
 
     public void SpawnSlashMiddle()
     {

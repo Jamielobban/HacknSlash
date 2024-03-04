@@ -52,7 +52,7 @@ public class AbilityPowerManager : MonoBehaviour
     private ControllerManager controllerManager;
 
     private Dictionary<RarityColor, Color> rarityColorMap;
-    bool menuActive = false;
+    public bool menuActive = false;
     [Header("Buttons")]
     [Space(15)]
     public Button option1Button;
@@ -123,24 +123,6 @@ public class AbilityPowerManager : MonoBehaviour
             }
         }
 
-        if (menuActive)
-        {
-            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option1Button.gameObject)
-            {
-                if (controllerManager != null && controllerManager.CheckIfPressed())
-                {
-                    OnOption1Clicked();
-                }
-            }
-            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
-            {
-                if (controllerManager != null && controllerManager.CheckIfPressed())
-                {
-                    OnOption2Clicked();
-                }
-            }
-        }
-
         //float comboSliderDynamicDecayRate = decayRate + comboCount * comboSliderDecayRateMultiplier;
         //DecaySlider(ref comboSlider, comboSliderDynamicDecayRate);
         //if (comboSlider.value <= 0)
@@ -152,6 +134,18 @@ public class AbilityPowerManager : MonoBehaviour
         //{
         //    comboSlider.gameObject.SetActive(true);
         //}
+    }
+
+    public void SetOptionClicked()
+    {
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option1Button.gameObject)
+        {
+            OnOption1Clicked();
+        }
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
+        {
+            OnOption2Clicked();
+        }
     }
 
     public void OnOption1Clicked()
