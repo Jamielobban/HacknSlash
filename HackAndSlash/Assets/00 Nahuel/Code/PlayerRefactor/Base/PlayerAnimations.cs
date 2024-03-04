@@ -14,17 +14,15 @@ public class PlayerAnimations : MonoBehaviour
         _player = GetComponent<PlayerManager>();
     }
     private float _timer = 0.0f;
-    public float timeToDeactive = .25f;
+    public float timeToDeactive = .10f;
     public void HandleMovingAnimations()
     {
-        if (_player.inputs.GetDirectionLeftStick().magnitude < 0.1f)
+        if (_player.inputs.GetDirectionLeftStick().magnitude < 0.2f)
         {
             _timer += Time.deltaTime;
             if (_timer > timeToDeactive && _player.groundCheck.isGrounded)
             {
-                Debug.Log("canceled");
-                _player.ChangeCharacterState(Enums.CharacterState.Idle);
-               // _player.movement.DisableMovement();
+                _player.ChangeCharacterState(Enums.CharacterState.Idle);               
                 _timer = 0f;
             }
         }
@@ -59,7 +57,7 @@ public class PlayerAnimations : MonoBehaviour
             if(_player.movement.lastState != Enums.PlayerMovementState.Dashing)
             {
                 StopAllCoroutines();
-                StartCoroutine(DecreaseSpeedOverTime(0f, 0.25f));
+                StartCoroutine(DecreaseSpeedOverTime(0f, 0.15f));
             }
             else
             {
@@ -72,7 +70,7 @@ public class PlayerAnimations : MonoBehaviour
             if (_player.movement.lastState != Enums.PlayerMovementState.Dashing)
             {
                 StopAllCoroutines();
-                _anim.SetFloat(Constants.ANIM_VAR_SPEED, .7f);
+                _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0.45f);
                 StartCoroutine(DecreaseSpeedOverTime(0f, .15f));
             }
             else

@@ -11,6 +11,7 @@ public class CheckGround : MonoBehaviour
     public float groundDrag = 10f;
     public LayerMask groundMask;
     public RaycastHit hitGround;
+    public bool canLandAnimation = true;
     private void Awake()
     {
         _player = transform.parent.parent.GetComponent<PlayerManager>();
@@ -27,15 +28,17 @@ public class CheckGround : MonoBehaviour
             {
                 if (!isGrounded)
                 {
-                    if (!_player.animations.Animator.GetCurrentAnimatorStateInfo(0).IsName("land"))
-                    {
-                        _player.animations.Animator.CrossFadeInFixedTime("land", 0.2f);
-                        _player.rb.velocity = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
-                    }
-
+                    //if (!_player.animations.Animator.GetCurrentAnimatorStateInfo(0).IsName("land") && canLandAnimation)
+                    //{
+                    //    canLandAnimation = false;
+                    //    _player.animations.Animator.CrossFadeInFixedTime("land", 0.2f);
+                    //    _player.rb.velocity = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
+                    //}
                     if (!_player.movement.isJumping)
                     {
                         isGrounded = true;
+                        _player.rb.velocity = new Vector3(_player.rb.velocity.x, 0, _player.rb.velocity.z);
+                        canLandAnimation = true;
                     }
                 }
             }

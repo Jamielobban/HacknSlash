@@ -135,8 +135,8 @@ public class PlayerMovement : MonoBehaviour
         // Anchors the player to the ground if the raycast is hiting so won't bounce in slopes, etc.
         if (_player.groundCheck.isGrounded && !isJumping)
         {
-            if (!_player.animations.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land"))
-            {
+            //if (!_player.animations.Animator.GetCurrentAnimatorStateInfo(0).IsName("land") || !_player.groundCheck.canLandAnimation)
+            //{
                 _targetPosition = transform.position;
                 _targetPosition.y = _player.groundCheck.GetHit().point.y;
                 if (_player.isInteracting || _player.inputs.GetDirectionLeftStick().magnitude > 0)
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     transform.position = _targetPosition;
                 }
-            }              
+            //}              
         }
 
     }
@@ -228,14 +228,13 @@ public class PlayerMovement : MonoBehaviour
         _player.rb.velocity = new Vector3(directionMove.x, _player.rb.velocity.y, directionMove.z);
         HandleRotation(moveSpeed);
 
-        //Velocity flat
-        //Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
+        Vector3 velocity = new Vector3(_player.rb.velocity.x, 0f, _player.rb.velocity.z);
 
-        //if (velocity.magnitude > moveSpeed)
-        //{
-        //    Vector3 limitedVelocity = velocity.normalized * moveSpeed;
-        //    _player.rb.velocity = new Vector3(limitedVelocity.x, _player.rb.velocity.y, limitedVelocity.z);
-        //}
+        if (velocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = velocity.normalized * moveSpeed;
+            _player.rb.velocity = new Vector3(limitedVelocity.x, _player.rb.velocity.y, limitedVelocity.z);
+        }
     }
 
     public void DisableMovement()
