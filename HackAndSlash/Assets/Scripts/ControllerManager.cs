@@ -66,6 +66,7 @@ public class ControllerManager : MonoBehaviour
     public bool Teleport2 = false;
     float time;
 
+    public PlayerCollision Interact;
     void Start()
     {
         leftStick = new Vector2();
@@ -202,6 +203,7 @@ public class ControllerManager : MonoBehaviour
             return false;
         if (X.action.WasPressedThisFrame() && canJump)
         {
+            Interact.InteractPerformed();
             jump = true;
             canJump = false;
         }
@@ -209,6 +211,7 @@ public class ControllerManager : MonoBehaviour
 
         if (jump)
         {
+
             jump = false;
             canJump = true;
 

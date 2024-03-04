@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
         _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
-        target = FindObjectOfType<PlayerManager>().transform;
+        target = FindObjectOfType<PlayerControl>().transform;
     }
 
     private void Start()

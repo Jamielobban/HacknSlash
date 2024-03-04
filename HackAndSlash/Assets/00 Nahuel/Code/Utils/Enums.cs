@@ -62,6 +62,11 @@ public class Enums
 
     };
 
+    public enum EventState
+    {
+        INACTIVE, PLAYING, FINISHED
+    };
+
     public enum Music
     {
     };

@@ -35,7 +35,7 @@ public class SpawnerBase : MonoBehaviour
     protected Coroutine _spawnCoroutine; // !! Can only be called once !! //
     protected NavMeshTriangulation _triangulation;
     protected RoomManager _roomManager;
-
+    [HideInInspector] public List<Enemy>enemiesFromThisSpawner = new List<Enemy>();
     protected virtual void Awake()
     {
         _roomManager = RoomManager.Instance;
@@ -89,6 +89,7 @@ public class SpawnerBase : MonoBehaviour
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
             _roomManager.AddEnemy(enemy.gameObject);
+            enemiesFromThisSpawner.Add(enemy);
             if(!_roomManager.firstEnemySpawned)
             {
                 _roomManager.firstEnemySpawned = true;
