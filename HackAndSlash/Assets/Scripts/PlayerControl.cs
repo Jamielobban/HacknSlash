@@ -49,6 +49,8 @@ public class PlayerControl : MonoBehaviour
     public float walkSpeedAir;
     public float runSpeedAir;
 
+    public bool HasDoubleJump;
+
     public GameObject movementController;
     public GameObject player;
 
@@ -157,6 +159,7 @@ public class PlayerControl : MonoBehaviour
 
     float TeleportTime;
 
+    bool OnAir;
     public enum HitState {DEBIL = 5,MEDIO = 10,FUERTE = 15};
 
     public enum PassiveCombo
@@ -208,6 +211,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        OnAir = false;
         hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
         //currentHealth = maxHealth;
@@ -279,51 +283,51 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfNextAttack()
     {
 
-        if (currentComboAttacks.combo == ComboAtaques.air2)
-        {
+        //if (currentComboAttacks.combo == ComboAtaques.air2)
+        //{
 
-            if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
-            {
-                attacks = Attacks.FALL;
-                playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
+        //    if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
+        //    {
+        //        attacks = Attacks.FALL;
+        //        playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
 
-            }
-            else if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.FALL)
-            {
-                RaycastHit hit;
+        //    }
+        //    else if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.FALL)
+        //    {
+        //        RaycastHit hit;
 
-                if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
-                {
-                    if (hit.distance < 0.5f)
-                    {
-                        playerAnim.speed = 1;
+        //        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        //        {
+        //            if (hit.distance < 0.5f)
+        //            {
+        //                playerAnim.speed = 1;
 
-                        StartCoroutine(DelayGolpe(0, 0, 1, damageMult));
+        //                StartCoroutine(DelayGolpe(0, 0, 1, damageMult));
 
-                        playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
-                        doubleJump = false;
+        //                playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
+        //                doubleJump = false;
 
-                        comboFinishedTime = Time.time;
-                        attackFinished = true;
-                        delayCombos = currentComboAttacks.attacks[currentComboAttack].delayFinal;
-                        dealyAttackFall = Time.time;
-                        attacks = Attacks.LAND;
-                        currentComboAttack = -1;
-                        moveDirSaved = new Vector3();
-                        landHeight = hit.point.y;
+        //                comboFinishedTime = Time.time;
+        //                attackFinished = true;
+        //                delayCombos = currentComboAttacks.attacks[currentComboAttack].delayFinal;
+        //                dealyAttackFall = Time.time;
+        //                attacks = Attacks.LAND;
+        //                currentComboAttack = -1;
+        //                moveDirSaved = new Vector3();
+        //                landHeight = hit.point.y;
 
 
-                        return false;
-                    }
+        //                return false;
+        //            }
 
-                }
-            }
-            if (CheckIfDash())
-            {
-                dashDown = true;
-            }
-            return false;
-        }
+        //        }
+        //    }
+        //    if (CheckIfDash())
+        //    {
+        //        dashDown = true;
+        //    }
+        //    return false;
+        //}
 
         if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque)
         {
@@ -429,7 +433,7 @@ public class PlayerControl : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
-        if ((states == States.ATTACK && !stopAttack) || currentComboAttacks.combo == ComboAtaques.air2)
+        if ((states == States.ATTACK && !stopAttack))
         {
             if (currentComboAttacks.attacks[golpe].effects != null)
             {
@@ -550,7 +554,7 @@ public class PlayerControl : MonoBehaviour
 
         playerAnim.speed = 1.75f;
         currentComboAttack++;
-        if (currentComboAttacks.attacks[currentComboAttack].collider != null && currentComboAttacks.combo != ComboAtaques.air2)
+        if (currentComboAttacks.attacks[currentComboAttack].collider != null )
         {
 
             for (int i = 0; i <= currentComboAttacks.attacks[currentComboAttack].repeticionGolpes; i++)
@@ -613,6 +617,8 @@ public class PlayerControl : MonoBehaviour
             {
 
                 fallStartTime = Time.time;
+                OnAir = true;
+
                 states = States.JUMP;
                 jump = Jump.FALL;
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
@@ -723,15 +729,17 @@ public class PlayerControl : MonoBehaviour
 
         if (controller.CheckIfJump())
         {
-
+            
             this.GetComponent<Rigidbody>().drag = 5;
 
-            if (states != States.JUMP)
+            if (!OnAir)
             {
-                singleJumpVFX.PlaySingleJumpVFX(this.transform.position);
+                //singleJumpVFX.PlaySingleJumpVFX(this.transform.position);
                 timeJumping = Time.time;
                 fallStartTime = Time.time;
                 states = States.JUMP;
+                OnAir = true;
+
                 jump = Jump.JUMP;
                 playerAnim.CrossFadeInFixedTime("Jump", 0.1f);
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -741,17 +749,19 @@ public class PlayerControl : MonoBehaviour
                 return true;
 
             }
-            else if (!doubleJump)
+            else if (!doubleJump && HasDoubleJump)
             {
                 Move(1);
                 doubleJumpVFX.PlayDoubleJumpVFX(this.transform.position + new Vector3(0f, 4f, 0f));
                 doubleJump = true;
                 timeJumping = Time.time;
                 fallStartTime = Time.time;
+                OnAir = true;
+
                 states = States.JUMP;
                 jump = Jump.JUMP;
                 this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1.25f, ForceMode.Impulse);
+                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
                 doubleJumpFeedback.PlayFeedbacks();
 
@@ -782,8 +792,10 @@ public class PlayerControl : MonoBehaviour
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
                     playerAnim.CrossFadeInFixedTime("Land", 0.2f);
                 states = States.JUMP;
+                OnAir = false;
+
                 jump = Jump.LAND;
-                doubleJump = false;
+                Invoke("ActiveDoubleJump", 0.1f);
                 moveDirSaved = new Vector3();
                 //landFeedback.PlayFeedbacks();
 
@@ -792,6 +804,12 @@ public class PlayerControl : MonoBehaviour
 
         }
         return false;
+    }
+
+    void ActiveDoubleJump()
+    {
+        doubleJump = false;
+
     }
     #endregion
 
@@ -804,7 +822,7 @@ public class PlayerControl : MonoBehaviour
     ////////////
 
     ////////////
-    
+
     #region En general no hay que tocar nada del UPDATE casi todo lo que hay que tocar es de las funciones
 
     void Update()
@@ -905,7 +923,8 @@ public class PlayerControl : MonoBehaviour
             case States.DASH:
                 this.GetComponent<Rigidbody>().drag = 15;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, this.transform.GetChild(0).transform.localEulerAngles.y, 0);
-
+                if (CheckIfJump())
+                    break;
                 if (CheckAtaques())
                     break;
                 switch (dash)
@@ -966,6 +985,14 @@ public class PlayerControl : MonoBehaviour
                                 {
                                     this.GetComponent<Rigidbody>().AddForce(-this.transform.up * 15000 * Time.fixedDeltaTime, ForceMode.Force);
                                 }
+                                else
+                                {
+                                    OnAir = false;
+                                }
+                            }
+                            else
+                            {
+                                OnAir = false;
                             }
                         }
                         break;
@@ -978,7 +1005,8 @@ public class PlayerControl : MonoBehaviour
                     case Dash.END:
                         if ((Time.time - delayDash) > 0.05f)
                         {
-            
+                            OnAir = false;
+
 
                             delayDash = Time.time;
                             moveDirSaved = new Vector3();
@@ -987,7 +1015,11 @@ public class PlayerControl : MonoBehaviour
                                 break;
 
                             if (CheckIfIsFalling())
+                            {
+                                OnAir = true;
+
                                 break;
+                            }
                             CheckIfReturnIdle();
 
                             //CheckIfStartMove();
@@ -1009,7 +1041,8 @@ public class PlayerControl : MonoBehaviour
 
                     break;
                 }
-
+                if (CheckIfJump())
+                    break;
 
                 switch (jump)
                 {
@@ -1067,7 +1100,7 @@ public class PlayerControl : MonoBehaviour
                             //Debug.Log("Landed");
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
-                            landVFX.PlayDustVFX(this.transform.position);
+                            //landVFX.PlayDustVFX(this.transform.position);
                             //CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
