@@ -203,22 +203,7 @@ public class PlayerControl : MonoBehaviour
 
     public Animator desaparecer;
 
-    [Header("Combat Stats")]
-    //[Space]
-    //[SerializeField]
-    //public float currentHealth;
-    //[SerializeField]
-    //public float maxHealth = 100;
-    [SerializeField]
-    public float critChance;
-    public float maxCritChance = 100;
-    [SerializeField]
-    public float attackDamage;
-    [SerializeField]
-    public float healthRegen;
-    public float critDamageMultiplier;
-    public int slowForce;
-    public bool isCrit;
+    public PlayerData stats;
 
     // Start is called before the first frame update
     void Start()
@@ -226,7 +211,6 @@ public class PlayerControl : MonoBehaviour
         hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
         //currentHealth = maxHealth;
-        attackDamage = 1;
         //HealingArea item = new HealingArea();
         //items.Add(new ItemList(item, item.GiveName(), 1));
         //StartCoroutine(CallItemUpdate());
@@ -251,45 +235,10 @@ public class PlayerControl : MonoBehaviour
     //    maxHealthText.text = maxHealth.ToString();
     //    healthSlider.value = currentHealth / maxHealth;
     //}
-    public bool ReturnIfCrit()
-    {
-        return isCrit;
-    }
-    public float GetCritOrDamage(float damage)
-    {
-        float baseDamage = damage * attackDamage;
-
-        bool isCrit = IsCriticalHit();
-
-        float finalDamage = CalculateDamage(baseDamage, isCrit);
-        // Debug.Log("Final Damage: " + finalDamage);
-
-        return finalDamage;
-    }
-
-    private bool IsCriticalHit()
-    {
-        float randomValue = UnityEngine.Random.Range(0f, 100f);
-        isCrit = randomValue <= critChance;
-        if (isCrit)
-        {
-            critFeedback.PlayFeedbacks();
-        }
 
 
-        Debug.Log("Is Critical Hit: " + isCrit);
 
-        return isCrit;
-    }
 
-    private float CalculateDamage(float baseDamage, bool isCrit)
-    {
-        float finalDamage = isCrit ? baseDamage * (2f * critDamageMultiplier) : baseDamage;
-
-        //Debug.Log("Final Damage: " + finalDamage);
-
-        return finalDamage;
-    }
     public ListaAtaques GetAttacks(ComboAtaques combo)
     {
         for (int i = 0; i < ataques.Length; i++)

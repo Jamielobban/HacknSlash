@@ -1,7 +1,7 @@
 using DamageNumbersPro;
 using UnityEngine;
 
-public class EnemyHealthSystem : MonoBehaviour, IDamageable
+public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
 {
     protected Enemy _enemy;
     protected float _currentHealth;
@@ -52,8 +52,9 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     }
 
     //  bool isCrit, Vector3 collisionPoint
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(PlayerControl.HitState state,float damage)
     {
+
         _currentHealth -= damage;
         //_player.CallItemOnHit();
         _enemy.events.Hit();

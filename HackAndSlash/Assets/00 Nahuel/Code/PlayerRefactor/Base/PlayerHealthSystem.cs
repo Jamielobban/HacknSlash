@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
     private PlayerControl _player;
-    public float maxHealth;
+    float maxHealth;
     private float _currentHealth;
     public float CurrentHealth
     {
@@ -14,6 +14,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     }
     private void Awake()
     {
+        maxHealth = _player.stats.maxHealth;
         _currentHealth = maxHealth;
         _player = transform.parent.GetComponent<PlayerControl>();
     }
