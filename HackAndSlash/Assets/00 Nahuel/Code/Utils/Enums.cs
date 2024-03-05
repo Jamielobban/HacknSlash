@@ -77,6 +77,11 @@ public class Enums
         INACTIVE, PLAYING, FINISHED
     };
 
+    public enum EventDificulty
+    {
+        EASY, MID, HARD
+    }
+
     public enum Music
     {
     };
