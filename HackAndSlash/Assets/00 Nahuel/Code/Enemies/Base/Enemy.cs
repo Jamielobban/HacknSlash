@@ -1,4 +1,5 @@
 using DamageNumbersPro.Demo;
+using System.Collections.Generic;
 using UnityEngine;
 
 // -- Base Class for each enemy -- //
@@ -14,8 +15,12 @@ public class Enemy : PoolableObject
     public EnemyHealthSystem healthSystem { get; private set; }
 
     #endregion
-    public PlayerManager _player { get; private set; }
+    public PlayerControl _player { get; private set; }
     public IState currentState;
+
+    public List<OnHitEffect> hitsEffects = new List<OnHitEffect>();
+
+    public OnHitEffect currentHitEffect;
 
     public GameObject lookAtEnemy;
 
@@ -33,18 +38,17 @@ public class Enemy : PoolableObject
         events = GetComponent<EnemyEvents>();
         hud = GetComponent<EnemyHud>();
         movements = GetComponent<EnemyMovement>();
-        _player = FindObjectOfType<PlayerManager>();
+        _player = FindObjectOfType<PlayerControl>();
     }
 
     protected virtual void Start()
     {
-        // Configurar eventos de transici�n
         events.OnIdle += () => SetState(gameObject.AddComponent<IdleState>());
         events.OnPatrolling += () => SetState(gameObject.AddComponent<PatrollState>());
         events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
-        events.OnHit += () => SetState(gameObject.AddComponent<ChaseState>());
+        events.OnHit += () => SetState(gameObject.AddComponent<HitState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
         ResetEnemy();

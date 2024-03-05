@@ -54,10 +54,27 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
     //  bool isCrit, Vector3 collisionPoint
     public virtual void TakeDamage(PlayerControl.HitState state,float damage)
     {
-
         _currentHealth -= damage;
-        //_player.CallItemOnHit();
-        _enemy.events.Hit();
+        if(_enemy.hitsEffects.Count != 0)
+        {
+            switch (state)
+            {
+                case PlayerControl.HitState.DEBIL:
+                    _enemy.currentHitEffect = _enemy.hitsEffects[0];
+                    break;
+                case PlayerControl.HitState.MEDIO:
+                    _enemy.currentHitEffect = _enemy.hitsEffects[1];
+
+                    break;
+                case PlayerControl.HitState.FUERTE:
+                    _enemy.currentHitEffect = _enemy.hitsEffects[2];
+                    break;
+                default:
+                    break;
+            }
+            _enemy.events.Hit();
+        }
+
        // DamageEffects(damage, isCrit, collisionPoint);
         if(_currentHealth <= 0)
         {

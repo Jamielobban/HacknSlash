@@ -14,11 +14,13 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     }
     private void Awake()
     {
-        maxHealth = _player.stats.maxHealth;
-        _currentHealth = maxHealth;
         _player = transform.parent.GetComponent<PlayerControl>();
     }
-
+    private void Start()
+    {
+        maxHealth = _player.stats.maxHealth;
+        _currentHealth = maxHealth;
+    }
     public void AirDamageable()
     {
         throw new System.NotImplementedException();

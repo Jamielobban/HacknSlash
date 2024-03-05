@@ -37,7 +37,6 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         //if (_agent.isActiveAndEnabled) { DisableMovement(); }
-        _enemy.events.OnHit += () => { HitStopEffect(); };
         _enemy.events.OnIdle += DisableMovement;
         _enemy.events.OnAttacking += DisableMovement;
         _enemy.events.OnPatrolling += EnableMovement;
@@ -69,7 +68,6 @@ public class EnemyMovement : MonoBehaviour
             _agent.destination = target.position;
             HandleRotation();
         }
-
     }
 
     public void HandlePatrollInArea()
@@ -88,20 +86,12 @@ public class EnemyMovement : MonoBehaviour
     public void HitStopEffect()
     {
         _enemy.canAttack = false;
-        knockback = true;
-        DisableMovement();
-        DisableAgent();
-        _rb.AddForce((transform.position - _enemy._player.transform.position) * .75f, ForceMode.Impulse);
-        Invoke(nameof(ResetKnockBack), .1f);
-        //this.Wait(_enemy.animations.Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
-        //{
-
-        //});
+        _enemy.movements.DisableMovement();
+        _enemy.movements.DisableAgent();
     }
 
-    private void ResetKnockBack()
+    public void ResetHit()
     {
-        knockback = false;
         _agent.velocity = Vector3.zero;
         _rb.velocity = Vector3.zero;
         EnableAgent();
@@ -110,7 +100,6 @@ public class EnemyMovement : MonoBehaviour
             EnableMovement();
         }
         _enemy.canAttack = true;
-        _enemy.events.Idle();
     }
 
     public void HandleRotation()

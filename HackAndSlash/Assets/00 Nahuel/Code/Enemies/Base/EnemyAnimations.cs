@@ -16,7 +16,6 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnPatrolling += () => _anim.SetFloat("speed", 0.5f);
         _events.OnAttacking += () => _anim.SetFloat("speed", 0);
         _events.OnFollowing += () => _anim.SetFloat("speed", 1);
-        _events.OnHit += () => { if (!_enemy.onAir) { PlayTargetAnimation("Hit", true); } };
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
 

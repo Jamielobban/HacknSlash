@@ -20,7 +20,7 @@ public class Spider : Enemy
         events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
-        events.OnHit += () => SetState(gameObject.AddComponent<ChaseState>());
+        events.OnHit += () => SetState(gameObject.AddComponent<HitState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
         ResetEnemy();
     }

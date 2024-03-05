@@ -157,7 +157,7 @@ public class PlayerControl : MonoBehaviour
 
     float TeleportTime;
 
-    public enum HitState {DEBIL,MEDIO,FUERTE};
+    public enum HitState {DEBIL = 5,MEDIO = 10,FUERTE = 15};
 
     public enum PassiveCombo
     {

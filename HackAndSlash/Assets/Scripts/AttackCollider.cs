@@ -6,32 +6,26 @@ using DamageNumbersPro;
 
 public class AttackCollider : MonoBehaviour
 {
-    PlayerData _player;
-    public PlayerControl.HitState state;
-
-    
+    PlayerControl _player;
+    public PlayerControl.HitState state;    
 
     void Start()
     {
-        _player = FindObjectOfType<PlayerData>();
+        _player = FindObjectOfType<PlayerControl>();
     }
     float CalculateDamage()
     {
-        float damage = (int)state * _player.attackDamage;
+        float damage = (int)state * _player.stats.attackDamage;
 
-        int rand = Random.Range(0, _player.maxCritChance);
-        if (rand < _player.critChance)
+        int rand = Random.Range(0, _player.stats.maxCritChance);
+        if (rand < _player.stats.critChance)
         {
-            damage *= _player.critDamageMultiplier;
+            damage *= _player.stats.critDamageMultiplier;
         }
         return damage;
     }
     private void OnTriggerEnter(Collider other)
     {
-
-
-
-
         other.GetComponent<IDamageableEnemy>()?.TakeDamage(state, CalculateDamage());
     }
 

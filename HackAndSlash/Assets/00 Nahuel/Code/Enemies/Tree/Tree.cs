@@ -12,6 +12,7 @@ public class Tree : Enemy
         events.OnAttacking += () => SetState(gameObject.AddComponent<TreeAttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
+        events.OnHit += () => SetState(gameObject.AddComponent<HitState>());
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
         ResetEnemy();
