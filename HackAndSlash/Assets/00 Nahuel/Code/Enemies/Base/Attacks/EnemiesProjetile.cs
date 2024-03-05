@@ -50,7 +50,7 @@ public class EnemiesProjetile : MonoBehaviour
             if (!(player.gameObject.layer == 8))
             {
                 DieEffects();
-                player.GetDamage(damage);
+               // player.GetDamage(damage);
                 Destroy(gameObject);
             }
 

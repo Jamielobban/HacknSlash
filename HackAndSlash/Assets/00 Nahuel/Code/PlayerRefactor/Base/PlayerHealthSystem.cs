@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
-    private PlayerManager _player;
+    private PlayerControl _player;
     public float maxHealth;
     private float _currentHealth;
     public float CurrentHealth
@@ -14,7 +15,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     private void Awake()
     {
         _currentHealth = maxHealth;
-        _player = transform.parent.GetComponent<PlayerManager>();
+        _player = transform.parent.GetComponent<PlayerControl>();
     }
 
     public void AirDamageable()
@@ -35,10 +36,14 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if(_player.isInvulnerable)
+        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH)
         {
             return;
         }
+
+        _player.states = PlayerControl.States.HIT;
+
+        _player.HitEffect();
 
         _currentHealth -= damage;
 
@@ -53,5 +58,6 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        _player.DeadEffect();
     }
 }

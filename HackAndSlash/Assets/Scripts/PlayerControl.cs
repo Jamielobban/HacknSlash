@@ -24,10 +24,9 @@ public class PlayerControl : MonoBehaviour
 
     public Animator cameraAAnims;
     public List<ItemList> items = new List<ItemList>();
-
     public enum HealthState { FROZEN, BURNED, POSIONED, AMPED, WEAKENED, NORMAL };
 
-    enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE, HIT, DEATH, TELEPORT };
+    public enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE, HIT, DEATH, TELEPORT };
 
     enum Attacks { GROUND, AIR, RUN, FALL, LAND };
 
@@ -37,7 +36,7 @@ public class PlayerControl : MonoBehaviour
 
     enum Jump { JUMP, FALL, LAND };
 
-    States states;
+    public States states;
     Attacks attacks;
     Moves moves;
     Dash dash;
@@ -61,9 +60,6 @@ public class PlayerControl : MonoBehaviour
     float delayMove;
 
     public float delayIdleToMoveTime;
-
-
-
     public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, Teleport, run3, run4, air3, air4 };
 
     public int currentScroll;
@@ -106,7 +102,7 @@ public class PlayerControl : MonoBehaviour
         public Ataques[] attacks;
     }
 
-
+    public PlayerHUDSystem hud;
 
     public Blessing[] blessing;
 
@@ -208,11 +204,11 @@ public class PlayerControl : MonoBehaviour
     public Animator desaparecer;
 
     [Header("Combat Stats")]
-    [Space]
-    [SerializeField]
-    public float currentHealth;
-    [SerializeField]
-    public float maxHealth = 100;
+    //[Space]
+    //[SerializeField]
+    //public float currentHealth;
+    //[SerializeField]
+    //public float maxHealth = 100;
     [SerializeField]
     public float critChance;
     public float maxCritChance = 100;
@@ -227,8 +223,9 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         attackDamage = 1;
         //HealingArea item = new HealingArea();
         //items.Add(new ItemList(item, item.GiveName(), 1));
@@ -244,16 +241,16 @@ public class PlayerControl : MonoBehaviour
         moves = Moves.IDLE;
     }
 
-    public void SetHealth()
-    {
-        if(currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        currentHealthText.text = currentHealth.ToString();
-        maxHealthText.text = maxHealth.ToString();
-        healthSlider.value = currentHealth / maxHealth;
-    }
+    //public void SetHealth()
+    //{
+    //    if(currentHealth > maxHealth)
+    //    {
+    //        currentHealth = maxHealth;
+    //    }
+    //    currentHealthText.text = currentHealth.ToString();
+    //    maxHealthText.text = maxHealth.ToString();
+    //    healthSlider.value = currentHealth / maxHealth;
+    //}
     public bool ReturnIfCrit()
     {
         return isCrit;
@@ -338,7 +335,6 @@ public class PlayerControl : MonoBehaviour
 
             if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
             {
-                this.gameObject.layer = 10;
                 attacks = Attacks.FALL;
                 playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
 
@@ -357,7 +353,6 @@ public class PlayerControl : MonoBehaviour
 
                         playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
                         doubleJump = false;
-                        this.gameObject.layer = 3;
 
                         comboFinishedTime = Time.time;
                         attackFinished = true;
@@ -673,7 +668,6 @@ public class PlayerControl : MonoBehaviour
                 jump = Jump.FALL;
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
                     playerAnim.CrossFadeInFixedTime("Fall", 0.2f);
-                this.gameObject.layer = 10;
 
                 return true;
 
@@ -689,7 +683,6 @@ public class PlayerControl : MonoBehaviour
             {
                 //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
                 doubleJump = false;
-                this.gameObject.layer = 3;
 
                 if (states == States.JUMP)
                     landFeedback.PlayFeedbacks();
@@ -781,7 +774,6 @@ public class PlayerControl : MonoBehaviour
 
         if (controller.CheckIfJump())
         {
-            this.gameObject.layer = 10;
 
             this.GetComponent<Rigidbody>().drag = 5;
 
@@ -836,7 +828,6 @@ public class PlayerControl : MonoBehaviour
 
             if ((hit.distance < 2 * ((gravity * (Time.time - fallStartTime)) / gravity) || hit.distance < 0.5f))
             {
-                this.gameObject.layer = 3;
 
                 timeLanding = Time.time;
                 if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
@@ -1039,7 +1030,6 @@ public class PlayerControl : MonoBehaviour
                         if ((Time.time - delayDash) > 0.05f)
                         {
             
-                            this.gameObject.layer = 3;
 
                             delayDash = Time.time;
                             moveDirSaved = new Vector3();
@@ -1386,7 +1376,6 @@ public class PlayerControl : MonoBehaviour
 
             if (pos2 != Vector3.zero)
             {
-                this.gameObject.layer = 8;
                 
                 Vector3 pos = (pos2 - this.transform.position).normalized;
 
@@ -1849,7 +1838,6 @@ public class PlayerControl : MonoBehaviour
             }
 
             playerAnim.speed = 2f;
-            this.gameObject.layer = 8;
 
             dashFeedback.PlayFeedbacks();
 
@@ -1978,7 +1966,6 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.StartMove() && states != States.IDLE)
         {
-            this.gameObject.layer = 3;
             Invoke("EndRun", 0.25f);
             states = States.IDLE;
             moves = Moves.IDLE;
@@ -2058,34 +2045,49 @@ public class PlayerControl : MonoBehaviour
 
         }
     }
-    public void GetDamage(float damage)
-    {
-        if ((states != States.HIT) && states != States.DEATH)
-        {
-            currentHealth -= damage;
-            SetHealth();
-            if (currentHealth <= 0)
-            {
-                states = States.DEATH;
-                deathTime = Time.time;
-                RoomManager.Instance.ResetRoomManager();
-                playerAnim.CrossFadeInFixedTime("Death", 0.2f);
-                cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
-            }
-            else
-            {
-                states = States.HIT;
-                hitTime = Time.time;
-                playerAnim.speed = 1;
-                playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
-                hitFeedback.PlayFeedbacks();
-            }
+    //public void GetDamage(float damage)
+    //{
+    //    if ((states != States.HIT) && states != States.DEATH)
+    //    {
+    //        currentHealth -= damage;
+    //        SetHealth();
+    //        if (currentHealth <= 0)
+    //        {
+    //            states = States.DEATH;
+    //            deathTime = Time.time;
+    //            RoomManager.Instance.ResetRoomManager();
+    //            playerAnim.CrossFadeInFixedTime("Death", 0.2f);
+    //            cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
+    //        }
+    //        else
+    //        {
+    //            states = States.HIT;
+    //            hitTime = Time.time;
+    //            playerAnim.speed = 1;
+    //            playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
+    //            hitFeedback.PlayFeedbacks();
+    //        }
 
-        }
-    }
+    //    }
+    //}
     private void OnTriggerEnter(Collider other)
     {
 
+    }
+
+    public void HitEffect()
+    {
+        hitTime = Time.time;
+        playerAnim.speed = 1;
+        playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
+        hitFeedback.PlayFeedbacks();
+    }
+
+    public void DeadEffect()
+    {
+        deathTime = Time.time;
+        playerAnim.CrossFadeInFixedTime("Death", 0.2f);
+        cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
     }
 }
 
