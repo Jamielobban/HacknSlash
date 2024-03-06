@@ -43,7 +43,7 @@ public class RobotMarikonAnimations : EnemyAnimations
             //Respawn?
             if (_enemy.isPooleable)
             {
-                RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
+                //RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
             }
             else
             {

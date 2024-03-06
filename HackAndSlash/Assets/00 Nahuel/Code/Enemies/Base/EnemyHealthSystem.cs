@@ -61,13 +61,16 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
             {
                 case PlayerControl.HitState.DEBIL:
                     _enemy.currentHitEffect = _enemy.hitsEffects[0];
+                    _enemy.currentFeedbacksEffect = _enemy.hitsFeedbacks[0];
                     break;
                 case PlayerControl.HitState.MEDIO:
                     _enemy.currentHitEffect = _enemy.hitsEffects[1];
+                    _enemy.currentFeedbacksEffect = _enemy.hitsFeedbacks[1];
 
                     break;
                 case PlayerControl.HitState.FUERTE:
                     _enemy.currentHitEffect = _enemy.hitsEffects[2];
+                    _enemy.currentFeedbacksEffect = _enemy.hitsFeedbacks[2];
                     break;
                 default:
                     break;

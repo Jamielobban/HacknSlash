@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     public int inventorySize = 14;
 
     //public PlayerStats playerStats;
-    public GameObject backdrop;
+    //public GameObject backdrop;
     public GameObject itemDescription;
     ControllerManager controller;
 

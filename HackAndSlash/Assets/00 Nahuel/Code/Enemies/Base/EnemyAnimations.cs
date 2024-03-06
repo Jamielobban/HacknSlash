@@ -42,7 +42,8 @@ public class EnemyAnimations : MonoBehaviour
             //Respawn?
             if(_enemy.isPooleable)
             {
-                RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
+                //   RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
+                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
             }
             _enemy.ResetEnemy();
             _enemy.gameObject.SetActive(false);
