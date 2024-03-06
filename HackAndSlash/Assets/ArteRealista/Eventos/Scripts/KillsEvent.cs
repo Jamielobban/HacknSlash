@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class KillsEvent : Event
+public class KillsEvent : EventMap
 {
     [SerializeField] GameObject spawnerParent;
     List<SpawnerBase> enemiesSpawner;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurviveEvent : Event
+public class SurviveEvent : EventMap
 {
     protected override void StartEvent()
     {

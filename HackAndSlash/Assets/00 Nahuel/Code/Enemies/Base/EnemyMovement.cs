@@ -10,6 +10,10 @@ public class EnemyMovement : MonoBehaviour
     protected Enemy _enemy;
     public NavMeshAgent Agent => _agent;
     public float hitForce;
+
+    public bool _isPathValid;
+    public NavMeshPath _path;
+
     #region Stats
 
     public CharacterStat chaseSight = new CharacterStat();
@@ -65,15 +69,15 @@ public class EnemyMovement : MonoBehaviour
 
     public void HandleFollow()
     {
-        NavMeshPath path = new NavMeshPath();
-        bool isPathValid = _agent.CalculatePath(target.position, path);
-        Debug.Log("Handle follow" + isPathValid);
-        if (isPathValid)
+        if (Time.frameCount % 20 == 0)
         {
-            _agent.destination = target.position;
-            HandleRotation();
+            _path = new NavMeshPath();
+            _isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _path);
         }
-        else
+
+        _agent.destination = target.position;
+        HandleRotation();
+        if (!_isPathValid)
         {
             _enemy.events.Idle();
         }

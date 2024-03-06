@@ -11,10 +11,10 @@ public class ItemList
     public Sprite itemImage;
     public string itemDescription;
     public StatType statType;
-    public RarityType rarity;
+    public Enums.RarityType rarity;
 
     public ItemList(Item newItem, string newName, int newStacks,
-        Sprite newImage, string newDescription, StatType newStatType, RarityType newRarity)
+        Sprite newImage, string newDescription, StatType newStatType, Enums.RarityType newRarity)
     {
         item = newItem;
         name = newName;

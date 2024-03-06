@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Enums;
 
 public class AbilityPowerManager : MonoBehaviour
 {
@@ -47,11 +48,10 @@ public class AbilityPowerManager : MonoBehaviour
     private Inventory inventory;
     private Item item1;
     private Item item2;
-    private PlayerManager playerStats;
-    private PlayerInventory player;
+    private PlayerControl player;
     private ControllerManager controllerManager;
 
-    private Dictionary<RarityColor, Color> rarityColorMap;
+    private Dictionary<Enums.RarityType, Color> rarityColorMap;
     public bool menuActive = false;
     [Header("Buttons")]
     [Space(15)]
@@ -87,8 +87,7 @@ public class AbilityPowerManager : MonoBehaviour
         }
         //comboCount = 0;
         _itemManager = GetComponent<ItemManager>();
-        playerStats = FindObjectOfType<PlayerManager>();
-        player = FindObjectOfType<PlayerInventory>();
+        player = FindObjectOfType<PlayerControl>();
         inventory = FindObjectOfType<Inventory>();
         controllerManager = FindObjectOfType<ControllerManager>();
         option1Button.onClick.AddListener(OnOption1Clicked);
@@ -152,7 +151,8 @@ public class AbilityPowerManager : MonoBehaviour
     {
         //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item1);
-
+        itemChoice.SetActive(false);
+        FindObjectOfType<PlayerCollision>().ClearInteractables();
 
        // option2Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
     }
@@ -161,9 +161,11 @@ public class AbilityPowerManager : MonoBehaviour
     {
         //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item2);
+        itemChoice.SetActive(false);
+        FindObjectOfType<PlayerCollision>().ClearInteractables();
 
 
-       // option1Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
+        // option1Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
     }
 
     private void ChooseItem(Item chosenItem)
@@ -206,11 +208,11 @@ public class AbilityPowerManager : MonoBehaviour
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
-        player.GetComponent<PlayerInventory>().enabled = false;
+        //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         Time.timeScale = 0.0f;
         // Generate new items for options
-        Debug.Log(_itemManager.gameObject);
+     //   Debug.Log(_itemManager.gameObject);
         if (_itemManager != null)
         {
             item1 = _itemManager.GetRandomItem();
@@ -237,36 +239,31 @@ public class AbilityPowerManager : MonoBehaviour
             //    item2 = ItemManager.instance.GetRandomItem();
             //}
         }
-        
-
-
-        int colorBox1;
-        int colorBox2;
-        RarityColor colorShow1;
-        RarityColor colorShow2;
-        //option1Button.colors.normalColor.
-
-        colorBox1 = (int)item1.GetRarity();
-        colorBox2 = (int)item2.GetRarity();
-        colorShow1 = (RarityColor)colorBox1;
-        colorShow2 = (RarityColor)colorBox2;
 
         item1Image.sprite = item1.GiveSprite();
         item1Name.text = item1.GiveName();
         item1Description.text = item1.GiveDescription();
-        option1Button.GetComponent<Image>().color = rarityColorMap[colorShow1];
-
+        option1Button.GetComponent<Image>().color = rarityColorMap[item1.GetRarity()];
 
 
         item2Image.sprite = item2.GiveSprite();
         item2Name.text = item2.GiveName();
         item2Description.text = item2.GiveDescription();
-        option2Button.GetComponent<Image>().color = rarityColorMap[colorShow2];
-
-
+        option2Button.GetComponent<Image>().color = rarityColorMap[item2.GetRarity()];
     }
 
-    public void AddItemHere(PlayerInventory player, Item item)
+    private void InitializeRarityColorMap()
+    {
+        rarityColorMap = new Dictionary<Enums.RarityType, Color>
+        {
+            { RarityType.Uncommon, new Color(0.75f, 0.75f, 0.75f) },    // White
+            { RarityType.Common, new Color(0f, 1f, 0f) },    // Green
+            { RarityType.Rare, new Color(0.5f, 0f, 1f) }, // Purple
+            { RarityType.Legendary, new Color(1f, 0f, 0f) }       // Red
+        };
+    }
+
+    public void AddItemHere(PlayerControl player, Item item)
     {
         foreach (ItemList i in player.items)
         {
@@ -321,22 +318,4 @@ public class AbilityPowerManager : MonoBehaviour
         //}
     }
 
-    private void InitializeRarityColorMap()
-    {
-        rarityColorMap = new Dictionary<RarityColor, Color>
-        {
-            { RarityColor.White, new Color(0.75f, 0.75f, 0.75f) },    // White
-            { RarityColor.Green, new Color(0f, 1f, 0f) },    // Green
-            { RarityColor.Purple, new Color(0.5f, 0f, 1f) }, // Purple
-            { RarityColor.Red, new Color(1f, 0f, 0f) }       // Red
-        };
-    }
-
-    public enum RarityColor
-    {
-        White,
-        Green,
-        Purple,
-        Red
-    }
 }

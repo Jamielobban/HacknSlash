@@ -26,6 +26,7 @@ public class Chest : MonoBehaviour, IInteractable
     public void Interact()
     {
         GetItem();
+        _collider.enabled = false;
     }
 
     public void EnableCollider() => _collider.enabled = true;

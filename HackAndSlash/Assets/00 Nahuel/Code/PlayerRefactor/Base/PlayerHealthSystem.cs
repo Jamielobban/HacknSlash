@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
     private PlayerControl _player;
-    float maxHealth;
+    public float maxHealth;
     private float _currentHealth;
     public float CurrentHealth
     {
