@@ -1,4 +1,5 @@
 using DamageNumbersPro.Demo;
+using MoreMountains.Feedbacks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +20,10 @@ public class Enemy : PoolableObject
     public IState currentState;
 
     public List<OnHitEffect> hitsEffects = new List<OnHitEffect>();
+    public List<MMFeedbacks> hitsFeedbacks = new List<MMFeedbacks>();
 
     public OnHitEffect currentHitEffect;
+    public MMFeedbacks currentFeedbacksEffect;
 
     public GameObject lookAtEnemy;
 
@@ -60,13 +63,20 @@ public class Enemy : PoolableObject
     protected virtual void Update()
     {
         currentState?.UpdateState(this);
+        if (Time.frameCount % 10 == 0)
+        {
+            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 150)
+            {
+                events.Die();
+            }
+        }
     }
 
     public virtual void ResetEnemy()
     {
         if(isPooleable)
         {
-            UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
+           // UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
         }
         healthSystem.ResetHealthEnemy();
         events.Idle();

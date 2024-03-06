@@ -11,13 +11,11 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text critDamMultiText;
     public TMP_Text attackDamageText;
     public TMP_Text healthRegenText;
-    public TMP_Text levelText;
-    public GameObject levelObject;
-    public GameObject healthText;
-    public GameObject BUTTONmapping;
+    //public GameObject healthText;
     private PlayerControl playerStats;
     private AbilityPowerManager ap;
     ControllerManager controller;
+    //
 
     //public GameObject itemPanelGrid;
     // Start is called before the first frame update
@@ -38,16 +36,12 @@ public class PlayerStats : MonoBehaviour
                 if (playerStatsMenu.activeSelf)
                 {
                     playerStatsMenu.SetActive(false);
-                    healthText.SetActive(false);
-                    levelObject.SetActive(false);
-                    BUTTONmapping.SetActive(false);
+                  //  healthText.SetActive(false);
                 }
                 else
                 {
                     playerStatsMenu.SetActive(true);
-                    healthText.SetActive(true);
-                    BUTTONmapping.SetActive(true);
-                    levelObject.SetActive(true);
+                  //  healthText.SetActive(true);
                     RefreshStats();
                 }
             }
