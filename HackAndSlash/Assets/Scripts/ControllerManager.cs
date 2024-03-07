@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MoreMountains.Feedbacks;
@@ -36,8 +34,6 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueTrianguloCargadoL2Press;
     public bool ataqueCuadradoL2Press;
     public bool ataqueTrianguloL2Press;
-
-
 
     bool dejarMantenerCuadrado;
     bool dejarMantenerTriangulo;
@@ -82,6 +78,7 @@ public class ControllerManager : MonoBehaviour
     public void TriangleHold() => OnTriangleHold?.Invoke();
     void Start()
     {
+        
         leftStick = new Vector2();
         rightStick = new Vector2();
 
