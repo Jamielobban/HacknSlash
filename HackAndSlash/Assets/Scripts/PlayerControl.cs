@@ -79,7 +79,7 @@ public class PlayerControl : MonoBehaviour
 
         public float delayFinal;
 
-        public GameObject collider;
+        public GameObject[] collider;
 
 
         public float[] delayRepeticionGolpes;
@@ -455,20 +455,20 @@ public class PlayerControl : MonoBehaviour
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
-            currentComboAttacks.attacks[golpe].collider.GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState[slash];
-                currentComboAttacks.attacks[golpe].collider.SetActive(true);
-                StartCoroutine(DesactivarCollisionGolpe(0.05f, golpe));
+            currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState[slash];
+                currentComboAttacks.attacks[golpe].collider[slash].SetActive(true);
+                StartCoroutine(DesactivarCollisionGolpe(0.05f, currentComboAttacks.attacks[golpe].collider[slash]));
             
         }
 
 
     }
 
-    private IEnumerator DesactivarCollisionGolpe(float time, int golpe)
+    private IEnumerator DesactivarCollisionGolpe(float time, GameObject col)
     {
 
         yield return new WaitForSeconds(time);
-        currentComboAttacks.attacks[golpe].collider.SetActive(false);
+       col.SetActive(false);
 
     }
 
@@ -786,7 +786,7 @@ public class PlayerControl : MonoBehaviour
         {
             landHeight = hit.point.y;
 
-            if ((hit.distance < 2.5f * ((gravity * (Time.time - fallStartTime)) / gravity) || hit.distance < 0.5f))
+            if ((hit.distance < 3f * ((gravity * (Time.time - fallStartTime)) / gravity) || hit.distance < 0.5f))
             {
 
                 timeLanding = Time.time;
@@ -1102,7 +1102,7 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             //landVFX.PlayDustVFX(this.transform.position);
-                            CallItemOnJump();
+                            //CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.3f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
