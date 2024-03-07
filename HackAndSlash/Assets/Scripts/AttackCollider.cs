@@ -15,12 +15,12 @@ public class AttackCollider : MonoBehaviour
     }
     float CalculateDamage()
     {
-        float damage = (int)state * _player.stats.attackDamage;
+        float damage = (int)state * _player.attackDamage;
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
-        if (rand < _player.stats.critChance)
+        if (rand < _player.critChance)
         {
-            damage *= _player.stats.critDamageMultiplier;
+            damage *= _player.critDamageMultiplier;
         }
         return damage;
     }

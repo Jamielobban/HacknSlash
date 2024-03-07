@@ -30,7 +30,7 @@ public class ManagerEnemies : MonoBehaviour
     private float _enemiesKilled = 0;
     private float _enemiesScore = 0;
 
-    public int timeToGetItem = 2;
+    public int timeToGetItem = 60;
     #region Settings
     [Header("Texts Settings:")]
     public TextMeshProUGUI textTime;
@@ -52,7 +52,8 @@ public class ManagerEnemies : MonoBehaviour
     public int SpawnedEnemies => _spawnedEnemies;
 
     // -- Timer Settings -- //
-    private float _timer = 0f;
+    private float _timerGlobal = 0f;
+    private float _timerItems = 0f;
     private int minutes = 0;
     private int seconds = 0;
     #endregion
@@ -67,23 +68,24 @@ public class ManagerEnemies : MonoBehaviour
 
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timerGlobal += Time.deltaTime;
+        _timerItems += Time.deltaTime;
 
         UpdateTimeText();
 
-        if(_timer >= timeToGetItem)
+        if(_timerItems >= timeToGetItem)
         {
-            Debug.Log("item get");
+            AbilityPowerManager.instance.ShowNewOptions();
+            _timerItems = 0f;
             _enemiesScore = 0;
             _enemiesKilled = 0;
-            timeToGetItem += 2;
         }
     }
 
     private void UpdateTimeText()
     {
-        minutes = (int)(_timer / 60f);
-        seconds = (int)(_timer % 60f);
+        minutes = (int)(_timerGlobal / 60f);
+        seconds = (int)(_timerGlobal % 60f);
         textTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 

@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class IdleState : EnemyState
 {
+
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
@@ -10,11 +11,13 @@ public class IdleState : EnemyState
 
     public override void UpdateState(Enemy enemy)
     {
-        NavMeshPath path = new NavMeshPath();
-        bool isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, path);
-        Debug.Log("Handle idle" + isPathValid);
+        if (Time.frameCount % 20 == 0)
+        {
+            _enemy.movements._path = new NavMeshPath();
+            _enemy.movements._isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _enemy.movements._path);
+        }
 
-        if (enemy.movements.InRangeToChase() && isPathValid)
+        if (enemy.movements.InRangeToChase() && _enemy.movements._isPathValid)
         {
             enemy.events.Following();
         }

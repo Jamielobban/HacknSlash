@@ -7,6 +7,8 @@ public class PlayerCollision : MonoBehaviour
     private List<GameObject> _touchingInteractables = new List<GameObject>();
     public bool canInteract;
 
+    public void ClearInteractables() => _touchingInteractables.Clear();
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Interactable")

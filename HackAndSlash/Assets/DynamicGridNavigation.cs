@@ -81,7 +81,7 @@ public class DynamicGridNavigation : MonoBehaviour
         string itemName = gridElements[currentIndex].name;
         string formattedName = itemName.Substring(3).Replace("Panel", "").Trim();
 
-        ITEMdESC.text = playerControl.GetItemDescription(formattedName);                                
+      //  ITEMdESC.text = playerControl.GetItemDescription(formattedName);                                
         itemHighlight.transform.position = gridElements[currentIndex].gameObject.transform.position;
     }
 

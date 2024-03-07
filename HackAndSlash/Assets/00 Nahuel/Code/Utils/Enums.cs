@@ -91,5 +91,13 @@ public class Enums
     public enum MusicEffects
     {
     };
+
+    public enum RarityType
+    {
+        Common,
+        Uncommon,
+        Rare,
+        Legendary
+    }
 }
 

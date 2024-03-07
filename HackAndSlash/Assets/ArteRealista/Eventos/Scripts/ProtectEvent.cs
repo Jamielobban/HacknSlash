@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ProtectEvent : Event
+public class ProtectEvent : EventMap
 {
     [SerializeField] GameObject spawnerParent;
     [SerializeField] List<Transform> targetsToProtect;    

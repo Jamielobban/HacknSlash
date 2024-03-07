@@ -65,7 +65,7 @@ public class Enemy : PoolableObject
         currentState?.UpdateState(this);
         if (Time.frameCount % 10 == 0)
         {
-            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 150)
+            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 120)
             {
                 events.Die();
             }
