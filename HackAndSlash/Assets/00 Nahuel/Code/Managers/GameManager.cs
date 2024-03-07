@@ -25,14 +25,16 @@ public class GameManager : MonoBehaviour
     public Enums.GameState state;
 
     private bool _isPaused;
-    private PlayerManager _player;
-    public PlayerManager Player => _player;
+    private PlayerControl _player;
+    public PlayerControl Player => _player;
     public bool IsPaused => _isPaused;
 
     private void Awake()
     {
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        _player = FindObjectOfType<PlayerControl>();
     }
 
     void Update()
@@ -71,7 +73,10 @@ public class GameManager : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         UpdateState(Enums.GameState.Playing);
-        _player = FindObjectOfType<PlayerManager>();
+        if(_player == null)
+        {
+            _player = FindObjectOfType<PlayerControl>();
+        }
         //MainMenu.Hide();
     }
 

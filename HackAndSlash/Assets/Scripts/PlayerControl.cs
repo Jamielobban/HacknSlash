@@ -1,15 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using UnityEngine;
-using UnityEngine.UI;
 using MoreMountains.Feedbacks;
-using UnityEngine.VFX;
 using System.Linq;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
 using System;
-using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using DamageNumbersPro;
@@ -19,8 +13,6 @@ public class PlayerControl : MonoBehaviour
     public PlayerHealthSystem healthSystem;
     public DamageNumber healPixel;
     public ParticleSystem flash;
-    public TextMeshProUGUI currentHealthText;
-    public TextMeshProUGUI maxHealthText;
     public UnityEngine.UI.Slider healthSlider;
 
     public Animator cameraAAnims;

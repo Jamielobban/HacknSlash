@@ -177,8 +177,8 @@ public class AbilityPowerManager : MonoBehaviour
         player.CallItemOnPickup(chosenItem.GetAssociatedStatType());
 
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
-        
-        Time.timeScale = 1.0f;
+
+        GameManager.Instance.PauseGame();
         isOpen = false;
         //itemChoiceAnim.SetTrigger("Close");
         //item1 = null;
@@ -210,7 +210,8 @@ public class AbilityPowerManager : MonoBehaviour
         option2Button.GetComponent<Button>().enabled = true;
         //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
-        Time.timeScale = 0.0f;
+
+        GameManager.Instance.PauseGame();
         // Generate new items for options
      //   Debug.Log(_itemManager.gameObject);
         if (_itemManager != null)
