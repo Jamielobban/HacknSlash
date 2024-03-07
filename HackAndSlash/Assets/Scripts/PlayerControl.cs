@@ -494,28 +494,29 @@ public class PlayerControl : MonoBehaviour
 
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) < 6 && currentComboAttacks.combo != ComboAtaques.Teleport)
         {
+            Vector3 d = this.transform.position + ((camera.transform.forward * controller.LeftStickValue().y * 6) + (camera.transform.right * controller.LeftStickValue().x * 6));
 
-            enemy = attackTeleport.GetEnemie(this.transform.position);
+            enemy = attackTeleport.GetEnemie(d);
             Vector3 enem = enemy;
             enem.y = player.transform.position.y;
             enemy += (enem - player.transform.position).normalized * 1f;
             Vector3 dir = new Vector3(0, 0, 0);
 
-            if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
-            {
+            //if (currentComboAttack == -1 || controller.LeftStickValue().magnitude == 0)
+            //{
                 dir = -(enem - player.transform.position);
-            }
-            else
-            {
-                dir = (camera.transform.position - (camera.transform.position + (camera.transform.forward * -controller.LeftStickValue().y) + (camera.transform.right * -controller.LeftStickValue().x)));
+            //}
+            //else
+            //{
+            //    dir = (camera.transform.position - (camera.transform.position + (camera.transform.forward * -controller.LeftStickValue().y) + (camera.transform.right * -controller.LeftStickValue().x)));
 
-            }
+            //}
             dir.Normalize();
 
             if (currentComboAttacks.combo == ComboAtaques.HoldQuadratL2)
-                dir = attackTeleport.GetEnemiePos(this.transform.position) + (dir * 7);
+                dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
             else
-                dir = attackTeleport.GetEnemiePos(this.transform.position) + (dir * 3);
+                dir = attackTeleport.GetEnemiePos(d) + (dir * 3);
 
             if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
                 dir.y = player.transform.position.y;
@@ -539,7 +540,7 @@ public class PlayerControl : MonoBehaviour
                     playerAnim.Play("Desaparecer", 1);
                     Invoke("Aparecer", 0.1f);
 
-                    enemy = attackTeleport.GetEnemie(this.transform.position);
+                    enemy = attackTeleport.GetEnemie(d);
                     enem = enemy;
                     enem.y = dir.y;
                     enemy += (enem - dir).normalized * 3f;
@@ -629,41 +630,44 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfIsFalling()
     {
         RaycastHit hit;
+        RaycastHit hit2;
 
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        if (Physics.Raycast(transform.position + new Vector3(0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
         {
-            if (hit.distance > distanceFloor)
+            if (Physics.Raycast(transform.position + new Vector3(-0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, 1 << 7))
             {
+                if (hit.distance > distanceFloor && hit2.distance > distanceFloor)
+                {
 
-                fallStartTime = Time.time;
-                OnAir = true;
+                    fallStartTime = Time.time;
+                    OnAir = true;
 
-                states = States.JUMP;
-                jump = Jump.FALL;
-                if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
-                    playerAnim.CrossFadeInFixedTime("Fall", 0.2f);
+                    states = States.JUMP;
+                    jump = Jump.FALL;
+                    if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
+                        playerAnim.CrossFadeInFixedTime("Fall", 0.2f);
 
-                return true;
+                    return true;
 
+                }
+                else if (hit.distance < 0 && hit2.distance < 0)
+                {
+                    //this.transform.position = new Vector3(this.transform.position.x, hit.point.y+0.1f, this.transform.position.z);
+                    doubleJump = false;
+
+                    return CheckIfLand();
+                }
+                else
+                {
+                    //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
+                    doubleJump = false;
+
+                    if (states == States.JUMP && currentComboAttacks.combo != ComboAtaques.air2)
+                        landFeedback.PlayFeedbacks();
+
+                    return false;
+                }
             }
-            else if (hit.distance < 0)
-            {
-                //this.transform.position = new Vector3(this.transform.position.x, hit.point.y+0.1f, this.transform.position.z);
-                doubleJump = false;
-
-                return CheckIfLand();
-            }
-            else
-            {
-                //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
-                doubleJump = false;
-
-                if (states == States.JUMP && currentComboAttacks.combo != ComboAtaques.air2)
-                    landFeedback.PlayFeedbacks();
-
-                return false;
-            }
-
         }
         return false;
 
@@ -799,28 +803,32 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfLand()
     {
         RaycastHit hit;
+        RaycastHit hit2;
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
         {
-            landHeight = hit.point.y;
-
-            if ((hit.distance < 3f * ((gravity * (Time.time - fallStartTime)) / gravity) || hit.distance < 0.5f))
+            if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, 1 << 7))
             {
+                landHeight = hit.point.y;
 
-                timeLanding = Time.time;
-                if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
-                    playerAnim.CrossFadeInFixedTime("Land", 0.3f);
-                states = States.JUMP;
-                OnAir = false;
+                float a = 3f * ((gravity * (Time.time - fallStartTime)) / gravity);
+                if (((hit.distance < a && hit2.distance < a) || (hit.distance < 0.5f && hit2.distance < 0.5f)))
+                {
 
-                jump = Jump.LAND;
-                Invoke("ActiveDoubleJump", 0.1f);
-                moveDirSaved = new Vector3();
-                //landFeedback.PlayFeedbacks();
+                    timeLanding = Time.time;
+                    if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Land"))
+                        playerAnim.CrossFadeInFixedTime("Land", 0.3f);
+                    states = States.JUMP;
+                    OnAir = false;
 
-                return true;
+                    jump = Jump.LAND;
+                    Invoke("ActiveDoubleJump", 0.1f);
+                    moveDirSaved = new Vector3();
+                    //landFeedback.PlayFeedbacks();
+
+                    return true;
+                }
             }
-
         }
         return false;
     }
@@ -1372,61 +1380,61 @@ public class PlayerControl : MonoBehaviour
 
         }
 
-        if (controller.Teleport1)
-        {
+        //if (controller.Teleport1)
+        //{
 
-            Vector3 pos2 = attackTeleport2.GetEnemiePos(this.transform.position);
+        //    Vector3 pos2 = attackTeleport2.GetEnemiePos(this.transform.position);
 
-            if (pos2 != Vector3.zero)
-            {
+        //    if (pos2 != Vector3.zero)
+        //    {
                 
-                Vector3 pos = (pos2 - this.transform.position).normalized;
+        //        Vector3 pos = (pos2 - this.transform.position).normalized;
 
-                pos = attackTeleport2.GetEnemiePos(this.transform.position) - (pos * 2);
+        //        pos = attackTeleport2.GetEnemiePos(this.transform.position) - (pos * 2);
 
-                RaycastHit hit;
+        //        RaycastHit hit;
 
-                if (Physics.Raycast(pos, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7))
-                {
-                    this.GetComponent<Rigidbody>().DOMove(pos, 0.25f);
-                    moveDir = Vector3.zero;
-                    moveDirSaved = Vector3.zero;
+        //        if (Physics.Raycast(pos, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7))
+        //        {
+        //            this.GetComponent<Rigidbody>().DOMove(pos, 0.25f);
+        //            moveDir = Vector3.zero;
+        //            moveDirSaved = Vector3.zero;
 
-                    playerAnim.Play("Desaparecer", 1);
-                    Invoke("Aparecer", 0.1f);
+        //            playerAnim.Play("Desaparecer", 1);
+        //            Invoke("Aparecer", 0.1f);
 
-                    enemy = attackTeleport2.GetEnemiePos(this.transform.position);
+        //            enemy = attackTeleport2.GetEnemiePos(this.transform.position);
 
-                    this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-                    TeleportTime = Time.time;
+        //            TeleportTime = Time.time;
 
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
-                    {
-                        damageMult = 1;
+        //            if ((Time.time - attackStartTime) >= delay + delayDamage)
+        //            {
+        //                damageMult = 1;
 
-                        currentComboAttack = -1;
-                        passiveCombo.Clear();
-                    }
-                    else if (GetAttacks(ComboAtaques.Teleport).attacks.Length - 1 <= currentComboAttack)
-                    {
-                        currentComboAttack = GetAttacks(ComboAtaques.Teleport).attacks.Length - 1;
-                    }
-                    passiveCombo.Add(PassiveCombo.TELEPORT);
-                    attacks = Attacks.GROUND;
-                    currentComboAttacks = GetAttacks(ComboAtaques.Teleport);
-                    PlayAttack();
+        //                currentComboAttack = -1;
+        //                passiveCombo.Clear();
+        //            }
+        //            else if (GetAttacks(ComboAtaques.Teleport).attacks.Length - 1 <= currentComboAttack)
+        //            {
+        //                currentComboAttack = GetAttacks(ComboAtaques.Teleport).attacks.Length - 1;
+        //            }
+        //            passiveCombo.Add(PassiveCombo.TELEPORT);
+        //            attacks = Attacks.GROUND;
+        //            currentComboAttacks = GetAttacks(ComboAtaques.Teleport);
+        //            PlayAttack();
 
-                    states = States.ATTACK;
+        //            states = States.ATTACK;
 
-                    controller.ResetBotonesAtaques();
-                    return true;
-                }
+        //            controller.ResetBotonesAtaques();
+        //            return true;
+        //        }
 
 
-            }
+        //    }
 
-        }
+        //}
 
 
         if (attackFinished && (Time.time - comboFinishedTime) >= delayCombos)
