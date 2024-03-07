@@ -69,7 +69,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void HandleFollow()
     {
-        if (Time.frameCount % 20 == 0)
+
+        if (Time.frameCount % 20 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
         {
             _path = new NavMeshPath();
             _isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _path);
@@ -77,7 +78,7 @@ public class EnemyMovement : MonoBehaviour
 
         _agent.destination = target.position;
         HandleRotation();
-        if (!_isPathValid)
+        if (!_isPathValid && _enemy._player.states != PlayerControl.States.JUMP)
         {
             _enemy.events.Idle();
         }

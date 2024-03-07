@@ -10,6 +10,9 @@ using DamageNumbersPro;
 
 public class PlayerControl : MonoBehaviour
 {
+    [SerializeField]
+    LayerMask layerSuelo;
+
     public PlayerHealthSystem healthSystem;
     public DamageNumber healPixel;
     public ParticleSystem flash;
@@ -632,9 +635,9 @@ public class PlayerControl : MonoBehaviour
         RaycastHit hit;
         RaycastHit hit2;
 
-        if (Physics.Raycast(transform.position + new Vector3(0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        if (Physics.Raycast(transform.position + new Vector3(0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, layerSuelo))
         {
-            if (Physics.Raycast(transform.position + new Vector3(-0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, 1 << 7))
+            if (Physics.Raycast(transform.position + new Vector3(-0.2f, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, layerSuelo))
             {
                 if (hit.distance > distanceFloor && hit2.distance > distanceFloor)
                 {
@@ -750,7 +753,8 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfJump()
     {
 
-        if (controller.CheckIfJump() && Time.timeScale != 0)
+
+        if (controller.CheckIfJump())
         {
             
             this.GetComponent<Rigidbody>().drag = 5;
@@ -805,9 +809,9 @@ public class PlayerControl : MonoBehaviour
         RaycastHit hit;
         RaycastHit hit2;
 
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, layerSuelo))
         {
-            if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, 1 << 7))
+            if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit2, 200, layerSuelo))
             {
                 landHeight = hit.point.y;
 
@@ -852,6 +856,7 @@ public class PlayerControl : MonoBehaviour
 
     #region En general no hay que tocar nada del UPDATE casi todo lo que hay que tocar es de las funciones
 
+    Vector3 dirDash;
     void Update()
     {
         if (!controller.GetController())
@@ -957,31 +962,29 @@ public class PlayerControl : MonoBehaviour
                 switch (dash)
                 {
                     case Dash.START:
-                        if ((Time.time - delayDash) > 0.05f)
+                        if ((Time.time - delayDash) > 0.02f)
                         {
                             playerAnim.speed = 1;
 
 
 
-
+                            Vector3 dir;
                             if (dashDirection == new Vector2(0, -1))
                             {
                                 player.transform.GetChild(3).transform.localPosition += new Vector3(dashDirection.x, 0, dashDirection.y).normalized;
-                                Vector3 dir = this.transform.position - player.transform.GetChild(3).transform.position;
-
-                                this.GetComponent<Rigidbody>().AddForce(dir * dashSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
+                                dir = this.transform.position - player.transform.GetChild(3).transform.position;
 
                                 player.transform.GetChild(3).transform.localPosition = new Vector3();
                             }
                             else
                             {
                                 movementController.transform.localPosition -= new Vector3(dashDirection.x, 0, dashDirection.y).normalized;
-                                Vector3 dir = this.transform.position - movementController.transform.position;
-                                this.GetComponent<Rigidbody>().AddForce(dir * dashSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
+                                dir = this.transform.position - movementController.transform.position;
 
                                 movementController.transform.localPosition = new Vector3();
                             }
 
+                            dirDash = dir;
 
 
                             delayDash = Time.time;
@@ -990,17 +993,17 @@ public class PlayerControl : MonoBehaviour
                         }
                         break;
                     case Dash.DASH:
-                        if ((Time.time - delayDash) > 0.05f)
+                        if ((Time.time - delayDash) > 0.25f)
                         {
                             delayDash = Time.time;
 
                             dash = Dash.END;
 
-                            playerAnim.CrossFadeInFixedTime("DashAparecer", 0.2f);
 
 
 
                         }
+                        this.GetComponent<Rigidbody>().AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
                         if (dashDown)
                         {
@@ -1030,7 +1033,7 @@ public class PlayerControl : MonoBehaviour
 
                         break;
                     case Dash.END:
-                        if ((Time.time - delayDash) > 0.05f)
+                        if ((Time.time - delayDash) > 0.10f)
                         {
                             OnAir = false;
 

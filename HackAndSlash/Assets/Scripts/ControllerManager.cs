@@ -199,13 +199,20 @@ public class ControllerManager : MonoBehaviour
 
     public bool CheckIfJump()
     {
+        
         if (X.action == null)
             return false;
         if (X.action.WasPressedThisFrame() && canJump)
         {
+     
             Interact.InteractPerformed();
-            jump = true;
-            canJump = false;
+
+            if(!Interact.canInteract && !AbilityPowerManager.instance.menuActive)
+            {
+                jump = true;
+                canJump = false;
+            }
+
         }
 
 

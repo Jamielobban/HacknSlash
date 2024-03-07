@@ -190,8 +190,15 @@ public class AbilityPowerManager : MonoBehaviour
         //itemChoiceAnim.SetTrigger("Close");
         //item1 = null;
         //item2 = null;
-        menuActive = false;
+        Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    void DesactivarMenu()
+    {
+
+        menuActive = false;
+
     }
 
     private IEnumerator SetActiveFalseCouroutine(GameObject wow, float delay)
