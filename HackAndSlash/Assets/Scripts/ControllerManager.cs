@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using MoreMountains.Feedbacks;
+using System;
 
 public class ControllerManager : MonoBehaviour
 {
@@ -36,8 +34,6 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueCuadradoL2Press;
     public bool ataqueTrianguloL2Press;
 
-
-
     bool dejarMantenerCuadrado;
     bool dejarMantenerTriangulo;
 
@@ -67,8 +63,13 @@ public class ControllerManager : MonoBehaviour
     float time;
 
     public PlayerCollision Interact;
+
+    public event Action OnSquarePress;
+    public void SquarePress() => OnSquarePress?.Invoke();
+
     void Start()
     {
+        
         leftStick = new Vector2();
         rightStick = new Vector2();
 

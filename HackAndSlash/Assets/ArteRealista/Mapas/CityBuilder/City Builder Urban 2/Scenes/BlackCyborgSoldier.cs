@@ -32,7 +32,11 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
     PlayerInputActionsRefactor _playerActions;
 
-    private PlayerManager _player;
+    private PlayerControl _player;
+
+
+
+
     private void Awake()
     {
         if (intro)
@@ -40,6 +44,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         _playerActions = new PlayerInputActionsRefactor();
         _playerActions.Player.Enable();
+        _player.cont
         
     }
 
