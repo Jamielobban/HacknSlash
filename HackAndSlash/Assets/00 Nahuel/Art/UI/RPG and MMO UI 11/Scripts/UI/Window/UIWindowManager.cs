@@ -52,64 +52,6 @@ namespace DuloGames.UI
                 m_Instance = null;
         }
 
-        protected virtual void Update()
-		{
-            // Reset the escape used variable
-            if (this.m_EscapeUsed)
-                this.m_EscapeUsed = false;
-
-			// Check for escape key press
-			if (Input.GetButtonDown(this.m_EscapeInputName))
-			{
-                // Check for currently opened modal and exit this method if one is found
-                UIModalBox[] modalBoxes = FindObjectsOfType<UIModalBox>();
-
-                if (modalBoxes.Length > 0)
-                {
-                    foreach (UIModalBox box in modalBoxes)
-                    {
-                        // If the box is active
-                        if (box.isActive && box.isActiveAndEnabled && box.gameObject.activeInHierarchy)
-                            return;
-                    }
-                }
-
-				// Get the windows list
-				List<UIWindow> windows = UIWindow.GetWindows();
-				
-				// Loop through the windows and hide if required
-				foreach (UIWindow window in windows)
-				{
-					// Check if the window has escape key action
-					if (window.escapeKeyAction != UIWindow.EscapeKeyAction.None)
-					{
-						// Check if the window should be hidden on escape
-						if (window.IsOpen && (window.escapeKeyAction == UIWindow.EscapeKeyAction.Hide || window.escapeKeyAction == UIWindow.EscapeKeyAction.Toggle || (window.escapeKeyAction == UIWindow.EscapeKeyAction.HideIfFocused && window.IsFocused)))
-						{
-							// Hide the window
-							window.Hide();
-
-                            // Mark the escape input as used
-                            this.m_EscapeUsed = true;
-                        }
-					}
-				}
-
-                // Exit the method if the escape was used for hiding windows
-                if (this.m_EscapeUsed)
-                    return;
-                
-				// Loop through the windows again and show any if required
-				foreach (UIWindow window in windows)
-				{
-					// Check if the window has escape key action toggle and is not shown
-					if (!window.IsOpen && window.escapeKeyAction == UIWindow.EscapeKeyAction.Toggle)
-					{
-						// Show the window
-						window.Show();
-					}
-				}
-			}
-		}
+       
 	}
 }

@@ -13,39 +13,19 @@ public class PlayerStats : MonoBehaviour
     public TMP_Text healthRegenText;
     //public GameObject healthText;
     private PlayerControl playerStats;
-    private AbilityPowerManager ap;
-    ControllerManager controller;
     //
 
     //public GameObject itemPanelGrid;
     // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
-        ap = FindObjectOfType<AbilityPowerManager>();
         playerStats = FindObjectOfType<PlayerControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (controller.GetTabButton().action != null)
-        {
-            if (controller.GetTabButton().action.WasPressedThisFrame())
-            {
-                if (playerStatsMenu.activeSelf)
-                {
-                    playerStatsMenu.SetActive(false);
-                  //  healthText.SetActive(false);
-                }
-                else
-                {
-                    playerStatsMenu.SetActive(true);
-                  //  healthText.SetActive(true);
-                    RefreshStats();
-                }
-            }
-        }
+
 
         if (playerStatsMenu.activeSelf)
         {

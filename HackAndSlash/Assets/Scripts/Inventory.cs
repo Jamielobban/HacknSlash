@@ -26,11 +26,10 @@ public class Inventory : MonoBehaviour
     //public GameObject backdrop;
     public GameObject itemDescription;
     ControllerManager controller;
-
     // Start is called before the first frame update
     void Start()
     {
-        //controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
+        controller = GameObject.FindAnyObjectByType<ControllerManager>();
 
         for (int i = 0; i < inventorySize; i++)
         {
@@ -43,39 +42,30 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (/*controller.GetTabButton().action != null*/ Input.GetKeyDown(KeyCode.Tab))
+        if (controller.GetTabButton().action != null)
         {
-            //if (controller.GetTabButton().action.WasPressedThisFrame())
-            //{
+            if (controller.GetTabButton().action.WasPressedThisFrame())
+            {
                 if (inventorymenu.activeSelf)
                 {
                     inventorymenu.SetActive(false);
-                    //backdrop.SetActive(false);
-                    //itemDescription.SetActive(false);
-                    if (!AbilityPowerManager.instance.isOpen) { 
-                        Time.timeScale = 1.0f;
+
+                    if (!AbilityPowerManager.instance.isOpen)
+                    {
+                        GameManager.Instance.PauseGame();
                     }
                 }
                 else
                 {
                     inventorymenu.SetActive(true);
-                    //backdrop.SetActive(true);
-                    //itemDescription.SetActive(true);
-                    //AddItem(new HealingItem(), 1);
-                    //Debug.Log("Hola");
+
                     RefreshInventory();
-                    
-                    Time.timeScale = 0.0f;
+
+                    GameManager.Instance.PauseGame();
                 }
-            //}
+            }
         }
-        //if(Input.GetKeyDown(KeyCode.K))
-        //{
 
-        //        //ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
-
-            
-        //}
     }
 
     public void RefreshInventory()

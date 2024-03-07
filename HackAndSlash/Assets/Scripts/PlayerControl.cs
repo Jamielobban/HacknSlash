@@ -561,7 +561,19 @@ public class PlayerControl : MonoBehaviour
             for (int i = 0; i < currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes.Length; i++)
             {
                 stopAttack = false;
-                StartCoroutine(DelayGolpe((currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]), currentComboAttack, damageMultiplier, damageMult, i));
+                if(currentComboAttacks.combo != ComboAtaques.air2)
+                    StartCoroutine(DelayGolpe((currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]), currentComboAttack, damageMultiplier, damageMult, i));
+                else
+                {
+                    RaycastHit hit;
+                    Physics.Raycast(this.transform.position, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7);
+                    float a = (this.transform.position.y - hit.point.y) / 10;
+                    float time = (currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]) + (a * 0.1f);
+                    slashSuelo = currentComboAttacks.attacks[currentComboAttack].slash[i].transform.GetChild(0).gameObject;
+                    Invoke("GuarradaSlashTrianguloAire", time - 0.15f);
+                    StartCoroutine(DelayGolpe(time, currentComboAttack, damageMultiplier, damageMult, i));
+
+                }
 
 
             }
@@ -571,6 +583,12 @@ public class PlayerControl : MonoBehaviour
         playerAnim.CrossFadeInFixedTime(currentComboAttacks.attacks[currentComboAttack].name, currentComboAttacks.attacks[currentComboAttack].transition);
 
         attackStartTime = Time.time;
+    }
+    GameObject slashSuelo;
+    void GuarradaSlashTrianguloAire()
+    {
+        slashSuelo.SetActive(true);
+
     }
 
     void AttackMovement()
@@ -640,7 +658,7 @@ public class PlayerControl : MonoBehaviour
                 //this.transform.position = new Vector3(this.transform.position.x, hit.point.y + 0.1f, this.transform.position.z);
                 doubleJump = false;
 
-                if (states == States.JUMP)
+                if (states == States.JUMP && currentComboAttacks.combo != ComboAtaques.air2)
                     landFeedback.PlayFeedbacks();
 
                 return false;
@@ -728,7 +746,7 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfJump()
     {
 
-        if (controller.CheckIfJump())
+        if (controller.CheckIfJump() && Time.timeScale != 0)
         {
             
             this.GetComponent<Rigidbody>().drag = 5;
@@ -1102,7 +1120,7 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             //landVFX.PlayDustVFX(this.transform.position);
-                            //CallItemOnJump();
+                            CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.3f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
@@ -1263,6 +1281,7 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
+            Debug.Log("agdsh");
             i.item.OnJump(this, i.stacks);
         }
     }
@@ -1339,7 +1358,8 @@ public class PlayerControl : MonoBehaviour
     }
     bool CheckAtaques()
     {
-
+        if (Time.timeScale == 0)
+            return false;
 
         float delay = 0;
         if (currentComboAttack != -1 && currentComboAttacks != null && (currentComboAttack + 1) != currentComboAttacks.attacks.Length)
@@ -1737,7 +1757,7 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfDash()
     {
 
-        if (controller.GetDash())
+        if (controller.GetDash() && Time.timeScale != 0)
         {
             controller.ResetBotonesAtaques();
 

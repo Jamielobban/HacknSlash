@@ -50,6 +50,8 @@ public class AbilityPowerManager : MonoBehaviour
     private Item item2;
     private PlayerControl player;
     private ControllerManager controllerManager;
+    public GameObject levelUpEffects;
+
 
     private Dictionary<Enums.RarityType, Color> rarityColorMap;
     public bool menuActive = false;
@@ -77,6 +79,7 @@ public class AbilityPowerManager : MonoBehaviour
     public bool isOpen;
     private void Awake()
     {
+        levelUpEffects.SetActive(false);
         if (_instance == null)
         {
             _instance = this;
@@ -112,10 +115,12 @@ public class AbilityPowerManager : MonoBehaviour
         {
             if (itemChoice.activeSelf)
             {
+
                 itemChoice.SetActive(false);
             }
             else
             {
+
                 //itemChoice.SetActive(true);
                 ShowNewOptions();
 
@@ -145,6 +150,8 @@ public class AbilityPowerManager : MonoBehaviour
         {
             OnOption2Clicked();
         }
+        levelUpEffects.SetActive(false);
+
     }
 
     public void OnOption1Clicked()
@@ -203,6 +210,8 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        levelUpEffects.SetActive(true);
+
         itemChoice.SetActive(true);
         isOpen = true;
         menuActive = true;
