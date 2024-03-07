@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
+using static Enums;
 
 public class BlackCyborgSoldier : Interactive, IInteractable
 {
@@ -13,7 +15,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [TextArea]
     [SerializeField] string[] dialogues;
 
-    [SerializeField] List<Combo>combosToPractice = new List<Combo>();
+    [SerializeField] List<ListWrapper<Enums.InputsAttack>> combosToPractice = new List<ListWrapper<Enums.InputsAttack>>();
     [SerializeField] List<Sprite> uiTutorialButtons = new List<Sprite>();
     [SerializeField] SimpleRTVoiceExample voice;
     [SerializeField] bool intro, hasSprinted = false, walking = false;
@@ -30,17 +32,17 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
-    PlayerInputActionsRefactor _playerActions;
 
-    private PlayerManager _player;
+    Inputs _playerActions;
+    private PlayerControl _player;
     private void Awake()
     {
         if (intro)
             return;
 
-        _playerActions = new PlayerInputActionsRefactor();
+        _playerActions = new Inputs();
         _playerActions.Player.Enable();
-        
+
     }
 
     private void Start()
@@ -49,24 +51,24 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         {
             StartCoroutine(IntroSpeach());
             return;
-        }        
+        }
 
         matchKeyWithUI.Add(Enums.InputsAttack.Square, uiTutorialButtons[3]);
         matchKeyWithUI.Add(Enums.InputsAttack.HoldSquare, uiTutorialButtons[4]); // air combo
         matchKeyWithUI.Add(Enums.InputsAttack.Triangle, uiTutorialButtons[5]);
         matchKeyWithUI.Add(Enums.InputsAttack.HoldTriangle, uiTutorialButtons[6]);
-        matchKeyWithUI.Add(Enums.InputsAttack.L2Square, uiTutorialButtons[7]);
-        matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiTutorialButtons[8]);
-        matchKeyWithUI.Add(Enums.InputsAttack.AirSquare, uiTutorialButtons[9]);
-        _player = FindObjectOfType<PlayerManager>();
+        //matchKeyWithUI.Add(Enums.InputsAttack.L2Square, uiTutorialButtons[7]);
+        //matchKeyWithUI.Add(Enums.InputsAttack.L2Triangle, uiTutorialButtons[8]);
+        //matchKeyWithUI.Add(Enums.InputsAttack.AirSquare, uiTutorialButtons[9]);
+        _player = FindObjectOfType<PlayerControl>();
     }
 
     private void Update()
     {
-        Debug.Log(voice.playing);
+        //Debug.Log(voice.playing);
 
         if (intro)
-            return;               
+            return;
 
         if (canInteract && currentState != Enums.TutorialState.FINISHED)
             objectiveMarker.SetActive(true);
@@ -76,27 +78,27 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (currentState == Enums.TutorialState.COMBOS)
         {
-            if (lastAttackTime == 0 || inputsBuffer.Count() > combosToPractice[currentComboLevel].sequence.Count() || inputsBuffer.Count == 0)
+            if (lastAttackTime == 0 || inputsBuffer.Count() > combosToPractice[currentComboLevel].collection.Count() || inputsBuffer.Count == 0)
                 return;
 
-            if(Time.time - lastAttackTime >= combosToPractice[currentComboLevel].attack[inputsBuffer.Count() - 1].data.animationLength + 0.25f)
+            if (Time.time - lastAttackTime >= 0.5f)
                 ComboFailed(1);
             else
             {
                 if (inputsBuffer.Count() <= 0 || lastBufferSize == inputsBuffer.Count() || lastAttackTime == 0)
                     return;
 
-                if (inputsBuffer.Last() != combosToPractice[currentComboLevel].sequence[inputsBuffer.Count() - 1])
+                if (inputsBuffer.Last() != combosToPractice[currentComboLevel].collection[inputsBuffer.Count() - 1])
                 {
                     ComboFailed();
                 }
                 else
                 {
                     StepDone();
-                    if (inputsBuffer.Count() == combosToPractice[currentComboLevel].sequence.Count())
+                    if (inputsBuffer.Count() == combosToPractice[currentComboLevel].collection.Count())
                         ComboCompleted();
                 }
-            }            
+            }
 
         }
 
@@ -108,27 +110,14 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         if (!canInteract || intro || voice.playing) return;
 
-        voice.Speak(dialogues[currentText], name);      
+        voice.Speak(dialogues[currentText], name);
 
         objectiveMarker.SetActive(false);
 
         Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
 
-        if(currentState == Enums.TutorialState.INACTIVE)
-            StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 3, 
-            () => {
-                canInteract = false;
-                currentText++;
-                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
-                {
-                    parentImage.color = color;
-                }).SetEase(Ease.Linear);
-            }, 
-            () => { 
-                _playerActions.Player.Jump.performed += Jump_performed; 
-            },0));            
-        else if(currentState == Enums.TutorialState.ROLLS)
-            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(),
+        if (currentState == Enums.TutorialState.INACTIVE)
+            StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 3,
             () => {
                 canInteract = false;
                 currentText++;
@@ -138,10 +127,23 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 }).SetEase(Ease.Linear);
             },
             () => {
-                _playerActions.Player.Square.performed += SquarePerformed;
-                _playerActions.Player.Triangle.performed += TrianglePerformed;
-                _playerActions.Player.L2.performed += L2_performed;
-                _playerActions.Player.L2.canceled += L2_canceled;
+                _playerActions.Player.Jump.performed += Jump_performed;
+            }, 0));
+        else if (currentState == Enums.TutorialState.ROLLS)
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].collection.Count(),
+            () => {
+                canInteract = false;
+                currentText++;
+                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
+                {
+                    parentImage.color = color;
+                }).SetEase(Ease.Linear);
+            },
+            () => {
+                _player.controller.OnSquarePress += SquarePressed;
+                _player.controller.OnTrianglePress += TrianglePressed;
+                _player.controller.OnSquareHold += SquareHolded;                
+                _player.controller.OnTriangleHold += TriangleHolded;
             }, 0));
 
 
@@ -164,7 +166,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         for (int i = 0; i < dialogues.Length; i++)
         {
-            voice.Speak(dialogues[i], name);            
+            voice.Speak(dialogues[i], name);
             yield return new WaitUntil(() => voice.playing == false);
             yield return new WaitForSeconds(0.8f);
         }
@@ -223,7 +225,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 if (newPhase != Enums.TutorialState.COMBOS)
                     uiCombosImage[i].sprite = uiTutorialButtons[(int)newPhase];
                 else
-                    uiCombosImage[i].sprite = matchKeyWithUI[combosToPractice[currentComboLevel].sequence[i]];
+                    uiCombosImage[i].sprite = matchKeyWithUI[combosToPractice[currentComboLevel].collection[i]];
 
                 if (!uiCombosImage[i].enabled)
                     uiCombosImage[i].enabled = true;
@@ -286,11 +288,11 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         }
 
         yield return new WaitForSeconds(1f);
-
-        _playerActions.Player.Square.performed += SquarePerformed;
-        _playerActions.Player.Triangle.performed += TrianglePerformed;
-        _playerActions.Player.L2.performed += L2_performed;
-        _playerActions.Player.L2.canceled += L2_canceled;
+        
+        _player.controller.OnSquarePress += SquarePressed;
+        _player.controller.OnSquareHold += SquareHolded;
+        _player.controller.OnTrianglePress += TrianglePressed;
+        _player.controller.OnTriangleHold += TriangleHolded;
     }
 
     IEnumerator HideTutorial(System.Action onTutorialHided)
@@ -299,7 +301,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         yield return StartCoroutine(ResetImages());
 
-        Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();        
+        Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
 
         DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0), 1f, (color) =>
         {
@@ -308,13 +310,13 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         yield return new WaitForSeconds(1.1f);
 
-        for(int i = 0; i < uiCombosImage.Length - 1; i++)
+        for (int i = 0; i < uiCombosImage.Length - 1; i++)
         {
             uiCombosImage[i].enabled = false;
             uiCombosImage[i].gameObject.SetActive(false);
         }
-        uiCombosImage[uiCombosImage.Length-1].sprite = emptySprite;
-        uiCombosImage[uiCombosImage.Length-1].color = Color.white;
+        uiCombosImage[uiCombosImage.Length - 1].sprite = emptySprite;
+        uiCombosImage[uiCombosImage.Length - 1].color = Color.white;
 
         onTutorialHided();
     }
@@ -346,7 +348,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 _playerActions.Player.Jump.performed -= Jump_performed;
             }, () =>
             {
-                _playerActions.Player.R2.performed += SprintPerformed;
+                _playerActions.Player.R2Pressed.performed += SprintPerformed;
                 _playerActions.Player.Movement.performed += MoveLeftStick_performed;
                 _playerActions.Player.Movement.canceled += MoveLeftStick_canceled;
             }, 1));
@@ -375,7 +377,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
             StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); }));
             inputsBuffer.Clear();
-        }        
+        }
     }
     private void SprintPerformed(InputAction.CallbackContext context)
     {
@@ -389,7 +391,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
             StartCoroutine(StartPhase(Enums.TutorialState.ROLLS, 3, () =>
             {
-                _playerActions.Player.R2.performed -= SprintPerformed;               
+                _playerActions.Player.R2Pressed.performed -= SprintPerformed;
             }, () =>
             {
                 _playerActions.Player.Dash.performed += RollPerformed;
@@ -399,69 +401,25 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     //HANDLE COMBOS INPUT
 
-    void TrianglePerformed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Triangle");
-        if (context.interaction is HoldInteraction)        
-            inputsBuffer.Add(Enums.InputsAttack.HoldTriangle);        
-        else
-        {
-            if(_isL2Performed)
-                inputsBuffer.Add(Enums.InputsAttack.L2Triangle);
-            else
-                inputsBuffer.Add(Enums.InputsAttack.Triangle);
-        }
+    void SquarePressed() { 
+        inputsBuffer.Add(Enums.InputsAttack.Square);
         lastAttackTime = Time.time;
     }
-    void SquarePerformed(InputAction.CallbackContext context)
+    void SquareHolded()
     {
-        Debug.Log("Square");
-
-        if (_player.groundCheck.isGrounded)
-        {
-            if (context.interaction is HoldInteraction)
-            {
-                inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
-            }
-            else
-            {
-                if (!_isL2Performed)
-                {
-                    inputsBuffer.Add(Enums.InputsAttack.Square);
-                }
-                else
-                {
-                    inputsBuffer.Add(Enums.InputsAttack.L2Square);
-                }
-            }
-        }
-        else
-        {
-            if (context.interaction is HoldInteraction)
-            {
-                //Chupamela
-            }
-            else
-            {
-                if (!_isL2Performed)
-                {
-                    inputsBuffer.Add(Enums.InputsAttack.AirSquare);
-                }
-            }
-        }
+        inputsBuffer.Add(Enums.InputsAttack.HoldSquare);
         lastAttackTime = Time.time;
-
     }
-    private void L2_performed(InputAction.CallbackContext context)
+    void TrianglePressed()
     {
-        _isL2Performed = true;
+        inputsBuffer.Add(Enums.InputsAttack.Triangle);
+        lastAttackTime = Time.time;
     }
-    private void L2_canceled(InputAction.CallbackContext context)
+    void TriangleHolded()
     {
-        _isL2Performed = false;
+        inputsBuffer.Add(Enums.InputsAttack.HoldTriangle);
+        lastAttackTime = Time.time;
     }
-
-    //EXTRA
 
     void StepDone()
     {
@@ -483,37 +441,35 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if(currentComboLevel >= combosToPractice.Count)
         {
             ChangeTutorialPhase(Enums.TutorialState.FINISHED);
-            _playerActions.Player.Square.performed -= SquarePerformed;
-            _playerActions.Player.Triangle.performed -= TrianglePerformed;
-            _playerActions.Player.L2.performed -= L2_performed;
-            _playerActions.Player.L2.canceled -= L2_canceled;
+            _player.controller.OnSquarePress -= SquarePressed;
+            _player.controller.OnSquareHold -= SquareHolded;
+            _player.controller.OnTrianglePress -= TrianglePressed;
+            _player.controller.OnTriangleHold -= TriangleHolded;
             StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); }));
         }            
         else
-            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].sequence.Count(), () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.COMBOS, combosToPractice[currentComboLevel].collection.Count(), () =>
             {
-                _playerActions.Player.Square.performed -= SquarePerformed;
-                _playerActions.Player.Triangle.performed -= TrianglePerformed;
-                _playerActions.Player.L2.performed -= L2_performed;
-                _playerActions.Player.L2.canceled -= L2_canceled;
+                _player.controller.OnSquarePress -= SquarePressed;
+                _player.controller.OnSquareHold -= SquareHolded;
+                _player.controller.OnTrianglePress -= TrianglePressed;
+                _player.controller.OnTriangleHold -= TriangleHolded;
             }, () =>
             {
-                _playerActions.Player.Square.performed += SquarePerformed;
-                _playerActions.Player.Triangle.performed += TrianglePerformed;
-                _playerActions.Player.L2.performed += L2_performed;
-                _playerActions.Player.L2.canceled += L2_canceled;
+                _player.controller.OnSquarePress += SquarePressed;
+                _player.controller.OnSquareHold += SquareHolded;
+                _player.controller.OnTrianglePress += TrianglePressed;
+                _player.controller.OnTriangleHold += TriangleHolded;
             }, 1));
-
-
 
     }
 
     void ComboFailed(int extra = 0)
     {
-        _playerActions.Player.Square.performed -= SquarePerformed;
-        _playerActions.Player.Triangle.performed -= TrianglePerformed;
-        _playerActions.Player.L2.performed -= L2_performed;
-        _playerActions.Player.L2.canceled -= L2_canceled;
+        _player.controller.OnSquarePress -= SquarePressed;
+        _player.controller.OnSquareHold -= SquareHolded;
+        _player.controller.OnTrianglePress -= TrianglePressed;
+        _player.controller.OnTriangleHold -= TriangleHolded;
 
         int ind = inputsBuffer.Count() - 1 + extra;
         
@@ -530,8 +486,10 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     void ChangeTutorialPhase(Enums.TutorialState newState)
     {
         currentState = newState;
-    }
+    }    
 
     public Enums.TutorialState TutorialState { get { return currentState; } }
+
+
 }
 

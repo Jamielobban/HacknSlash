@@ -127,7 +127,7 @@ public class PlayerControl : MonoBehaviour
     bool triangulo;
 
     float dealyAttackFall;
-    ControllerManager controller;
+    public ControllerManager controller;
     float delayDash;
     public float dashSpeed;
     Vector2 dashDirection;
@@ -154,6 +154,7 @@ public class PlayerControl : MonoBehaviour
     float TeleportTime;
 
     bool OnAir;
+    public bool GetOnAir => OnAir;
     public enum HitState {DEBIL = 5,MEDIO = 10,FUERTE = 15};
 
     public enum PassiveCombo
