@@ -897,13 +897,13 @@ public class PlayerControl : MonoBehaviour
                 movementController.transform.localPosition = new Vector3();
 
 
-                if (enemy != Vector3.zero)
-                {
-                    Vector3 enem = enemy;
-                    enem.y = player.transform.position.y;
-                    player.transform.LookAt(enem);
+                //if (enemy != Vector3.zero)
+                //{
+                //    Vector3 enem = enemy;
+                //    enem.y = player.transform.position.y;
+                //    player.transform.LookAt(enem);
 
-                }
+                //}
 
                 if (CheckIfNextAttack())
                 {
