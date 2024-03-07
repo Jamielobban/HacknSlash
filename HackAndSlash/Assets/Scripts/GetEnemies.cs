@@ -8,9 +8,28 @@ public class GetEnemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        Invoke("UpdateList", 0.5f);
 
+    }
+    void UpdateList()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
+            {
+                enemies.RemoveAt(i);
+            }
+            if (enemies[i].transform.parent != null)
+            {
+                if (!enemies[i].transform.parent.gameObject.activeSelf)
+                {
+                    enemies.RemoveAt(i);
+
+                }
+            }
+        }
+        Invoke("UpdateList", 0.5f);
+    }
     // Update is called once per frame
     void Update()
     {
