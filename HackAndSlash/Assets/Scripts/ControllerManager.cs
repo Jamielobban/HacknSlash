@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MoreMountains.Feedbacks;
+using System;
 
 public class ControllerManager : MonoBehaviour
 {
@@ -62,11 +63,23 @@ public class ControllerManager : MonoBehaviour
     InputAction.CallbackContext Tab;
     InputAction.CallbackContext interact;
 
+    Event squarePress;
+    Event squareHold;
+
     public bool Teleport1 = false;
     public bool Teleport2 = false;
     float time;
 
     public PlayerCollision Interact;
+
+    public Action OnSquarePress;
+    public Action OnSquareHold;
+    public Action OnTrianglePress;
+    public Action OnTriangleHold;
+    public void SquarePress() => OnSquarePress?.Invoke();
+    public void SquareHold() => OnSquareHold?.Invoke();
+    public void TrianglePress() => OnTrianglePress?.Invoke();
+    public void TriangleHold() => OnTriangleHold?.Invoke();
     void Start()
     {
         leftStick = new Vector2();
@@ -259,13 +272,14 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueCuadrado = true;
                         ataqueCuadradoPress = true;
-
+                        SquarePress();
                     }
                 }
                 else
                 {
                     ataqueCuadrado = true;
                     ataqueCuadradoPress = true;
+                    SquarePress();
 
                 }
             }
@@ -285,14 +299,14 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueCuadradoCargado = true;
                         ataqueCuadradoCargadoPress = true;
-
+                        SquareHold();
                     }
                 }
                 else
                 {
                     ataqueCuadradoCargado = true;
                     ataqueCuadradoCargadoPress = true;
-
+                    SquareHold();
                 }
                 cuadradoHold = false;
 
@@ -321,14 +335,14 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueTriangulo = true;
                         ataqueTrianguloPress = true;
-
+                        TrianglePress();
                     }
                 }
                 else
                 {
                     ataqueTriangulo = true;
                     ataqueTrianguloPress = true;
-
+                    TrianglePress();
                 }
 
 
@@ -351,14 +365,14 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueTrianguloCargado = true;
                         ataqueTrianguloCargadoPress = true;
-
+                        TriangleHold();
                     }
                 }
                 else
                 {
                     ataqueTrianguloCargado = true;
                     ataqueTrianguloCargadoPress = true;
-
+                    TriangleHold();
                 }
 
             }
