@@ -35,10 +35,10 @@ public class PlayerStats : MonoBehaviour
 
     public void RefreshStats()
     {
-        critChanceText.text = "Crit chance: " + playerStats.stats.critChance.ToString() + "%";
-        critDamMultiText.text = "Crit Damage:" + playerStats.stats.critDamageMultiplier.ToString();
-        attackDamageText.text = "Attack Damage:" + playerStats.stats.attackDamage.ToString();
-        healthRegenText.text = "Health Regen:" + playerStats.stats.healthRegen.ToString();
+        critChanceText.text = "Crit chance: " + playerStats.critChance.ToString() + "%";
+        critDamMultiText.text = "Crit Damage:" + playerStats.critDamageMultiplier.ToString();
+        attackDamageText.text = "Attack Damage:" + playerStats.attackDamage.ToString();
+        healthRegenText.text = "Health Regen:" + playerStats.healthRegen.ToString();
         //levelText.text = $"{ap.slider1.value:F2}/{ap.slider1.maxValue:F0}";
     }
 }
