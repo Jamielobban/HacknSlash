@@ -98,7 +98,13 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Vector3 targetPosition = target.position + _player.rb.velocity * predictionTime;
+            float timeToPlayer = Vector3.Distance(_player.transform.position, transform.position) / _agent.velocity.magnitude;
+            if(timeToPlayer > predictionTime)
+            {
+                timeToPlayer = predictionTime;
+            }
+
+            Vector3 targetPosition = target.position + _player.rb.velocity * timeToPlayer;
             Vector3 directionToTarget = (targetPosition - transform.position).normalized;
             Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
 

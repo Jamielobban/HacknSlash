@@ -29,7 +29,7 @@ public class EnemyAnimations : MonoBehaviour
         {
             foreach (var mat in mats)
             {
-                mat.material.SetFloat("_ShaderDisplacement", 1.2f);
+                mat.material.SetFloat("_ShaderDisplacement", 1f);
             }
         }
 
@@ -47,7 +47,7 @@ public class EnemyAnimations : MonoBehaviour
             {
                 mat.material.SetFloat("_ShaderDisplacement", _currentTime);
             }
-            if(_currentTime <= -0.2f)
+            if(_currentTime <= -0f)
             {
                 ManagerEnemies.Instance.AddEnemyScore(_enemy.stats.score);
                 ManagerEnemies.Instance.AddEnemyKilled();
