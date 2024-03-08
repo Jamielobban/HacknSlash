@@ -974,6 +974,7 @@ public class PlayerControl : MonoBehaviour
                     break;
                 if (CheckAtaques())
                     break;
+
                 switch (dash)
                 {
                     case Dash.START:
@@ -1014,6 +1015,15 @@ public class PlayerControl : MonoBehaviour
 
                             dash = Dash.END;
 
+
+
+
+                        }
+                        if ((Time.time - delayDash) > dashDuration- (dashDuration/4))
+                        {
+
+                            if (CheckIfDash())
+                                break;
 
 
 
@@ -1487,7 +1497,7 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.ataqueCuadradoCargado)
             {
-                this.gameObject.layer = 12;
+                //this.gameObject.layer = 12;
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
                     //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
@@ -1611,7 +1621,7 @@ public class PlayerControl : MonoBehaviour
 
             if ((controller.ataqueTrianguloCargado))
             {
-                this.gameObject.layer = 12;
+                //this.gameObject.layer = 12;
 
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
@@ -1800,7 +1810,7 @@ public class PlayerControl : MonoBehaviour
 
             if (dashCount < dashConsecutivos)
             {
-                if ((Time.time - delayDash) > 0.1f)
+                if ((Time.time - delayDash) > 0.35f)
                 {
                     dashCount = 0;
                 }
