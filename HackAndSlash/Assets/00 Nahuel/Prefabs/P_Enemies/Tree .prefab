@@ -13053,6 +13053,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
+      propertyPath: chaseSightMax
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
+      propertyPath: chaseSightMin
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
+        type: 3}
       propertyPath: chaseSight.baseValue
       value: 40
       objectReference: {fileID: 0}
@@ -13483,7 +13493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d0a5d63364fc943904774ee2c40ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPooleable: 0
+  isPooleable: 1
   hitsEffects:
   - {fileID: 11400000, guid: 47c60f2f0f95500479554b6fcba1bee4, type: 2}
   - {fileID: 11400000, guid: d82eedf8873538c44824bcce96c40570, type: 2}

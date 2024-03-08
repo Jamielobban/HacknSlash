@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform target;
+    protected PlayerControl _player;
     protected NavMeshAgent _agent;
     protected Rigidbody _rb;
     protected Enemy _enemy;
@@ -13,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
 
     public bool _isPathValid;
     public NavMeshPath _path;
+    public float chaseSightMin;
+    public float chaseSightMax;
 
     #region Stats
 
@@ -27,15 +30,22 @@ public class EnemyMovement : MonoBehaviour
     private bool reached = false;
     #endregion
 
+    [Range(-1, 1)]
+    public float movementsPredictionThreshold = 0;
+    public bool useMovementPrediction = false;
     protected virtual void Awake()
     {
+        chaseSight.baseValue = Random.Range(chaseSightMin, chaseSightMax);
         respawnPoint = transform.position;
         patrollPoint = GetRandomNavmeshPoint();
 
         _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
-        target = FindObjectOfType<PlayerControl>().transform;
+        _player = FindObjectOfType<PlayerControl>();
+        target = _player.transform;
+
+        useMovementPrediction = Random.value > 0.5f;
     }
 
     private void Start()
@@ -66,7 +76,7 @@ public class EnemyMovement : MonoBehaviour
             _agent.isStopped = true;
         }
     }
-
+    public float predictionTime;
     public void HandleFollow()
     {
 
@@ -74,13 +84,30 @@ public class EnemyMovement : MonoBehaviour
         {
             _path = new NavMeshPath();
             _isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _path);
+
+            if (!_isPathValid && _enemy._player.states != PlayerControl.States.JUMP)
+            {
+                _enemy.events.Idle();
+            }
         }
 
-        _agent.destination = target.position;
-        HandleRotation();
-        if (!_isPathValid && _enemy._player.states != PlayerControl.States.JUMP)
+        if(!useMovementPrediction)
         {
-            _enemy.events.Idle();
+            _agent.destination = target.position;
+            HandleRotation();
+        }
+        else
+        {
+            Vector3 targetPosition = target.position + _player.rb.velocity * predictionTime;
+            Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+            Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
+
+            float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+            if(dot < movementsPredictionThreshold)
+            {
+                targetPosition = _player.transform.position;
+            }
+            _agent.SetDestination(targetPosition);
         }
     }
 

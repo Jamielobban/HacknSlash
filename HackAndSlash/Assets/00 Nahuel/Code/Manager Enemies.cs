@@ -56,6 +56,8 @@ public class ManagerEnemies : MonoBehaviour
     private float _timerItems = 0f;
     private int minutes = 0;
     private int seconds = 0;
+    public bool isInEvent = false;
+    private GameObject _currentSpawner = null;
     #endregion
 
     private void Awake()
@@ -63,7 +65,7 @@ public class ManagerEnemies : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
         InitializePools();
-        GameObject go = Instantiate(spawners[0]);
+        _currentSpawner = Instantiate(spawners[0]);
     }
 
     void Update()
@@ -80,6 +82,14 @@ public class ManagerEnemies : MonoBehaviour
             ResetScore();
         }
     }
+
+    public void StartEvent()
+    {
+        isInEvent = true;
+        _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+    }
+    public void EndEvent() => isInEvent = false;
+    
 
     private void UpdateTimeText()
     {

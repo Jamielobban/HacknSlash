@@ -10,7 +10,6 @@ public abstract class EventMap : Interactive, IInteractable
     protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
     protected Enums.EventState currentEventState;
     protected int currentRound = 0;
-    // Start is called before the first frame update
     public void Interact()
     {
         if (!canInteract) return;
@@ -25,13 +24,13 @@ public abstract class EventMap : Interactive, IInteractable
         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
         currentEventState = Enums.EventState.INACTIVE;
     }
-    // Update is called once per frame
     protected virtual void Update()
     {
 
     }
     protected virtual void StartEvent()
     {
+        ManagerEnemies.Instance.StartEvent();
         forceField.SetSpeed(0.15f);
         foreach (Collider col in tangentColliders)
         {
@@ -45,6 +44,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void FinishEvent()
     {
+        ManagerEnemies.Instance.EndEvent();
         forceField.SetSpeed(-0.1f);        
         foreach (BoxCollider col in tangentColliders)
         {
