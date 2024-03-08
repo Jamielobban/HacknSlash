@@ -23,6 +23,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] Sprite emptySprite;
     [SerializeField] GameObject enemyHealthUI;
     [SerializeField] BoxCollider enemyDamageableCol;
+    [SerializeField] GameObject pyramidTracker;
 
     public GameObject objectiveMarker;
     readonly string name = "Cyborg Sergeant";
@@ -149,6 +150,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (currentState == Enums.TutorialState.FINISHED)
         {
+            //if(!pyramidTracker.activeSelf)
+            //    pyramidTracker.SetActive(true);
+
             if (enemyDamageableCol != null && !enemyDamageableCol.enabled)
                 enemyDamageableCol.enabled = true;
 

@@ -11,7 +11,6 @@ public class PyramidTeleport : Interactive, IInteractable
     [SerializeField] GameObject objectiveMarker;
     [SerializeField] FadeScript fade;
     bool firstTeleportDone = false;
-
     public GameObject loadingMenu;
     public Image loadingFillBar;
 
@@ -25,11 +24,11 @@ public class PyramidTeleport : Interactive, IInteractable
 
     private void Update()
     {
-        if (!objectiveMarker.activeSelf && !firstTeleportDone && soldier.TutorialState == Enums.TutorialState.FINISHED)
-        {
-            if(!soldier.objectiveMarker.activeSelf)
-                objectiveMarker.SetActive(true);
-        }
+        
+        if (!objectiveMarker.activeSelf && !firstTeleportDone && soldier.TutorialState == Enums.TutorialState.FINISHED && !soldier.objectiveMarker.activeSelf)                
+            objectiveMarker.SetActive(true);       
+        else if(objectiveMarker.activeSelf)
+            objectiveMarker.SetActive(false);
     }
 
     public void Interact()
