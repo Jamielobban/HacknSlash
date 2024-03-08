@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class PyramidTeleport : Interactive, IInteractable
 {
-    [SerializeField] float period, verticalMoveTime, verticaDistance;
-    [SerializeField] BlackCyborgSoldier soldier;
-    [SerializeField] GameObject objectiveMarker;
+    [SerializeField] float period, verticalMoveTime, verticaDistance;   
+    
     [SerializeField] FadeScript fade;
     bool firstTeleportDone = false;
     public GameObject loadingMenu;
@@ -25,10 +24,6 @@ public class PyramidTeleport : Interactive, IInteractable
     private void Update()
     {
         
-        if (!objectiveMarker.activeSelf && !firstTeleportDone && soldier.TutorialState == Enums.TutorialState.FINISHED && !soldier.objectiveMarker.activeSelf)                
-            objectiveMarker.SetActive(true);       
-        else if(objectiveMarker.activeSelf)
-            objectiveMarker.SetActive(false);
     }
 
     public void Interact()
@@ -37,8 +32,7 @@ public class PyramidTeleport : Interactive, IInteractable
 
         if (!firstTeleportDone)
         {
-            firstTeleportDone = true;
-            objectiveMarker.SetActive(false);
+            firstTeleportDone = true;            
             //fade.DoTransition();
             loadingMenu.SetActive(true);
             Invoke(nameof(ActiveScene), .15f);
