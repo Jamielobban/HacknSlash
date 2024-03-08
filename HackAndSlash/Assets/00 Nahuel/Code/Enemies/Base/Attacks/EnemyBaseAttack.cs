@@ -45,6 +45,7 @@ public class EnemyBaseAttack : MonoBehaviour
         yield return new WaitForSeconds(data.castTime.Value);
         SetVisualEffects();
         AttackAction();
+        enemy.attackInterrupted = false;
         _currentTime = data.cooldown.Value;
         currentAttackState = Enums.AttackState.Cooldown;
     }
@@ -64,7 +65,10 @@ public class EnemyBaseAttack : MonoBehaviour
     }
     protected virtual void AttackAction()
     {
-
+        if (enemy.attackInterrupted)
+        {
+            return;
+        }
     }
     public virtual bool IsInRangeToAttack(float dist)
     {

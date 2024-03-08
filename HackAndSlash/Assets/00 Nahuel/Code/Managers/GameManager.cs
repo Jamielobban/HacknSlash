@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public PlayerControl Player => _player;
     public bool IsPaused => _isPaused;
 
+    public bool isTutorialCompleted = false;
+
     private void Awake()
     {
         _instance = this;
@@ -47,31 +49,28 @@ public class GameManager : MonoBehaviour
         UpdateState(Enums.GameState.Menu);
     }
 
-    public void LoadLevel(string _name, GameObject _loader, Image _progress)
+    public void LoadLevel(string _name, Image _progress)
     {
-        StartCoroutine(LoadSceneAsync(_name, _loader, _progress));
+        StartCoroutine(LoadSceneAsync(_name, _progress));
     }
 
-    private IEnumerator LoadSceneAsync(string levelName, GameObject _loaderCanvas, Image _progresionBar)
+    private IEnumerator LoadSceneAsync(string levelName, Image _progresionBar)
     {
         AsyncOperation async = SceneManager.LoadSceneAsync(levelName);
         async.allowSceneActivation = false;
-
-        _loaderCanvas.SetActive(true);
-        float progress = 0f;
-        _progresionBar.fillAmount = progress;
         while(!async.isDone)
         {
+            float progress = Mathf.Clamp01(async.progress / .9f);
             _progresionBar.fillAmount = progress;
             if(progress >= 0.9f)
             {
                 _progresionBar.fillAmount = 1;
                 async.allowSceneActivation = true;
             }
-            progress = async.progress;
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
+
         UpdateState(Enums.GameState.Playing);
         if(_player == null)
         {

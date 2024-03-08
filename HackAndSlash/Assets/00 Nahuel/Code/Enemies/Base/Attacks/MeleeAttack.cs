@@ -5,8 +5,12 @@ public class MeleeAttack : EnemyBaseAttack
     public Collider damageCollider;
     protected override void AttackAction()
     {
-        damageCollider.enabled = true;
-        Invoke("DisableCollider", 0.2f);
+        base.AttackAction();
+        if(!enemy.attackInterrupted)
+        {
+            damageCollider.enabled = true;
+            Invoke("DisableCollider", 0.2f);
+        }
     }
 
     private void DisableCollider()

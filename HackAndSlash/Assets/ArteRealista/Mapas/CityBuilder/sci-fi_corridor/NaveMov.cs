@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
 
 public class NaveMov : MonoBehaviour
 {
@@ -13,19 +11,21 @@ public class NaveMov : MonoBehaviour
     public float fadeOutDuration;
     public float timeToFadeOut;
     public SimpleRTVoiceExample voice;
-    // Start is called before the first frame update
+
+    public GameObject canvasLoadingBar;
+    public Image imageFillLoading;
+
     void Start()
     {
         blackImage.gameObject.SetActive(true);
         StartCoroutine(FadeIn());
         StartCoroutine(FadeOut());
+        canvasLoadingBar.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         this.transform.position = this.transform.position + new Vector3(velocity * Time.deltaTime, 0,0);
-        //Debug.Log(Time.time);
     }
 
     IEnumerator FadeIn()
@@ -39,7 +39,9 @@ public class NaveMov : MonoBehaviour
         yield return new WaitForSeconds(timeToFadeOut);
         DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 1f, fadeInDuration).SetEase(Ease.Linear);        
         yield return new WaitForSeconds(fadeInDuration + 0.3f);
-        SceneManager.LoadScene(1);
-
+        canvasLoadingBar.SetActive(true);
+        Invoke(nameof(ActivateScene), .15f);
     }
+
+    private void ActivateScene() => GameManager.Instance.LoadLevel("02 Tutorial", imageFillLoading);
 }

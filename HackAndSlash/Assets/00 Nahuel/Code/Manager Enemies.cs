@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManagerEnemies : MonoBehaviour
 {
@@ -35,8 +36,7 @@ public class ManagerEnemies : MonoBehaviour
     [Header("Texts Settings:")]
     public TextMeshProUGUI textTime;
     public TextMeshProUGUI currentSpawnedEnemies;
-    public TextMeshProUGUI score;
-
+    public TextMeshProUGUI currentScoreText;
 
     // -- Spawner Settings -- //
     [Header("Spawn Settings:")]
@@ -77,8 +77,7 @@ public class ManagerEnemies : MonoBehaviour
         {
             AbilityPowerManager.instance.ShowNewOptions();
             _timerItems = 0f;
-            _enemiesScore = 0;
-            _enemiesKilled = 0;
+            ResetScore();
         }
     }
 
@@ -91,6 +90,12 @@ public class ManagerEnemies : MonoBehaviour
 
     public void UpdateEnemiesSpawned() => currentSpawnedEnemies.text = "Spawned Enemies:" + _spawnedEnemies;
 
+    public void UpdateScore()
+    {
+        currentScoreText.text = "Score: " + _enemiesScore;
+        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore, 1500);
+    }
+
     private void InitializePools()
     {
         for (int i = 0; i < enemies.Count; i++)
@@ -99,7 +104,18 @@ public class ManagerEnemies : MonoBehaviour
         }
     }
 
-    public void AddEnemyScore(float val) => _enemiesScore += val;
+    private void ResetScore()
+    {
+        _enemiesScore = 0;
+        GameManager.Instance.Player.hud.ResetProgressScoreBar();
+        UpdateScore();
+    }
+
+    public void AddEnemyScore(float val)
+    {
+        _enemiesScore += val;
+        UpdateScore();
+    }
     public void AddEnemyKilled() => _enemiesKilled++;
 
     public void SetSpawnedEnemies(int val)

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TreeAttackState : AttackState
 {
+    public override void EnterState(Enemy enemy)
+    {
+        base.EnterState(enemy);
+        _enemy.events.OnHit += () => { _enemy.attackInterrupted = true; };
+    }
     public override void UpdateState(Enemy enemy)
     {
         HandleRotationFacePlayer();

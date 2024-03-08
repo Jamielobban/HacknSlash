@@ -1985,6 +1985,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396a3282df93653468c5ff68c360d1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mats:
+  - {fileID: 1857583639545853045}
+--- !u!137 &1857583639545853045 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13777774, guid: aedbd60e2d85ee240b7af8956da0f2bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857583639540731675}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3006269449454205841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6945,6 +6953,7 @@ MonoBehaviour:
   isGrounded: 0
   canAttack: 1
   onAir: 0
+  attackInterrupted: 0
 --- !u!114 &5330141171526988806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6959,6 +6968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToActiveGravity:
     baseValue: 0.65
+  score: 20
 --- !u!114 &1749490065133583326
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // -- Base Animations class, in Animator base animation as "Die", "Hit", "Stun" should be named equal always -- //
@@ -7,6 +9,10 @@ public class EnemyAnimations : MonoBehaviour
     private Animator _anim;
     public Animator Animator => _anim;
     protected EnemyEvents _events;
+
+    public List<SkinnedMeshRenderer> mats = new List<SkinnedMeshRenderer>();
+    protected float _currentTime = 1.2f;
+
     protected virtual void Awake()
     {
         _events = transform.parent.GetComponent<EnemyEvents>();
@@ -18,6 +24,14 @@ public class EnemyAnimations : MonoBehaviour
         _events.OnFollowing += () => _anim.SetFloat("speed", 1);
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
+        //mats = new List<SkinnedMeshRenderer>(mats);
+        if(mats.Count > 0)
+        {
+            foreach (var mat in mats)
+            {
+                mat.material.SetFloat("_ShaderDisplacement", 1.2f);
+            }
+        }
 
     }
     protected virtual void Start()
@@ -26,7 +40,20 @@ public class EnemyAnimations : MonoBehaviour
     }
     protected virtual void Update()
     {
-
+        if(_enemy.isDead && mats.Count > 0)
+        {
+            _currentTime -= Time.deltaTime * 0.5f;
+            foreach (var mat in mats)
+            {
+                mat.material.SetFloat("_ShaderDisplacement", _currentTime);
+            }
+            if(_currentTime <= -0.2f)
+            {
+                ManagerEnemies.Instance.AddEnemyScore(_enemy.stats.score);
+                ManagerEnemies.Instance.AddEnemyKilled();
+                EnemyDieApply();
+            }
+        }
     }
 
     public virtual void PlayTargetAnimation(string targetAnimation, bool isInteracting)
@@ -37,16 +64,28 @@ public class EnemyAnimations : MonoBehaviour
     protected virtual void DeadAnimEnd()
     {
         PlayTargetAnimation("Die", true);
-        this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+
+        if(mats.Count <= 0)
         {
-            //Respawn?
-            if(_enemy.isPooleable)
+            this.Wait(Animator.GetCurrentAnimatorClipInfo(0).Length, () =>
             {
-                //   RoomManager.Instance.RemoveEnemy(_enemy.gameObject);
-                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
-            }
+                ManagerEnemies.Instance.AddEnemyScore(_enemy.stats.score);
+                ManagerEnemies.Instance.AddEnemyKilled();
+                EnemyDieApply();
+            });
+        }
+    }
+    public void EnemyDieApply()
+    {
+        if (_enemy.isPooleable)
+        {
+            ManagerEnemies.Instance.SetSpawnedEnemies(-1);
             _enemy.ResetEnemy();
             _enemy.gameObject.SetActive(false);
-        });
+        }
+        else
+        {
+            Destroy(_enemy.gameObject);
+        }
     }
 }

@@ -31,6 +31,7 @@ public class Enemy : PoolableObject
     public bool isGrounded = false;
     public bool canAttack = true;
     public bool onAir = false;
+    public bool attackInterrupted = false;
 
     protected virtual void Awake()
     {
@@ -51,7 +52,7 @@ public class Enemy : PoolableObject
         events.OnAttacking += () => SetState(gameObject.AddComponent<AttackState>());
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
-        events.OnHit += () => SetState(gameObject.AddComponent<HitState>());
+        events.OnHit += () => { SetState(gameObject.AddComponent<HitState>()); };
         events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
 
         ResetEnemy();
@@ -67,7 +68,16 @@ public class Enemy : PoolableObject
         {
             if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 120)
             {
-                events.Die();
+                if (isPooleable)
+                {
+                    ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+                    ResetEnemy();
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    animations.EnemyDieApply();
+                }
             }
         }
     }
