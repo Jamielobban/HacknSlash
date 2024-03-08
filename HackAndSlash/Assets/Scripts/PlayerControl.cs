@@ -1323,7 +1323,6 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            Debug.Log("agdsh");
             i.item.OnJump(this, i.stacks);
         }
     }
