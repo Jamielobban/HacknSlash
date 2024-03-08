@@ -223,7 +223,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         //Appear new images, enabled only necessary ones and transparent to 1
 
-        for (int i = 3; i >= 0; i--)
+        for (int i = 0; i < 4; i++)
         {
             if (i <= imagesNeeded - 1)
             {
