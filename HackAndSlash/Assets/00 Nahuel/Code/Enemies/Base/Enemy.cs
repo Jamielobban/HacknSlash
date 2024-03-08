@@ -74,10 +74,6 @@ public class Enemy : PoolableObject
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }
-                else
-                {
-                    animations.EnemyDieApply();
-                }
             }
         }
     }

@@ -44,15 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df28a95b45982743bdaf93b44cde3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToSpawn: 2
+  _timeToSpawn: 0.2
   _isBurstSpawner: 0
   enemySpawnMethod: 2
   _enemies:
   - {fileID: 5641807391036227690, guid: fa178a087b9eb6f44aef71457f17a263, type: 3}
+  - {fileID: 3441910430522070975, guid: e4fc51f81faca21419336d7b30f2339a, type: 3}
   timeMinToSpawn: 0.8
   timeMaxToSpawn: 2.5
   _enemyProbabilities:
   - enemy: {fileID: 5641807391036227690, guid: fa178a087b9eb6f44aef71457f17a263, type: 3}
-    probability: 100
-  maxFarDistToSpawn: 70
-  minFarDistToSpawn: 5
+    probability: 79
+  - enemy: {fileID: 3441910430522070975, guid: e4fc51f81faca21419336d7b30f2339a, type: 3}
+    probability: 15
+  maxFarDistToSpawn: 50
+  minFarDistToSpawn: 10

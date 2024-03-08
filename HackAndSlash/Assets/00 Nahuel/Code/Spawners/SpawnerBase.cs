@@ -34,11 +34,13 @@ public class SpawnerBase : MonoBehaviour
 
     protected Coroutine _spawnCoroutine; // !! Can only be called once !! //
     protected NavMeshTriangulation _triangulation;
-    protected RoomManager _roomManager;
     [HideInInspector] public List<Enemy>enemiesFromThisSpawner = new List<Enemy>();
+
+    protected ManagerEnemies _managerEnemies;
+
     protected virtual void Awake()
     {
-        _roomManager = RoomManager.Instance;
+        _managerEnemies = FindObjectOfType<ManagerEnemies>();
     }
 
     protected virtual void Start()
@@ -83,17 +85,13 @@ public class SpawnerBase : MonoBehaviour
 
     protected virtual void DoSpawnEnemy(Enemy e, Vector3 spawnPos)
     {
-        PoolableObject poolable = _roomManager.enemyObjectsPools[e].GetObject();
+        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
 
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
-            _roomManager.AddEnemy(enemy.gameObject);
             enemiesFromThisSpawner.Add(enemy);
-            if(!_roomManager.firstEnemySpawned)
-            {
-                _roomManager.firstEnemySpawned = true;
-            }
+
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
             {

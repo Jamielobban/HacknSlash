@@ -22,7 +22,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     [SerializeField] Image[] uiCombosImage = new Image[4];
     [SerializeField] Sprite emptySprite;
     [SerializeField] GameObject enemyHealthUI;
-    [SerializeField] BoxCollider enemyDamageableCol;
+    [SerializeField] BoxCollider enemyDamageableCol;     
+    [SerializeField] GameObject pyramidTracker;
 
     public GameObject objectiveMarker;
     readonly string name = "Cyborg Sergeant";
@@ -62,6 +63,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         //matchKeyWithUI.Add(Enums.InputsAttack.AirSquare, uiTutorialButtons[9]);
         _player = FindObjectOfType<PlayerControl>();
     }
+
 
     private void Update()
     {
@@ -149,6 +151,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (currentState == Enums.TutorialState.FINISHED)
         {
+            if (!pyramidTracker.activeSelf)
+                pyramidTracker.SetActive(true);
+
             if (enemyDamageableCol != null && !enemyDamageableCol.enabled)
                 enemyDamageableCol.enabled = true;
 
@@ -218,7 +223,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         //Appear new images, enabled only necessary ones and transparent to 1
 
-        for (int i = 3; i >= 0; i--)
+        for (int i = 0; i < 4; i++)
         {
             if (i <= imagesNeeded - 1)
             {

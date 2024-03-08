@@ -32,6 +32,7 @@ public class InfiniteSpawner : MonoBehaviour
     public float timeMaxToSpawn = 2.5f;
 
     private ManagerEnemies _managerEnemies;
+    private List<Enemy> _spawnedEnemies = new List<Enemy>();
 
     protected virtual void Start()
     {
@@ -43,7 +44,7 @@ public class InfiniteSpawner : MonoBehaviour
     {
         _timer += Time.deltaTime;
 
-        if(_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= _managerEnemies.enemiesCap)
+        if(_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= _managerEnemies.enemiesCap && !_managerEnemies.isInEvent)
         {
             //Spawn Enemy
             switch (enemySpawnMethod)
@@ -65,6 +66,15 @@ public class InfiniteSpawner : MonoBehaviour
             _timer = 0;
         }
     }
+
+    public void ClearAllEnemiesSpawned()
+    {
+        foreach (var enemy in _spawnedEnemies)
+        {
+            enemy.animations.EnemyDieApply();
+        }
+    }
+
     protected void SpawnRandomEnemy()
     {
         DoSpawnEnemy(_enemies[Random.Range(0, _enemies.Count)], ChooseRandomPositionOnNavMesh());
@@ -87,6 +97,7 @@ public class InfiniteSpawner : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
+            _spawnedEnemies.Add(enemy);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
             {

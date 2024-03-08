@@ -7,6 +7,7 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using DamageNumbersPro;
+using JetBrains.Rider.Unity.Editor;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -89,9 +90,6 @@ public class PlayerControl : MonoBehaviour
 
         public HitState []hitState;
         public GameObject[] slash;
-
-
-
     }
 
     [System.Serializable]
@@ -210,11 +208,12 @@ public class PlayerControl : MonoBehaviour
     public float attackDamage;
     public float healthRegen;
     public float critDamageMultiplier;
-    
+    public Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         critChance = stats.critChance;
         attackDamage = stats.attackDamage;
         healthRegen = stats.healthRegen;
@@ -380,7 +379,7 @@ public class PlayerControl : MonoBehaviour
         Vector3 gravity = new Vector3(0, this.gravity * (Time.time - fallStartTime), 0);
 
 
-        this.GetComponent<Rigidbody>().AddForce(gravity * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(gravity * Time.deltaTime, ForceMode.Force);
         
 
     }
@@ -400,9 +399,9 @@ public class PlayerControl : MonoBehaviour
         }
         player.transform.LookAt(player.transform.position + moveDirSaved);
         if (moves == Moves.IDLE)
-            this.GetComponent<Rigidbody>().AddForce(moveDirSaved * 0 * Time.deltaTime, ForceMode.Force);
+            rb.AddForce(moveDirSaved * 0 * Time.deltaTime, ForceMode.Force);
         else
-            this.GetComponent<Rigidbody>().AddForce(moveDirSaved * vel * Time.deltaTime, ForceMode.Force);
+            rb.AddForce(moveDirSaved * vel * Time.deltaTime, ForceMode.Force);
     }
 
     private bool AreListsEqual<T>(List<T> listA, List<T> listB)
@@ -550,7 +549,7 @@ public class PlayerControl : MonoBehaviour
                     enemy += (enem - dir).normalized * 3f;
 
 
-                    this.GetComponent<Rigidbody>().DOMove(dir, 0.3f, false);
+                     rb.DOMove(dir, 0.3f, false);
                 }
 
             }
@@ -600,7 +599,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (currentComboAttack == -1)
             currentComboAttack = 0;
-        this.GetComponent<Rigidbody>().AddForce(this.transform.up * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimientoY.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimientoY * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(this.transform.up * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimientoY.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimientoY * Time.deltaTime, ForceMode.Force);
 
         player.transform.GetChild(3).transform.localPosition += new Vector3(0, 0, 1).normalized;
 
@@ -622,7 +621,7 @@ public class PlayerControl : MonoBehaviour
         }
         Vector3 dir = this.transform.position - player.transform.GetChild(3).transform.position;
         //player.transform.LookAt(movementController.transform.position);
-        this.GetComponent<Rigidbody>().AddForce(-dir.normalized * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimiento.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimiento * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(-dir.normalized * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimiento.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimiento * Time.deltaTime, ForceMode.Force);
         player.transform.GetChild(3).transform.localPosition = new Vector3();
 
     }
@@ -761,7 +760,7 @@ public class PlayerControl : MonoBehaviour
 
             controller.ResetBotonesAtaques();
 
-            this.GetComponent<Rigidbody>().drag = 5;
+            rb.drag = 5;
 
             if (!OnAir)
             {
@@ -773,8 +772,8 @@ public class PlayerControl : MonoBehaviour
 
                 jump = Jump.JUMP;
                 playerAnim.CrossFadeInFixedTime("Jump", 0.1f);
-                this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce, ForceMode.Impulse);
+                rb.velocity = Vector3.zero;
+                rb.AddForce(this.transform.up * jumpForce, ForceMode.Impulse);
                 jumpFeedback.PlayFeedbacks();
 
                 return true;
@@ -791,8 +790,8 @@ public class PlayerControl : MonoBehaviour
 
                 states = States.JUMP;
                 jump = Jump.JUMP;
-                this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 1f, ForceMode.Impulse);
+                rb.velocity = Vector3.zero;
+                rb.AddForce(this.transform.up * jumpForce * 1f, ForceMode.Impulse);
                 playerAnim.CrossFadeInFixedTime("DoubleJump", 0.2f);
                 doubleJumpFeedback.PlayFeedbacks();
 
@@ -887,11 +886,11 @@ public class PlayerControl : MonoBehaviour
                 if (CheckIfJump())
                     break;
                 CheckIfStartMove();
-                this.GetComponent<Rigidbody>().drag = 15;
+                rb.drag = 15;
 
                 break;
             case States.ATTACK:
-                this.GetComponent<Rigidbody>().drag = 15;
+                rb.drag = 15;
                 CheckNextAttack();
                 AttackMovement();
                 RotatePlayer(3);
@@ -968,7 +967,7 @@ public class PlayerControl : MonoBehaviour
             case States.DASH:
                 this.gameObject.layer = 12;
 
-                this.GetComponent<Rigidbody>().drag = 15;
+                rb.drag = 15;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, this.transform.GetChild(0).transform.localEulerAngles.y, 0);
                 if (CheckIfJump())
                     break;
@@ -1028,7 +1027,7 @@ public class PlayerControl : MonoBehaviour
 
 
                         }
-                        this.GetComponent<Rigidbody>().AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
+                        rb.AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
                         if (dashDown)
                         {
@@ -1038,7 +1037,7 @@ public class PlayerControl : MonoBehaviour
                             {
                                 if ((hit.distance > 0.25f))
                                 {
-                                    this.GetComponent<Rigidbody>().AddForce(-this.transform.up * 10000 * Time.fixedDeltaTime, ForceMode.Force);
+                                    rb.AddForce(-this.transform.up * 10000 * Time.fixedDeltaTime, ForceMode.Force);
                                 }
                                 else
                                 {
@@ -1087,7 +1086,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case States.JUMP:
                 ApplyGravity();
-                this.GetComponent<Rigidbody>().drag = 5;
+                rb.drag = 5;
                 this.gameObject.layer = 3;
 
 
@@ -1169,7 +1168,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case States.MOVE:
-                this.GetComponent<Rigidbody>().drag = 15;
+                rb.drag = 15;
                 this.gameObject.layer = 3;
 
                 if (CheckIfDash())
@@ -1251,7 +1250,7 @@ public class PlayerControl : MonoBehaviour
             case States.TELEPORT:
                 if ((Time.time - TeleportTime) > 0.25f)
                 {
-                    this.GetComponent<Rigidbody>().useGravity = true;
+                    rb.useGravity = true;
 
                     if (CheckIfIsFalling())
                         break;
@@ -1323,7 +1322,6 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            Debug.Log("agdsh");
             i.item.OnJump(this, i.stacks);
         }
     }
@@ -2030,7 +2028,7 @@ public class PlayerControl : MonoBehaviour
                 pos = (movementController.transform.position - this.transform.position).normalized;
                 movementController.transform.localPosition = new Vector3();
 
-                this.GetComponent<Rigidbody>().AddForce(pos * velocity * Time.deltaTime, ForceMode.Force);
+                rb.AddForce(pos * velocity * Time.deltaTime, ForceMode.Force);
             }
 
         }
