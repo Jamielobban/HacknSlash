@@ -8,4 +8,6 @@ public static class Constants
     public const string ANIMATION_LAND = "land";
     public const string ANIMATION_JUMP = "jump";
     public const string ANIMATION_DIE = "die";
+
+    public static string[] MUSICDIRECTORIES = { "Audio/Music", "Audio/Sound", "Audio/MusicEffects" };
 }
