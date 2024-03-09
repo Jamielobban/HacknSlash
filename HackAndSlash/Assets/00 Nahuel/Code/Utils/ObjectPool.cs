@@ -19,6 +19,7 @@ public class ObjectPool
         ObjectPool pool = new ObjectPool(Prefab, Size);
 
         pool._parent = new GameObject(Prefab + " Pool");
+        ManagerEnemies.Instance.parentObjectPools.Add(pool._parent);
         pool.CreateObjects();
 
         return pool;

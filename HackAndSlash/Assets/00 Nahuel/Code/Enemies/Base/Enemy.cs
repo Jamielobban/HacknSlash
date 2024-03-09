@@ -84,13 +84,28 @@ public class Enemy : PoolableObject
         {
            // UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
         }
+        isDead = false;
         healthSystem.ResetHealthEnemy();
         events.Idle();
     }
-
-    private void UpgradeEnemy(float scaleFactor)
+    private float lastHealth;
+    public void UpgradeEnemy(float scaleFactor)
     {
-        healthSystem.currentMaxHealth *= scaleFactor;
+        lastHealth = healthSystem.currentMaxHealth;
+
+        float newHealth = healthSystem.baseMaxHealth.Value * scaleFactor;
+
+        healthSystem.currentMaxHealth = newHealth;
+
+        if(gameObject.activeSelf)
+        {
+            if(healthSystem.CurrentHealth >= lastHealth)
+                ResetEnemy();
+        }
+        else
+        {
+            ResetEnemy();
+        }
     }
 
     public virtual void SetState(IState newState)

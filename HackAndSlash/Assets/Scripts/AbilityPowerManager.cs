@@ -185,11 +185,8 @@ public class AbilityPowerManager : MonoBehaviour
 
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
 
-        GameManager.Instance.PauseGame();
+        GameManager.Instance.UnPauseMenuGame();
         isOpen = false;
-        //itemChoiceAnim.SetTrigger("Close");
-        //item1 = null;
-        //item2 = null;
         Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -227,7 +224,7 @@ public class AbilityPowerManager : MonoBehaviour
         //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
 
-        GameManager.Instance.PauseGame();
+        GameManager.Instance.PauseMenuGame();
         // Generate new items for options
      //   Debug.Log(_itemManager.gameObject);
         if (_itemManager != null)

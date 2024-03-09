@@ -34,6 +34,8 @@ public class InfiniteSpawner : MonoBehaviour
     private ManagerEnemies _managerEnemies;
     private List<Enemy> _spawnedEnemies = new List<Enemy>();
 
+    public int enemiesCap;
+
     protected virtual void Start()
     {
         _triangulation = NavMesh.CalculateTriangulation();
@@ -44,7 +46,7 @@ public class InfiniteSpawner : MonoBehaviour
     {
         _timer += Time.deltaTime;
 
-        if(_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= _managerEnemies.enemiesCap && !_managerEnemies.isInEvent)
+        if(_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= enemiesCap && !_managerEnemies.isInEvent)
         {
             //Spawn Enemy
             switch (enemySpawnMethod)

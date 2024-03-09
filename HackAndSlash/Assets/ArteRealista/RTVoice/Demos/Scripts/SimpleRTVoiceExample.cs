@@ -107,7 +107,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
         {  
             showLetters += showText[i];
             dialogText.text = whoSpeaks + ": " + showLetters;
-            yield return new WaitForSeconds(0.045f);
+            yield return new WaitForSecondsRealtime(0.045f);
         }
         
     }

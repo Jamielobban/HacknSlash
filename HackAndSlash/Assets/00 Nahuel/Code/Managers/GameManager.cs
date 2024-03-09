@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public bool isTutorialCompleted = false;
 
+    public bool isInMenu = false;
+
     private void Awake()
     {
         _instance = this;
@@ -114,8 +116,25 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        _isPaused = !_isPaused;
-        Time.timeScale = _isPaused ? 0 : 1;
+        if(!isInMenu)
+        {
+            _isPaused = !_isPaused;
+            Time.timeScale = _isPaused ? 0 : 1;
+        }
+    }
+
+    public void PauseMenuGame()
+    {
+        isInMenu = true;
+        _isPaused = true;
+        Time.timeScale = 0;
+    }
+
+    public void UnPauseMenuGame()
+    {
+        isInMenu = false;
+        _isPaused = false;
+        Time.timeScale = 1;
     }
 
     public void SetPauseVariable(bool pause)

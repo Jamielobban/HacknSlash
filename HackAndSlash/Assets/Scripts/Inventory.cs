@@ -52,16 +52,19 @@ public class Inventory : MonoBehaviour
 
                     if (!AbilityPowerManager.instance.isOpen)
                     {
-                        GameManager.Instance.PauseGame();
+                        GameManager.Instance.UnPauseMenuGame();
                     }
                 }
                 else
                 {
-                    inventorymenu.SetActive(true);
+                    if(!GameManager.Instance.isInMenu)
+                    {
+                        inventorymenu.SetActive(true);
 
-                    RefreshInventory();
+                        RefreshInventory();
 
-                    GameManager.Instance.PauseGame();
+                        GameManager.Instance.PauseMenuGame();
+                    }
                 }
             }
         }

@@ -9,15 +9,11 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
     public float currentMaxHealth;
     public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
 
-    #region Prefabs Effects
     private PlayerControl _player;
-
-    #endregion
     public void ResetHealthEnemy()
     {
         _currentHealth = currentMaxHealth;
         ChangeLife();
-        gameObject.SetActive(true);
     }
     protected virtual void Awake()
     {

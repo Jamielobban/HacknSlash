@@ -16,7 +16,6 @@ public class ManagerEnemies : MonoBehaviour
             {
                 GameObject go = new GameObject("Enemies Manager");
                 go.AddComponent<ManagerEnemies>();
-                DontDestroyOnLoad(go);
             }
             return _instance;
         }
@@ -32,6 +31,7 @@ public class ManagerEnemies : MonoBehaviour
     private float _enemiesScore = 0;
 
     public int timeToGetItem = 60;
+
     #region Settings
     [Header("Texts Settings:")]
     public TextMeshProUGUI textTime;
@@ -45,40 +45,58 @@ public class ManagerEnemies : MonoBehaviour
 
     // -- Enemies Settings --//
     [Header("Enemies Settings: ")]
-    public int enemiesCap = 100;
     public List<Enemy> enemies = new List<Enemy>();
     public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    public List<GameObject> parentObjectPools = new List<GameObject>(); 
+
     private int _spawnedEnemies = 0;
     public int SpawnedEnemies => _spawnedEnemies;
 
     // -- Timer Settings -- //
     private float _timerGlobal = 0f;
+    public float CurrentGlobalTime => _timerGlobal;
+
     private float _timerItems = 0f;
     private int minutes = 0;
     private int seconds = 0;
     public bool isInEvent = false;
     private GameObject _currentSpawner = null;
+
+    private int _currentSpawnerIndex = 0;
+
+    // -- Scaling Propierties -- //
+    [Range(1, 2)] public float scalingRate = 1.05f;
+    public float scaleMultiplier = 0f;
     #endregion
 
     private void Awake()
     {
         _instance = this;
-        DontDestroyOnLoad(gameObject);
         InitializePools();
-        _currentSpawner = Instantiate(spawners[0]);
+        _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
     }
 
     void Update()
     {
         _timerGlobal += Time.deltaTime;
         _timerItems += Time.deltaTime;
-
         UpdateTimeText();
-
-        if(_timerItems >= timeToGetItem)
+        if (_timerItems >= timeToGetItem)
         {
-            AbilityPowerManager.instance.ShowNewOptions();
             _timerItems = 0f;
+            scaleMultiplier = Mathf.Pow(scalingRate, _timerGlobal);
+
+            //Take All enemies and Upgrade them (?)
+            foreach (var pool in parentObjectPools)
+            {
+                Debug.Log(pool.transform.childCount);
+                for (int i = 0; i < pool.transform.childCount; i++)
+                {
+                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleMultiplier);
+                }
+            }
+
+            AbilityPowerManager.instance.ShowNewOptions();
             ResetScore();
         }
     }
@@ -86,8 +104,10 @@ public class ManagerEnemies : MonoBehaviour
     public void StartEvent()
     {
         isInEvent = true;
-        _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+        if(_currentSpawner != null)
+            _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
     }
+
     public void EndEvent() => isInEvent = false;
     
 
@@ -133,4 +153,12 @@ public class ManagerEnemies : MonoBehaviour
         _spawnedEnemies += val;
         UpdateEnemiesSpawned();
     }
+
+    public void NextSpawner()
+    {
+        Destroy(_currentSpawner);
+        _currentSpawnerIndex++;
+        _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
+    }
+
 }
