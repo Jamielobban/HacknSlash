@@ -96,7 +96,8 @@ public class Enums
     public enum MusicEffects
     {
         Atmosfera,
-        Wind
+        Wind,
+        Click
     };
 
     public enum RarityType

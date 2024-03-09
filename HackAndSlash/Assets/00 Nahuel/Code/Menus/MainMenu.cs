@@ -15,6 +15,7 @@ public class MainMenu : BaseMenu<MainMenu>
     }
     public void OnPlayPressed()
     {
+        AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Click);
         mainMenuContent.SetActive(false);
         loadingInspector.SetActive(true);
         Invoke(nameof(ActiveScene), .07f);
@@ -34,11 +35,13 @@ public class MainMenu : BaseMenu<MainMenu>
 
     public void OnSettingsPressed()
     {
-       // SettingsMenu.Show();
+        AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Click);
+        // SettingsMenu.Show();
     }
 
     public override void OnBackPressed()
     {
+        AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Click);
         GameManager.Instance.UpdateState(Enums.GameState.Exit);
     }
 
