@@ -9,7 +9,6 @@ public class CanvasAnnouncements : MonoBehaviour
 
     public void ShowNotification(string titleToShow, string textToShow)
     {
-
     }
 
     public void ShowEventCompleted()

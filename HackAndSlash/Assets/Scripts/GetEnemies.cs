@@ -123,15 +123,23 @@ public class GetEnemies : MonoBehaviour
     }
 
     public void RemoveByDistance()
-    {
+    { 
+
+        List<GameObject> enemiesToRemove = new List<GameObject>();
         foreach (var enemy in enemies)
         {
             if(Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position) > 6)
             {
-                enemies.Remove(enemy);
+                enemiesToRemove.Add(enemy);
+
             }
         }
+        foreach (var enemyToRemove in enemiesToRemove)
+        {
+            enemies.Remove(enemyToRemove);
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

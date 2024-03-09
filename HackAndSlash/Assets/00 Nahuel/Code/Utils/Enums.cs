@@ -84,12 +84,19 @@ public class Enums
 
     public enum Music
     {
+        MainMenuMusic,
+        TutorialMusic
     };
+
     public enum Effects
     {
+        ShockWave
     };
+
     public enum MusicEffects
     {
+        Atmosfera,
+        Wind
     };
 
     public enum RarityType
