@@ -66,6 +66,7 @@ public class ManagerEnemies : MonoBehaviour
 
     // -- Scaling Propierties -- //
     [Range(1, 2)] public float scalingRate = 1.05f;
+    public float scaleDivision = 1;
     public float scaleMultiplier = 0f;
     #endregion
 
@@ -81,10 +82,16 @@ public class ManagerEnemies : MonoBehaviour
         _timerGlobal += Time.deltaTime;
         _timerItems += Time.deltaTime;
         UpdateTimeText();
+        scaleMultiplier = (1f + Mathf.Pow(scalingRate, _timerGlobal)) / (scaleDivision * 10);
+
         if (_timerItems >= timeToGetItem)
         {
             _timerItems = 0f;
-            scaleMultiplier = Mathf.Pow(scalingRate, _timerGlobal);
+
+            scaleMultiplier = (1f + Mathf.Pow(scalingRate, _timerGlobal) ) / (scaleDivision * 10);
+
+            if(scaleMultiplier < 1)
+                scaleMultiplier = 1;
 
             //Take All enemies and Upgrade them (?)
             foreach (var pool in parentObjectPools)

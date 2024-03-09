@@ -37,7 +37,7 @@ public class KillsEvent : EventMap
 
     void CheckEventState()
     {
-        if (currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
+        if (_currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
         {
             if (currentRound >= enemiesSpawner.Count - 1)
                 FinishEvent();
@@ -48,16 +48,17 @@ public class KillsEvent : EventMap
 
     bool AllEnemiesDefeated()
     {
-        if (enemiesSpawner[currentRound].enemiesFromThisSpawner.Count < enemiesSpawner[currentRound].EnemiesToSpawn)
-            return false;
+        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
+        // if (enemiesSpawner[currentRound].enemiesFromThisSpawner.Count < enemiesSpawner[currentRound].EnemiesToSpawn)
+        //    return false;
 
-        foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
-        {
-            if (!e.isDead)
-                return false;
-        }
+        //foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
+        //{
+        //    if (!e.isDead)
+        //        return false;
+        //}
 
-        return true;
+        //return true;
     }
 
 }

@@ -5,53 +5,40 @@ using UnityEngine;
 public class GetEnemies : MonoBehaviour
 {
     public List<GameObject> enemies;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Invoke("UpdateList", 0.5f);
+    //void Start()
+    //{
+    //    Invoke("UpdateList", 0.5f);
 
-    }
-    void UpdateList()
-    {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
-            {
-                enemies.RemoveAt(i);
-            }
-            if (enemies[i].transform.parent != null)
-            {
-                if (!enemies[i].transform.parent.gameObject.activeSelf)
-                {
-                    enemies.RemoveAt(i);
+    //}
+    //void UpdateList()
+    //{
+    //    for (int i = 0; i < enemies.Count; i++)
+    //    {
+    //        if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
+    //        {
+    //            enemies.RemoveAt(i);
+    //        }
+    //        if (enemies[i].transform.parent != null)
+    //        {
+    //            if (!enemies[i].transform.parent.gameObject.activeSelf)
+    //            {
+    //                enemies.RemoveAt(i);
 
-                }
-            }
-        }
-        Invoke("UpdateList", 0.5f);
-    }
-    // Update is called once per frame
+    //            }
+    //        }
+    //    }
+    //    Invoke("UpdateList", 0.5f);
+    //}
     void Update()
     {
         
     }
     public Vector3 GetEnemie(Vector3 pos)
     {
-        for(int i = 0; i < enemies.Count;i++)
-        {
-            if (enemies[i] == null || enemies[i].tag != "Enemy" || !enemies[i].activeSelf)
-            {
-                enemies.RemoveAt(i);
-            }
-            if (enemies[i].transform.parent != null)
-            {
-                if (!enemies[i].transform.parent.gameObject.activeSelf)
-                {
-                    enemies.RemoveAt(i);
+        //Clear Nulls & far enemies
+        UtilsNagu.RemoveAllNulls(ref enemies);
+        RemoveByDistance();
 
-                }
-            }
-        }
         Vector3 position =  Vector3.zero;
         float distance = 100;
         for (int i = 0; i < enemies.Count; i++)
@@ -63,8 +50,6 @@ public class GetEnemies : MonoBehaviour
             }
 
         }
-
-
 
         return position;
     }
@@ -137,6 +122,17 @@ public class GetEnemies : MonoBehaviour
         return enemy;
     }
 
+    public void RemoveByDistance()
+    {
+        foreach (var enemy in enemies)
+        {
+            if(Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position) > 6)
+            {
+                enemies.Remove(enemy);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy"))
@@ -147,6 +143,7 @@ public class GetEnemies : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))

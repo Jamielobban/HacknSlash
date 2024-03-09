@@ -24,8 +24,7 @@ public class Enemy : PoolableObject
 
     public OnHitEffect currentHitEffect;
     public MMFeedbacks currentFeedbacksEffect;
-
-    public GameObject lookAtEnemy;
+    public GameObject spawner;
 
     public bool isDead = false;
     public bool isGrounded = false;
@@ -80,10 +79,6 @@ public class Enemy : PoolableObject
 
     public virtual void ResetEnemy()
     {
-        if(isPooleable)
-        {
-           // UpgradeEnemy(RoomManager.Instance.GetScaleFactor());
-        }
         isDead = false;
         healthSystem.ResetHealthEnemy();
         events.Idle();

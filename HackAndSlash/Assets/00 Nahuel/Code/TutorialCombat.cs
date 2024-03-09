@@ -7,6 +7,7 @@ public class TutorialCombat : MonoBehaviour
     [SerializeField] string[] dialoguesIntro;
     [SerializeField] string[] dialoguesItems;
     [SerializeField] string[] dialoguesEvent;
+    [SerializeField] string[] endTutorial;
 
 
     [SerializeField] SimpleRTVoiceExample voice;
@@ -17,6 +18,7 @@ public class TutorialCombat : MonoBehaviour
 
     private bool hasReadedItems = false;
     private bool hasReadedEvents = false;
+    private bool hasReadEndTutorial = false;
 
     private void Awake()
     {
@@ -31,7 +33,6 @@ public class TutorialCombat : MonoBehaviour
 
     void Update()
     {
-      //  voice.Speak(dialogues[currentText], name);
         if(ManagerEnemies.Instance.CurrentGlobalTime >= 62 && !hasReadedItems)
         {
             hasReadedItems = true;
@@ -43,6 +44,18 @@ public class TutorialCombat : MonoBehaviour
             hasReadedEvents = true;
             GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesEvent));
+            eventActivable.SetActive(true);
+        }
+        else if(eventActivable.activeSelf && !hasReadEndTutorial)
+        {
+            if(eventActivable.GetComponent<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
+            {
+                hasReadEndTutorial = true;
+                ManagerEnemies.Instance.isInEvent = true;
+                GameManager.Instance.PauseGame();
+                StartCoroutine(Speak(endTutorial));
+                GameManager.Instance.isTutorialCompleted = true;
+            }
         }
     }
 

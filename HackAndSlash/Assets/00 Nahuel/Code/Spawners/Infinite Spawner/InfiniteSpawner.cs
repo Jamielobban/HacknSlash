@@ -99,6 +99,7 @@ public class InfiniteSpawner : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
+            enemy.spawner = this.gameObject;
             _spawnedEnemies.Add(enemy);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
@@ -114,6 +115,14 @@ public class InfiniteSpawner : MonoBehaviour
         else
         {
             Debug.LogError($"Unable to fetch enemy of type {spawnPos} from object pool. Out of objects?");
+        }
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        if (_spawnedEnemies.Contains(enemy))
+        {
+            _spawnedEnemies.Remove(enemy);
         }
     }
 

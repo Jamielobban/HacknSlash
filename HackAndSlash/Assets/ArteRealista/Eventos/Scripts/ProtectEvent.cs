@@ -51,7 +51,7 @@ public class ProtectEvent : EventMap
     }
     void CheckEventState()
     {
-        if (currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
+        if (_currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
         {
             if (currentRound >= enemiesSpawner.Count - 1)
                 FinishEvent();
@@ -61,16 +61,7 @@ public class ProtectEvent : EventMap
     }
     bool AllEnemiesDefeated()
     {
-        if (enemiesSpawner[currentRound].enemiesFromThisSpawner.Count < enemiesSpawner[currentRound].EnemiesToSpawn)
-            return false;
-
-        foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
-        {
-            if (!e.isDead)
-                return false;
-        }
-
-        return true;
+        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
     }
 
     void RetargetSpawnedEnemies()

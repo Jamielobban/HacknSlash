@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DeadState : EnemyState
 {
-    private float _counter = 0f;
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
@@ -24,7 +23,6 @@ public class DeadState : EnemyState
 
     public override void ExitState(Enemy enemy)
     {
-        _counter = 0;
         base.ExitState(enemy);
     }
 }

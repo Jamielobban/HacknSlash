@@ -34,7 +34,7 @@ public class SpawnerBase : MonoBehaviour
 
     protected Coroutine _spawnCoroutine; // !! Can only be called once !! //
     protected NavMeshTriangulation _triangulation;
-    [HideInInspector] public List<Enemy>enemiesFromThisSpawner = new List<Enemy>();
+    public List<Enemy> enemiesFromThisSpawner = new List<Enemy>();
 
     protected ManagerEnemies _managerEnemies;
 
@@ -90,6 +90,7 @@ public class SpawnerBase : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
+            enemy.spawner = this.gameObject;
             enemiesFromThisSpawner.Add(enemy);
 
             NavMeshHit hit;
@@ -127,6 +128,14 @@ public class SpawnerBase : MonoBehaviour
     protected virtual void SpawnProbabilityEnemy()
     {
         // Fill in ProbabilitySpawner Class
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        if(enemiesFromThisSpawner.Contains(enemy))
+        {
+            enemiesFromThisSpawner.Remove(enemy);
+        }
     }
     protected virtual void OnEnable()
     {

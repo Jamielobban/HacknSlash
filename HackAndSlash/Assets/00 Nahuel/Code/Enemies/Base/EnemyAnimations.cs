@@ -77,8 +77,11 @@ public class EnemyAnimations : MonoBehaviour
     }
     public void EnemyDieApply()
     {
+
         if (_enemy.isPooleable)
         {
+            _enemy.spawner?.GetComponent<SpawnerBase>()?.RemoveEnemy(_enemy);
+
             ManagerEnemies.Instance.SetSpawnedEnemies(-1);
             _enemy.ResetEnemy();
             _enemy.gameObject.SetActive(false);

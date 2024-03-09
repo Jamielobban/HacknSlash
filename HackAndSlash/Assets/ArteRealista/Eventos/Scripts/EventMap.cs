@@ -8,7 +8,8 @@ public abstract class EventMap : Interactive, IInteractable
     [SerializeField] GameObject objectiveMarker;    
     [SerializeField] protected ForceFieldController forceField;
     protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
-    protected Enums.EventState currentEventState;
+    protected Enums.EventState _currentEventState;
+    public Enums.EventState CurrentEventState => _currentEventState;
     protected int currentRound = 0;
     public void Interact()
     {
@@ -22,7 +23,7 @@ public abstract class EventMap : Interactive, IInteractable
     {
         forceField.SetSpeed(0f);
         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
-        currentEventState = Enums.EventState.INACTIVE;
+        _currentEventState = Enums.EventState.INACTIVE;
     }
     protected virtual void Update()
     {
@@ -36,7 +37,7 @@ public abstract class EventMap : Interactive, IInteractable
         {
             col.isTrigger = false;
         }
-        currentEventState = Enums.EventState.PLAYING;
+        _currentEventState = Enums.EventState.PLAYING;
     }
     protected virtual void NextRound()
     {
@@ -45,12 +46,13 @@ public abstract class EventMap : Interactive, IInteractable
     protected virtual void FinishEvent()
     {
         ManagerEnemies.Instance.EndEvent();
+        FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted();
         forceField.SetSpeed(-0.1f);        
         foreach (BoxCollider col in tangentColliders)
         {
             col.isTrigger = true;
         }
-        currentEventState = Enums.EventState.FINISHED;
+        _currentEventState = Enums.EventState.FINISHED;
     }    
     protected void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders)
     {

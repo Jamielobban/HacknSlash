@@ -31939,40 +31939,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 279472812286893951, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 279472812286893951, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -404.8
-      objectReference: {fileID: 0}
     - target: {fileID: 996283754196698678, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
       propertyPath: m_Name
       value: Canvas Announcements
       objectReference: {fileID: 0}
-    - target: {fileID: 996283754196698678, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772575685257773871, guid: 8d45216639cfea44bb59750a31e07f89,
+    - target: {fileID: 1679739116246535711, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588941551552000520, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588941551552000520, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 81.2
       objectReference: {fileID: 0}
     - target: {fileID: 5821767646058275455, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
@@ -32082,21 +32057,6 @@ PrefabInstance:
     - target: {fileID: 6233947910861563881, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7628642509314847974, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7628642509314847974, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -344
-      objectReference: {fileID: 0}
-    - target: {fileID: 8590423800748465629, guid: 8d45216639cfea44bb59750a31e07f89,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -75837,6 +75797,10 @@ MonoBehaviour:
   - It seems that this never ends... Completing the events in each world is a requirement.
   - Every event has a uniqueness, which you will discover when you start a new one.
   - Find the stone that will spawn in this map and start the event. Good luck!
+  endTutorial:
+  - Now i think you are ready for what it comes.
+  - 'Try to accomplish all the worlds without succumbing to death or... '
+  - You will have to start over.
   voice: {fileID: 106717310}
   eventActivable: {fileID: 2121577540}
 --- !u!1001 &1333154033
@@ -99412,7 +99376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 47.299988}
+  m_AnchoredPosition: {x: 0, y: 47.5}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2040073360
@@ -104442,12 +104406,12 @@ PrefabInstance:
     - target: {fileID: 5303250098012167921, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.020521391
+      value: -0.020521412
       objectReference: {fileID: 0}
     - target: {fileID: 5303250098012167921, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.003307846
+      value: 0.0033078494
       objectReference: {fileID: 0}
     - target: {fileID: 5333652906127582166, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
@@ -104982,7 +104946,7 @@ PrefabInstance:
     - target: {fileID: 8605157644180756787, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.38324085
+      value: -0.38324094
       objectReference: {fileID: 0}
     - target: {fileID: 8605157644180756787, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
@@ -104992,7 +104956,7 @@ PrefabInstance:
     - target: {fileID: 8605157644180756787, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.891613
+      value: -0.89161307
       objectReference: {fileID: 0}
     - target: {fileID: 8605157644180756787, guid: 9d6e70f566dc4ab409044976b51fb1c4,
         type: 3}

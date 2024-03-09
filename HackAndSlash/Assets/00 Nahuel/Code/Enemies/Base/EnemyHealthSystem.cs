@@ -78,7 +78,6 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
         if(_currentHealth <= 0)
         {
             _enemy.events.Die();
-            gameObject.SetActive(false);
         }
     }
     private void DamageEffects(float dmg, bool critical, Vector3 collisionPoint)

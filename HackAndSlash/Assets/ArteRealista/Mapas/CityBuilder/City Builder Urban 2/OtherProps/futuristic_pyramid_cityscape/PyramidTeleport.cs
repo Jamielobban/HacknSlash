@@ -39,5 +39,5 @@ public class PyramidTeleport : Interactive, IInteractable
         }
     }
 
-    private void ActiveScene() => GameManager.Instance.LoadLevel("DanielIceMap", loadingFillBar);
+    private void ActiveScene() => GameManager.Instance.LoadLevel("03 Tutorial Combat", loadingFillBar);
 }
