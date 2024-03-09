@@ -15,7 +15,7 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(SpawnEnemies());
+        _spawnCoroutine = StartCoroutine(SpawnEnemies());
     }
         
 
@@ -26,6 +26,11 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
         //{
         //    _spawnCoroutine = StartCoroutine(SpawnEnemies());
         //}
+    }
+    protected override void OnDisable()
+    {
+        _spawnCoroutine = null;
+
     }
 
     protected override Vector3 ChooseRandomPositionOnNavMesh() => new Vector3(Random.Range(_bounds.min.x, _bounds.max.x), _bounds.min.y, Random.Range(_bounds.min.z, _bounds.max.z));

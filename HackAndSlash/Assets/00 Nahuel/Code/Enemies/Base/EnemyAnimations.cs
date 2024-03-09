@@ -47,7 +47,7 @@ public class EnemyAnimations : MonoBehaviour
             {
                 mat.material.SetFloat("_ShaderDisplacement", _currentTime);
             }
-            if(_currentTime <= -0f)
+            if(_currentTime <= 0f)
             {
                 ManagerEnemies.Instance.AddEnemyScore(_enemy.stats.score);
                 ManagerEnemies.Instance.AddEnemyKilled();
@@ -77,12 +77,18 @@ public class EnemyAnimations : MonoBehaviour
     }
     public void EnemyDieApply()
     {
-
+        _currentTime = 1.2f;
         if (_enemy.isPooleable)
         {
-            _enemy.spawner?.GetComponent<SpawnerBase>()?.RemoveEnemy(_enemy);
-
-            ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+            if(_enemy.spawner.GetComponent<SpawnerBase>())
+            {
+                _enemy.spawner?.GetComponent<SpawnerBase>()?.RemoveEnemy(_enemy);
+            }
+            else
+            {
+                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+            }
+            _enemy.spawner = null;
             _enemy.ResetEnemy();
             _enemy.gameObject.SetActive(false);
         }

@@ -149,6 +149,10 @@ public class ForceFieldController : MonoBehaviour {
     private void OpenCloseProgress()
     {        
         openCloseValue += Time.deltaTime * openSpeed;
+        if (openCloseValue < 0)
+            openCloseValue = 0;
+        else if (openCloseValue > 1)
+            openCloseValue = 1;
         openCloseCurve = openCurve.Evaluate(openCloseValue);
         openCloseProgress = openCloseCurve;
     }

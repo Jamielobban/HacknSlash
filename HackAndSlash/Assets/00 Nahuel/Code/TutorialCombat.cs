@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialCombat : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class TutorialCombat : MonoBehaviour
 
 
     [SerializeField] SimpleRTVoiceExample voice;
-
+    public GameObject loadingGo;
+    public Image fillLoadingGo;
     public GameObject eventActivable;
     
     readonly string name = "Cyborg Sergeant";
@@ -55,8 +57,15 @@ public class TutorialCombat : MonoBehaviour
                 GameManager.Instance.PauseGame();
                 StartCoroutine(Speak(endTutorial));
                 GameManager.Instance.isTutorialCompleted = true;
+                loadingGo.SetActive(true);
+                Invoke(nameof(NextScene), 1f);
             }
         }
+    }
+
+    private void NextScene()
+    {
+        GameManager.Instance.LoadLevel("DanielIceMap", fillLoadingGo);
     }
 
     IEnumerator Speak(string[] _dialogues)

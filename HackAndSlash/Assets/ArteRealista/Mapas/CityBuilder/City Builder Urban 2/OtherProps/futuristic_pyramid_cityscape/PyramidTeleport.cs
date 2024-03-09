@@ -35,7 +35,7 @@ public class PyramidTeleport : Interactive, IInteractable
             firstTeleportDone = true;            
             //fade.DoTransition();
             loadingMenu.SetActive(true);
-            Invoke(nameof(ActiveScene), .15f);
+            Invoke(nameof(ActiveScene), 1f);
         }
     }
 

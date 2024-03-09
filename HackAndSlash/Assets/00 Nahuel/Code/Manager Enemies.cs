@@ -112,7 +112,9 @@ public class ManagerEnemies : MonoBehaviour
     {
         isInEvent = true;
         if(_currentSpawner != null)
+        {
             _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+        }
     }
 
     public void EndEvent() => isInEvent = false;

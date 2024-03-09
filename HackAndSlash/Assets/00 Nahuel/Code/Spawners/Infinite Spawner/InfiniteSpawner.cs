@@ -75,6 +75,7 @@ public class InfiniteSpawner : MonoBehaviour
         {
             enemy.animations.EnemyDieApply();
         }
+        _spawnedEnemies.Clear();
     }
 
     protected void SpawnRandomEnemy()
@@ -100,7 +101,7 @@ public class InfiniteSpawner : MonoBehaviour
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
             enemy.spawner = this.gameObject;
-            _spawnedEnemies.Add(enemy);
+            AddEnemy(enemy);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
             {
@@ -118,6 +119,13 @@ public class InfiniteSpawner : MonoBehaviour
         }
     }
 
+    public void AddEnemy(Enemy enemy)
+    {
+        if(!_spawnedEnemies.Contains(enemy))
+        {
+            _spawnedEnemies.Add(enemy);
+        }
+    }
     public void RemoveEnemy(Enemy enemy)
     {
         if (_spawnedEnemies.Contains(enemy))

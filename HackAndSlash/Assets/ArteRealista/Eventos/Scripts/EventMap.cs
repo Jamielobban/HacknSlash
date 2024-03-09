@@ -15,7 +15,9 @@ public abstract class EventMap : Interactive, IInteractable
     {
         if (!canInteract) return;
 
+        GetComponent<Collider>().enabled = false;
         StartEvent();
+
         objectiveMarker.SetActive(false);
         canInteract = false;
     }
@@ -47,7 +49,7 @@ public abstract class EventMap : Interactive, IInteractable
     {
         ManagerEnemies.Instance.EndEvent();
         FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted();
-        forceField.SetSpeed(-0.1f);        
+        forceField.SetSpeed(-0.2f);        
         foreach (BoxCollider col in tangentColliders)
         {
             col.isTrigger = true;

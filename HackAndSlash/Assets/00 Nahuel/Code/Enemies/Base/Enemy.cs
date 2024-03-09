@@ -63,13 +63,20 @@ public class Enemy : PoolableObject
     protected virtual void Update()
     {
         currentState?.UpdateState(this);
-        if (Time.frameCount % 10 == 0)
+        if (Time.frameCount % 10 == 0 && gameObject.activeSelf)
         {
             if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 120)
             {
                 if (isPooleable)
                 {
-                    ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+                    if(spawner.GetComponent<SpawnerBase>())
+                    {
+                        spawner?.GetComponent<SpawnerBase>()?.RemoveEnemy(this);
+                    }
+                    else
+                    {
+                        ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+                    }
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }

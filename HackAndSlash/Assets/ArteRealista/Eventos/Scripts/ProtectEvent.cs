@@ -27,6 +27,7 @@ public class ProtectEvent : EventMap
     }
     protected override void StartEvent()
     {
+
         base.StartEvent();
         enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
@@ -42,8 +43,8 @@ public class ProtectEvent : EventMap
     }
     protected override void FinishEvent()
     {
-        base.FinishEvent();
         enemiesSpawner[currentRound].gameObject.SetActive(false);
+        base.FinishEvent();
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.canvas.SetActive(false));
@@ -70,6 +71,8 @@ public class ProtectEvent : EventMap
         {
             if (e.isDead)
                 continue;
+
+            e.movements.useMovementPrediction = false;
 
             bool isCorrected = false;
             foreach(Transform t in targetsToProtect)

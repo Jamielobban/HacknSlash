@@ -33,7 +33,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     List<Enums.InputsAttack> inputsBuffer = new List<Enums.InputsAttack>();
     Dictionary<Enums.InputsAttack, Sprite> matchKeyWithUI = new Dictionary<Enums.InputsAttack, Sprite>();
     Enums.TutorialState currentState = Enums.TutorialState.INACTIVE;
-
+    [SerializeField] private float maxTimeBetweenCombosInputs = 0.8f;
     Inputs _playerActions;
     private PlayerControl _player;
     private void Awake()
@@ -83,7 +83,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             if (lastAttackTime == 0 || inputsBuffer.Count() > combosToPractice[currentComboLevel].collection.Count() || inputsBuffer.Count == 0)
                 return;
 
-            if (Time.time - lastAttackTime >= 0.5f)
+            if (Time.time - lastAttackTime >= maxTimeBetweenCombosInputs)
                 ComboFailed(1);
             else
             {

@@ -31,8 +31,8 @@ public class KillsEvent : EventMap
     }
     protected override void FinishEvent()
     {
-        base.FinishEvent();
         enemiesSpawner[currentRound].gameObject.SetActive(false);
+        base.FinishEvent();
     }
 
     void CheckEventState()
@@ -49,16 +49,6 @@ public class KillsEvent : EventMap
     bool AllEnemiesDefeated()
     {
         return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
-        // if (enemiesSpawner[currentRound].enemiesFromThisSpawner.Count < enemiesSpawner[currentRound].EnemiesToSpawn)
-        //    return false;
-
-        //foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
-        //{
-        //    if (!e.isDead)
-        //        return false;
-        //}
-
-        //return true;
     }
 
 }

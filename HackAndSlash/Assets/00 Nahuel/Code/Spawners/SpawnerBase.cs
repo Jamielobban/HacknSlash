@@ -91,7 +91,7 @@ public class SpawnerBase : MonoBehaviour
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
             enemy.spawner = this.gameObject;
-            enemiesFromThisSpawner.Add(enemy);
+            AddEnemy(enemy);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
@@ -129,7 +129,13 @@ public class SpawnerBase : MonoBehaviour
     {
         // Fill in ProbabilitySpawner Class
     }
-
+    public void AddEnemy(Enemy enemy)
+    {
+        if (!enemiesFromThisSpawner.Contains(enemy))
+        {
+            enemiesFromThisSpawner.Add(enemy);
+        }
+    }
     public void RemoveEnemy(Enemy enemy)
     {
         if(enemiesFromThisSpawner.Contains(enemy))
