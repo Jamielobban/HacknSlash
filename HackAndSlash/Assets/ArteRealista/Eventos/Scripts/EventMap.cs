@@ -6,6 +6,9 @@ using UnityEngine;
 public abstract class EventMap : Interactive, IInteractable
 {
     [SerializeField] GameObject objectiveMarker;    
+    [SerializeField] List<MeshRenderer> renderers;
+    [SerializeField] List<Material> normalMats;
+    [SerializeField] List<Material> triggerMats;
     [SerializeField] protected ForceFieldController forceField;
     protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
     protected Enums.EventState _currentEventState;
@@ -27,9 +30,23 @@ public abstract class EventMap : Interactive, IInteractable
         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
         _currentEventState = Enums.EventState.INACTIVE;
     }
-    protected virtual void Update()
-    {
 
+    protected virtual void Update() { }
+
+    public override void ShowObjectInRange()
+    {
+        for(int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].material = triggerMats[i];
+        }
+    }
+
+    public override void HideObjectInRange()
+    {
+        for (int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].material = normalMats[i];
+        }
     }
     protected virtual void StartEvent()
     {
