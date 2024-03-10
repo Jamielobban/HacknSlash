@@ -85,18 +85,29 @@ public class Enums
     public enum Music
     {
         MainMenuMusic,
-        TutorialMusic
+        MainTheme,
+        EpicTheme,
+        UnoVSUno,
+        InGameMenu
     };
 
     public enum Effects
     {
-        ShockWave
+        Click,
+        Evento,
+        Negativo,
+        Positivo,
+        WolfAttack,
+        ChestOpen
     };
 
     public enum MusicEffects
     {
         Atmosfera,
-        Wind
+        Wind,
+        IceWind
+       
+        
     };
 
     public enum RarityType

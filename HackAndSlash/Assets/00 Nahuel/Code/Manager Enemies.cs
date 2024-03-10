@@ -110,6 +110,7 @@ public class ManagerEnemies : MonoBehaviour
 
     public void StartEvent()
     {
+        
         isInEvent = true;
         if(_currentSpawner != null)
         {

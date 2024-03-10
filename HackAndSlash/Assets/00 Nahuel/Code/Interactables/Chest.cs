@@ -25,6 +25,7 @@ public class Chest : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        AudioManager.Instance.PlayFx(Enums.Effects.ChestOpen);
         GetItem();
         _collider.enabled = false;
     }
