@@ -103,7 +103,7 @@ public class PlayerControl : MonoBehaviour
     public Blessing[] blessing;
 
     public ListaAtaques[] ataques;
-    ListaAtaques currentComboAttacks;
+    public ListaAtaques currentComboAttacks;
     public ListaAtaques[] airCombo;
     public ListaAtaques[] runCombo;
 
@@ -213,6 +213,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         rb = GetComponent<Rigidbody>();
         critChance = stats.critChance;
         attackDamage = stats.attackDamage;
@@ -229,6 +230,7 @@ public class PlayerControl : MonoBehaviour
         controller = GameObject.FindObjectOfType<ControllerManager>();
         currentComboAttack = -1;
         playerAnim = player.GetComponent<Animator>();
+        playerAnim.CrossFadeInFixedTime("Idle", 0.2f);
 
         states = States.IDLE;
         moves = Moves.IDLE;
@@ -460,7 +462,7 @@ public class PlayerControl : MonoBehaviour
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
             currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState[slash];
-                currentComboAttacks.attacks[golpe].collider[slash].SetActive(true);
+                currentComboAttacks.attacks[golpe].collider[slash].GetComponent<Collider>().enabled = true;
                 StartCoroutine(DesactivarCollisionGolpe(0.05f, currentComboAttacks.attacks[golpe].collider[slash]));
             
         }
@@ -472,7 +474,7 @@ public class PlayerControl : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-       col.SetActive(false);
+       col.GetComponent<Collider>().enabled = false;
 
     }
 
@@ -520,7 +522,7 @@ public class PlayerControl : MonoBehaviour
             if (currentComboAttacks.combo == ComboAtaques.HoldQuadratL2)
                 dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
             else
-                dir = attackTeleport.GetEnemiePos(d) + (dir * 3);
+                dir = attackTeleport.GetEnemiePos(d) + (dir * 4.5f);
 
             if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
                 dir.y = player.transform.position.y;
