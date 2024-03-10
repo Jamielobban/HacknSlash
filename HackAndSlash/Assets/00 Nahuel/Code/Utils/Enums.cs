@@ -85,7 +85,10 @@ public class Enums
     public enum Music
     {
         MainMenuMusic,
-        TutorialMusic
+        MainTheme,
+        EpicTheme,
+        UnoVSUno,
+        InGameMenu
     };
 
     public enum Effects
@@ -101,7 +104,8 @@ public class Enums
     public enum MusicEffects
     {
         Atmosfera,
-        Wind
+        Wind,
+        IceWind
        
         
     };
