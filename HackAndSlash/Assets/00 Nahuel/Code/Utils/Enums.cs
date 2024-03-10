@@ -90,14 +90,20 @@ public class Enums
 
     public enum Effects
     {
-        ShockWave
+        Click,
+        Evento,
+        Negativo,
+        Positivo,
+        WolfAttack,
+        ChestOpen
     };
 
     public enum MusicEffects
     {
         Atmosfera,
-        Wind,
-        Click
+        Wind
+       
+        
     };
 
     public enum RarityType

@@ -31,6 +31,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void StartEvent()
     {
+        AudioManager.Instance.PlayFx(Enums.Effects.Evento);
         ManagerEnemies.Instance.StartEvent();
         forceField.SetSpeed(0.15f);
         foreach (Collider col in tangentColliders)

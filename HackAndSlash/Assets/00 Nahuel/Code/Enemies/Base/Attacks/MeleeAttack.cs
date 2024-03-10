@@ -6,7 +6,7 @@ public class MeleeAttack : EnemyBaseAttack
     protected override void AttackAction()
     {
         base.AttackAction();
-        AudioManager.Instance.PlayFx(Enums.Effects.ShockWave);
+        AudioManager.Instance.PlayFx(Enums.Effects.WolfAttack);
         if(!enemy.attackInterrupted)
         {
             damageCollider.enabled = true;
