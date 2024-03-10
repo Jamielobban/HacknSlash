@@ -12,6 +12,8 @@ public class MainMenu : BaseMenu<MainMenu>
         base.Awake();
         loadingInspector.SetActive(false);
         mainMenuContent.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void OnPlayPressed()
     {
