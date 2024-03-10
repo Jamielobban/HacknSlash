@@ -27,6 +27,7 @@ public class ManagerEnemies : MonoBehaviour
     // If enemies are to far from player deactive and respawn
     //-//-//-//-//-//
 
+
     private float _enemiesKilled = 0;
     private float _enemiesScore = 0;
 

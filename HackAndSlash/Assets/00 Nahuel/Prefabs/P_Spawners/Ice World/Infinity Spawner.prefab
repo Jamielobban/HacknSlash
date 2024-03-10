@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2776334167964219810
 MonoBehaviour:
@@ -53,6 +53,8 @@ MonoBehaviour:
   timeMinToSpawn: 0.8
   timeMaxToSpawn: 2.5
   enemiesCap: 10
+  delayStartTime: 0
+  canStartSpawn: 1
   _enemyProbabilities:
   - enemy: {fileID: 5641807391036227690, guid: fa178a087b9eb6f44aef71457f17a263, type: 3}
     probability: 79

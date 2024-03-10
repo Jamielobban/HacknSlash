@@ -36,6 +36,10 @@ public class InfiniteSpawner : MonoBehaviour
 
     public int enemiesCap;
 
+    public float delayStartTime = 0f;
+    private float _timerDelay;
+
+    public bool canStartSpawn = false;
     protected virtual void Start()
     {
         _triangulation = NavMesh.CalculateTriangulation();
@@ -46,27 +50,38 @@ public class InfiniteSpawner : MonoBehaviour
     {
         _timer += Time.deltaTime;
 
-        if(_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= enemiesCap && !_managerEnemies.isInEvent)
+        if(!canStartSpawn)
         {
-            //Spawn Enemy
-            switch (enemySpawnMethod)
+            _timerDelay += Time.deltaTime;
+            if (_timerDelay > delayStartTime)
             {
-                case Enums.SpawnMethod.RoundRobin:
-                    SpawnRoundRobinEnemy(_managerEnemies.SpawnedEnemies);
-                    break;
-                case Enums.SpawnMethod.Random:
-                    SpawnRandomEnemy();
-                    break;
-                case Enums.SpawnMethod.Probability:
-                    SpawnProbabilityEnemy();
-                    break;
-                default:
-                    Debug.LogError("Unsuported spawn method");
-                    break;
+                canStartSpawn = true;
             }
-            _managerEnemies.SetSpawnedEnemies(+1);
-            _timer = 0;
         }
+        else
+        {
+            if (_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= enemiesCap && !_managerEnemies.isInEvent)
+            {
+                //Spawn Enemy
+                switch (enemySpawnMethod)
+                {
+                    case Enums.SpawnMethod.RoundRobin:
+                        SpawnRoundRobinEnemy(_managerEnemies.SpawnedEnemies);
+                        break;
+                    case Enums.SpawnMethod.Random:
+                        SpawnRandomEnemy();
+                        break;
+                    case Enums.SpawnMethod.Probability:
+                        SpawnProbabilityEnemy();
+                        break;
+                    default:
+                        Debug.LogError("Unsuported spawn method");
+                        break;
+                }
+                _managerEnemies.SetSpawnedEnemies(+1);
+                _timer = 0;
+            }
+        }        
     }
 
     public void ClearAllEnemiesSpawned()

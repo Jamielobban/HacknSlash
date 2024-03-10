@@ -34,12 +34,13 @@ public class TutorialCombat : MonoBehaviour
 
     void Update()
     {
-        if(ManagerEnemies.Instance.CurrentGlobalTime >= 62 && !hasReadedItems)
+        if(ManagerEnemies.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
+            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesItems));
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 80 && !hasReadedEvents)
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 70 && !hasReadedEvents)
         {
             hasReadedEvents = true;
             StartCoroutine(Speak(dialoguesEvent));
@@ -50,14 +51,20 @@ public class TutorialCombat : MonoBehaviour
             if(FindObjectOfType<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
             {
                 hasReadEndTutorial = true;
+
+                Invoke(nameof(StartEnd), 1.5f);
+
                 ManagerEnemies.Instance.isInEvent = true;
-                StartCoroutine(Speak(endTutorial));
-                Invoke(nameof(TutorialFinished), 4.5f);
             }
         }
     }
 
-
+    private void StartEnd()
+    {
+        GameManager.Instance.PauseGame();
+        StartCoroutine(Speak(endTutorial));
+        Invoke(nameof(TutorialFinished), 8f);
+    }
     private void TutorialFinished()
     {
         GameManager.Instance.isTutorialCompleted = true;
@@ -79,6 +86,10 @@ public class TutorialCombat : MonoBehaviour
             voice.Speak(_dialogues[i], name);
             yield return new WaitUntil(() => voice.playing == false);
             yield return new WaitForSecondsRealtime(0.8f);
+        }
+        if(GameManager.Instance.IsPaused)
+        {
+            GameManager.Instance.PauseGame();
         }
     }
 
