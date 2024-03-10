@@ -12,7 +12,7 @@ public class AttackState : EnemyState
     public override void UpdateState(Enemy enemy)
     {
         HandleRotationFacePlayer();
-        if (enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && enemy.movements.InRangeToChase() && enemy.movements.DistanceToPlayer() > 3)
+        if (enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && enemy.movements.InRangeToChase() && enemy.movements.DistanceToPlayer() > 2.7)
         {
             enemy.events.Following();
         }
