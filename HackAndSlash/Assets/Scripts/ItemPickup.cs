@@ -51,8 +51,8 @@ public class ItemPickup : MonoBehaviour
 
             case Items.CritItem: return new CritItem();
             case Items.AttackDamageItem: return new AttackDamge();
-            case Items.MeatItem: return new Meat();
-            case Items.BoosterShotItem: return new BoosterShot();
+            case Items.MeatItem: return new MaxHealthItem();
+            case Items.BoosterShotItem: return new RecoveryFlower();
             case Items.CritDamageItem: return new CritDamageItem();
 
             default: return null;

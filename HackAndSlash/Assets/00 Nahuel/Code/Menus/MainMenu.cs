@@ -17,7 +17,7 @@ public class MainMenu : BaseMenu<MainMenu>
     {
         mainMenuContent.SetActive(false);
         loadingInspector.SetActive(true);
-        Invoke(nameof(ActiveScene), .07f);
+        Invoke(nameof(ActiveScene), 1f);
     }
 
     private void ActiveScene()

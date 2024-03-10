@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeAttack : EnemyBaseAttack
 {
     public Collider damageCollider;
+
+
     protected override void AttackAction()
     {
         base.AttackAction();
-        AudioManager.Instance.PlayFx(Enums.Effects.ShockWave);
         if(!enemy.attackInterrupted)
         {
             damageCollider.enabled = true;

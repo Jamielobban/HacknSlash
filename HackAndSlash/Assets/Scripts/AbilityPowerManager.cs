@@ -9,21 +9,7 @@ using static Enums;
 
 public class AbilityPowerManager : MonoBehaviour
 {
-    //public Slider slider1;
-    //public Slider comboSlider;
 
-    // Combo thresholds
-    //private float slider1AddRate = 0.05f;
-    //private float comboSliderDecayRateMultiplier = 0.05f;
-    // Decay rate for sliders
-    //private float decayRate = 0.00001f;
-
-    //bool Combo = false;
-    //int ComboHabilitiCout = 0;
-
-    //public int comboCount;
-
-    //public TMP_Text comboNumber;
     private static AbilityPowerManager _instance;
     public static AbilityPowerManager instance
     {
@@ -73,8 +59,8 @@ public class AbilityPowerManager : MonoBehaviour
     public TMP_Text item2Name;
     public TMP_Text item2Description;
 
-
-
+    public List<GameObject> itemRarityEffect = new List<GameObject>();
+    private GameObject currentButton1Rarity = null, currentButton2Rarity = null;
 
     public bool isOpen;
     private void Awake()
@@ -183,6 +169,9 @@ public class AbilityPowerManager : MonoBehaviour
         inventory.RefreshInventory();
         player.CallItemOnPickup(chosenItem.GetAssociatedStatType());
 
+        Destroy(currentButton1Rarity);
+        Destroy(currentButton2Rarity);
+
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
 
         GameManager.Instance.UnPauseMenuGame();
@@ -193,9 +182,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     void DesactivarMenu()
     {
-
         menuActive = false;
-
     }
 
     private IEnumerator SetActiveFalseCouroutine(GameObject wow, float delay)
@@ -203,11 +190,7 @@ public class AbilityPowerManager : MonoBehaviour
         option1Button.GetComponent<Button>().enabled = false;
         option2Button.GetComponent<Button>().enabled = false;
         yield return new WaitForSeconds(delay);
-
-
         //itemChoiceAnim.SetTrigger("Close");
-
-
         yield return new WaitForSeconds(delay);
         wow.SetActive(false);
     }
@@ -221,12 +204,11 @@ public class AbilityPowerManager : MonoBehaviour
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
+
         //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
 
-        GameManager.Instance.PauseMenuGame();
         // Generate new items for options
-     //   Debug.Log(_itemManager.gameObject);
         if (_itemManager != null)
         {
             item1 = _itemManager.GetRandomItem();
@@ -257,13 +239,20 @@ public class AbilityPowerManager : MonoBehaviour
         item1Image.sprite = item1.GiveSprite();
         item1Name.text = item1.GiveName();
         item1Description.text = item1.GiveDescription();
-        option1Button.GetComponent<Image>().color = rarityColorMap[item1.GetRarity()];
+        //option1Button.GetComponent<Image>().color = rarityColorMap[item1.GetRarity()];
 
 
         item2Image.sprite = item2.GiveSprite();
         item2Name.text = item2.GiveName();
         item2Description.text = item2.GiveDescription();
-        option2Button.GetComponent<Image>().color = rarityColorMap[item2.GetRarity()];
+        //option2Button.GetComponent<Image>().color = rarityColorMap[item2.GetRarity()];
+
+        currentButton1Rarity = Instantiate(itemRarityEffect[(int)item1.GetRarity()], option1Button.transform);
+        currentButton2Rarity = Instantiate(itemRarityEffect[(int)item2.GetRarity()], option2Button.transform);
+        currentButton1Rarity.transform.localPosition = Vector3.zero;
+        currentButton2Rarity.transform.localPosition = Vector3.zero;
+        GameManager.Instance.PauseMenuGame();
+
     }
 
     private void InitializeRarityColorMap()

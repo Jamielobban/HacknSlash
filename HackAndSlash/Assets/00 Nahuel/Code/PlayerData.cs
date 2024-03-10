@@ -16,6 +16,7 @@ public class PlayerData : ScriptableObject
     public float attackDamage;
     [SerializeField]
     public float healthRegen;
+    public float timeToHeal = 5f;
     public float critDamageMultiplier;
     public int slowForce;
 

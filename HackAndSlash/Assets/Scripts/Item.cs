@@ -1,7 +1,3 @@
-using DamageNumbersPro;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -72,7 +68,7 @@ public class CritItem : Item
 {
     public override Enums.RarityType GetRarity()
     {
-        return Enums.RarityType.Uncommon;
+        return Enums.RarityType.Rare;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -80,7 +76,7 @@ public class CritItem : Item
     }
     public override string GiveName()
     {
-        return "Crit Glasses";
+        return "Critical Aura";
     }
 
     public override string GiveDescription()
@@ -90,7 +86,7 @@ public class CritItem : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Glasses");
+        return Resources.Load<Sprite>("Item Images/CriticalPercent");
     }
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
@@ -125,7 +121,7 @@ public class CritDamageItem : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Glasses");
+        return Resources.Load<Sprite>("Item Images/CriticalDamage");
     }
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
@@ -141,7 +137,7 @@ public class AttackDamge : Item
 {
     public override Enums.RarityType GetRarity()
     {
-        return Enums.RarityType.Common;
+        return Enums.RarityType.Uncommon;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -160,7 +156,7 @@ public class AttackDamge : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Damage");
+        return Resources.Load<Sprite>("Item Images/AttackDamage");
     }
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
     {
@@ -172,11 +168,11 @@ public class AttackDamge : Item
 }
 
 //Gives max health
-public class Meat : Item
+public class MaxHealthItem : Item
 {
     public override Enums.RarityType GetRarity()
     {
-        return Enums.RarityType.Uncommon;
+        return Enums.RarityType.Rare;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -184,7 +180,7 @@ public class Meat : Item
     }
     public override string GiveName()
     {
-        return "Meat";
+        return "Health";
     }
 
     public override string GiveDescription()
@@ -194,7 +190,7 @@ public class Meat : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Meat");
+        return Resources.Load<Sprite>("Item Images/MaxHp");
     }
 
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
@@ -208,11 +204,11 @@ public class Meat : Item
 }
 
 //Gives current health
-public class BoosterShot : Item
+public class RecoveryFlower : Item
 {
     public override Enums.RarityType GetRarity()
     {
-        return Enums.RarityType.Rare;
+        return Enums.RarityType.Common;
     }
 
     public override StatType GetAssociatedStatType()
@@ -221,17 +217,17 @@ public class BoosterShot : Item
     }
     public override string GiveName()
     {
-        return "BoosterShot";
+        return "Recovery";
     }
 
     public override string GiveDescription()
     {
-        return "Adds 40 health per stack.";
+        return "Heals 40 hp";
     }
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Meat");
+        return Resources.Load<Sprite>("Item Images/HealLife");
     }
 
     public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
@@ -243,6 +239,38 @@ public class BoosterShot : Item
     }
 }
 
+public class RegenerationItem : Item
+{
+    public override Enums.RarityType GetRarity()
+    {
+        return Enums.RarityType.Rare;
+    }
+    public override StatType GetAssociatedStatType()
+    {
+        return StatType.Health;
+    }
+    public override string GiveName()
+    {
+        return "Regeneration Amulet";
+    }
+
+    public override string GiveDescription()
+    {
+        return "Heals 2 hp every 5 seconds per stack";
+    }
+
+    public override Sprite GiveSprite()
+    {
+        return Resources.Load<Sprite>("Item Images/HealthRegen");
+    }
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.Health)
+        {
+            player.healthRegen += 2;
+        }
+    }
+}
 
 //On hit heal
 
@@ -250,7 +278,7 @@ public class MonsterTooth : Item
 {
     public override Enums.RarityType GetRarity()
     {
-        return Enums.RarityType.Rare;
+        return Enums.RarityType.Legendary;
     }
     public override StatType GetAssociatedStatType()
     {
@@ -268,7 +296,7 @@ public class MonsterTooth : Item
 
     public override Sprite GiveSprite()
     {
-        return Resources.Load<Sprite>("Item Images/Tooth");
+        return Resources.Load<Sprite>("Item Images/HealAttacking");
     }
 
     public override void OnHit(PlayerControl player, int stacks)
@@ -276,244 +304,243 @@ public class MonsterTooth : Item
         int heal = 3;
         player.healthSystem.Heal(heal);
 
-        //player.healPixel.Spawn(player.transform.position + new Vector3(0f,2f,0f), heal);
         //player.SetHealth();
     }
 }
+#region Not Used 
+//public class Gasoline : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+//    public override string GiveName()
+//    {
+//        return "Gasoline";
+//    }
 
-public class Gasoline : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
-    public override string GiveName()
-    {
-        return "Gasoline";
-    }
+//    public override string GiveDescription()
+//    {
+//        return "When killing an enemy spawn a firey circle on the floor that applies burn to all enemies inside it. Stack scales the circle 1.1x";
+//    }
 
-    public override string GiveDescription()
-    {
-        return "When killing an enemy spawn a firey circle on the floor that applies burn to all enemies inside it. Stack scales the circle 1.1x";
-    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
+//}
 
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-}
+//public class Lighter : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+//    public override string GiveName()
+//    {
+//        throw new System.NotImplementedException();
+//    }
 
-public class Lighter : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
-    public override string GiveName()
-    {
-        throw new System.NotImplementedException();
-    }
+//    public override string GiveDescription()
+//    {
+//        return "Hello";
+//    }
 
-    public override string GiveDescription()
-    {
-        return "Hello";
-    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
+//}
 
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-}
+//public class Slashes : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Legendary;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+//    public override string GiveName()
+//    {
+//        return "Slashes";
+//    }
 
-public class Slashes : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Legendary;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
-    public override string GiveName()
-    {
-        return "Slashes";
-    }
+//    public override string GiveDescription()
+//    {
+//        return "Your heavy attacks now launch long-range slashes";
+//    }
 
-    public override string GiveDescription()
-    {
-        return "Your heavy attacks now launch long-range slashes";
-    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
 
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
+//    //public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+//    //{
+//    //    if (statType == StatType.None)
+//    //    {
+//    //        if (player.currentHealth < player.maxHealth)
+//    //        {
+//    //            player.currentHealth += 40;
+//    //            player.SetHealth();
+//    //        }
+//    //    }
+//    //}
 
-    //public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
-    //{
-    //    if (statType == StatType.None)
-    //    {
-    //        if (player.currentHealth < player.maxHealth)
-    //        {
-    //            player.currentHealth += 40;
-    //            player.SetHealth();
-    //        }
-    //    }
-    //}
+//}
 
-}
+//public class DoubleHit : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.DoubleHit;
+//    }
+//    public override string GiveName()
+//    {
+//        return "Double Hit Square";
+//    }
 
-public class DoubleHit : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.DoubleHit;
-    }
-    public override string GiveName()
-    {
-        return "Double Hit Square";
-    }
+//    public override string GiveDescription()
+//    {
+//        return "Your light attacks now hit twice.";
+//    }
 
-    public override string GiveDescription()
-    {
-        return "Your light attacks now hit twice.";
-    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
+//    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+//    {
+//        //if (statType == StatType.DoubleHit)
+//        //{
+//        //    for (int i = 0; i < player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks.Length; i++)
+//        //    {
+//        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
+//        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
+//        //    }
+//        //}
+//    }
+//}
 
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
-    {
-        //if (statType == StatType.DoubleHit)
-        //{
-        //    Debug.Log("added");
-        //    for (int i = 0; i < player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks.Length; i++)
-        //    {
-        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].repeticionGolpes = 1;
-        //        player.GetAttacks(PlayerInventory.ComboAtaques.Quadrat).attacks[i].delayRepeticionGolpes = 0.15f;
-        //    }
-        //}
-    }
-}
+//public class HealingItem : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+//    public override string GiveName()
+//    {
+//        return "Healing Item";
+//    }
+//    public override string GiveDescription()
+//    {
+//        return "Hello";
+//    }
 
-public class HealingItem : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
-    public override string GiveName()
-    {
-        return "Healing Item";
-    }
-    public override string GiveDescription()
-    {
-        return "Hello";
-    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
 
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-
-    public override void Update(PlayerControl player, int stacks)
-    {
-        //player.maxHealth += 3 + (2 * stacks);
-    }
-}
-
-
-public class FireDamage : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
-    public override string GiveName()
-    {
-        return "Fire Damage Item";
-    }
-
-    public override string GiveDescription()
-    {
-        return "Hello";
-    }
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-
-    public override void OnHit(PlayerControl player, int stacks)
-    {
-        //enemy.health -= 3 * stacks;
-    }
+//    public override void Update(PlayerControl player, int stacks)
+//    {
+//        //player.maxHealth += 3 + (2 * stacks);
+//    }
+//}
 
 
-    public int GetDamage(PlayerControl player, int stacks)
-    {
-        return -3 * stacks;
-    }
-}
+//public class FireDamage : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+//    public override string GiveName()
+//    {
+//        return "Fire Damage Item";
+//    }
 
-public class HealingArea : Item
-{
-    public override Enums.RarityType GetRarity()
-    {
-        return Enums.RarityType.Common;
-    }
-    public override StatType GetAssociatedStatType()
-    {
-        return StatType.None;
-    }
+//    public override string GiveDescription()
+//    {
+//        return "Hello";
+//    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
 
-    float internalCooldown;
-    GameObject effect;
-    public override string GiveName()
-    {
-        return "Healing Area";
-    }
-    public override string GiveDescription()
-    {
-        return "Hello";
-    }
-    public override Sprite GiveSprite()
-    {
-        return Resources.Load<Sprite>("Item Images/Gasoline");
-    }
-    public override void Update(PlayerControl player, int stacks)
-    {
-        internalCooldown -= 1;
-    }
-    public override void OnJump(PlayerControl player, int stacks)
-    {
-        if (internalCooldown <= 0)
-        {
-            if (effect == null) effect = (GameObject)Resources.Load("Item Effects/Something", typeof(GameObject));
+//    public override void OnHit(PlayerControl player, int stacks)
+//    {
+//        //enemy.health -= 3 * stacks;
+//    }
 
-            GameObject healingArea = GameObject.Instantiate(effect, player.transform.position + new Vector3(0f, 0.1f, 0f), Quaternion.Euler(Vector3.zero));
-            internalCooldown = 1f;
-        }
-    }
-}
+
+//    public int GetDamage(PlayerControl player, int stacks)
+//    {
+//        return -3 * stacks;
+//    }
+//}
+
+//public class HealingArea : Item
+//{
+//    public override Enums.RarityType GetRarity()
+//    {
+//        return Enums.RarityType.Common;
+//    }
+//    public override StatType GetAssociatedStatType()
+//    {
+//        return StatType.None;
+//    }
+
+//    float internalCooldown;
+//    GameObject effect;
+//    public override string GiveName()
+//    {
+//        return "Healing Area";
+//    }
+//    public override string GiveDescription()
+//    {
+//        return "Hello";
+//    }
+//    public override Sprite GiveSprite()
+//    {
+//        return Resources.Load<Sprite>("Item Images/Gasoline");
+//    }
+//    public override void Update(PlayerControl player, int stacks)
+//    {
+//        internalCooldown -= 1;
+//    }
+//    public override void OnJump(PlayerControl player, int stacks)
+//    {
+//        if (internalCooldown <= 0)
+//        {
+//            if (effect == null) effect = (GameObject)Resources.Load("Item Effects/Something", typeof(GameObject));
+
+//            GameObject healingArea = GameObject.Instantiate(effect, player.transform.position + new Vector3(0f, 0.1f, 0f), Quaternion.Euler(Vector3.zero));
+//            internalCooldown = 1f;
+//        }
+//    }
+//}
+#endregion

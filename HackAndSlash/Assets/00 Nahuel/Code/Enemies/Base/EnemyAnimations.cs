@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,18 +19,27 @@ public class EnemyAnimations : MonoBehaviour
         _events = transform.parent.GetComponent<EnemyEvents>();
         _anim = GetComponent<Animator>();
         _enemy = transform.parent.GetComponent<Enemy>();
-        _events.OnIdle += () => _anim.SetFloat("speed", 0);
+        _events.OnIdle += () =>
+        {
+            StartCoroutine(DecreaseSpeedOverTime(0f, .5f));
+        };
         _events.OnPatrolling += () => _anim.SetFloat("speed", 0.5f);
-        _events.OnAttacking += () => _anim.SetFloat("speed", 0);
-        _events.OnFollowing += () => _anim.SetFloat("speed", 1);
+        _events.OnAttacking += () =>
+        {
+            StartCoroutine(DecreaseSpeedOverTime(0f, .5f));
+        };
+        _events.OnFollowing += () =>
+        {
+            StartCoroutine(IncreaseOverTime(0f, 1f));
+        };
+        
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
-        //mats = new List<SkinnedMeshRenderer>(mats);
         if(mats.Count > 0)
         {
             foreach (var mat in mats)
             {
-                mat.material.SetFloat("_ShaderDisplacement", 1f);
+                mat.material.SetFloat("_ShaderDisplacement", 1.2f);
             }
         }
 
@@ -94,7 +104,37 @@ public class EnemyAnimations : MonoBehaviour
         }
         else
         {
-            Destroy(_enemy.gameObject);
+            _enemy.gameObject.SetActive(false);
         }
+    }
+
+    public IEnumerator DecreaseSpeedOverTime(float targetValue, float _duration)
+    {
+        float currentSpeedAnimation = _anim.GetFloat(Constants.ANIM_VAR_SPEED);
+        float elapsedTime = 0f;
+        float duration = _duration;
+
+        while (elapsedTime < duration)
+        {
+            float newAnimationSpeed = Mathf.Lerp(currentSpeedAnimation, targetValue, elapsedTime / duration);
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, newAnimationSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);
+    }
+
+    private IEnumerator IncreaseOverTime(float currentSpeed, float targetValue)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.3f;
+        while (elapsedTime < duration)
+        {
+            float newSpeedAnimation = Mathf.Lerp(currentSpeed, targetValue, elapsedTime / duration);
+            _anim.SetFloat(Constants.ANIM_VAR_SPEED, newSpeedAnimation);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        _anim.SetFloat(Constants.ANIM_VAR_SPEED, targetValue);
     }
 }

@@ -29,7 +29,6 @@ public class TutorialCombat : MonoBehaviour
     void Start()
     {
         eventActivable.SetActive(false);
-        GameManager.Instance.PauseGame();
         StartCoroutine(Speak(dialoguesIntro));
     }
 
@@ -38,29 +37,32 @@ public class TutorialCombat : MonoBehaviour
         if(ManagerEnemies.Instance.CurrentGlobalTime >= 62 && !hasReadedItems)
         {
             hasReadedItems = true;
-            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesItems));
         }
         else if(ManagerEnemies.Instance.CurrentGlobalTime >= 80 && !hasReadedEvents)
         {
             hasReadedEvents = true;
-            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesEvent));
             eventActivable.SetActive(true);
         }
         else if(eventActivable.activeSelf && !hasReadEndTutorial)
         {
-            if(eventActivable.GetComponent<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
+            if(FindObjectOfType<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
             {
                 hasReadEndTutorial = true;
                 ManagerEnemies.Instance.isInEvent = true;
-                GameManager.Instance.PauseGame();
                 StartCoroutine(Speak(endTutorial));
-                GameManager.Instance.isTutorialCompleted = true;
-                loadingGo.SetActive(true);
-                Invoke(nameof(NextScene), 1f);
+                Invoke(nameof(TutorialFinished), 4.5f);
             }
         }
+    }
+
+
+    private void TutorialFinished()
+    {
+        GameManager.Instance.isTutorialCompleted = true;
+        loadingGo.SetActive(true);
+        Invoke(nameof(NextScene), 1f);
     }
 
     private void NextScene()
@@ -70,7 +72,7 @@ public class TutorialCombat : MonoBehaviour
 
     IEnumerator Speak(string[] _dialogues)
     {
-        yield return new WaitForSecondsRealtime(.75f);
+        yield return new WaitForSecondsRealtime(.15f);
 
         for (int i = 0; i < _dialogues.Length; i++)
         {
@@ -78,7 +80,6 @@ public class TutorialCombat : MonoBehaviour
             yield return new WaitUntil(() => voice.playing == false);
             yield return new WaitForSecondsRealtime(0.8f);
         }
-        GameManager.Instance.PauseGame();
     }
 
 }

@@ -8,6 +8,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     private PlayerControl _player;
     public float maxHealth;
     private float _currentHealth;
+    private float _timer = 0f;
     public float CurrentHealth
     {
         get { return _currentHealth; }
@@ -21,6 +22,19 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         maxHealth = _player.stats.maxHealth;
         _currentHealth = maxHealth;
     }
+
+    private void Update()
+    {
+        if(_player.healthRegen > 0)
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= _player.timeToHeal)
+            {
+                Heal(_player.healthRegen);
+                _timer = 0f;
+            }
+        }
+    }
     public void AirDamageable()
     {
         throw new System.NotImplementedException();
@@ -28,9 +42,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        _currentHealth -= amount;
+        _currentHealth += amount;
 
-        if(_currentHealth >= maxHealth)
+        _player.healPixel.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), amount);
+
+        if (_currentHealth >= maxHealth)
         {
             _currentHealth = maxHealth;
         }

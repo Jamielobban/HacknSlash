@@ -7,6 +7,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
     protected float _currentHealth;
     public CharacterStat baseMaxHealth = new CharacterStat();
     public float currentMaxHealth;
+    public DamageNumber normalPrefab;
     public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
 
     private PlayerControl _player;
@@ -50,6 +51,11 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
     //  bool isCrit, Vector3 collisionPoint
     public virtual void TakeDamage(PlayerControl.HitState state,float damage)
     {
+        if(_enemy.isDead)
+        {
+            return;
+        }
+
         _currentHealth -= damage;
         if(_enemy.hitsEffects.Count != 0)
         {
@@ -74,17 +80,17 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
             _enemy.events.Hit();
         }
 
-       // DamageEffects(damage, isCrit, collisionPoint);
+        DamageEffects(damage);
         if(_currentHealth <= 0)
         {
             _enemy.events.Die();
         }
     }
-    private void DamageEffects(float dmg, bool critical, Vector3 collisionPoint)
+    private void DamageEffects(float dmg)
     {
         //*** Text Effects ***//
 
-      //  DamageNumber damageNumber = critical ? critPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg) : normalPrefab.Spawn(collisionPoint + new Vector3(0f, 1.5f, 0f), (int)dmg);
+        normalPrefab.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)dmg);
 
         //*** Particle Effects ***//
 

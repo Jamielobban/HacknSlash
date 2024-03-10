@@ -12,7 +12,7 @@ public class DynamicGridNavigation : MonoBehaviour
     private int currentIndex;
     private GameObject lastSelectedObject; // Added to store the last selected object
     ControllerManager controllerMan;
-    public TMP_Text ITEMdESC;
+    public TextMeshProUGUI itemDescription;
     public PlayerControl playerControl;
     public Image itemHighlight;
 
@@ -81,7 +81,7 @@ public class DynamicGridNavigation : MonoBehaviour
         string itemName = gridElements[currentIndex].name;
         string formattedName = itemName.Substring(3).Replace("Panel", "").Trim();
 
-      //  ITEMdESC.text = playerControl.GetItemDescription(formattedName);                                
+        itemDescription.text = playerControl.GetItemDescription(formattedName);                                
         itemHighlight.transform.position = gridElements[currentIndex].gameObject.transform.position;
     }
 

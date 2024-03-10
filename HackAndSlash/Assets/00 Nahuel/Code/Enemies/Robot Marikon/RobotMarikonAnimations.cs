@@ -22,7 +22,7 @@ public class RobotMarikonAnimations : EnemyAnimations
             {
                 mat.material.SetFloat("_ShaderDisplacement", _currentTime);
             }
-            if(_currentTime <= -0.2f)
+            if(_currentTime <= 0.1f)
             {
                 Destroy(transform.parent.gameObject);
             }

@@ -37,18 +37,21 @@ public class GetEnemies : MonoBehaviour
     {
         //Clear Nulls & far enemies
         UtilsNagu.RemoveAllNulls(ref enemies);
+        UtilsNagu.RemoveAllInactive(ref enemies);
         RemoveByDistance();
 
         Vector3 position =  Vector3.zero;
         float distance = 100;
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (Vector3.Distance(enemies[i].transform.position,pos) < distance)
+            if(enemies[i] != null)
             {
-                distance = Vector3.Distance(enemies[i].transform.position, pos);
-                position = new Vector3(enemies[i].transform.position.x, pos.y, enemies[i].transform.position.z);
+                if (Vector3.Distance(enemies[i].transform.position, pos) < distance)
+                {
+                    distance = Vector3.Distance(enemies[i].transform.position, pos);
+                    position = new Vector3(enemies[i].transform.position.x, pos.y, enemies[i].transform.position.z);
+                }
             }
-
         }
 
         return position;
@@ -124,14 +127,15 @@ public class GetEnemies : MonoBehaviour
 
     public void RemoveByDistance()
     { 
-
         List<GameObject> enemiesToRemove = new List<GameObject>();
         foreach (var enemy in enemies)
         {
-            if(Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position) > 6)
+            if(enemy != null)
             {
-                enemiesToRemove.Add(enemy);
-
+                if (Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position) > 15)
+                {
+                    enemiesToRemove.Add(enemy);
+                }
             }
         }
         foreach (var enemyToRemove in enemiesToRemove)
@@ -143,14 +147,25 @@ public class GetEnemies : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            if(!enemies.Contains(other.gameObject))
+            if (!enemies.Contains(other.gameObject))
             {
                 enemies.Add(other.gameObject);
             }
         }
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //        if (!enemies.Contains(other.gameObject))
+    //        {
+    //            enemies.Add(other.gameObject);
+    //        }
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {

@@ -17,9 +17,9 @@ public abstract class EventMap : Interactive, IInteractable
 
         GetComponent<Collider>().enabled = false;
         StartEvent();
-
         objectiveMarker.SetActive(false);
         canInteract = false;
+        FindObjectOfType<PlayerCollision>().canInteract = false;
     }
     protected virtual void Start()
     {

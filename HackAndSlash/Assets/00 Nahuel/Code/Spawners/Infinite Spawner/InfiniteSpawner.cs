@@ -100,6 +100,7 @@ public class InfiniteSpawner : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
+            enemy.movements.target = GameManager.Instance.Player.transform;
             enemy.spawner = this.gameObject;
             AddEnemy(enemy);
             NavMeshHit hit;

@@ -118,6 +118,7 @@ Shader "AmplifyShader/GoodUIIconTrail"
 			uniform float _TrailNumber;
 			uniform sampler2D _RotatingTexture;
 			uniform float _TimeSpeed;
+			uniform float _UnscaledTime;
 			uniform float _TrailLengthFalloff;
 			uniform float _GlobalAlphaIntensity;
 			uniform float _GlobalAlphaFalloff;
@@ -147,7 +148,7 @@ Shader "AmplifyShader/GoodUIIconTrail"
 				float3 appendResult139 = (float3(_ColorOverlay.r , _ColorOverlay.g , _ColorOverlay.b));
 				float2 uv0127 = IN.texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 uv0123 = IN.texcoord.xy * float2( 1.5,1.5 ) + float2( 0,0 );
-				float2 panner122 = ( 1.0 * _Time.y * float2( 0.1,0.1 ) + uv0123);
+				float2 panner122 = ( 1.0 * _UnscaledTime * float2( 0.1,0.1 ) + uv0123);
 				float lerpResult162 = lerp( -0.25 , 0.15 , tex2D( _T_CloudNoise, panner122 ).r);
 				float2 appendResult125 = (float2(lerpResult162 , lerpResult162));
 				#ifdef _USEDISTORTION_ON
@@ -165,7 +166,7 @@ Shader "AmplifyShader/GoodUIIconTrail"
 				#else
 				float4 staticSwitch21 = float4( uv016, 0.0 , 0.0 );
 				#endif
-				float mulTime57 = _Time.y * ( _TimeSpeed * 3.0 );
+				float mulTime57 = _UnscaledTime * ( _TimeSpeed * 3.0 );
 				float cos13 = cos( mulTime57 );
 				float sin13 = sin( mulTime57 );
 				float2 rotator13 = mul( staticSwitch21.xy - float2( 0.5,0.5 ) , float2x2( cos13 , -sin13 , sin13 , cos13 )) + float2( 0.5,0.5 );

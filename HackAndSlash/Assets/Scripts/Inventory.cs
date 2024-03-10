@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.Rendering;
 
 public class Inventory : MonoBehaviour
 {
-
-
     [SerializeReference] public List<ItemSlotInfo> items = new List<ItemSlotInfo>();
 
     [Space]
@@ -22,24 +17,18 @@ public class Inventory : MonoBehaviour
     [Space]
     public int inventorySize = 14;
 
-    //public PlayerStats playerStats;
-    //public GameObject backdrop;
     public GameObject itemDescription;
     ControllerManager controller;
-    // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindAnyObjectByType<ControllerManager>();
+        controller = FindAnyObjectByType<ControllerManager>();
 
         for (int i = 0; i < inventorySize; i++)
         {
             items.Add(new ItemSlotInfo(null, 0));
         }
-        //AddItem(new HealingItem(), 15);
-        //AddItem(new FireDamage(), 15);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (controller.GetTabButton().action != null)

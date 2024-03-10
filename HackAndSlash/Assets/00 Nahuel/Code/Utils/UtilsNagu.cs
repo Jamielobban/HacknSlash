@@ -60,18 +60,22 @@ public static class UtilsNagu
         return areListsEqual;
     }
 
-
-    public static void RemoveAllNulls<T>(ref List<T> list)
+    public static void RemoveAllNulls<T>(ref List<T> list) where T : class
     {
-        List<T> withoutNulls = new List<T>();
-        foreach (T item in list)
+        list.RemoveAll(item => item == null);
+    }
+
+    public static void  RemoveAllInactive (ref List<GameObject> list)
+    {
+        List<GameObject> withoutInactive = new List<GameObject>();
+        foreach (GameObject item in list)
         {
-            if(item != null)
+            if (item.activeSelf && item != null)
             {
-                withoutNulls.Add(item);
+                withoutInactive.Add(item);
             }
         }
-        list = withoutNulls;
+        list = withoutInactive;
     }
 
     public static T RandomWeightedElement<T>(this IEnumerable<T> collection) where T : EnemyProbability

@@ -7,7 +7,6 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using DamageNumbersPro;
-using JetBrains.Rider.Unity.Editor;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -207,6 +206,7 @@ public class PlayerControl : MonoBehaviour
     public float critChance;
     public float attackDamage;
     public float healthRegen;
+    public float timeToHeal;
     public float critDamageMultiplier;
     public Rigidbody rb;
 
@@ -217,6 +217,7 @@ public class PlayerControl : MonoBehaviour
         critChance = stats.critChance;
         attackDamage = stats.attackDamage;
         healthRegen = stats.healthRegen;
+        timeToHeal = stats.timeToHeal;
         critDamageMultiplier = stats.critDamageMultiplier;
         OnAir = false;
         hud = GetComponent<PlayerHUDSystem>();

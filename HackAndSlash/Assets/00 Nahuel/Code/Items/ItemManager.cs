@@ -23,18 +23,16 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    //public List<GameObject> itemPool = new List<GameObject>();
-    //public int test;
     public List<GameObject> itemPool = new List<GameObject>();
 
     public List<Item> itemList = new List<Item>();
+
     private void Awake()
     {
         // Singleton pattern to ensure only one instance exists
         if (_instance == null)
         {
             _instance = this;
-            //DontDestroyOnLoad(ItemTooltip);
         }
         // Initialize other manager-specific setup here
         AddItemsToList();
@@ -114,12 +112,13 @@ public class ItemManager : MonoBehaviour
 
     public void AddItemsToList()
     {
-        //itemList.Add(new CritItem());
-        //itemList.Add(new CritDamageItem());
+        itemList.Add(new CritItem());
+        itemList.Add(new CritDamageItem());
         itemList.Add(new AttackDamge());
-        itemList.Add(new Meat());
-        //itemList.Add(new BoosterShot());
-        //itemList.Add(new MonsterTooth());
+        itemList.Add(new MaxHealthItem());
+        itemList.Add(new RecoveryFlower());
+        itemList.Add(new RegenerationItem());
+        itemList.Add(new MonsterTooth());
         //itemList.Add(new Slashes());
         //itemList.Add(new DoubleHit());
         //

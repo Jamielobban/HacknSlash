@@ -11,14 +11,14 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Interactable")
+        if (other.gameObject.tag == "Interactable")
         {
-            if(other.GetComponent<Interactive>())
+            if (other.GetComponent<Interactive>())
             {
                 canInteract = true;
                 other.GetComponent<Interactive>().ShowObjectInRange();
             }
-            if(!_touchingInteractables.Contains(other.gameObject))
+            if (!_touchingInteractables.Contains(other.gameObject))
             {
                 _touchingInteractables.Add(other.gameObject);
             }

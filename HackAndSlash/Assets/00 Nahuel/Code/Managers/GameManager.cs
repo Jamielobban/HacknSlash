@@ -4,142 +4,143 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
-{
-    private static GameManager _instance;
-    public static GameManager Instance
+    public class GameManager : MonoBehaviour
     {
-        get
+        private static GameManager _instance;
+        public static GameManager Instance
         {
-            if(_instance == null)
+            get
             {
-                GameObject go = new GameObject("Game Manager");
-                go.AddComponent<GameManager>();
-                DontDestroyOnLoad(go);
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("Game Manager");
+                    go.AddComponent<GameManager>();
+                    DontDestroyOnLoad(go);
+                }
+                return _instance;
             }
-            return _instance;
+
         }
 
-    }
+        public Enums.GameState state;
 
-    public Enums.GameState state;
+        private bool _isPaused;
+        private PlayerControl _player;
+        public PlayerControl Player => _player;
+        public bool IsPaused => _isPaused;
 
-    private bool _isPaused;
-    private PlayerControl _player;
-    public PlayerControl Player => _player;
-    public bool IsPaused => _isPaused;
+        public bool isTutorialCompleted = false;
 
-    public bool isTutorialCompleted = false;
+        public bool isInMenu = false;
 
-    public bool isInMenu = false;
-
-    private void Awake()
-    {
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        _player = FindObjectOfType<PlayerControl>();
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void Init()
-    {
-        UpdateState(Enums.GameState.Menu);
-    }
-
-    public void LoadLevel(string _name, Image _progress)
-    {
-        StartCoroutine(LoadSceneAsync(_name, _progress));
-    }
-
-    private IEnumerator LoadSceneAsync(string levelName, Image _progresionBar)
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync(levelName);
-        async.allowSceneActivation = false;
-        while(!async.isDone)
+        private void Awake()
         {
-            float progress = Mathf.Clamp01(async.progress / .9f);
-            _progresionBar.fillAmount = progress;
-            if(progress >= 0.9f)
-            {
-                _progresionBar.fillAmount = 1;
-                async.allowSceneActivation = true;
-            }
-            yield return null;
-        }
-        yield return new WaitForSeconds(0.15f);
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
 
-        UpdateState(Enums.GameState.Playing);
-        if(_player == null)
-        {
             _player = FindObjectOfType<PlayerControl>();
         }
-        //MainMenu.Hide();
-    }
 
-    public void UpdateState(Enums.GameState newState)
-    {
-        if(state == newState)
+        void Update()
         {
-            return;
+
         }
 
-        state = newState;
-
-        switch (state)
+        public void Init()
         {
-            case Enums.GameState.Menu:
-                MainMenu.Show();
-                break;
-            case Enums.GameState.StartPlaying:
-                break;
-            case Enums.GameState.Playing:
-                break;
-            case Enums.GameState.Pause:
-                PauseMenu.Show();
-                break;
-            case Enums.GameState.ReturningMenu:
-                MainMenu.Show();
-                break;
-            case Enums.GameState.Exit:
-                Application.Quit();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            UpdateState(Enums.GameState.Menu);
         }
-    }
-    private bool GuardPlayer() => _player != null ? true : false;
 
-    public void PauseGame()
-    {
-        if(!isInMenu)
+        public void LoadLevel(string _name, Image _progress)
         {
-            _isPaused = !_isPaused;
-            Time.timeScale = _isPaused ? 0 : 1;
+            StartCoroutine(LoadSceneAsync(_name, _progress));
         }
+
+        private IEnumerator LoadSceneAsync(string levelName, Image _progresionBar)
+        {
+            AsyncOperation async = SceneManager.LoadSceneAsync(levelName);
+            async.allowSceneActivation = false;
+            while (!async.isDone)
+            {
+                float progress = Mathf.Clamp01(async.progress / .9f);
+                _progresionBar.fillAmount = progress;
+                if (progress >= 0.9f)
+                {
+                    _progresionBar.fillAmount = 1;
+                    async.allowSceneActivation = true;
+                }
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.15f);
+
+            UpdateState(Enums.GameState.Playing);
+            if (_player == null)
+            {
+                _player = FindObjectOfType<PlayerControl>();
+            }
+            //MainMenu.Hide();
+        }
+
+        public void UpdateState(Enums.GameState newState)
+        {
+            if (state == newState)
+            {
+                return;
+            }
+
+            state = newState;
+
+            switch (state)
+            {
+                case Enums.GameState.Menu:
+                    MainMenu.Show();
+                    break;
+                case Enums.GameState.StartPlaying:
+                    break;
+                case Enums.GameState.Playing:
+                    break;
+                case Enums.GameState.Pause:
+                    PauseMenu.Show();
+                    break;
+                case Enums.GameState.ReturningMenu:
+                    MainMenu.Show();
+                    break;
+                case Enums.GameState.Exit:
+                    Application.Quit();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+        private bool GuardPlayer() => _player != null ? true : false;
+
+        public void PauseGame()
+        {
+            if (!isInMenu)
+            {
+                _isPaused = !_isPaused;
+                Time.timeScale = _isPaused ? 0 : 1;
+            }
+        }
+
+        public void PauseMenuGame()
+        {
+            isInMenu = true;
+            _isPaused = true;
+            Time.timeScale = 0;
+        }
+
+        public void UnPauseMenuGame()
+        {
+            isInMenu = false;
+            _isPaused = false;
+            Time.timeScale = 1;
+        }
+
+        public void SetPauseVariable(bool pause)
+        {
+            _isPaused = pause;
+        }
+
     }
 
-    public void PauseMenuGame()
-    {
-        isInMenu = true;
-        _isPaused = true;
-        Time.timeScale = 0;
-    }
-
-    public void UnPauseMenuGame()
-    {
-        isInMenu = false;
-        _isPaused = false;
-        Time.timeScale = 1;
-    }
-
-    public void SetPauseVariable(bool pause)
-    {
-        _isPaused = pause;
-    }
-
-}
