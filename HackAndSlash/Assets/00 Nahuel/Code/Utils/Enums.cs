@@ -98,7 +98,10 @@ public class Enums
         Negativo,
         Positivo,
         WolfAttack,
-        ChestOpen
+        ChestOpen,
+        MonsterSpeak1,MonsterSpeak2,
+        AlienSound1,AlienSound2,AlienSound3,
+        SpiderSound1, SpiderSound2, SpiderSound3, SpiderSound4, SpiderSound5, SpiderSound6, SpiderSound7, SpiderSound8, SpiderSound9, SpiderSound10, SpiderSound11, SpiderSound12
     };
 
     public enum MusicEffects
