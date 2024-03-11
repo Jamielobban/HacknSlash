@@ -15,6 +15,8 @@ public class Enemy : PoolableObject
     public EnemyAttackHolder attackHolder { get; private set; }
     public EnemyHealthSystem healthSystem { get; private set; }
 
+    public EnemySounds sound; 
+
     #endregion
     public PlayerControl _player { get; private set; }
     public IState currentState;
@@ -52,7 +54,7 @@ public class Enemy : PoolableObject
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
         events.OnHit += () => { SetState(gameObject.AddComponent<HitState>()); };
-        events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; };
+        events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; sound.PlaySoundDead(); };
 
         ResetEnemy();
     }

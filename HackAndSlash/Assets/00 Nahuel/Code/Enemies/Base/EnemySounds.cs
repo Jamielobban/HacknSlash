@@ -8,6 +8,8 @@ public class EnemySounds : MonoBehaviour
 {
     public List<AudioClip> randomSoundsAround= new List<AudioClip>();
     public AudioSource randomSound;
+    public List<AudioClip> randomDeadSounds = new List<AudioClip>();
+    public AudioSource deadSound3D;
     private float _timer = 0f;
     public float timeToRandomSound = 4f;
 
@@ -16,7 +18,10 @@ public class EnemySounds : MonoBehaviour
     {
         
     }
-
+    public void PlaySoundDead() 
+    {
+        deadSound3D.PlayOneShot(randomDeadSounds[Random.Range(0, randomDeadSounds.Count)]);
+    }
     
     void Update()
     {
