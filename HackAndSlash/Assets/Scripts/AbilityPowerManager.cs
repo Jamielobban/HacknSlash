@@ -164,6 +164,7 @@ public class AbilityPowerManager : MonoBehaviour
     private void ChooseItem(Item chosenItem)
     {
         // Add the chosen item to the player's inventory and perform any other actions
+        //PlaySound select item
         AddItemHere(player, chosenItem);
         inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GiveName()));
         inventory.RefreshInventory();
@@ -197,6 +198,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        //Open menu play sound
         levelUpEffects.SetActive(true);
 
         itemChoice.SetActive(true);
