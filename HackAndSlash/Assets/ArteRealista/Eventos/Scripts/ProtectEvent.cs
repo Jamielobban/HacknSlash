@@ -16,13 +16,14 @@ public class ProtectEvent : EventMap
         enemiesSpawner = spawnerParent.GetComponentsInChildren<SpawnerBase>(true).ToList();
         foreach (Transform t in targetsToProtect)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.canvas.SetActive(false));
+            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
         }
     }
     protected override void Update()
     {
         base.Update();
-        RetargetSpawnedEnemies();
+        if(CurrentEventState == Enums.EventState.PLAYING)
+            RetargetSpawnedEnemies();
         CheckEventState();
     }
     protected override void StartEvent()
@@ -32,7 +33,7 @@ public class ProtectEvent : EventMap
         enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.canvas.SetActive(true));
+            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
         }
     }
     protected override void NextRound()
@@ -47,7 +48,21 @@ public class ProtectEvent : EventMap
         base.FinishEvent();
         foreach (Transform t in targetsToProtect)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.canvas.SetActive(false));
+            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
+        }
+    }
+    protected override void RestartEvent()
+    {
+        base.RestartEvent();
+        RetargetSpawnedEnemies(false);
+        foreach (Transform t in targetsToProtect)
+        {
+            List<DamageableObject> damageables = GetComponentsInChildren<DamageableObject>().ToList();
+            foreach (DamageableObject dam in damageables)
+            {
+                dam.gameObject.SetActive(false);
+                dam.MaxHeal();
+            }
         }
     }
     void CheckEventState()
@@ -59,13 +74,28 @@ public class ProtectEvent : EventMap
             else
                 NextRound();
         }
+        else
+        {
+            foreach (Transform t in targetsToProtect)
+            {
+                List<DamageableObject> damageables = GetComponentsInChildren<DamageableObject>().ToList();
+                foreach (DamageableObject dam in damageables)
+                {
+                    if (dam.IsDead)
+                    {
+                        RestartEvent();
+                        break;
+                    }
+                }
+            }
+        }
     }
     bool AllEnemiesDefeated()
     {
         return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
     }
 
-    void RetargetSpawnedEnemies()
+    void RetargetSpawnedEnemies(bool toPillar = true)
     {
         foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
         {
@@ -75,17 +105,28 @@ public class ProtectEvent : EventMap
             e.movements.useMovementPrediction = false;
 
             bool isCorrected = false;
-            foreach(Transform t in targetsToProtect)
-            {
-                if(e.movements.target == t)
-                {
-                    isCorrected = true;
-                    break;
-                }
-            }
 
-            if(!isCorrected)
-                e.movements.target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
+            if (toPillar)
+            {
+                foreach (Transform t in targetsToProtect)
+                {
+                    if (e.movements.target == t)
+                    {
+                        isCorrected = true;
+                        break;
+                    }
+                }
+
+                if (!isCorrected)
+                    e.movements.target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
+            }
+            else
+            {
+                if (e.movements.target != GameManager.Instance.Player.transform)
+                    e.movements.target = GameManager.Instance.Player.transform;
+
+            }
+            
         }
     }    
 }

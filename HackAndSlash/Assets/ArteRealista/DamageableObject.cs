@@ -32,8 +32,14 @@ public class DamageableObject : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        throw new System.NotImplementedException();
+        currentHealth += amount;
+        if(currentHealth > maxHealth)
+            currentHealth = maxHealth;
     }
+
+    public void MaxHeal() => currentHealth = maxHealth;
+
+    public bool IsDead => currentHealth <= 0;
 
     public void AirDamageable()
     {

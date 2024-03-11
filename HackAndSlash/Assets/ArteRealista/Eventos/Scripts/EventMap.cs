@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
+using TMPro;
 
 public abstract class EventMap : Interactive, IInteractable
 {
@@ -9,11 +11,16 @@ public abstract class EventMap : Interactive, IInteractable
     [SerializeField] List<MeshRenderer> renderers;
     [SerializeField] List<Material> normalMats;
     [SerializeField] List<Material> triggerMats;
+    [SerializeField] Transform timers;
     [SerializeField] protected ForceFieldController forceField;
+    [SerializeField] protected float timeToActivate, timeToRestart;
+    bool scaling = false;
+    List<TextMeshProUGUI> timersText;
+    protected float timer = 0;
     protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
     protected Enums.EventState _currentEventState;
-    public Enums.EventState CurrentEventState => _currentEventState;
     protected int currentRound = 0;
+    public Enums.EventState CurrentEventState => _currentEventState;
     public void Interact()
     {
         if (!canInteract) return;
@@ -26,12 +33,54 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void Start()
     {
+        timer += timeToActivate;
         forceField.SetSpeed(0f);
         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
         _currentEventState = Enums.EventState.INACTIVE;
+        timersText = timers.GetComponentsInChildren<TextMeshProUGUI>().ToList();
     }
 
-    protected virtual void Update() { }
+    protected virtual void Update() 
+    { 
+        HandleTimer();
+    }
+
+    void HandleTimer()
+    {
+        if(timer <= 0)
+        {            
+            if (timers.localScale.x > 0 && !scaling) 
+            {
+                timers.DOScale(0, 0.5f);
+                scaling = true;
+                Invoke(nameof(StopScale), 0.5f);
+            }
+            
+        }
+        else
+        {
+            if (timers.localScale.x <= 0 && !scaling)
+            {
+                timers.DOScale(1, 0.5f);
+                scaling = true;
+                Invoke(nameof(StopScale), 0.5f);
+            }
+            
+            timer -= Time.deltaTime;
+
+            if(timer < 0)
+                timer = 0;
+
+            string minutos = ((int)(timer / 60)).ToString();
+            string segundos = ((int)(timer%60)).ToString();
+            foreach (TextMeshProUGUI tmp in timersText)
+                tmp.text = minutos + " : " + segundos;
+        }        
+
+        canInteract = _currentEventState == Enums.EventState.INACTIVE && timer <= 0;
+    }
+
+    void StopScale() { scaling = false; }
 
     public override void ShowObjectInRange()
     {
@@ -62,6 +111,19 @@ public abstract class EventMap : Interactive, IInteractable
     protected virtual void NextRound()
     {
         currentRound++;
+    }
+    protected virtual void RestartEvent()
+    {
+        timer += timeToRestart;
+        objectiveMarker.SetActive(true);
+        ManagerEnemies.Instance.EndEvent();
+        //FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted(); TODO: Show event failed
+        forceField.SetSpeed(-0.2f);
+        foreach (BoxCollider col in tangentColliders)
+        {
+            col.isTrigger = true;
+        }
+        _currentEventState = Enums.EventState.INACTIVE;
     }
     protected virtual void FinishEvent()
     {
