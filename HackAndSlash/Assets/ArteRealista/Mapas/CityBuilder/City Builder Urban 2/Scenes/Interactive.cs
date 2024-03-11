@@ -9,12 +9,12 @@ public abstract class Interactive : MonoBehaviour
     [SerializeField] Material triggerMat, normalMat;
     protected bool canInteract = true;
 
-    public void ShowObjectInRange()
+    public virtual void ShowObjectInRange()
     {
         GetComponentInChildren<Renderer>().material = triggerMat;
     }
 
-    public void HideObjectInRange()
+    public virtual void HideObjectInRange()
     {
         GetComponentInChildren<Renderer>().material = normalMat;
     }
