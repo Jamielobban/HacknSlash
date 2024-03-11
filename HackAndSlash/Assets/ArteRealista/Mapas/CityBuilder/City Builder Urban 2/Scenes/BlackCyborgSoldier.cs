@@ -123,7 +123,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             () => {
                 canInteract = false;
                 currentText++;
-                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
+                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 1), 1.5f, (color) =>
                 {
                     parentImage.color = color;
                 }).SetEase(Ease.Linear);
@@ -136,7 +136,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             () => {
                 canInteract = false;
                 currentText++;
-                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 0.38f), 1.5f, (color) =>
+                DOVirtual.Color(parentImage.color, new Color(1, 1, 1, 1f), 1.5f, (color) =>
                 {
                     parentImage.color = color;
                 }).SetEase(Ease.Linear);
