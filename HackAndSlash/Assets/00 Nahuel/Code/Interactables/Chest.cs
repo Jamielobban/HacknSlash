@@ -7,8 +7,10 @@ public class Chest : MonoBehaviour, IInteractable
     public bool canBeUnlocked = false;
     public GameObject particleSystem;
 
+    
     private void Awake()
     {
+        
         _anim = GetComponent<Animator>();
         _collider = GetComponent<Collider>();
         _collider.enabled = false;
@@ -19,13 +21,18 @@ public class Chest : MonoBehaviour, IInteractable
         if(canBeUnlocked)
         {
             _anim.SetBool("openChest", true);
+            
             canBeUnlocked = false;
         }
     }
-
-    public void Interact()
+    public void PlayChestSound() 
     {
         AudioManager.Instance.PlayFx(Enums.Effects.ChestOpen);
+
+    }
+    public void Interact()
+    {
+        
         GetItem();
         _collider.enabled = false;
     }

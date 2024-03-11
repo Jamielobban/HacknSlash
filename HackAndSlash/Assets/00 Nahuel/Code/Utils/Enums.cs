@@ -104,6 +104,7 @@ public class Enums
         AlienSound1,AlienSound2,AlienSound3,
         SpiderSound1, SpiderSound2, SpiderSound3, SpiderSound4, SpiderSound5, SpiderSound6, SpiderSound7, SpiderSound8, SpiderSound9, SpiderSound10, SpiderSound11, SpiderSound12,
         MonsterSpeak3,MonsterSpeak4, MonsterSpeak5, MonsterSpeak6, MonsterSpeak7, MonsterSpeak8, MonsterSpeak9,MonsterSpeak10,MonsterSpeak11,MonsterSpeak12,
+        DeadWolf1,DeadWolf2,
 
     };
 

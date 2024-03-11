@@ -31,7 +31,7 @@ public class AttackCollider : MonoBehaviour
 
     float CalculateDamage(Transform enemyPos)
     {
-        if(targets.Contains(enemyPos.gameObject))
+j        if(targets.Contains(enemyPos.gameObject))
         {
             return 0;
         }
