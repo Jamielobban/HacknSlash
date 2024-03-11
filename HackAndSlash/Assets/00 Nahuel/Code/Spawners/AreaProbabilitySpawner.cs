@@ -15,7 +15,7 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
     protected override void Start()
     {
         base.Start();
-        _spawnCoroutine = StartCoroutine(SpawnEnemies());
+        //_spawnCoroutine = StartCoroutine(SpawnEnemies());
     }
         
 
@@ -27,6 +27,13 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
         //    _spawnCoroutine = StartCoroutine(SpawnEnemies());
         //}
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _spawnCoroutine = StartCoroutine(SpawnEnemies());
+    }
+
     protected override void OnDisable()
     {
         _spawnCoroutine = null;

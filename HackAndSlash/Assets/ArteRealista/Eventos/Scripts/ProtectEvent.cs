@@ -7,8 +7,7 @@ public class ProtectEvent : EventMap
 {
     [SerializeField] GameObject spawnerParent;
     [SerializeField] List<Transform> targetsToProtect;    
-    List<SpawnerBase> enemiesSpawner;
-    
+    List<SpawnerBase> enemiesSpawner;    
 
     protected override void Start()
     {
@@ -28,7 +27,6 @@ public class ProtectEvent : EventMap
     }
     protected override void StartEvent()
     {
-
         base.StartEvent();
         enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
@@ -46,6 +44,13 @@ public class ProtectEvent : EventMap
     {
         enemiesSpawner[currentRound].gameObject.SetActive(false);
         base.FinishEvent();
+
+        foreach (SpawnerBase spawner in enemiesSpawner)
+        {
+            spawner.gameObject.SetActive(false);
+            spawner.allEnemiesSpawned = false;
+        }
+
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
@@ -54,6 +59,16 @@ public class ProtectEvent : EventMap
     protected override void RestartEvent()
     {
         base.RestartEvent();
+
+        currentRound = 0;
+
+        foreach (SpawnerBase spawner in enemiesSpawner)
+        {
+            spawner.allEnemiesSpawned = false;
+            spawner.gameObject.SetActive(false);
+            spawner.enemiesFromThisSpawner.Clear();
+        }
+
         RetargetSpawnedEnemies(false);
         foreach (Transform t in targetsToProtect)
         {
@@ -92,7 +107,7 @@ public class ProtectEvent : EventMap
     }
     bool AllEnemiesDefeated()
     {
-        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
+        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0 && enemiesSpawner[currentRound].allEnemiesSpawned;
     }
 
     void RetargetSpawnedEnemies(bool toPillar = true)

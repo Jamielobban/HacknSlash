@@ -92,7 +92,7 @@ public class EnemyAnimations : MonoBehaviour
         _currentTime = 1.2f;
         if (_enemy.isPooleable)
         {
-            if(_enemy.spawner.GetComponent<SpawnerBase>())
+            if(_enemy.spawner?.GetComponent<SpawnerBase>())
             {
                 _enemy.spawner?.GetComponent<SpawnerBase>()?.RemoveEnemy(_enemy);
             }

@@ -114,6 +114,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void RestartEvent()
     {
+        GetComponent<Collider>().enabled = true;
         timer += timeToRestart;
         objectiveMarker.SetActive(true);
         ManagerEnemies.Instance.EndEvent();

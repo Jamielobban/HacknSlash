@@ -35,7 +35,7 @@ public class SpawnerBase : MonoBehaviour
     protected Coroutine _spawnCoroutine; // !! Can only be called once !! //
     protected NavMeshTriangulation _triangulation;
     public List<Enemy> enemiesFromThisSpawner = new List<Enemy>();
-
+    public bool allEnemiesSpawned = false;
     protected ManagerEnemies _managerEnemies;
 
     protected virtual void Awake()
@@ -73,7 +73,8 @@ public class SpawnerBase : MonoBehaviour
             _spawnedEnemies++;
             yield return wait;
         }
-        if(_isBurstSpawner)
+        allEnemiesSpawned = true;
+        if (_isBurstSpawner)
         {
             Destroy(gameObject);
         }
