@@ -30,14 +30,13 @@ public class AbilityPowerManager : MonoBehaviour
     }
     private ItemManager _itemManager;
     public GameObject itemChoice;
-    private Animator itemChoiceAnim;
     private Inventory inventory;
-    private Item item1;
-    private Item item2;
     private PlayerControl player;
-    private ControllerManager controllerManager;
     public GameObject levelUpEffects;
 
+    private Item item1;
+    private Item item2;
+    private Item item3;
 
     private Dictionary<Enums.RarityType, Color> rarityColorMap;
     public bool menuActive = false;
@@ -45,6 +44,7 @@ public class AbilityPowerManager : MonoBehaviour
     [Space(15)]
     public Button option1Button;
     public Button option2Button;
+    public Button option3Button;
 
     [Header("Item 1")]
     [Space(15)]
@@ -59,8 +59,14 @@ public class AbilityPowerManager : MonoBehaviour
     public TMP_Text item2Name;
     public TMP_Text item2Description;
 
+    [Header("Item 2")]
+    [Space(15)]
+    public Image item3Image;
+    public TMP_Text item3Name;
+    public TMP_Text item3Description;
+
     public List<GameObject> itemRarityEffect = new List<GameObject>();
-    private GameObject currentButton1Rarity = null, currentButton2Rarity = null;
+    private GameObject currentButton1Rarity = null, currentButton2Rarity = null, currentButton3Rarity;
 
     public bool isOpen;
     private void Awake()
@@ -78,12 +84,11 @@ public class AbilityPowerManager : MonoBehaviour
         _itemManager = GetComponent<ItemManager>();
         player = FindObjectOfType<PlayerControl>();
         inventory = FindObjectOfType<Inventory>();
-        controllerManager = FindObjectOfType<ControllerManager>();
         option1Button.onClick.AddListener(OnOption1Clicked);
         option2Button.onClick.AddListener(OnOption2Clicked);
+        option3Button.onClick.AddListener(OnOption3Clicked);
         InitializeRarityColorMap();
         SetUpControllerNavigation();
-        itemChoiceAnim = itemChoice.GetComponent<Animator>();
     }
     private void Start()
     {
@@ -91,74 +96,61 @@ public class AbilityPowerManager : MonoBehaviour
     }
     private void Update()
     {
-        //if (slider1.value >= 0.99f)
-        //{
-        //    ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
-        //    slider1.value = 0f;
-        //}
-
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (itemChoice.activeSelf)
             {
-
                 itemChoice.SetActive(false);
             }
             else
             {
-
-                //itemChoice.SetActive(true);
                 ShowNewOptions();
-
             }
         }
-
-        //float comboSliderDynamicDecayRate = decayRate + comboCount * comboSliderDecayRateMultiplier;
-        //DecaySlider(ref comboSlider, comboSliderDynamicDecayRate);
-        //if (comboSlider.value <= 0)
-        //{
-        //    comboCount = 0;
-        //    comboSlider.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    comboSlider.gameObject.SetActive(true);
-        //}
     }
 
     public void SetOptionClicked()
     {
-        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option1Button.gameObject)
+        if(EventSystem.current != null)
         {
-            OnOption1Clicked();
+            if (EventSystem.current.currentSelectedGameObject == option1Button.gameObject)
+            {
+                OnOption1Clicked();
+            }
+            if ( EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
+            {
+                OnOption2Clicked();
+            }
+            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
+            {
+                OnOption3Clicked();
+            }
         }
-        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
-        {
-            OnOption2Clicked();
-        }
-        levelUpEffects.SetActive(false);
 
+        levelUpEffects.SetActive(false);
     }
 
     public void OnOption1Clicked()
     {
-        //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item1);
-        itemChoice.SetActive(false);
-        FindObjectOfType<PlayerCollision>().ClearInteractables();
-
-       // option2Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
+        DisablePickItems();
     }
 
     public void OnOption2Clicked()
     {
-        //player.GetComponent<PlayerControl>().enabled = true;
         ChooseItem(item2);
+        DisablePickItems();
+    }
+    public void OnOption3Clicked()
+    {
+        ChooseItem(item3);
+        DisablePickItems();
+    }
+
+    private void DisablePickItems()
+    {
         itemChoice.SetActive(false);
         FindObjectOfType<PlayerCollision>().ClearInteractables();
-
-
-        // option1Button.gameObject.GetComponent<Animator>().SetTrigger("NotChosen");
     }
 
     private void ChooseItem(Item chosenItem)
@@ -167,10 +159,11 @@ public class AbilityPowerManager : MonoBehaviour
         AddItemHere(player, chosenItem);
         inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GiveName()));
         inventory.RefreshInventory();
-        player.CallItemOnPickup(chosenItem.GetAssociatedStatType());
+        player.CallItemOnPickup(chosenItem.data.id);
 
         Destroy(currentButton1Rarity);
         Destroy(currentButton2Rarity);
+        Destroy(currentButton3Rarity);
 
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
 
@@ -197,6 +190,10 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        option1Button.GetComponent<Animator>().SetTrigger("Normal");
+        option2Button.GetComponent<Animator>().SetTrigger("Normal");
+        option3Button.GetComponent<Animator>().SetTrigger("Normal");
+
         levelUpEffects.SetActive(true);
 
         itemChoice.SetActive(true);
@@ -204,6 +201,7 @@ public class AbilityPowerManager : MonoBehaviour
         menuActive = true;
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
+        option3Button.GetComponent<Button>().enabled = true;
 
         //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
@@ -215,7 +213,12 @@ public class AbilityPowerManager : MonoBehaviour
             do
             {
                 item2 = _itemManager.GetRandomItem();
-            } while (item1.GiveName() == item2.GiveName());
+            } while (CheckItemEqual(item1, item2));
+
+            do
+            {
+                item3 = _itemManager.GetRandomItem();
+            } while (CheckItemEqual(item1, item3) || CheckItemEqual(item2, item3));
         }
 
         item1Image.sprite = item1.GiveSprite();
@@ -229,12 +232,33 @@ public class AbilityPowerManager : MonoBehaviour
         item2Description.text = item2.GiveDescription();
         //option2Button.GetComponent<Image>().color = rarityColorMap[item2.GetRarity()];
 
+
+        item3Image.sprite = item3.GiveSprite();
+        item3Name.text = item3.GiveName();
+        item3Description.text = item3.GiveDescription();
+
+
         currentButton1Rarity = Instantiate(itemRarityEffect[(int)item1.GetRarity()], option1Button.transform);
         currentButton2Rarity = Instantiate(itemRarityEffect[(int)item2.GetRarity()], option2Button.transform);
+        currentButton3Rarity = Instantiate(itemRarityEffect[(int)item3.GetRarity()], option3Button.transform);
         currentButton1Rarity.transform.localPosition = Vector3.zero;
         currentButton2Rarity.transform.localPosition = Vector3.zero;
+        currentButton3Rarity.transform.localPosition = Vector3.zero;
         GameManager.Instance.PauseMenuGame();
 
+    }
+
+    private bool CheckItemEqual(Item item1, Item item2)
+    {
+        if(item1.GiveName() == item2.GiveName())
+        {
+            if(item1.GetRarity() == item2.GetRarity())
+            {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     private void InitializeRarityColorMap()
@@ -258,7 +282,7 @@ public class AbilityPowerManager : MonoBehaviour
                 return;
             }
         }
-        player.items.Add(new ItemList(item, item.GiveName(), 1, item.GiveSprite(), item.GiveDescription(), item.GetAssociatedStatType(), item.GetRarity()));
+        player.items.Add(new ItemList(item, 1));
         inventory.AddItem(item, 1);
     }
 

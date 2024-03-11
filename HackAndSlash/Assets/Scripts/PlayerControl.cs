@@ -7,6 +7,7 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using DamageNumbersPro;
+using static UnityEditor.Progress;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -223,7 +224,7 @@ public class PlayerControl : MonoBehaviour
         OnAir = false;
         hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
-        StartCoroutine(CallItemUpdate());
+        //StartCoroutine(CallItemUpdate());
         dashCount = 0;
         attackFinished = false;
         attackFinished = false;
@@ -690,19 +691,18 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            if (i.name == itemName)
+            if (i.item.data.itemName == itemName)
             {
                 return i.stacks;
             }
         }
         return 0;
     }
-
     public bool CheckIfHasItem(string itemName)
     {
         foreach (ItemList i in items)
         {
-            if (i.name == itemName)
+            if (i.item.data.itemName == itemName)
             {
                 return true;
             }
@@ -714,9 +714,9 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            if (i.name == itemName)
+            if (i.item.data.itemName == itemName)
             {
-                return i.itemDescription;
+                return i.item.data.itemDescription;
             }
         }
         return null;
@@ -725,25 +725,25 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            if (i.name == itemName)
+            if (i.item.data.itemName == itemName)
             {
-                return i.itemImage;
+                return i.item.data.itemIcon;
             }
         }
         return null;
     }
 
-    public Enums.RarityType GetItemRarity(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.name == itemName)
-            {
-                return i.rarity;
-            }
-        }
-        return 0;
-    }
+    //public Enums.RarityType GetItemRarity(string itemName)
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        if (i.name == itemName)
+    //        {
+    //            return i.rarity;
+    //        }
+    //    }
+    //    return 0;
+    //}
     #endregion
 
     #region Funcion que devuelve el ataque actual que estas haciendo (enum ComboAtaques)
@@ -1278,15 +1278,15 @@ public class PlayerControl : MonoBehaviour
     ////////////
 
 
-    IEnumerator CallItemUpdate()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.Update(this, i.stacks);
-        }
-        yield return new WaitForSeconds(1);
-        StartCoroutine(CallItemUpdate());
-    }
+    //IEnumerator CallItemUpdate()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.Update(this, i.stacks);
+    //    }
+    //    yield return new WaitForSeconds(1);
+    //    StartCoroutine(CallItemUpdate());
+    //}
 
     public void CallItemOnKill(Enemy enemy)
     {
@@ -1303,13 +1303,13 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void CallItemOnPickup(StatType desiredStatType)
+    public void CallItemOnPickup(int id)
     {
         foreach (ItemList i in items)
         {
-            if (i.statType == desiredStatType)
+            if (i.item.data.id == id)
             {
-                i.item.OnItemPickup(this, i.stacks, i.statType);
+                i.item.OnItemPickup(this, i.stacks);
             }
         }
     }
@@ -1334,7 +1334,7 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (ItemList i in items)
         {
-            i.item.OnItemPickup(this, i.stacks, i.statType);
+            i.item.OnItemPickup(this, i.stacks);
         }
     }
     float damageMult = 1;

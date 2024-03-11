@@ -1,74 +1,96 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using static Enums;
 
 public class ItemManager : MonoBehaviour
 {
-    private static ItemManager _instance;
-    public static ItemManager instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<ItemManager>();
-                if (_instance == null)
-                {
-                    GameObject go = new GameObject("Item Manager");
-                    go.AddComponent<ItemManager>();
-                    DontDestroyOnLoad(go);
-                }
-            }
-            return _instance;
-        }
-    }
-
-    public List<GameObject> itemPool = new List<GameObject>();
+    //private static ItemManager _instance;
+    //public static ItemManager instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            _instance = FindObjectOfType<ItemManager>();
+    //            if (_instance == null)
+    //            {
+    //                GameObject go = new GameObject("Item Manager");
+    //                go.AddComponent<ItemManager>();
+    //                DontDestroyOnLoad(go);
+    //            }
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
     public List<Item> itemList = new List<Item>();
 
+    public int commonChance = 40;
+    public int uncommonChance = 30;
+    public int rareChance = 20;
+    public int legendaryChance = 10;
+
     private void Awake()
     {
-        // Singleton pattern to ensure only one instance exists
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        // Initialize other manager-specific setup here
-        AddItemsToList();
+        //if (_instance == null)
+        //{
+        //    _instance = this;
+        //}
+        //AddItemsToList();
         
     }
 
-    void Start()
-    {
-        //foreach (var item in itemList)
-        //{
-        //    Debug.Log(item.GiveName());
-        //}
-    }
-
-    void Update()
-    {
-        //Debug.Log(itemList.Count);
-    }
 
     public Item GetRandomItem()
     {
-        Item itemToReturn;
-        //if (itemPool.Count == 0)
-        //{
-        //    Debug.LogWarning("Item pool is empty. Add items to the pool.");
-        //    return null;
-        //}
-        //foreach (var item in itemList)
-        //{
-        //    Debug.Log(item.GiveName());
-        //}
-        itemToReturn = itemList[Random.Range(0, itemList.Count)];
-        //Debug.Log(itemToReturn.GiveName());
-        return itemToReturn;
+        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance;
+        int randomValue = Random.Range(0, totalChance);
+        Debug.Log(randomValue);
+
+        if (randomValue < commonChance)
+        {
+            return GetRandomItemOfRarity(RarityType.Common);
+        }
+        else if (randomValue < commonChance + uncommonChance)
+        {
+            return GetRandomItemOfRarity(RarityType.Uncommon);
+        }
+        else if (randomValue < commonChance + uncommonChance + rareChance)
+        {
+            return GetRandomItemOfRarity(RarityType.Rare);
+        }
+        else
+        {
+            return GetRandomItemOfRarity(RarityType.Legendary);
+        }
     }
 
+
+
+    //public Item GetRandomItem()
+    //{
+    //    Item itemToReturn;
+
+    //    int valueRandom = Random.Range(0, 100);
+
+    //    itemToReturn = itemList[Random.Range(0, itemList.Count)];
+    //    //Debug.Log(itemToReturn.GiveName());
+    //    return itemToReturn;
+    //}
+
+    private Item GetRandomItemOfRarity(RarityType rarity)
+    {
+        List<Item> itemsOfRarity = itemList.FindAll(item => item.data.rarityType == rarity);
+
+        if (itemsOfRarity.Count == 0)
+        {
+            Debug.LogWarning("No items of rarity " + rarity + " found.");
+            return null;
+        }
+
+        return itemsOfRarity[Random.Range(0, itemsOfRarity.Count)];
+    }
 
     public void SpawnItem(Vector3 initialPosition, GameObject itemSpawn)
     {
@@ -112,13 +134,13 @@ public class ItemManager : MonoBehaviour
 
     public void AddItemsToList()
     {
-        itemList.Add(new CritItem());
-        itemList.Add(new CritDamageItem());
-        itemList.Add(new AttackDamge());
-        itemList.Add(new MaxHealthItem());
-        itemList.Add(new RecoveryFlower());
-        itemList.Add(new RegenerationItem());
-        itemList.Add(new MonsterTooth());
+        //itemList.Add(new CritItem());
+        //itemList.Add(new CritDamageItem());
+        //itemList.Add(new AttackDamge());
+        //itemList.Add(new MaxHealthItem());
+        //itemList.Add(new RecoveryFlower());
+        //itemList.Add(new RegenerationItem());
+        //itemList.Add(new MonsterTooth());
         //itemList.Add(new Slashes());
         //itemList.Add(new DoubleHit());
         //
