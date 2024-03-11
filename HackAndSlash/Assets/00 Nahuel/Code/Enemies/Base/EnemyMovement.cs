@@ -79,7 +79,10 @@ public class EnemyMovement : MonoBehaviour
     public float predictionTime;
     public void HandleFollow()
     {
-
+        if(_enemy.animations.Animator.GetFloat(Constants.ANIM_VAR_SPEED) < 0.1f)
+        {
+            StartCoroutine(_enemy.animations.IncreaseOverTime(0f, 1f));
+        }
         if (Time.frameCount % 20 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
         {
             _path = new NavMeshPath();

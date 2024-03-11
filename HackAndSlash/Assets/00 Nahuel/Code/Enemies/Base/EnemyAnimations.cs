@@ -150,7 +150,7 @@ public class EnemyAnimations : MonoBehaviour
         _anim.SetFloat(Constants.ANIM_VAR_SPEED, 0f);
     }
 
-    private IEnumerator IncreaseOverTime(float currentSpeed, float targetValue)
+    public IEnumerator IncreaseOverTime(float currentSpeed, float targetValue)
     {
         float elapsedTime = 0f;
         float duration = 0.3f;
