@@ -53,9 +53,9 @@ public abstract class EventMap : Interactive, IInteractable
             {
                 timers.DOScale(0, 0.5f);
                 scaling = true;
+                Invoke(nameof(StopScale), 0.5f);
             }
-            else
-                scaling = false;
+            
         }
         else
         {
@@ -63,10 +63,9 @@ public abstract class EventMap : Interactive, IInteractable
             {
                 timers.DOScale(1, 0.5f);
                 scaling = true;
+                Invoke(nameof(StopScale), 0.5f);
             }
-            else
-                scaling = false;
-
+            
             timer -= Time.deltaTime;
 
             if(timer < 0)
@@ -80,6 +79,8 @@ public abstract class EventMap : Interactive, IInteractable
 
         canInteract = _currentEventState == Enums.EventState.INACTIVE && timer <= 0;
     }
+
+    void StopScale() { scaling = false; }
 
     public override void ShowObjectInRange()
     {

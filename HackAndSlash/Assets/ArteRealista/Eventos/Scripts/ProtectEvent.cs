@@ -48,7 +48,7 @@ public class ProtectEvent : EventMap
         base.FinishEvent();
         foreach (Transform t in targetsToProtect)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.canvas.SetActive(false));
+            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
         }
     }
     protected override void RestartEvent()
@@ -60,7 +60,7 @@ public class ProtectEvent : EventMap
             List<DamageableObject> damageables = GetComponentsInChildren<DamageableObject>().ToList();
             foreach (DamageableObject dam in damageables)
             {
-                dam.canvas.SetActive(false);
+                dam.gameObject.SetActive(false);
                 dam.MaxHeal();
             }
         }
