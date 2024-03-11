@@ -391,7 +391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8830206895322870140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ RectTransform:
   - {fileID: 2916788454471033919}
   - {fileID: 3894798050818940224}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -610,8 +610,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOnAwake: 1
   firstColor: {r: 0, g: 0, b: 0, a: 1}
-  lastColor: {r: 1, g: 1, b: 1, a: 0}
-  timeEffect: 1
+  lastColor: {r: 0, g: 0, b: 0, a: 0}
+  timeEffect: 0.1
   initialDelay: 0
   firstToLast: 1
   pingPong: 0

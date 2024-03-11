@@ -43,5 +43,5 @@ public class NaveMov : MonoBehaviour
         Invoke(nameof(ActivateScene), 1f);
     }
 
-    private void ActivateScene() => GameManager.Instance.LoadLevel("02 Tutorial", imageFillLoading);
+    private void ActivateScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL, imageFillLoading);
 }

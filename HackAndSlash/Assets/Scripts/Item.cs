@@ -307,6 +307,40 @@ public class MonsterTooth : Item
         //player.SetHealth();
     }
 }
+
+public class DamageCrazy : Item
+{
+    public override Enums.RarityType GetRarity()
+    {
+        return Enums.RarityType.Legendary;
+    }
+    public override StatType GetAssociatedStatType()
+    {
+        return StatType.None;
+    }
+    public override string GiveName()
+    {
+        return "Crazy Damage";
+    }
+
+    public override string GiveDescription()
+    {
+        return "Gain 50% attack damage per stack.";
+    }
+
+    public override Sprite GiveSprite()
+    {
+        return Resources.Load<Sprite>("Item Images/AttackDamage");
+    }
+    public override void OnItemPickup(PlayerControl player, int stacks, StatType statType)
+    {
+        if (statType == StatType.Damage)
+        {
+            player.attackDamage += 0.5f;
+        }
+    }
+}
+
 #region Not Used 
 //public class Gasoline : Item
 //{

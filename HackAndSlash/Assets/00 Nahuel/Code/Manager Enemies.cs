@@ -66,10 +66,13 @@ public class ManagerEnemies : MonoBehaviour
     private int _currentSpawnerIndex = 0;
 
     // -- Scaling Propierties -- //
-    [Range(1, 2)] public float scalingRate = 1.05f;
-    public float scaleDivision = 1;
+    public float scaleMultiplierByPow = 0f;
     public float scaleMultiplier = 0f;
+
     #endregion
+
+    float maxMultiplier = 30f;
+    float timeToReachMax = 1800f;
 
     private void Awake()
     {
@@ -83,24 +86,23 @@ public class ManagerEnemies : MonoBehaviour
         _timerGlobal += Time.deltaTime;
         _timerItems += Time.deltaTime;
         UpdateTimeText();
-        scaleMultiplier = (1f + Mathf.Pow(scalingRate, _timerGlobal)) / (scaleDivision * 10);
+
+       // scaleMultiplierByPow = 1f + (Mathf.Pow(scalingRate, _timerGlobal)) / (scaleDivision * 10);
 
         if (_timerItems >= timeToGetItem)
         {
             _timerItems = 0f;
 
-            scaleMultiplier = (1f + Mathf.Pow(scalingRate, _timerGlobal) ) / (scaleDivision * 10);
-
-            if(scaleMultiplier < 1)
-                scaleMultiplier = 1;
+            //scaleMultiplier = 1f + scalingRate * _timerGlobal; //) / (scaleDivision * 10;
+            float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
+            scaleMultiplierByPow = Mathf.Lerp(1f, maxMultiplier, lerpFactor);
 
             //Take All enemies and Upgrade them (?)
             foreach (var pool in parentObjectPools)
             {
-                Debug.Log(pool.transform.childCount);
                 for (int i = 0; i < pool.transform.childCount; i++)
                 {
-                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleMultiplier);
+                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleMultiplierByPow);
                 }
             }
 

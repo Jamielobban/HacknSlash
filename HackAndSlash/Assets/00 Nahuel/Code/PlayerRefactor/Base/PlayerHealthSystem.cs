@@ -65,13 +65,24 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.HitEffect();
 
         _currentHealth -= damage;
-
-        if(_currentHealth <= 0)
+        if(GameManager.Instance.state != Enums.GameState.Tutorial)
         {
-            _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
-            _currentHealth = 0;
-            Die();
+            if (_currentHealth <= 0)
+            {
+                _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
+                _currentHealth = 0;
+                Die();
+            }
         }
+        else
+        {
+            if (_currentHealth <= maxHealth * 0.2f)
+            {
+                _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
+                _currentHealth = maxHealth * 0.2f;
+            }
+        }
+
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 

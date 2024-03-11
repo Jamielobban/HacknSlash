@@ -63,7 +63,7 @@ public class TutorialCombat : MonoBehaviour
     {
         GameManager.Instance.PauseGame();
         StartCoroutine(Speak(endTutorial));
-        Invoke(nameof(TutorialFinished), 8f);
+        Invoke(nameof(TutorialFinished), 4f);
     }
     private void TutorialFinished()
     {
@@ -74,7 +74,8 @@ public class TutorialCombat : MonoBehaviour
 
     private void NextScene()
     {
-        GameManager.Instance.LoadLevel("DanielIceMap", fillLoadingGo);
+        GameManager.Instance.UpdateState(Enums.GameState.Playing);
+        GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }
 
     IEnumerator Speak(string[] _dialogues)

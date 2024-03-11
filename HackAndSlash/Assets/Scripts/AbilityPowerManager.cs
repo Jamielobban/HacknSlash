@@ -212,28 +212,10 @@ public class AbilityPowerManager : MonoBehaviour
         if (_itemManager != null)
         {
             item1 = _itemManager.GetRandomItem();
-            if(item1 != null)
+            do
             {
-                Debug.Log(item1.GiveName());
-            }
-            else
-            {
-                Debug.Log("Item 1 is null");
-            }
-            item2 = _itemManager.GetRandomItem();
-            if (item2 != null)
-            {
-                Debug.Log(item2.GiveName());
-            }
-            else
-            {
-                Debug.Log("Item 2 is null");
-            }
-
-            //while (item1.GiveName() == item2.GiveName())
-            //{
-            //    item2 = ItemManager.instance.GetRandomItem();
-            //}
+                item2 = _itemManager.GetRandomItem();
+            } while (item1.GiveName() == item2.GiveName());
         }
 
         item1Image.sprite = item1.GiveSprite();

@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         _player = FindObjectOfType<PlayerControl>();
         target = _player.transform;
 
-        useMovementPrediction = Random.value > 0.5f;
+        //useMovementPrediction = Random.value > 0.5f;
     }
 
     private void Start()

@@ -60,10 +60,10 @@ public class ItemManager : MonoBehaviour
         //    Debug.LogWarning("Item pool is empty. Add items to the pool.");
         //    return null;
         //}
-        foreach (var item in itemList)
-        {
-            Debug.Log(item.GiveName());
-        }
+        //foreach (var item in itemList)
+        //{
+        //    Debug.Log(item.GiveName());
+        //}
         itemToReturn = itemList[Random.Range(0, itemList.Count)];
         //Debug.Log(itemToReturn.GiveName());
         return itemToReturn;

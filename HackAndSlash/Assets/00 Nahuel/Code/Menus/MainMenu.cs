@@ -27,11 +27,14 @@ public class MainMenu : BaseMenu<MainMenu>
     {
         if (GameManager.Instance.isTutorialCompleted)
         {
-            GameManager.Instance.LoadLevel("DanielIceMap ", loadingFillAmountInspector);
+            GameManager.Instance.UpdateState(Enums.GameState.Playing);
+
+            GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, loadingFillAmountInspector);
         }
         else
         {
-            GameManager.Instance.LoadLevel("01 Cinematic", loadingFillAmountInspector);
+            GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
+            GameManager.Instance.LoadLevel(Constants.SCENE_CINEMATIC, loadingFillAmountInspector);
         }
     }
 

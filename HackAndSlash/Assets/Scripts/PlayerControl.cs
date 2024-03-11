@@ -155,7 +155,7 @@ public class PlayerControl : MonoBehaviour
 
     bool OnAir;
     public bool GetOnAir => OnAir;
-    public enum HitState {DEBIL = 5,MEDIO = 10,FUERTE = 15};
+    public enum HitState { DEBIL = 15, MEDIO = 25, FUERTE = 30 };
 
     public enum PassiveCombo
     {
@@ -519,10 +519,12 @@ public class PlayerControl : MonoBehaviour
             //}
             dir.Normalize();
 
+            //Clamp Al enemigo Mas cerca / Mas lejos TP
+
             if (currentComboAttacks.combo == ComboAtaques.HoldQuadratL2)
                 dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
             else
-                dir = attackTeleport.GetEnemiePos(d) + (dir * 4.5f);
+                dir = attackTeleport.GetEnemiePos(d) + (dir * 5f);
 
             if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
                 dir.y = player.transform.position.y;
@@ -834,7 +836,7 @@ public class PlayerControl : MonoBehaviour
                     jump = Jump.LAND;
                     Invoke("ActiveDoubleJump", 0.1f);
                     moveDirSaved = new Vector3();
-                    //landFeedback.PlayFeedbacks();
+                    landFeedback.PlayFeedbacks();
 
                     return true;
                 }
@@ -1498,7 +1500,7 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.ataqueCuadradoCargado)
             {
-                //this.gameObject.layer = 12;
+                this.gameObject.layer = 12;
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
                     //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
@@ -1622,7 +1624,7 @@ public class PlayerControl : MonoBehaviour
 
             if ((controller.ataqueTrianguloCargado))
             {
-                //this.gameObject.layer = 12;
+                this.gameObject.layer = 12;
 
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
@@ -1899,7 +1901,7 @@ public class PlayerControl : MonoBehaviour
         if (states == States.MOVE && moves == Moves.WALK)
         {
             walkFeedback.PlayFeedbacks();
-            StartCoroutine(WalkFeedbak(0.42f));
+            StartCoroutine(WalkFeedbak(0.25f));
         }
     }
     private IEnumerator RunFeedback(float time)
@@ -1910,7 +1912,7 @@ public class PlayerControl : MonoBehaviour
         if (states == States.MOVE && moves == Moves.RUN)
         {
             runFeedback.PlayFeedbacks();
-            StartCoroutine(RunFeedback(0.3f));
+            StartCoroutine(RunFeedback(0.15f));
         }
 
     }

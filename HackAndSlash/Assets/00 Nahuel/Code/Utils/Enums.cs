@@ -64,6 +64,7 @@ public class Enums
     public enum GameState
     {
         Menu,
+        Tutorial,
         StartPlaying,
         Playing,
         Pause,

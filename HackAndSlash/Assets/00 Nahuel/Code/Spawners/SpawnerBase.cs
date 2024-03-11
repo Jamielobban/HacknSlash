@@ -90,6 +90,7 @@ public class SpawnerBase : MonoBehaviour
         if (poolable != null)
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
+            //enemy.animations.OnSpawn();
             enemy.spawner = this.gameObject;
             AddEnemy(enemy);
 

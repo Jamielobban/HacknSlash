@@ -57,6 +57,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
         }
 
         _currentHealth -= damage;
+
         if(_enemy.hitsEffects.Count != 0)
         {
             switch (state)
@@ -89,9 +90,10 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageableEnemy
     private void DamageEffects(float dmg)
     {
         //*** Text Effects ***//
-
-        normalPrefab.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)dmg);
-
+        if((int)dmg != 0)
+        {
+            normalPrefab.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)dmg);
+        }
         //*** Particle Effects ***//
 
         //SpawnWhiteSplash(collisionPoint);

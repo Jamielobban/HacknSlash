@@ -21,7 +21,8 @@ public class EnemyAnimations : MonoBehaviour
         _enemy = transform.parent.GetComponent<Enemy>();
         _events.OnIdle += () =>
         {
-            StartCoroutine(DecreaseSpeedOverTime(0f, .5f));
+            if(_enemy.gameObject .activeSelf)
+                StartCoroutine(DecreaseSpeedOverTime(0f, .5f));
         };
         _events.OnPatrolling += () => _anim.SetFloat("speed", 0.5f);
         _events.OnAttacking += () =>
@@ -35,7 +36,8 @@ public class EnemyAnimations : MonoBehaviour
         
         _events.OnStun += () => PlayTargetAnimation("Stun", true);
         _events.OnDie += () => DeadAnimEnd();
-        if(mats.Count > 0)
+        //OnSpawn();
+        if (mats.Count > 0)
         {
             foreach (var mat in mats)
             {
@@ -107,6 +109,30 @@ public class EnemyAnimations : MonoBehaviour
             _enemy.gameObject.SetActive(false);
         }
     }
+
+    public IEnumerator Spawn()
+    {
+        float elapsedTime = 0;
+        if (mats.Count > 0)
+        {
+            foreach (var mat in mats)
+            {
+                mat.material.SetFloat("_ShaderDisplacement", 0f);
+            }
+        
+            while (elapsedTime < 1.2f)
+            {
+                foreach (var mat in mats)
+                {
+                    mat.material.SetFloat("_ShaderDisplacement", elapsedTime);
+                }
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+    }
+
+    public void OnSpawn() => StartCoroutine(Spawn()); 
 
     public IEnumerator DecreaseSpeedOverTime(float targetValue, float _duration)
     {
