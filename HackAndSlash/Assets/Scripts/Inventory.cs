@@ -27,6 +27,10 @@ public class Inventory : MonoBehaviour
         {
             items.Add(new ItemSlotInfo(null, 0));
         }
+
+        inventorymenu.SetActive(true);
+        RefreshInventory();
+        inventorymenu.SetActive(false);
     }
 
     void Update()
@@ -74,39 +78,34 @@ public class Inventory : MonoBehaviour
                 existingPanels.Add(newPanel.GetComponent<ItemPanel>());
             }
         }
-            int index = 0;
-            foreach (ItemSlotInfo i in items)
+        int index = 0;
+        foreach (ItemSlotInfo i in items)
+        {
+            i.name = "" + (index + 1);
+            if (i.item != null) i.name += ": " + i.item.GiveName();
+            else i.name += ": -";
+
+            ItemPanel panel = existingPanels[index];
+            if (panel != null)
             {
-                i.name = "" + (index + 1);
-                if (i.item != null) i.name += ": " + i.item.GiveName();
-                else i.name += ": -";
-
-                ItemPanel panel = existingPanels[index];
-                if (panel != null)
+                panel.name = i.name + " Panel";
+                panel.inventory = this;
+                panel.itemSlot = i;
+                if (i.item != null)
                 {
-                    panel.name = i.name + " Panel";
-                    panel.inventory = this;
-                    panel.itemSlot = i;
-                    if (i.item != null)
-                    {
-                        panel.itemImage.gameObject.SetActive(true);
-                        panel.itemImage.sprite = i.item.GiveSprite();
-                        panel.stacksText.gameObject.SetActive(true);
-                        panel.stacksText.text = " " + i.stacks;
-                        //Debug.Log("refresh");
-                        //Debug.Log(i.stacks);
-                    }
-                    else
-                    {
-                        panel.itemImage.gameObject.SetActive(false);
-
-                        panel.stacksText.gameObject.SetActive(false);
-
-                    }
+                    panel.itemImage.gameObject.SetActive(true);
+                    panel.itemImage.sprite = i.item.GiveSprite();
+                    panel.stacksText.gameObject.SetActive(true);
+                    panel.stacksText.text = " " + i.stacks;
                 }
-                index++;
-            
+                else
+                {
+                    panel.itemImage.gameObject.SetActive(false);
+                    panel.stacksText.gameObject.SetActive(false);
+                }
             }
+            index++;
+        }
     }
     const int max = 99;
     public int AddItem(Item item, int amount)

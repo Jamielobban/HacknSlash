@@ -29,7 +29,6 @@ public class MainMenu : BaseMenu<MainMenu>
         if (GameManager.Instance.isTutorialCompleted)
         {
             GameManager.Instance.UpdateState(Enums.GameState.Playing);
-
             GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, loadingFillAmountInspector);
         }
         else

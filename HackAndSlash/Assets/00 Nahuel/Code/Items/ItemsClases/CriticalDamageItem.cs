@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CriticalDamageItem : Item
 {
+    private void Awake()
+    {
+        _defaultDescription = "The damage multiplier will increase when you cause critical damage.";
+    }
+
+
     public override void OnItemPickup(PlayerControl player, int stacks)
     {
         player.critDamageMultiplier += data.value;

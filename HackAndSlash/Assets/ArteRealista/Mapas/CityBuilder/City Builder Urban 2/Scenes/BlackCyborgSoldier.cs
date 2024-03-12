@@ -41,6 +41,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (intro)
             return;
 
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         _playerActions = new Inputs();
         _playerActions.Player.Enable();
 

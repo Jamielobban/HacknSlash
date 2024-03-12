@@ -17,6 +17,7 @@ public class NaveMov : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         blackImage.gameObject.SetActive(true);
         StartCoroutine(FadeIn());
         StartCoroutine(FadeOut());

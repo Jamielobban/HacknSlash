@@ -117,11 +117,11 @@ public class AbilityPowerManager : MonoBehaviour
             {
                 OnOption1Clicked();
             }
-            if ( EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
+            if (EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
             {
                 OnOption2Clicked();
             }
-            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
+            if (EventSystem.current.currentSelectedGameObject == option3Button.gameObject)
             {
                 OnOption3Clicked();
             }
@@ -183,8 +183,8 @@ public class AbilityPowerManager : MonoBehaviour
     {
         option1Button.GetComponent<Button>().enabled = false;
         option2Button.GetComponent<Button>().enabled = false;
+        option3Button.GetComponent<Button>().enabled = false;
         yield return new WaitForSeconds(delay);
-        //itemChoiceAnim.SetTrigger("Close");
         yield return new WaitForSeconds(delay);
         wow.SetActive(false);
     }
@@ -225,13 +225,11 @@ public class AbilityPowerManager : MonoBehaviour
         item1Image.sprite = item1.GiveSprite();
         item1Name.text = item1.GiveName();
         item1Description.text = item1.GiveDescription();
-        //option1Button.GetComponent<Image>().color = rarityColorMap[item1.GetRarity()];
 
 
         item2Image.sprite = item2.GiveSprite();
         item2Name.text = item2.GiveName();
         item2Description.text = item2.GiveDescription();
-        //option2Button.GetComponent<Image>().color = rarityColorMap[item2.GetRarity()];
 
 
         item3Image.sprite = item3.GiveSprite();
@@ -308,9 +306,16 @@ public class AbilityPowerManager : MonoBehaviour
         Navigation nav2 = option2Button.navigation;
         nav2.mode = Navigation.Mode.Explicit;
         nav2.selectOnLeft = option1Button;
+        nav2.selectOnRight = option3Button;
+
+
+        Navigation nav3 = option3Button.navigation;
+        nav3.mode = Navigation.Mode.Explicit;
+        nav3.selectOnLeft = option2Button;
 
         option1Button.navigation = nav1;
         option2Button.navigation = nav2;
+        option3Button.navigation = nav3;
     }
 
     // Function to increase the combo count

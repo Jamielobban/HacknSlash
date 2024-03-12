@@ -716,7 +716,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (i.item.data.itemName == itemName)
             {
-                return i.item.data.itemDescription;
+                return i.item.DefaultDescription;
             }
         }
         return null;

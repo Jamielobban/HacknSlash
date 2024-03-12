@@ -5,11 +5,24 @@ public class EventsManager : MonoBehaviour
 {
     [SerializeField] GameObject[] eventsPrefabs;
     Transform[] eventsHolders;
+    public int secondsToUnlockBase = 150;
     private void Awake()
-    {
+    {        
         eventsHolders = GameObject.FindGameObjectsWithTag("Event").Select(go => go.transform).ToArray();
-        foreach (Transform t in eventsHolders) {
-            Instantiate(eventsPrefabs[Random.Range(0, eventsPrefabs.Count())], t);
+
+        int secondsIncrementToUnlock = secondsToUnlockBase;
+        for (int i = 0; i < eventsHolders.Length; i++)
+        {
+            GameObject go = Instantiate(eventsPrefabs[Random.Range(0, eventsPrefabs.Count())], eventsHolders[i]);
+            if(GameManager.Instance.state == Enums.GameState.Tutorial)
+            {
+                go.GetComponent<EventMap>().timeToActivate = 15;
+            }
+            else
+            {
+                go.GetComponent<EventMap>().timeToActivate = secondsIncrementToUnlock;
+            }
+            secondsIncrementToUnlock += secondsToUnlockBase;
         }
     }
 

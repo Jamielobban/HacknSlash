@@ -24,6 +24,7 @@ public class TutorialCombat : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
     }
 
     void Start()

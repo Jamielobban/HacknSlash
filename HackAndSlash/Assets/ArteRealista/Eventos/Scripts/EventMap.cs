@@ -13,10 +13,11 @@ public abstract class EventMap : Interactive, IInteractable
     [SerializeField] List<Material> triggerMats;
     [SerializeField] Transform timers;
     [SerializeField] protected ForceFieldController forceField;
-    [SerializeField] protected float timeToActivate, timeToRestart;
+    public float timeToActivate, timeToRestart;
+
     bool scaling = false;
     List<TextMeshProUGUI> timersText;
-    protected float timer = 0;
+    public float timer = 0;
     protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
     protected Enums.EventState _currentEventState;
     protected int currentRound = 0;
@@ -33,7 +34,8 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void Start()
     {
-        timer += timeToActivate;
+        timer = timeToActivate;
+        timeToRestart = timeToActivate * 0.5f;
         forceField.SetSpeed(0f);
         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
         _currentEventState = Enums.EventState.INACTIVE;
@@ -115,7 +117,7 @@ public abstract class EventMap : Interactive, IInteractable
     protected virtual void RestartEvent()
     {
         GetComponent<Collider>().enabled = true;
-        timer += timeToRestart;
+        timer = timeToRestart;
         objectiveMarker.SetActive(true);
         ManagerEnemies.Instance.EndEvent();
         //FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted(); TODO: Show event failed
