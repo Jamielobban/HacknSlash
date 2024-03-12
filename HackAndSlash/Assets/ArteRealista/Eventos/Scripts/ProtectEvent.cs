@@ -7,11 +7,14 @@ public class ProtectEvent : EventMap
 {
     [SerializeField] GameObject spawnerParent;
     [SerializeField] List<Transform> targetsToProtect;    
-    List<SpawnerBase> enemiesSpawner;    
+    List<SpawnerBase> enemiesSpawner;
+
+    public DamageableObject damageEventScript;
 
     protected override void Start()
     {
         base.Start();
+        damageEventScript.CurrentHealth = damageEventScript.MaxHealth;
         enemiesSpawner = spawnerParent.GetComponentsInChildren<SpawnerBase>(true).ToList();
         foreach (Transform t in targetsToProtect)
         {
@@ -21,14 +24,17 @@ public class ProtectEvent : EventMap
     protected override void Update()
     {
         base.Update();
+
         if(CurrentEventState == Enums.EventState.PLAYING)
+        {
             RetargetSpawnedEnemies();
-        CheckEventState();
+            CheckEventState();
+        }
     }
     protected override void StartEvent()
     {
-        enemiesSpawner[currentRound].gameObject.SetActive(true);
         base.StartEvent();
+        enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
@@ -82,7 +88,7 @@ public class ProtectEvent : EventMap
     }
     void CheckEventState()
     {
-        if (_currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
+        if (AllEnemiesDefeated())
         {
             if (currentRound >= enemiesSpawner.Count - 1)
                 FinishEvent();

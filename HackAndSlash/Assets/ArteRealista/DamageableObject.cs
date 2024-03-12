@@ -10,6 +10,9 @@ public class DamageableObject : MonoBehaviour, IDamageable
     [SerializeField] Image progressBar;
     float currentHealth;
 
+    public float CurrentHealth { get => currentHealth; set { currentHealth = value; } }
+    public float MaxHealth { get => maxHealth; }
+
     private void Start()
     {
         currentHealth = maxHealth;
