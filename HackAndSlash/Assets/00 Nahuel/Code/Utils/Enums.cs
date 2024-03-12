@@ -89,7 +89,8 @@ public class Enums
         MainTheme,
         EpicTheme,
         UnoVSUno,
-        InGameMenu
+        InGameMenu,
+        Helicopter
     };
 
     public enum Effects

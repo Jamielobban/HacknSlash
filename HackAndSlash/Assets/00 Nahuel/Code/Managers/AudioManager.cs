@@ -31,10 +31,6 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        audioFx = gameObject.AddComponent<AudioSource>();
-        audioMusic = gameObject.AddComponent<AudioSource>();
-        audioFxStopeable = gameObject.AddComponent<AudioSource>();
-        audioMusicEffects = gameObject.AddComponent<AudioSource>();
         LoadAllAudios();
         audioMusicEffects.loop = true;
         audioMusic.loop = true;

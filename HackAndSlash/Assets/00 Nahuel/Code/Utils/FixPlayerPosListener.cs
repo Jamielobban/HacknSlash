@@ -8,10 +8,18 @@ public class FixPlayerPosListener : MonoBehaviour
     void Start()
     {
         _target = GameManager.Instance.Player.transform;
+        if(_target == null)
+        {
+            _target = FindObjectOfType<PlayerControl>().transform;
+        }
     }
 
     void Update()
     {
+        if(_target == null)
+        {
+            _target = FindObjectOfType<PlayerControl>().transform;
+        }
         transform.position = _target.position;
     }
 }

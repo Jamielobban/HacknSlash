@@ -27,8 +27,8 @@ public class ProtectEvent : EventMap
     }
     protected override void StartEvent()
     {
-        base.StartEvent();
         enemiesSpawner[currentRound].gameObject.SetActive(true);
+        base.StartEvent();
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));

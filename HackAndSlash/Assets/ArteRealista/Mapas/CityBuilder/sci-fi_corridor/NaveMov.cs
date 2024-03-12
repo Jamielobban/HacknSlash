@@ -17,6 +17,7 @@ public class NaveMov : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayMusic(Enums.Music.Helicopter);
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         blackImage.gameObject.SetActive(true);
         StartCoroutine(FadeIn());

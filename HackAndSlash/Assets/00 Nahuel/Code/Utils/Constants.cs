@@ -14,7 +14,7 @@ public static class Constants
     public const string SCENE_TUTORIAL = "02 Tutorial";
     public const string SCENE_TUTORIALCOMBAT = "03 Tutorial Combat";
     public const string SCENE_MAIN = "04 Main Scene";
-    public const string SCENE_DEAD = "05 Dead Scene";
+    public const string SCENE_DEAD = "05 DeadScene";
 
     public static string[] MUSICDIRECTORIES = { "Audio/Music", "Audio/SoundFX", "Audio/MusicEffects" };
 }

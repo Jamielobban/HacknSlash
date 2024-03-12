@@ -1250,10 +1250,10 @@ public class PlayerControl : MonoBehaviour
 
                 break;
             case States.DEATH:
-                if ((Time.time - deathTime) > 2)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
+                //if ((Time.time - deathTime) > 2)
+                //{
+                //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //}
 
                 break;
             case States.TELEPORT:
@@ -2115,6 +2115,7 @@ public class PlayerControl : MonoBehaviour
         deathTime = Time.time;
         playerAnim.CrossFadeInFixedTime("Death", 0.2f);
         cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
+        states = States.DEATH;
     }
 }
 

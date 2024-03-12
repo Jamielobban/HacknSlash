@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
@@ -9,6 +7,10 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     public float maxHealth;
     private float _currentHealth;
     private float _timer = 0f;
+
+    public GameObject loadingBar;
+    public Image loadingFill;
+
     public float CurrentHealth
     {
         get { return _currentHealth; }
@@ -88,6 +90,25 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        if(_player.states == PlayerControl.States.DEATH)
+        {
+            return;
+        }
         _player.DeadEffect();
+        if(GameManager.Instance.state == Enums.GameState.Playing)
+        {
+            Invoke(nameof(StartLoadingBar), 1f);
+        }
+    }
+
+    private void StartLoadingBar()
+    {
+        loadingBar.SetActive(true);
+        Invoke(nameof(StartLoadingNewScene), 1f);
+    }
+
+    private void StartLoadingNewScene()
+    {
+        GameManager.Instance.LoadLevel(Constants.SCENE_DEAD, loadingFill);
     }
 }

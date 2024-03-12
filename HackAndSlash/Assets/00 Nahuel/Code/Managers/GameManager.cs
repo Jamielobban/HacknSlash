@@ -74,11 +74,7 @@ using UnityEngine.UI;
             }
             yield return new WaitForSeconds(0.15f);
 
-            UpdateState(Enums.GameState.Playing);
-            if (_player == null)
-            {
-                _player = FindObjectOfType<PlayerControl>();
-            }
+            _player = FindObjectOfType<PlayerControl>();
             //MainMenu.Hide();
         }
 
