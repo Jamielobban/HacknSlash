@@ -49,6 +49,7 @@ public class Inventory : MonoBehaviour
                     if(!GameManager.Instance.isInMenu)
                     {
                         inventorymenu.SetActive(true);
+                        AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
 
                         RefreshInventory();
 

@@ -197,8 +197,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 46cb970870b504b4f809922d14dafbec, type: 3}
   - {fileID: 8300000, guid: a70b4cf3a0f483b4c98acef8824b2ee5, type: 3}
   - {fileID: 8300000, guid: 9b27c82b83d1bf04e909de9446544730, type: 3}
+  - {fileID: 8300000, guid: 802619c90c013f54f8f0827a3d0ddab0, type: 3}
+  - {fileID: 8300000, guid: 55caf3c81f7ee7e479c22d9ffe499b0e, type: 3}
   randomSound: {fileID: 124925649436691066}
-  deadSound: {fileID: 0}
+  randomDeadSounds:
+  - {fileID: 8300000, guid: cc5c7a73074f1da4c9f8e3855c34a42e, type: 3}
   deadSound3D: {fileID: 8059735055133533248}
   timeToRandomSound: 3
 --- !u!82 &124925649436691066
@@ -4633,12 +4636,12 @@ PrefabInstance:
     - target: {fileID: 425218101819116564, guid: ad0db4f2ae212614095a0ab94a5fedc9,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MaxVolume
-      value: 1
+      value: 0.785
       objectReference: {fileID: 0}
     - target: {fileID: 425218101819116564, guid: ad0db4f2ae212614095a0ab94a5fedc9,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MinVolume
-      value: 1
+      value: 0.588
       objectReference: {fileID: 0}
     - target: {fileID: 425218101819116564, guid: ad0db4f2ae212614095a0ab94a5fedc9,
         type: 3}
@@ -9325,12 +9328,12 @@ PrefabInstance:
     - target: {fileID: 7916004088322168246, guid: e315549e50d355c419f0c5ab52738025,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MaxVolume
-      value: 1
+      value: 0.766
       objectReference: {fileID: 0}
     - target: {fileID: 7916004088322168246, guid: e315549e50d355c419f0c5ab52738025,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MinVolume
-      value: 1
+      value: 0.526
       objectReference: {fileID: 0}
     - target: {fileID: 7916004088322168246, guid: e315549e50d355c419f0c5ab52738025,
         type: 3}
@@ -14416,12 +14419,12 @@ PrefabInstance:
     - target: {fileID: 1862495087722023291, guid: a5fe9219379be7a4f881636f0e11f19e,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MaxVolume
-      value: 1
+      value: 0.728
       objectReference: {fileID: 0}
     - target: {fileID: 1862495087722023291, guid: a5fe9219379be7a4f881636f0e11f19e,
         type: 3}
       propertyPath: managedReferences[7756930873380044805].MinVolume
-      value: 1
+      value: 0.525
       objectReference: {fileID: 0}
     - target: {fileID: 1862495087722023291, guid: a5fe9219379be7a4f881636f0e11f19e,
         type: 3}
