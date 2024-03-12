@@ -68,6 +68,7 @@ using UnityEngine.UI;
                 {
                     _progresionBar.fillAmount = 1;
                     async.allowSceneActivation = true;
+                
                 }
                 yield return null;
             }
