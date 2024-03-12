@@ -10,7 +10,7 @@ public class CriticalDamageItem : Item
     }
 
 
-    public override void OnItemPickup(PlayerControl player, int stacks)
+    public override void OnItemPickup(PlayerControl player)
     {
         player.critDamageMultiplier += data.value;
     }

@@ -8,7 +8,7 @@ public class AttackDamageItem : Item
     {
         _defaultDescription = "Increases the attack damage by percentage.";
     }
-    public override void OnItemPickup(PlayerControl player, int stacks)
+    public override void OnItemPickup(PlayerControl player)
     {
         player.attackDamage += data.value;
     }

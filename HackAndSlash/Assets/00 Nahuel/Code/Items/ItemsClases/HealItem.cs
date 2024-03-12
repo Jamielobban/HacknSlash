@@ -7,7 +7,7 @@ public class HealItem : Item
         _defaultDescription = "Heals, it's a instantant consumible item";
     }
 
-    public override void OnItemPickup(PlayerControl player, int stacks)
+    public override void OnItemPickup(PlayerControl player)
     {
         player.healthSystem.Heal(+data.value);
     }

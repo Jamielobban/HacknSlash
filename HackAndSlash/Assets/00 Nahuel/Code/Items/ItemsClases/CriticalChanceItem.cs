@@ -9,7 +9,7 @@ public class CriticalChanceItem : Item
         _defaultDescription = "Increases the chance of critical hit.";
     }
 
-    public override void OnItemPickup(PlayerControl player, int stacks)
+    public override void OnItemPickup(PlayerControl player)
     {
         player.critChance += data.value;
 
