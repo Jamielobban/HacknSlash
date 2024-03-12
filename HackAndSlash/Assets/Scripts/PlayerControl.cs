@@ -522,10 +522,11 @@ public class PlayerControl : MonoBehaviour
 
             //Clamp Al enemigo Mas cerca / Mas lejos TP
 
-            if (currentComboAttacks.combo == ComboAtaques.HoldQuadratL2)
-                dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
-            else
-                dir = attackTeleport.GetEnemiePos(d) + (dir * 5f);
+            //if (currentComboAttacks.combo == ComboAtaques.HoldQuadratL2)
+            //    dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
+            //else
+            //dir = attackTeleport.GetEnemiePos(d) + (dir * 5f);
+            dir = attackTeleport.GetEnemiePos(d) + (dir * 2.25f);
 
             if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
                 dir.y = player.transform.position.y;
@@ -550,12 +551,15 @@ public class PlayerControl : MonoBehaviour
                     Invoke("Aparecer", 0.1f);
 
                     enemy = attackTeleport.GetEnemie(d);
+
                     enem = enemy;
                     enem.y = dir.y;
-                    enemy += (enem - dir).normalized * 3f;
+                    if (Vector3.Distance(transform.position, enemy) >= 1.75f)
+                    {
+                        enemy += (enem - dir).normalized * 3f;
+                        rb.DOMove(dir, 0.3f, false);
+                    }
 
-
-                     rb.DOMove(dir, 0.3f, false);
                 }
 
             }
