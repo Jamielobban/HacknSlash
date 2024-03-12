@@ -196,7 +196,7 @@ public class PlayerControl : MonoBehaviour
     public MMFeedbacks critFeedback;
     public MMFeedbacks playerHurt;
 
-    float hitTime;
+    public float hitTime;
     float deathTime;
     int repeticionGolpe;
 
@@ -986,6 +986,7 @@ public class PlayerControl : MonoBehaviour
                 switch (dash)
                 {
                     case Dash.START:
+
                         if ((Time.time - delayDash) > 0.02f)
                         {
                             playerAnim.speed = 1;
@@ -1038,26 +1039,26 @@ public class PlayerControl : MonoBehaviour
                         }
                         rb.AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
-                        if (dashDown)
-                        {
-                            RaycastHit hit;
+  
+                        RaycastHit hit;
 
-                            if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+                        if (Physics.Raycast(transform.position + dirDash + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+                        {
+                            if ((hit.distance > 0.25f))
                             {
-                                if ((hit.distance > 0.25f))
-                                {
-                                    rb.AddForce(-this.transform.up * 10000 * Time.fixedDeltaTime, ForceMode.Force);
-                                }
-                                else
-                                {
-                                    OnAir = false;
-                                }
+                                rb.AddForce(-this.transform.up * 10000 * Time.fixedDeltaTime, ForceMode.Force);
                             }
                             else
                             {
+
                                 OnAir = false;
                             }
                         }
+                        else
+                        {
+                            OnAir = false;
+                        }
+                        
                         break;
                     case Dash.DOUBLEDASH:
 
@@ -1089,6 +1090,7 @@ public class PlayerControl : MonoBehaviour
                             CheckMove();
 
                         }
+                      
                         break;
                 }
 
@@ -1233,7 +1235,7 @@ public class PlayerControl : MonoBehaviour
             case States.HIT:
                 this.gameObject.layer = 3;
 
-                if ((Time.time - hitTime) > 0.25f)
+                if ((Time.time - hitTime) > 0.15f)
                 {
                     if (CheckIfDash())
                     {

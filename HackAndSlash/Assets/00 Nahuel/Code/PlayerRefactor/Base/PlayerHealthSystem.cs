@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     }
     private void Start()
     {
+        _player.hitTime = Time.time;
         maxHealth = _player.stats.maxHealth;
         _currentHealth = maxHealth;
     }
@@ -57,11 +59,10 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH)
+        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.75f)
         {
             return;
         }
-
         _player.states = PlayerControl.States.HIT;
 
         _player.HitEffect();
