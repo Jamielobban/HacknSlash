@@ -102,6 +102,7 @@ public abstract class EventMap : Interactive, IInteractable
     protected virtual void StartEvent()
     {
         AudioManager.Instance.PlayFx(Enums.Effects.Evento);
+        AudioManager.Instance.PlayMusic(Enums.Music.EpicTheme);
         ManagerEnemies.Instance.StartEvent();
         forceField.SetSpeed(0.15f);
         foreach (Collider col in tangentColliders)
@@ -131,6 +132,8 @@ public abstract class EventMap : Interactive, IInteractable
     protected virtual void FinishEvent()
     {
         ManagerEnemies.Instance.EndEvent();
+        AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
+
         FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted();
         forceField.SetSpeed(-0.2f);        
         foreach (BoxCollider col in tangentColliders)
