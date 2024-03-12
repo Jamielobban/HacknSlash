@@ -316,7 +316,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         yield return new WaitForSeconds(1.1f);
 
-        for (int i = 0; i < uiCombosImage.Length - 1; i++)
+        for (int i = 1; i < uiCombosImage.Length - 1; i++)
         {
             uiCombosImage[i].enabled = false;
             uiCombosImage[i].gameObject.SetActive(false);
@@ -381,7 +381,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
 
 
-            StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); }));
+            StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); uiCombosImage[0].sprite = emptySprite; }));
             inputsBuffer.Clear();
         }
     }
