@@ -224,7 +224,6 @@ public class PlayerControl : MonoBehaviour
         OnAir = false;
         hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
-        //StartCoroutine(CallItemUpdate());
         dashCount = 0;
         attackFinished = false;
         attackFinished = false;
@@ -1252,7 +1251,7 @@ public class PlayerControl : MonoBehaviour
 
                 break;
             case States.DEATH:
-                //if ((Time.time - deathTime) > 2)
+                //if ((Time.time - deathTime) > 2)  
                 //{
                 //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 //}
@@ -1309,16 +1308,16 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void CallItemOnPickup(int id)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.id == id)
-            {
-                i.item.OnItemPickup(this, i.stacks);
-            }
-        }
-    }
+    //public void CallItemOnPickup(int id)
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        if (i.item.data.id == id)
+    //        {
+    //            i.item.OnItemPickup(this, i.stacks);
+    //        }
+    //    }
+    //}
 
     public void CallItemOnHit()
     {
@@ -1336,13 +1335,13 @@ public class PlayerControl : MonoBehaviour
             i.item.OnJump(this, i.stacks);
         }
     }
-    public void CallItemOnPickup()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnItemPickup(this, i.stacks);
-        }
-    }
+    //public void CallItemOnPickup()
+    //{
+    //    foreach (ItemList i in items)
+    //    {
+    //        i.item.OnItemPickup(this, i.stacks);
+    //    }
+    //}
     float damageMult = 1;
     public float delayDamage = 0.5f;
     bool atackPress = false;

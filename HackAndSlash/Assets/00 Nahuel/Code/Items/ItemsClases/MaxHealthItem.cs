@@ -8,9 +8,9 @@ public class MaxHealthItem : Item
     {
         _defaultDescription = "Increases the maximum health available";
     }
-    public override void OnItemPickup(PlayerControl player, int stacks)
+    public override void OnItemPickup(PlayerControl player)
     {
-        player.healthSystem.maxHealth += 5 + (1 * stacks);
+        player.healthSystem.maxHealth += data.value;
         player.hud.UpdateHealthBar(player.healthSystem.CurrentHealth, player.healthSystem.maxHealth);
     }
 }

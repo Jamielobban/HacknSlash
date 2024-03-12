@@ -160,7 +160,8 @@ public class AbilityPowerManager : MonoBehaviour
         AddItemHere(player, chosenItem);
         inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GiveName()));
         inventory.RefreshInventory();
-        player.CallItemOnPickup(chosenItem.data.id);
+        chosenItem.OnItemPickup(player);
+       // player.CallItemOnPickup(chosenItem.data.id);
 
         Destroy(currentButton1Rarity);
         Destroy(currentButton2Rarity);
