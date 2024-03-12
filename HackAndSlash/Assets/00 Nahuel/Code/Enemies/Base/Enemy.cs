@@ -67,7 +67,7 @@ public class Enemy : PoolableObject
         currentState?.UpdateState(this);
         if (Time.frameCount % 10 == 0 && gameObject.activeSelf)
         {
-            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 120)
+            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 160)
             {
                 if (isPooleable)
                 {

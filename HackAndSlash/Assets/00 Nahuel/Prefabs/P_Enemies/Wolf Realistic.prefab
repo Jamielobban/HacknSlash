@@ -365,6 +365,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f239df62ad67f904e9e250d3081c1248, type: 3}
   deadSound3D: {fileID: 6436544938620515920}
   timeToRandomSound: 4
+  monsterFootStep: {fileID: 2850484001823429970}
 --- !u!82 &7828800280632412494
 AudioSource:
   m_ObjectHideFlags: 0
@@ -474,7 +475,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3165942800488051908, guid: 7e984f512e89b60468e829489e8883e3,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
@@ -7003,12 +7004,12 @@ PrefabInstance:
     - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: chaseSightMax
-      value: 60
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}
       propertyPath: chaseSightMin
-      value: 35
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1124403735784402115, guid: b6fe7b0dd033c294ea7f78bb3985c314,
         type: 3}

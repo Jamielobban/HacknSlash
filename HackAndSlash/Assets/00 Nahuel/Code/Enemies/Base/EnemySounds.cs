@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 
 public class EnemySounds : MonoBehaviour
@@ -13,11 +14,8 @@ public class EnemySounds : MonoBehaviour
     private float _timer = 0f;
     public float timeToRandomSound = 4f;
 
+    public AudioSource monsterFootStep;
     
-    void Start()
-    {
-        
-    }
     public void PlaySoundDead() 
     {
         deadSound3D.PlayOneShot(randomDeadSounds[Random.Range(0, randomDeadSounds.Count)]);
@@ -32,5 +30,27 @@ public class EnemySounds : MonoBehaviour
             _timer= 0f;
            
         }
+    }
+
+    public void FadeFootSteps(float duration)
+    {
+        StartCoroutine(StartFade(monsterFootStep, duration, 0));
+    }
+
+    IEnumerator StartFade(AudioSource audioSource, float duration, float targetVolume)
+    {
+        float currentTime = 0;
+        float start = audioSource.volume;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(start, targetVolume, currentTime / duration);
+            yield return null;
+        }
+        if (audioSource.volume <= 0.1f)
+        {
+            audioSource.Stop();
+        }
+        yield break;
     }
 }

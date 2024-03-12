@@ -78,6 +78,11 @@ public class AudioManager : MonoBehaviour
         Fade(audioMusicEffects, 1f, volume);
     }
 
+    public void FadeMusic(float duration, float volume)
+    {
+        Fade(audioMusic, duration, volume);
+    }
+
     private void Fade(AudioSource source, float duration, float volume)
     {
         StartCoroutine(StartFade(source, duration, volume));

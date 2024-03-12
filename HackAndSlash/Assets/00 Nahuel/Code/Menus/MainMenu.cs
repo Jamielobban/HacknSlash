@@ -25,6 +25,7 @@ public class MainMenu : BaseMenu<MainMenu>
 
     private void ActiveScene()
     {
+        AudioManager.Instance.FadeMusic(1f, 0f);
         if (GameManager.Instance.isTutorialCompleted)
         {
             GameManager.Instance.UpdateState(Enums.GameState.Playing);

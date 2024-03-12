@@ -22,6 +22,9 @@ public abstract class EventMap : Interactive, IInteractable
     protected Enums.EventState _currentEventState;
     protected int currentRound = 0;
     public Enums.EventState CurrentEventState => _currentEventState;
+
+    public EventsManager manager;
+
     public void Interact()
     {
         if (!canInteract) return;
@@ -73,10 +76,11 @@ public abstract class EventMap : Interactive, IInteractable
             if(timer < 0)
                 timer = 0;
 
-            string minutos = ((int)(timer / 60)).ToString();
-            string segundos = ((int)(timer%60)).ToString();
+            int minutos = ((int)(timer / 60));
+            int segundos = ((int)(timer % 60));
+
             foreach (TextMeshProUGUI tmp in timersText)
-                tmp.text = minutos + " : " + segundos;
+                tmp.text = minutos.ToString("00") + " : " + segundos.ToString("00");
         }        
 
         canInteract = _currentEventState == Enums.EventState.INACTIVE && timer <= 0;
@@ -121,6 +125,7 @@ public abstract class EventMap : Interactive, IInteractable
         timer = timeToRestart;
         objectiveMarker.SetActive(true);
         ManagerEnemies.Instance.EndEvent();
+        AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
         //FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted(); TODO: Show event failed
         forceField.SetSpeed(-0.2f);
         foreach (BoxCollider col in tangentColliders)
@@ -131,6 +136,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void FinishEvent()
     {
+        manager.SetCurrentCompletedEvents();
         ManagerEnemies.Instance.EndEvent();
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
 

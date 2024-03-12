@@ -42,6 +42,7 @@ public class NaveMov : MonoBehaviour
         DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 1f, fadeInDuration).SetEase(Ease.Linear);        
         yield return new WaitForSeconds(fadeInDuration + 0.3f);
         canvasLoadingBar.SetActive(true);
+        AudioManager.Instance.FadeMusic(1.5f, 0f);
         Invoke(nameof(ActivateScene), 1f);
     }
 

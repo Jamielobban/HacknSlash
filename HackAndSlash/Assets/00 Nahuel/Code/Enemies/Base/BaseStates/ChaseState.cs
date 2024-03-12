@@ -5,6 +5,8 @@ public class ChaseState : EnemyState
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
+        _enemy.sound.monsterFootStep.volume = 1f;
+        _enemy.sound.monsterFootStep.Play();
     }
     public override void UpdateState(Enemy enemy)
     {
@@ -24,5 +26,6 @@ public class ChaseState : EnemyState
     public override void ExitState(Enemy enemy)
     {
         base.ExitState(enemy);
+        _enemy.sound.FadeFootSteps(.25f);
     }
 }
