@@ -120,7 +120,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
 
         if (currentState == Enums.TutorialState.INACTIVE)
-            StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 3,
+            StartCoroutine(StartPhase(Enums.TutorialState.JUMPS, 1,
             () => {
                 canInteract = false;
                 currentText++;
@@ -339,26 +339,26 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     }
     private void Jump_performed(InputAction.CallbackContext context)
     {
-        jumpsDone += 1;
-        int ind = jumpsDone;
+        //jumpsDone += 1;
+        //int ind = jumpsDone;
 
-        DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
+        DOVirtual.Color(uiCombosImage[0].color, Color.green, 1f, (color) =>
         {
-            uiCombosImage[ind].color = color;
+            uiCombosImage[0].color = color;
         }).SetEase(Ease.InOutSine);
 
-        if (ind >= 2)
+        //if (ind >= 2)
+        //{
+        StartCoroutine(StartPhase(Enums.TutorialState.SPRINT, 1, () =>
         {
-            StartCoroutine(StartPhase(Enums.TutorialState.SPRINT, 1, () =>
-            {
-                _playerActions.Player.Jump.performed -= Jump_performed;
-            }, () =>
-            {
-                _playerActions.Player.R2Pressed.performed += SprintPerformed;
-                _playerActions.Player.Movement.performed += MoveLeftStick_performed;
-                _playerActions.Player.Movement.canceled += MoveLeftStick_canceled;
-            }, 1));
-        }
+            _playerActions.Player.Jump.performed -= Jump_performed;
+        }, () =>
+        {
+            _playerActions.Player.R2Pressed.performed += SprintPerformed;
+            _playerActions.Player.Movement.performed += MoveLeftStick_performed;
+            _playerActions.Player.Movement.canceled += MoveLeftStick_canceled;
+        }, 1));
+        //}
 
     }
     private void RollPerformed(InputAction.CallbackContext context)
@@ -366,16 +366,16 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (!walking)
             return;
 
-        rollsDone += 1;
-        int ind = rollsDone;
+        //rollsDone += 1;
+        //int ind = rollsDone;
 
-        DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
+        DOVirtual.Color(uiCombosImage[0].color, Color.green, 1f, (color) =>
         {
-            uiCombosImage[ind].color = color;
+            uiCombosImage[0].color = color;
         }).SetEase(Ease.InOutSine);
 
-        if (ind >= 2)
-        {
+        //if (ind >= 1)
+        //{
             _playerActions.Player.Dash.performed -= RollPerformed;
             _playerActions.Player.Movement.performed -= MoveLeftStick_performed;
             _playerActions.Player.Movement.canceled -= MoveLeftStick_canceled;
@@ -383,7 +383,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
             StartCoroutine(HideTutorial(() => { canInteract = true; objectiveMarker.SetActive(true); uiCombosImage[0].sprite = emptySprite; }));
             inputsBuffer.Clear();
-        }
+        //}
     }
     private void SprintPerformed(InputAction.CallbackContext context)
     {
@@ -395,7 +395,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 uiCombosImage[0].color = color;
             }).SetEase(Ease.InOutSine);
 
-            StartCoroutine(StartPhase(Enums.TutorialState.ROLLS, 3, () =>
+            StartCoroutine(StartPhase(Enums.TutorialState.ROLLS, 1, () =>
             {
                 _playerActions.Player.R2Pressed.performed -= SprintPerformed;
             }, () =>
