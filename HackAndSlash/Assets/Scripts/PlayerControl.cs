@@ -985,7 +985,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     case Dash.START:
 
-                        if ((Time.time - delayDash) > 0.02f)
+                        if ((Time.time - delayDash) > 0.05f)
                         {
                             playerAnim.speed = 1;
 
@@ -1026,15 +1026,15 @@ public class PlayerControl : MonoBehaviour
 
 
                         }
-                        if ((Time.time - delayDash) > dashDuration- (dashDuration/4))
-                        {
+                        //if ((Time.time - delayDash) > dashDuration- (dashDuration/4))
+                        //{
 
-                            if (CheckIfDash())
-                                break;
+                        //    if (CheckIfDash())
+                        //        break;
 
 
 
-                        }
+                        //}
                         rb.AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
   
@@ -1065,7 +1065,7 @@ public class PlayerControl : MonoBehaviour
 
                         break;
                     case Dash.END:
-                        if ((Time.time - delayDash) > 0.05f)
+                        if ((Time.time - delayDash) > 0.10f)
                         {
                             OnAir = false;
 
@@ -1099,12 +1099,7 @@ public class PlayerControl : MonoBehaviour
                 this.gameObject.layer = 3;
 
 
-                if (CheckIfDash())
-                {
-                    dashDown = true;
 
-                    break;
-                }
                 if (CheckIfJump())
                     break;
 
@@ -1809,7 +1804,7 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfDash()
     {
 
-        if (controller.GetDash() && Time.timeScale != 0)
+        if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
             this.gameObject.layer = 12;
 
@@ -1880,16 +1875,10 @@ public class PlayerControl : MonoBehaviour
             controller.ResetBotonesAtaques();
 
             delayDash = Time.time;
-            if(!OnAir)
-            {
-                playerAnim.CrossFadeInFixedTime("Dash", 0.1f);
-                dashDuration = 0.25f;
-            }
-            else
-            {
-                playerAnim.CrossFadeInFixedTime("DashAir", 0.1f);
-                dashDuration = 0.2f;
-            }
+
+            playerAnim.CrossFadeInFixedTime("Dash", 0.1f);
+            dashDuration = 0.325f;
+
 
             states = States.DASH;
             dash = Dash.START;
