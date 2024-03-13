@@ -12364,6 +12364,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6400022159461683899, guid: 3cc1a7fcaf917ca41b7cbb9161e8640a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7997518552561469117, guid: 3cc1a7fcaf917ca41b7cbb9161e8640a,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8830206895322870140, guid: 3cc1a7fcaf917ca41b7cbb9161e8640a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -28949,7 +28959,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -84744,9 +84754,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToGetItem: 60
-  textTime: {fileID: 687641696}
+  textTime: {fileID: 687641695}
   currentSpawnedEnemies: {fileID: 687641697}
-  currentScoreText: {fileID: 687641695}
+  currentScoreText: {fileID: 687641696}
   spawners:
   - {fileID: 231096998520596031, guid: 998464d03fe55394d973fe3466386082, type: 3}
   enemies:
