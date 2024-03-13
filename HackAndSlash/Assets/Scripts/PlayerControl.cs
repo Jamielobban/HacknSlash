@@ -814,7 +814,7 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region Funcion que devuelve true si el player aterriza
-    bool CheckIfLand()
+    public bool CheckIfLand()
     {
         RaycastHit hit;
         RaycastHit hit2;

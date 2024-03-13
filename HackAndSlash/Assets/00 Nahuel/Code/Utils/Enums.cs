@@ -54,9 +54,10 @@ public class Enums
     };
     public enum TutorialState
     {
-        JUMPS,
+        JUMP,
+        DOUBLEJUMP,
         SPRINT,
-        ROLLS,
+        ROLL,
         COMBOS,
         FINISHED,
         INACTIVE

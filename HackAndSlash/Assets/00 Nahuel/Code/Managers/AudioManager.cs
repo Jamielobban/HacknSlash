@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Enums;
 
 public class AudioManager : MonoBehaviour
 {
@@ -168,7 +169,16 @@ public class AudioManager : MonoBehaviour
         audioFxStopeable.PlayOneShot(_arrayFx[Random.Range(0, _arrayFx.Count)]);
     }
 
+    IEnumerator DelayTime(float delay, System.Action onTimeDelayed)
+    {
+        yield return new  WaitForSeconds(delay);
+        onTimeDelayed();
+    }
 
+    public void PlayDelayFx(Enums.Effects fx, float delayTime) =>  StartCoroutine(DelayTime(delayTime, () => { PlayFx(fx); }));
+    public void PlayDelayMusic(Enums.Music music, float delayTime) => StartCoroutine(DelayTime(delayTime, () => { PlayMusic(music); }));
+    public void PlayDelayMusicFX(Enums.MusicEffects musicFX, float delayTime) => StartCoroutine(DelayTime(delayTime, () => { PlayMusicEffect(musicFX); }));
+    public void PlayDelayStoppeableFX(Enums.Effects fx, float delayTime) => StartCoroutine(DelayTime(delayTime, () => { PlayStopeableFx(fx); }));
 
     private void OnDestroy()
     {
