@@ -652,6 +652,7 @@ public class PlayerControl : MonoBehaviour
 
                     fallStartTime = Time.time;
                     OnAir = true;
+                    healthSystem.IsDamageable = true;
 
                     states = States.JUMP;
                     jump = Jump.FALL;
@@ -834,6 +835,7 @@ public class PlayerControl : MonoBehaviour
                         playerAnim.CrossFadeInFixedTime("Land", 0.3f);
                     states = States.JUMP;
                     OnAir = false;
+                    healthSystem.IsDamageable = true;
 
                     jump = Jump.LAND;
                     Invoke("ActiveDoubleJump", 0.1f);
@@ -911,6 +913,11 @@ public class PlayerControl : MonoBehaviour
                 //    player.transform.LookAt(enem);
 
                 //}
+                if((Time.time-attackStartTime) > 0.75f && (currentComboAttacks.combo == ComboAtaques.HoldQuadrat|| currentComboAttacks.combo == ComboAtaques.HoldTriangle))
+                {
+                    healthSystem.IsDamageable = false;
+
+                }
 
                 if (CheckIfNextAttack())
                 {
@@ -1806,6 +1813,7 @@ public class PlayerControl : MonoBehaviour
 
         if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
+            healthSystem.IsDamageable = false;
             this.gameObject.layer = 12;
 
             controller.ResetBotonesAtaques();
@@ -1925,6 +1933,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.StartMove() && states != States.MOVE)
         {
+            healthSystem.IsDamageable = true;
+
             states = States.MOVE;
 
             if (controller.RightTriggerPressed())
@@ -1978,6 +1988,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.StartMove() && states != States.IDLE)
         {
+            healthSystem.IsDamageable = true;
+
             Invoke("EndRun", 0.25f);
             states = States.IDLE;
             moves = Moves.IDLE;
