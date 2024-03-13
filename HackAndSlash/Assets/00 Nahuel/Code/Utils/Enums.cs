@@ -110,7 +110,8 @@ public class Enums
         MonsterFootstep, MonsterFootstep1, MonsterFootstep2,
         DeadWolf1,DeadWolf2,
         RisaMonster,monsterSpeak,monsterSpeak2,
-        OpenInventory
+        OpenInventory,
+        MonsterAttack1,MonsterAttack2
 
     };
 
