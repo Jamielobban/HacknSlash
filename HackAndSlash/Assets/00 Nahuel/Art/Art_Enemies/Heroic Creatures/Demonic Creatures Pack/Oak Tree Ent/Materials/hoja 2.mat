@@ -21,17 +21,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: hoja 2
-  m_Shader: {fileID: 4800000, guid: 408164c79f25e5f48b9440f3d87534d2, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0ca6dca7396eb48e5849247ffd444914, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_ValidKeywords:
+  - _NORMALMAP
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -45,11 +51,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 8ef1069caf6155045acc09971f8ca92e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4585d4d78643cf9458b7f65572608e02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 5144c517ed817e543a1a15852a612363, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a732a591e085e7469d4d602828eb8a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -73,11 +79,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8ef1069caf6155045acc09971f8ca92e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4585d4d78643cf9458b7f65572608e02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: b87bd0148b8d21a4aa0ca0de72f5cc50, type: 3}
+        m_Texture: {fileID: 2800000, guid: 01ea510706dfd354f9bfc2163df56635, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise:
@@ -93,7 +99,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e89e9c6528c4f8241a994062a610f752, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -127,11 +133,15 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 1
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DarkAreaPower: 3.24
     - _DarkAreaScale: 0.34
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DissolveColorPower: -0.2
     - _DissolvePower: 0
@@ -140,13 +150,16 @@ Material:
     - _DissolveTiling: 18.25
     - _DstBlend: 10
     - _DstBlendAlpha: 10
+    - _EnvironmentReflections: 1
     - _FRPower: 1
     - _FRScale: 1
     - _FirstTextureHight: -0.97
     - _FirstTextureScale: 0.54
     - _FirstTextureTiling: 14.13
+    - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
+    - _GlossyReflections: 0
     - _Invert: 0
     - _LineWidth: 0
     - _Metallic: 0.064
@@ -167,12 +180,15 @@ Material:
     - _Shininess: 0.065
     - _Smoothness: 0.253
     - _SmoothnessSource: 1
+    - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _UVSec: 0
+    - _WindQuality: 0
+    - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
@@ -182,6 +198,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _FirstTextureColor: {r: 0.38041517, g: 0.5349588, b: 2.270603, a: 0}
     - _FresnelColor: {r: 0, g: 0, b: 0, a: 0}
+    - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _NoiseEmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _SecondTextureColor: {r: 0.38041517, g: 0.5349588, b: 2.270603, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

@@ -1,4 +1,5 @@
 using MoreMountains.Tools;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,13 +13,28 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     public GameObject loadingBar;
     public Image loadingFill;
 
+    public List<GameObject> bloodImages = new List<GameObject>();
+    public GDTFadeEffect fadeOutLowHp;
+    public AudioSource lowHpAudio;
+
+    public GameObject onDie;
+
     public float CurrentHealth
     {
         get { return _currentHealth; }
     }
     private void Awake()
     {
+        lowHpAudio = GetComponent<AudioSource>();   
+        lowHpAudio.Stop();
         _player = transform.parent.GetComponent<PlayerControl>();
+        GameObject parent = GameObject.Find("BloodParent");
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            GameObject child = parent.transform.GetChild(i).gameObject;
+            bloodImages.Add(child);
+            child.SetActive(false);
+        }
     }
     private void Start()
     {
@@ -46,9 +62,17 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
+        if (_currentHealth != maxHealth)
+        {
+            _player.healPixel.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), amount);
+        }
         _currentHealth += amount;
 
-        _player.healPixel.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), amount);
+        if ((_currentHealth > maxHealth * 0.25) && bloodImages[2].activeSelf)
+        {
+            lowHpAudio.Stop();
+            SetFadeOutBloodHard();
+        }
 
         if (_currentHealth >= maxHealth)
         {
@@ -66,12 +90,13 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.states = PlayerControl.States.HIT;
 
         _player.HitEffect();
-
+        SetBloodEffect();
         _currentHealth -= damage;
         if(GameManager.Instance.state != Enums.GameState.Tutorial)
         {
             if (_currentHealth <= 0)
             {
+                lowHpAudio.Stop();
                 _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
                 _currentHealth = 0;
                 Die();
@@ -79,15 +104,42 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         }
         else
         {
-            if (_currentHealth <= maxHealth * 0.2f)
+            if (_currentHealth <= maxHealth * 0.3f)
             {
+                lowHpAudio.Stop();
                 _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
-                _currentHealth = maxHealth * 0.2f;
+                _currentHealth = maxHealth * 0.3f;
             }
         }
 
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
+
+    private void SetBloodEffect()
+    {
+        if (_currentHealth <= (maxHealth * 0.7) && _currentHealth > (maxHealth * 0.25f))
+        {
+            bloodImages[1].SetActive(true);
+        }
+        else if (_currentHealth <= (maxHealth * 0.25) && _currentHealth > 0)
+        {
+            lowHpAudio.Play();
+            bloodImages[2].SetActive(true);
+        }
+        else
+        {
+            bloodImages[0].SetActive(true);
+        }
+    }
+
+    public void SetFadeOutBloodHard()
+    {
+        if (bloodImages[2].activeSelf)
+        {
+            fadeOutLowHp.StartEffect();
+        }
+    }
+
 
     public void Die()
     {
@@ -95,10 +147,13 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         {
             return;
         }
+        SetFadeOutBloodHard();
         _player.DeadEffect();
         if(GameManager.Instance.state == Enums.GameState.Playing)
         {
-            Invoke(nameof(StartLoadingBar), 1f);
+            onDie.SetActive(true);
+            onDie.GetComponent<GDTFadeEffect>()?.StartEffect();
+            Invoke(nameof(StartLoadingBar), 4f);
         }
     }
 

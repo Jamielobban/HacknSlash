@@ -28,6 +28,8 @@ public class Enemy : PoolableObject
     public MMFeedbacks currentFeedbacksEffect;
     public GameObject spawner;
 
+    public Collider collide { get; private set; }
+
     public bool isDead = false;
     public bool isGrounded = false;
     public bool canAttack = true;
@@ -44,6 +46,7 @@ public class Enemy : PoolableObject
         hud = GetComponent<EnemyHud>();
         movements = GetComponent<EnemyMovement>();
         _player = FindObjectOfType<PlayerControl>();
+        collide = GetComponent<Collider>();
     }
 
     protected virtual void Start()
@@ -54,7 +57,7 @@ public class Enemy : PoolableObject
         events.OnFollowing += () => SetState(gameObject.AddComponent<ChaseState>());
         events.OnAir += () => SetState(gameObject.AddComponent<AirState>());
         events.OnHit += () => { SetState(gameObject.AddComponent<HitState>()); };
-        events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; sound.PlaySoundDead(); };
+        events.OnDie += () => { SetState(gameObject.AddComponent<DeadState>()); isDead = true; sound.PlaySoundDead(); collide.enabled = false; };
 
         ResetEnemy();
     }
@@ -65,9 +68,9 @@ public class Enemy : PoolableObject
     protected virtual void Update()
     {
         currentState?.UpdateState(this);
-        if (Time.frameCount % 10 == 0 && gameObject.activeSelf)
+        if (Time.frameCount % 20 == 0 && gameObject.activeSelf)
         {
-            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 160)
+            if(Mathf.Abs(Vector3.Distance(transform.position, movements.target.position)) >= 80)
             {
                 if (isPooleable)
                 {
@@ -90,13 +93,12 @@ public class Enemy : PoolableObject
     {
         isDead = false;
         healthSystem.ResetHealthEnemy();
+        collide.enabled = true;
         events.Idle();
     }
     private float lastHealth;
     public void UpgradeEnemy(float scaleFactor)
     {
-        //healthSystem.currentMaxHealth = healthSystem.baseMaxHealth.Value + upgradeValue;
-
         lastHealth = healthSystem.currentMaxHealth;
 
         float newHealth = healthSystem.baseMaxHealth.Value * scaleFactor;

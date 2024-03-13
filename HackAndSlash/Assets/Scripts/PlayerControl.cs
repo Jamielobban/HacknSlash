@@ -7,7 +7,6 @@ using System;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using DamageNumbersPro;
-using static UnityEditor.Progress;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -1045,7 +1044,7 @@ public class PlayerControl : MonoBehaviour
                         {
                             if ((hit.distance > 0.25f))
                             {
-                                rb.AddForce(-this.transform.up * 10000 * Time.fixedDeltaTime, ForceMode.Force);
+                                rb.AddForce(-this.transform.up * 10000 * Time.deltaTime, ForceMode.Force);
                             }
                             else
                             {

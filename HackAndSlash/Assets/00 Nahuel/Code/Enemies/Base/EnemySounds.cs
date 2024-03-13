@@ -18,17 +18,19 @@ public class EnemySounds : MonoBehaviour
     
     public void PlaySoundDead() 
     {
-        deadSound3D.PlayOneShot(randomDeadSounds[Random.Range(0, randomDeadSounds.Count)]);
+        if(randomDeadSounds.Count > 0)
+        {
+            deadSound3D.PlayOneShot(randomDeadSounds[Random.Range(0, randomDeadSounds.Count)]);
+        }
     }
     
     void Update()
     {
         _timer += Time.deltaTime;
-        if(_timer> timeToRandomSound ) 
+        if(_timer > timeToRandomSound && randomSoundsAround.Count > 0) 
         {
             randomSound.PlayOneShot(randomSoundsAround[Random.Range(0, randomSoundsAround.Count)]);
-            _timer= 0f;
-           
+            _timer= 0f;           
         }
     }
 

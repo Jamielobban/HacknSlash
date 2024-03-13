@@ -28,8 +28,17 @@ public class HitState : EnemyState
     public override void UpdateState(Enemy enemy)
     {
         _force = _enemy.currentHitEffect.animationCurve.Evaluate(Time.time - _timerCurve);
-        Vector3 playerPosition = _enemy._player.transform.position;
-        Vector3 dir = (transform.position - playerPosition);
+        Vector3 dir = Vector3.zero;
+        if (_enemy._player.currentComboAttacks.combo == PlayerControl.ComboAtaques.HoldQuadrat || _enemy._player.currentComboAttacks.combo == PlayerControl.ComboAtaques.HoldTriangle)
+        {
+            dir = _enemy._player.transform.forward;
+
+        }
+        else
+        {
+            dir = (transform.position - _enemy._player.transform.position); 
+
+        }         
         dir.y = 0;
         _enemy.movements.GetRigidBody().AddForce(dir.normalized * _force * _enemy.movements.hitForce * Time.deltaTime, ForceMode.Force);
         if(Physics.Raycast(transform.position, Vector3.down, out _hit, 50f, LayerMask.GetMask("Ground")))

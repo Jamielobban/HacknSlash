@@ -28,9 +28,6 @@ public class Inventory : MonoBehaviour
             items.Add(new ItemSlotInfo(null, 0));
         }
 
-        inventorymenu.SetActive(true);
-        RefreshInventory();
-        inventorymenu.SetActive(false);
     }
 
     void Update()
