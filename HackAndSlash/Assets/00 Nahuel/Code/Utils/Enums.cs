@@ -59,6 +59,7 @@ public class Enums
         SPRINT,
         ROLL,
         COMBOS,
+        COMBOSAIR,
         FINISHED,
         INACTIVE
     }
