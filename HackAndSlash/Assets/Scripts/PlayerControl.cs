@@ -652,6 +652,7 @@ public class PlayerControl : MonoBehaviour
 
                     fallStartTime = Time.time;
                     OnAir = true;
+                    healthSystem.IsDamageable = true;
 
                     states = States.JUMP;
                     jump = Jump.FALL;
@@ -814,7 +815,7 @@ public class PlayerControl : MonoBehaviour
     #endregion
 
     #region Funcion que devuelve true si el player aterriza
-    bool CheckIfLand()
+    public bool CheckIfLand()
     {
         RaycastHit hit;
         RaycastHit hit2;
@@ -834,6 +835,7 @@ public class PlayerControl : MonoBehaviour
                         playerAnim.CrossFadeInFixedTime("Land", 0.3f);
                     states = States.JUMP;
                     OnAir = false;
+                    healthSystem.IsDamageable = true;
 
                     jump = Jump.LAND;
                     Invoke("ActiveDoubleJump", 0.1f);
@@ -911,6 +913,11 @@ public class PlayerControl : MonoBehaviour
                 //    player.transform.LookAt(enem);
 
                 //}
+                if((Time.time-attackStartTime) > 0.75f && (currentComboAttacks.combo == ComboAtaques.HoldQuadrat|| currentComboAttacks.combo == ComboAtaques.HoldTriangle))
+                {
+                    healthSystem.IsDamageable = false;
+
+                }
 
                 if (CheckIfNextAttack())
                 {
@@ -985,7 +992,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     case Dash.START:
 
-                        if ((Time.time - delayDash) > 0.02f)
+                        if ((Time.time - delayDash) > 0.05f)
                         {
                             playerAnim.speed = 1;
 
@@ -1026,15 +1033,15 @@ public class PlayerControl : MonoBehaviour
 
 
                         }
-                        if ((Time.time - delayDash) > dashDuration- (dashDuration/4))
-                        {
+                        //if ((Time.time - delayDash) > dashDuration- (dashDuration/4))
+                        //{
 
-                            if (CheckIfDash())
-                                break;
+                        //    if (CheckIfDash())
+                        //        break;
 
 
 
-                        }
+                        //}
                         rb.AddForce(dirDash * dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
   
@@ -1065,7 +1072,7 @@ public class PlayerControl : MonoBehaviour
 
                         break;
                     case Dash.END:
-                        if ((Time.time - delayDash) > 0.05f)
+                        if ((Time.time - delayDash) > 0.10f)
                         {
                             OnAir = false;
 
@@ -1099,12 +1106,7 @@ public class PlayerControl : MonoBehaviour
                 this.gameObject.layer = 3;
 
 
-                if (CheckIfDash())
-                {
-                    dashDown = true;
 
-                    break;
-                }
                 if (CheckIfJump())
                     break;
 
@@ -1809,8 +1811,9 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfDash()
     {
 
-        if (controller.GetDash() && Time.timeScale != 0)
+        if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
+            healthSystem.IsDamageable = false;
             this.gameObject.layer = 12;
 
             controller.ResetBotonesAtaques();
@@ -1880,16 +1883,10 @@ public class PlayerControl : MonoBehaviour
             controller.ResetBotonesAtaques();
 
             delayDash = Time.time;
-            if(!OnAir)
-            {
-                playerAnim.CrossFadeInFixedTime("Dash", 0.1f);
-                dashDuration = 0.25f;
-            }
-            else
-            {
-                playerAnim.CrossFadeInFixedTime("DashAir", 0.1f);
-                dashDuration = 0.2f;
-            }
+
+            playerAnim.CrossFadeInFixedTime("Dash", 0.1f);
+            dashDuration = 0.325f;
+
 
             states = States.DASH;
             dash = Dash.START;
@@ -1936,6 +1933,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.StartMove() && states != States.MOVE)
         {
+            healthSystem.IsDamageable = true;
+
             states = States.MOVE;
 
             if (controller.RightTriggerPressed())
@@ -1989,6 +1988,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (!controller.StartMove() && states != States.IDLE)
         {
+            healthSystem.IsDamageable = true;
+
             Invoke("EndRun", 0.25f);
             states = States.IDLE;
             moves = Moves.IDLE;

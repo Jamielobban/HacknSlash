@@ -40,7 +40,24 @@ public class Enums
         Attacking,
         Air
     }
-
+    public enum TutorialInputs
+    {
+        Cross,
+        Run,
+        Roll,
+        Square,
+        Triangle,
+        HoldSquare,
+        HoldTriangle,        
+    }
+    public enum TutorialState
+    {
+        MOVEMENTS,
+        COMBOS,
+        AIRCOMBOS,
+        FINISHED,
+        INACTIVE
+    }
     public enum InputsAttack
     {
         Square,
@@ -52,15 +69,6 @@ public class Enums
         AirSquare,
         AirTriangle
     };
-    public enum TutorialState
-    {
-        JUMPS,
-        SPRINT,
-        ROLLS,
-        COMBOS,
-        FINISHED,
-        INACTIVE
-    }
     public enum GameState
     {
         Menu,
@@ -109,7 +117,14 @@ public class Enums
         MonsterFootstep, MonsterFootstep1, MonsterFootstep2,
         DeadWolf1,DeadWolf2,
         RisaMonster,monsterSpeak,monsterSpeak2,
-        OpenInventory
+        OpenInventory,
+        MonsterAttack1,MonsterAttack2,
+        ErrorButton,
+        OpenItemsToPick,
+        Selected,
+        SelectItem,
+        OpenItemsToPickEpic,
+        FailEvent,SuccessEvent
 
     };
 
