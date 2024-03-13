@@ -40,7 +40,24 @@ public class Enums
         Attacking,
         Air
     }
-
+    public enum TutorialInputs
+    {
+        Cross,
+        Run,
+        Roll,
+        Square,
+        Triangle,
+        HoldSquare,
+        HoldTriangle,        
+    }
+    public enum TutorialState
+    {
+        MOVEMENTS,
+        COMBOS,
+        AIRCOMBOS,
+        FINISHED,
+        INACTIVE
+    }
     public enum InputsAttack
     {
         Square,
@@ -52,17 +69,6 @@ public class Enums
         AirSquare,
         AirTriangle
     };
-    public enum TutorialState
-    {
-        JUMP,
-        DOUBLEJUMP,
-        SPRINT,
-        ROLL,
-        COMBOS,
-        COMBOSAIR,
-        FINISHED,
-        INACTIVE
-    }
     public enum GameState
     {
         Menu,
