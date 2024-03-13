@@ -157,6 +157,7 @@ public class AbilityPowerManager : MonoBehaviour
     {
         // Add the chosen item to the player's inventory and perform any other actions
         //PlaySound select item
+        AudioManager.Instance.PlayFx(Effects.SelectItem);
         AddItemHere(player, chosenItem);
         inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GiveName()));
         inventory.RefreshInventory();
@@ -192,6 +193,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         option1Button.GetComponent<Animator>().SetTrigger("Normal");
         option2Button.GetComponent<Animator>().SetTrigger("Normal");
         option3Button.GetComponent<Animator>().SetTrigger("Normal");
