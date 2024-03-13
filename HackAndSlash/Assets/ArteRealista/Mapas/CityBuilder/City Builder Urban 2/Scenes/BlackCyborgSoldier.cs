@@ -279,7 +279,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     IEnumerator RestartCombo(System.Action onPhaseRestarted)
     {
-
+        AudioManager.Instance.PlayDelayFx(Effects.ErrorButton, 0);
         yield return new WaitForSeconds(1.3f);
 
         AudioManager.Instance.PlayDelayFx(Enums.Effects.Negativo, 0.5f);

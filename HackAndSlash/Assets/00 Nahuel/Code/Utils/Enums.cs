@@ -111,7 +111,8 @@ public class Enums
         DeadWolf1,DeadWolf2,
         RisaMonster,monsterSpeak,monsterSpeak2,
         OpenInventory,
-        MonsterAttack1,MonsterAttack2
+        MonsterAttack1,MonsterAttack2,
+        ErrorButton
 
     };
 
