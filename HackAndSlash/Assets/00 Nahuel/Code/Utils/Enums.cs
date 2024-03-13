@@ -116,7 +116,8 @@ public class Enums
         OpenItemsToPick,
         Selected,
         SelectItem,
-        OpenItemsToPickEpic
+        OpenItemsToPickEpic,
+        FailEvent,SuccessEvent
 
     };
 
