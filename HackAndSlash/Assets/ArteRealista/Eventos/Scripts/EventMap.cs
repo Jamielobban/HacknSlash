@@ -121,6 +121,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void RestartEvent()
     {
+        AudioManager.Instance.PlayFx(Enums.Effects.FailEvent);
         GetComponent<Collider>().enabled = true;
         timer = timeToRestart;
         objectiveMarker.SetActive(true);
@@ -139,6 +140,8 @@ public abstract class EventMap : Interactive, IInteractable
         manager.SetCurrentCompletedEvents();
         ManagerEnemies.Instance.EndEvent();
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
+        AudioManager.Instance.PlayFx(Enums.Effects.SuccessEvent);
+
 
         FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted();
         forceField.SetSpeed(-0.2f);        

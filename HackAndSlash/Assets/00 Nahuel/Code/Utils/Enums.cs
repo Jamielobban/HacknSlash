@@ -113,7 +113,12 @@ public class Enums
         RisaMonster,monsterSpeak,monsterSpeak2,
         OpenInventory,
         MonsterAttack1,MonsterAttack2,
-        ErrorButton
+        ErrorButton,
+        OpenItemsToPick,
+        Selected,
+        SelectItem,
+        OpenItemsToPickEpic,
+        FailEvent,SuccessEvent
 
     };
 
