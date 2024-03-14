@@ -571,7 +571,6 @@ public class PlayerControl : MonoBehaviour
         currentComboAttack++;
         if (currentComboAttacks.attacks[currentComboAttack].collider != null )
         {
-
             for (int i = 0; i < currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes.Length; i++)
             {
                 stopAttack = false;
@@ -586,10 +585,7 @@ public class PlayerControl : MonoBehaviour
                     slashSuelo = currentComboAttacks.attacks[currentComboAttack].slash[i].transform.GetChild(0).gameObject;
                     Invoke("GuarradaSlashTrianguloAire", time - 0.15f);
                     StartCoroutine(DelayGolpe(time, currentComboAttack, damageMultiplier, damageMult, i));
-
                 }
-
-
             }
         }
         damageMult = 1;
