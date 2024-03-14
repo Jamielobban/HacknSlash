@@ -6,7 +6,8 @@ using UnityEngine;
 public abstract class Interactive : MonoBehaviour
 {
     [Header("INTERACTIVE AREA")]
-    [SerializeField] Material triggerMat, normalMat;
+    [SerializeField] Material triggerMat;
+    [SerializeField] Material normalMat;
     protected bool canInteract = true;
 
     public virtual void ShowObjectInRange()
