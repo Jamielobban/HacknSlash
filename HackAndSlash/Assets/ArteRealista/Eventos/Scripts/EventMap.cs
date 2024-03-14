@@ -85,6 +85,11 @@ public abstract class EventMap : Interactive, IInteractable
         }        
 
         canInteract = _currentEventState == Enums.EventState.INACTIVE && timer <= 0;
+
+        if(canInteract && !objectiveMarker.activeSelf)
+        {
+            objectiveMarker.SetActive(true);
+        }
     }
 
     void StopScale() { scaling = false; }
@@ -129,7 +134,6 @@ public abstract class EventMap : Interactive, IInteractable
         objectiveMarker.SetActive(true);
         ManagerEnemies.Instance.EndEvent();
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
-        //FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted(); TODO: Show event failed
         forceField.SetSpeed(-0.2f);
         foreach (BoxCollider col in tangentColliders)
         {
