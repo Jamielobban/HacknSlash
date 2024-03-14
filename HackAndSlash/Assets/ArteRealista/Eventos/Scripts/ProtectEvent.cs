@@ -27,13 +27,14 @@ public class ProtectEvent : EventMap
 
         if(CurrentEventState == Enums.EventState.PLAYING)
         {
-            RetargetSpawnedEnemies();
             CheckEventState();
         }
     }
     protected override void StartEvent()
     {
         base.StartEvent();
+        RetargetSpawnedEnemies();
+
         enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
         {
