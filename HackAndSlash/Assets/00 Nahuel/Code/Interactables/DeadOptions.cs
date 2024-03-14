@@ -15,6 +15,5 @@ public class DeadOptions : MonoBehaviour, IInteractable
     private void GoToScene()
     {
         GameManager.Instance.LoadLevel(sceneName, loadBarFill);
-
     }
 }

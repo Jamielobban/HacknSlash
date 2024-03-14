@@ -8,9 +8,13 @@ public class EnemyBaseAttack : MonoBehaviour
     protected float _currentTime;
     public Enemy enemy;
     private bool _animationOver;
+
+    public float currentDamage;
+
     protected virtual void Awake()
     {
         _animationOver = false;
+        currentDamage = data.damage.Value;
     }
 
     protected virtual void Start()
@@ -28,6 +32,11 @@ public class EnemyBaseAttack : MonoBehaviour
                 ResetAbility();
             }
         }
+    }
+    public void UpgradeAttack(float scale)
+    {
+        float newDmg = data.damage.Value * scale;
+        currentDamage = newDmg;
     }
 
     public virtual void Use()

@@ -72,7 +72,7 @@ public class ManagerEnemies : MonoBehaviour
     #endregion
 
     public float maxMultiplierLife = 30f;
-    public float maxMultiplierAttack = 2f;
+    public float maxMultiplierAttack = 1.8f;
     public float timeToReachMax = 1800f;
 
     private void Awake()
@@ -94,13 +94,13 @@ public class ManagerEnemies : MonoBehaviour
 
             float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
             scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
-           // scaleDamageMultiplier = Mathf.Lerp(1, 2, lerpFactor);
+            scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
             //Take All enemies and Upgrade them (?)
             foreach (var pool in parentObjectPools)
             {
                 for (int i = 0; i < pool.transform.childCount; i++)
                 {
-                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier);
+                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
                 }
             }
 

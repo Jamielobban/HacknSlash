@@ -79,7 +79,7 @@ public class EnemyMovement : MonoBehaviour
             StartCoroutine(_enemy.animations.IncreaseOverTime(0f, 1f));
         }
 
-        _agent.destination = GameManager.Instance.Player.gameObject.transform.position;
+        _agent.destination = target.position;
         HandleRotation();
     }
 

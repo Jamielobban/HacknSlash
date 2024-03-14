@@ -12,6 +12,8 @@ public class EventsManager : MonoBehaviour
     int currentCompletedEvents = 0;
     public TextMeshProUGUI eventsText;
 
+    public GameObject onWin;
+    public GameObject text;
 
     private void Awake()
     {        
@@ -44,6 +46,13 @@ public class EventsManager : MonoBehaviour
         if(CheckAllEventsCompleted())
         {
             //Si todos eventos completos unlock final boss / win
+            onWin?.SetActive(true);
+            text?.SetActive(true);
+        }
+
+        if(Input.GetKeyDown(KeyCode.P) && Input.GetKeyDown(KeyCode.O))
+        {
+            currentCompletedEvents = numEventsToComplete;
         }
     }
 

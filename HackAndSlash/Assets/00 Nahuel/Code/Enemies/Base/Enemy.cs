@@ -96,13 +96,18 @@ public class Enemy : PoolableObject
         events.Idle();
     }
     private float lastHealth;
-    public void UpgradeEnemy(float scaleFactor)
+    public void UpgradeEnemy(float scaleFactorHP, float scaleFactorDmg)
     {
         lastHealth = healthSystem.currentMaxHealth;
 
-        float newHealth = healthSystem.baseMaxHealth.Value * scaleFactor;
+        float newHealth = healthSystem.baseMaxHealth.Value * scaleFactorHP;
         Debug.Log(newHealth);
         healthSystem.currentMaxHealth = newHealth;
+
+        foreach (var attack in attackHolder.attacks)
+        {
+            attack.UpgradeAttack(scaleFactorDmg);
+        }
 
         if(gameObject.activeSelf)
         {
