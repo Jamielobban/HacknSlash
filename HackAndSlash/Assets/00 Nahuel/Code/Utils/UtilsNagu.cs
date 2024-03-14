@@ -70,9 +70,12 @@ public static class UtilsNagu
         List<GameObject> withoutInactive = new List<GameObject>();
         foreach (GameObject item in list)
         {
-            if (item.activeSelf && item != null)
+            if(item!=null)
             {
-                withoutInactive.Add(item);
+                if (item.activeSelf)
+                {
+                    withoutInactive.Add(item);
+                }
             }
         }
         list = withoutInactive;
