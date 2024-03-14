@@ -46,8 +46,8 @@ public class Enums
         Run,
         Roll,
         Square,
-        Triangle,
         HoldSquare,
+        Triangle,
         HoldTriangle,        
     }
     public enum TutorialState

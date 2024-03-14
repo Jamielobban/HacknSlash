@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-    //InteractiveColor
+    [Header("INTERACTIVE AREA")]
     [SerializeField] Material triggerMat, normalMat;
     protected bool canInteract = true;
 
