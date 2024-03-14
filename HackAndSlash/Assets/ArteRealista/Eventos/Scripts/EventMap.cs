@@ -7,12 +7,10 @@ using TMPro;
 
 public abstract class EventMap : Interactive, IInteractable
 {
-    [SerializeField] GameObject objectiveMarker;    
-    [SerializeField] List<MeshRenderer> renderers;
-    [SerializeField] List<Material> normalMats;
-    [SerializeField] List<Material> triggerMats;
+    [SerializeField] GameObject objectiveMarker;        
     [SerializeField] Transform timers;
     [SerializeField] protected ForceFieldController forceField;
+    [SerializeField] AudioSource noiseSound;
     public float timeToActivate, timeToRestart;
 
     bool scaling = false;
@@ -93,22 +91,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
 
     void StopScale() { scaling = false; }
-
-    public override void ShowObjectInRange()
-    {
-        for(int i = 0; i < renderers.Count; i++)
-        {
-            renderers[i].material = triggerMats[i];
-        }
-    }
-
-    public override void HideObjectInRange()
-    {
-        for (int i = 0; i < renderers.Count; i++)
-        {
-            renderers[i].material = normalMats[i];
-        }
-    }
+    
     protected virtual void StartEvent()
     {
         AudioManager.Instance.PlayFx(Enums.Effects.Evento);
@@ -155,6 +138,9 @@ public abstract class EventMap : Interactive, IInteractable
             col.isTrigger = true;
         }
         _currentEventState = Enums.EventState.FINISHED;
+        noiseSound.enabled = false;
+        foreach(Material mat in normalMats)
+            mat.DOFloat(0, "EmissiveMapForce", 0.5f);
     }
     protected void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders)
     {
