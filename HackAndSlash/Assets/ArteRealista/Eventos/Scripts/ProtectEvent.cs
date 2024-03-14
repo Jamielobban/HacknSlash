@@ -77,6 +77,10 @@ public class ProtectEvent : EventMap
         {
             spawner.allEnemiesSpawned = false;
             spawner.gameObject.SetActive(false);
+            for (int i = 0; i < spawner.enemiesFromThisSpawner.Count; i++)
+            {
+                spawner.enemiesFromThisSpawner[i].events.Die();
+            }
             spawner.enemiesFromThisSpawner.Clear();
         }
 
@@ -125,11 +129,6 @@ public class ProtectEvent : EventMap
     {
         foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
         {
-            if (e.isDead)
-                continue;
-
-            e.movements.useMovementPrediction = false;
-
             bool isCorrected = false;
 
             if (toPillar)
@@ -150,7 +149,6 @@ public class ProtectEvent : EventMap
             {
                 if (e.movements.target != GameManager.Instance.Player.transform)
                     e.movements.target = GameManager.Instance.Player.transform;
-
             }
             
         }

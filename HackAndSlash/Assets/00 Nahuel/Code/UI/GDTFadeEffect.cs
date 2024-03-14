@@ -22,6 +22,7 @@ public class GDTFadeEffect : MonoBehaviour
     private bool goingToLast;
     public bool loop = false;
     public bool deactiveParent = false;
+    public bool reset = false;
     void OnEnable()
     {
         halfCycle = false;
@@ -174,7 +175,10 @@ public class GDTFadeEffect : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-
+        if(reset)
+        {
+            blackImage.color = Color.Lerp(firstColor, lastColor, 255);
+        }
     }
 
     private void HalfCycleDelay()

@@ -17,7 +17,7 @@ public class EventsManager : MonoBehaviour
     {        
         eventsHolders = GameObject.FindGameObjectsWithTag("Event").Select(go => go.transform).ToArray();
 
-        int secondsIncrementToUnlock = secondsToUnlockBase;
+        int secondsIncrementToUnlock = 0;
         for (int i = 0; i < eventsHolders.Length; i++)
         {
             GameObject go = Instantiate(eventsPrefabs[Random.Range(0, eventsPrefabs.Count())], eventsHolders[i]);

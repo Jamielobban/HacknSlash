@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasAnnouncements : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class CanvasAnnouncements : MonoBehaviour
     private void DeactiveEvent()
     {
         eventCompleted.SetActive(false);
+        foreach (var fade in fadeEffectsCompleted)
+        {
+            fade.gameObject.GetComponent<Image>().color = Color.Lerp(fade.firstColor, fade.lastColor, 255);
+        }
         AbilityPowerManager.instance.ShowNewOptions();
     }
     public void ShowEventDefeated()
@@ -46,8 +51,11 @@ public class CanvasAnnouncements : MonoBehaviour
     }
     private void DeactiveEventDefeated()
     {
+        foreach (var fade in fadeEffectsCompleted)
+        {
+            fade.gameObject.GetComponent<Image>().color = Color.Lerp(fade.firstColor, fade.lastColor, 255);
+        }
         eventDefeated.SetActive(false);
-
     }
 
 }

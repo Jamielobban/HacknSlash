@@ -14,16 +14,19 @@ public class ObjectShake : MonoBehaviour
 
     void Update()
     {
-        if (shakeDuration > 0)
+        if(Time.timeScale != 0)
         {
-            transform.localPosition = originalPosition + Random.insideUnitSphere * shakeMagnitude;
+            if (shakeDuration > 0)
+            {
+                transform.localPosition = originalPosition + Random.insideUnitSphere * shakeMagnitude;
 
-            shakeDuration -= Time.deltaTime;
-        }
-        else
-        {
-            shakeDuration = 0f;
-            transform.localPosition = originalPosition;
+                shakeDuration -= Time.deltaTime;
+            }
+            else
+            {
+                shakeDuration = 0f;
+                transform.localPosition = originalPosition;
+            }
         }
     }
 

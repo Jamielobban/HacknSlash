@@ -156,7 +156,7 @@ public class EnemyMovement : MonoBehaviour
         if(_agent.path.corners.Length > 0 && _agent.velocity.magnitude > 0)
         {
             Quaternion rotation = Quaternion.LookRotation(_agent.velocity.normalized); // 5f -> RotationSpeed
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5f * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 9f * Time.deltaTime);
         }
     }
 

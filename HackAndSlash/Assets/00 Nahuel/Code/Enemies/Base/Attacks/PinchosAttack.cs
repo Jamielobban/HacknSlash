@@ -13,7 +13,7 @@ public class PinchosAttack : MonoBehaviour
         Vector3 direction = (player.transform.position - transform.position).normalized;
 
         direction.y = 0;
-
+        GameManager.Instance.Player.rb.drag = 15;
         player.GetComponent<Rigidbody>().AddForce(direction * knockbakcForce, ForceMode.Impulse);
     }
 }
