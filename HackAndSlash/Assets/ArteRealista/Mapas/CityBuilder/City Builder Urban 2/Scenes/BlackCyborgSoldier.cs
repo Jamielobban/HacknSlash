@@ -35,6 +35,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     int jumpsDone = -1, rollsDone = -1, lastBufferSize = 0;
     float lastAttackTime = 0, lastDoubleJumpTime = 0;
     bool _isL2Performed;
+    bool airComboDone = false;
 
     [Header("GAMELOOP AREA")]
     public GameObject objectiveMarker;
@@ -82,7 +83,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if ((currentTutorialGeneralPhase == TutorialState.MOVEMENTS && currentInputsListIndex == 1) || currentTutorialGeneralPhase == TutorialState.AIRCOMBOS)
         {
-            if (jumpsDone >= 0 && Time.time - lastDoubleJumpTime >= 0.3f && _player.CheckIfLand())
+            if (jumpsDone >= 0 && Time.time - lastDoubleJumpTime >= 0.3f && _player.CheckIfLand() && !airComboDone)
             {
                 jumpsDone = -1;
                 _playerActions.Player.Jump.performed -= DoubleJump_performed;
@@ -96,6 +97,16 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                 {
                     _playerActions.Player.Jump.performed += DoubleJump_performed;
                 }));
+            }
+            else if (airComboDone)
+            {
+                jumpsDone = -1;
+                airComboDone = false;
+                DOVirtual.Color(uiCombosImage[1].color, Color.green, 1f, (color) =>
+                {
+                    uiCombosImage[1].color = color;
+                }).SetEase(Ease.InOutSine);
+                ComboCompleted();
             }
         }
         else if (currentTutorialGeneralPhase == Enums.TutorialState.COMBOS)
@@ -389,8 +400,13 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     private void DoubleJump_performed(InputAction.CallbackContext context)
     {
+
         lastDoubleJumpTime = Time.time;
         jumpsDone += 1;
+
+        if (jumpsDone > 0 && currentTutorialGeneralPhase == TutorialState.AIRCOMBOS)
+            return;
+
         int ind = jumpsDone;
 
         DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
@@ -414,17 +430,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
                     _playerActions.Player.Movement.canceled += MoveLeftStick_canceled;
                 }, 1));
             }
-            else
-            {
-                StartCoroutine(StartPhase(Enums.TutorialState.AIRCOMBOS, 1, () =>
-                {
-                    currentInputsListIndex++;
-                    _playerActions.Player.Jump.performed -= DoubleJump_performed;
-                }, () =>
-                {
-                    _playerActions.Player.Jump.performed += DoubleJump_performed;
-                }, 1));
-            }
+            
         }
 
     }
@@ -477,6 +483,9 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     void SquarePressed() { 
         inputsBuffer.Add(Enums.TutorialInputs.Square);
         lastAttackTime = Time.time;
+        if(currentTutorialGeneralPhase == TutorialState.AIRCOMBOS && !_player.CheckIfLand() && currentInputsListIndex == 0)
+            airComboDone = true;
+
     }
     void SquareHolded()
     {
@@ -487,6 +496,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     {
         inputsBuffer.Add(Enums.TutorialInputs.Triangle);
         lastAttackTime = Time.time;
+        if (currentTutorialGeneralPhase == TutorialState.AIRCOMBOS && !_player.CheckIfLand() && currentInputsListIndex == 1)
+            airComboDone = true;
     }
     void TriangleHolded()
     {
@@ -523,6 +534,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         {
             AudioManager.Instance.PlayDelayFx(Enums.Effects.Positivo, 0.4f);
             ChangeTutorialPhase(Enums.TutorialState.FINISHED);
+            _playerActions.Player.Jump.performed -= DoubleJump_performed;
             _player.controller.OnSquarePress -= SquarePressed;
             _player.controller.OnSquareHold -= SquareHolded;
             _player.controller.OnTrianglePress -= TrianglePressed;
@@ -532,12 +544,16 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         else
             StartCoroutine(StartPhase(currentTutorialGeneralPhase, tutorialPhasesInputs[(int)currentTutorialGeneralPhase].collection[currentInputsListIndex].collection.Count(), () =>
             {
+                if(currentTutorialGeneralPhase == TutorialState.AIRCOMBOS)
+                    _playerActions.Player.Jump.performed -= DoubleJump_performed;
                 _player.controller.OnSquarePress -= SquarePressed;
                 _player.controller.OnSquareHold -= SquareHolded;
                 _player.controller.OnTrianglePress -= TrianglePressed;
                 _player.controller.OnTriangleHold -= TriangleHolded;
             }, () =>
             {
+                if (currentTutorialGeneralPhase == TutorialState.AIRCOMBOS)
+                    _playerActions.Player.Jump.performed += DoubleJump_performed;
                 _player.controller.OnSquarePress += SquarePressed;
                 _player.controller.OnSquareHold += SquareHolded;
                 _player.controller.OnTrianglePress += TrianglePressed;
