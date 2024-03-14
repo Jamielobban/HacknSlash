@@ -20,8 +20,14 @@ public class SimpleRTVoiceExample : MonoBehaviour
     public TextMeshProUGUI dialogText; 
    private string uid; //Unique id of the speech
     public bool playing = false;
+    private AudioSource audioSource;
 
-   private void OnEnable()
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnEnable()
    {
       // Subscribe event listeners
       Speaker.Instance.OnVoicesReady += voicesReady;
@@ -44,7 +50,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
    public void Speak(string text, string whoSpeaks)
    {
         playing = true;
-        uid = Speaker.Instance.Speak(text, null, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f); //Speak with the first voice matching the given culture
+        uid = Speaker.Instance.Speak(text, audioSource, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f); //Speak with the first voice matching the given culture
         StartCoroutine(ShowText(text, whoSpeaks));
    }
 

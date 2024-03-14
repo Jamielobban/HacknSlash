@@ -46,7 +46,6 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     Inputs _playerActions;
     private PlayerControl _player;
 
-
     private void Awake()
     {
         if (intro)

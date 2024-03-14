@@ -35,8 +35,12 @@ using UnityEngine.UI;
 
         private void Awake()
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            if(_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
 
             _player = FindObjectOfType<PlayerControl>();
         }
