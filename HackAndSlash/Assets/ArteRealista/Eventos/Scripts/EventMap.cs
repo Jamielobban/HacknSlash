@@ -140,7 +140,7 @@ public abstract class EventMap : Interactive, IInteractable
         _currentEventState = Enums.EventState.FINISHED;
         noiseSound.enabled = false;
         foreach(Material mat in normalMats)
-            mat.DOFloat(0, "EmissiveMapForce", 0.5f);
+            mat.DOFloat(-0.4f, "_EmissiveMapForce", 0.5f);
     }
     protected void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders)
     {

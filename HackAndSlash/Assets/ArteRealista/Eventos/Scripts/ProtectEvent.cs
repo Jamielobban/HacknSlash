@@ -27,13 +27,14 @@ public class ProtectEvent : EventMap
 
         if(CurrentEventState == Enums.EventState.PLAYING)
         {
+            RetargetSpawnedEnemies();
             CheckEventState();
         }
     }
     protected override void StartEvent()
     {
         base.StartEvent();
-        RetargetSpawnedEnemies();
+
 
         enemiesSpawner[currentRound].gameObject.SetActive(true);
         foreach (Transform t in targetsToProtect)
@@ -128,30 +129,20 @@ public class ProtectEvent : EventMap
 
     void RetargetSpawnedEnemies(bool toPillar = true)
     {
+        Transform target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
+
         foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
         {
-            bool isCorrected = false;
+            if (e.movements.target != target)
+                e.movements.target = target;
 
-            if (toPillar)
-            {
-                foreach (Transform t in targetsToProtect)
-                {
-                    if (e.movements.target == t)
-                    {
-                        isCorrected = true;
-                        break;
-                    }
-                }
+            //}
+            //else
+            //{
+            //    if (e.movements.target != GameManager.Instance.Player.transform)
+            //        e.movements.target = GameManager.Instance.Player.transform;
+            //}
 
-                if (!isCorrected)
-                    e.movements.target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
-            }
-            else
-            {
-                if (e.movements.target != GameManager.Instance.Player.transform)
-                    e.movements.target = GameManager.Instance.Player.transform;
-            }
-            
         }
     }    
 }

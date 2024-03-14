@@ -877,7 +877,7 @@ public class PlayerControl : MonoBehaviour
         {
             case States.IDLE:
                 var a = this.transform.position;
-
+                OnAir = false;
                 if (CheckIfDash())
                 {
                     dashDown = false;
@@ -1087,7 +1087,7 @@ public class PlayerControl : MonoBehaviour
             case States.JUMP:
                 ApplyGravity();
                 rb.drag = 5;
-
+                OnAir = true;
                 if (CheckIfJump())
                     break;
 
@@ -1144,6 +1144,8 @@ public class PlayerControl : MonoBehaviour
                     case Jump.LAND:
                         if ((Time.time - timeLanding) > 0.05f)
                         {
+                            OnAir = false;
+
                             //Debug.Log("Landed");
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
@@ -1161,7 +1163,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case States.MOVE:
                 rb.drag = 15;
-
+                OnAir = false;
                 if (CheckIfDash())
                 {
                     dashDown = false;
@@ -1195,7 +1197,7 @@ public class PlayerControl : MonoBehaviour
 
                 break;
             case States.DELAYMOVE:
-
+                OnAir = false;
                 if (CheckIfDash())
                 {
                     dashDown = false;

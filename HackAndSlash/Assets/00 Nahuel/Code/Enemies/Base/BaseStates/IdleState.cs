@@ -11,13 +11,14 @@ public class IdleState : EnemyState
 
     public override void UpdateState(Enemy enemy)
     {
-        if (Time.frameCount % 20 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
-        {
-            _enemy.movements._path = new NavMeshPath();
-            _enemy.movements._isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _enemy.movements._path);
-        }
+        //if (Time.frameCount % 20 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
+        //{
+        //    _enemy.movements._path = new NavMeshPath();
+        //    _enemy.movements._isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _enemy.movements._path);
+        //}
+        //&& _enemy.movements._isPathValid
 
-        if (enemy.movements.InRangeToChase() && _enemy.movements._isPathValid)
+        if (enemy.movements.InRangeToChase() )
         {
             enemy.events.Following();
         }
