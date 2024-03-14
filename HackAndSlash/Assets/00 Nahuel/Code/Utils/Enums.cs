@@ -124,7 +124,8 @@ public class Enums
         Selected,
         SelectItem,
         OpenItemsToPickEpic,
-        FailEvent,SuccessEvent
+        FailEvent,SuccessEvent,
+        PositiveClickTuto
 
     };
 
