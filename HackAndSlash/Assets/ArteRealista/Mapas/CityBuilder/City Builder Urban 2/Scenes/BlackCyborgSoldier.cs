@@ -100,6 +100,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             }
             else if (airComboDone)
             {
+                AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
                 jumpsDone = -1;
                 airComboDone = false;
                 DOVirtual.Color(uiCombosImage[1].color, Color.green, 1f, (color) =>
@@ -269,26 +270,23 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         for (int i = 0; i < 4; i++)
         {
             if (i <= imagesNeeded - 1)
-            {
-                //if (newPhase != Enums.TutorialState.COMBOS)
-                //    uiCombosImage[i].sprite = matchKeyWithUI[(int)newPhase].value;
-                //else
+            {               
                 uiCombosImage[i].sprite = matchKeyWithUI.Where(e => e.key == tutorialPhasesInputs[(int)currentTutorialGeneralPhase].collection[currentInputsListIndex].collection[i]).Select(e =>  e.value).First();
                     
-                //matchKeyWithUI.Where(e => e.key == tutorialPhasesInputs[(int)currentTutorialGeneralPhase].collection[currentInputsListIndex].collection[i]).Select(e => e.value).First();
-
                 if (!uiCombosImage[i].enabled)
                     uiCombosImage[i].enabled = true;
 
                 if (!uiCombosImage[i].gameObject.activeSelf)
                     uiCombosImage[i].gameObject.SetActive(true);
 
-                DOVirtual.Color(uiCombosImage[i].color, Color.white, 0.6f, (col) =>
+                int ind = i;
+
+                DOVirtual.Color(uiCombosImage[ind].color, Color.white, 0.6f, (col) =>
                 {
-                    uiCombosImage[i].color = col;
+                    uiCombosImage[ind].color = col;
                 }).SetEase(Ease.InOutSine);
 
-                yield return new WaitForSeconds(0.6f);
+                //yield return new WaitForSeconds(0.6f);
             }
 
         }        
@@ -385,6 +383,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
             uiCombosImage[0].color = color;
         }).SetEase(Ease.InOutSine);
 
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
 
         StartCoroutine(StartPhase(Enums.TutorialState.MOVEMENTS, 2, () =>
         {
@@ -407,6 +406,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (jumpsDone > 0 && currentTutorialGeneralPhase == TutorialState.AIRCOMBOS)
             return;
 
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
         int ind = jumpsDone;
 
         DOVirtual.Color(uiCombosImage[ind].color, Color.green, 1f, (color) =>
@@ -417,7 +417,6 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (ind >= 1)
         {            
             jumpsDone = -1;
-
             if (currentTutorialGeneralPhase == TutorialState.MOVEMENTS) { 
                 StartCoroutine(StartPhase(Enums.TutorialState.MOVEMENTS, 1, () =>
                 {
@@ -441,6 +440,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (!walking)
             return;
 
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
         AudioManager.Instance.PlayDelayFx(Enums.Effects.Positivo, 0.4f);        
 
         DOVirtual.Color(uiCombosImage[0].color, Color.green, 1f, (color) =>
@@ -462,6 +462,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         if (walking)
         {
+            AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
             DOVirtual.Color(uiCombosImage[0].color, Color.green, 1f, (color) =>
             {
                 uiCombosImage[0].color = color;
@@ -507,6 +508,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
     void StepDone()
     {
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
         int index = inputsBuffer.Count() - 1;
         DOVirtual.Color(uiCombosImage[index].color, Color.green, 1f, (color) =>
         {
