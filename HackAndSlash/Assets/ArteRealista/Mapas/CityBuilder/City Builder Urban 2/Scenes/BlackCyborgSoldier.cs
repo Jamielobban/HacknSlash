@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,7 +42,8 @@ public class BlackCyborgSoldier : Interactive, IInteractable
     public GameObject objectiveMarker;
     [SerializeField] GameObject enemyHealthUI;
     [SerializeField] BoxCollider enemyDamageableCol;
-    [SerializeField] GameObject pyramidTracker;    
+    [SerializeField] GameObject pyramidTracker;
+    [SerializeField] GameObject xCanvas;
    
     Inputs _playerActions;
     private PlayerControl _player;
@@ -148,6 +150,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
 
         voice.Speak(dialogues[currentText], name);
 
+        xCanvas.SetActive(false);
         objectiveMarker.SetActive(false);
 
         Image parentImage = uiCombosImage[0].transform.parent.GetComponent<Image>();
@@ -534,6 +537,7 @@ public class BlackCyborgSoldier : Interactive, IInteractable
         if (currentTutorialGeneralPhase == TutorialState.FINISHED)
         {
             AudioManager.Instance.PlayDelayFx(Enums.Effects.Positivo, 0.4f);
+            AudioManager.Instance.PlayDelayFx(Enums.Effects.TutoEnded, 1.3f);
             ChangeTutorialPhase(Enums.TutorialState.FINISHED);
             _playerActions.Player.Jump.performed -= DoubleJump_performed;
             _player.controller.OnSquarePress -= SquarePressed;
