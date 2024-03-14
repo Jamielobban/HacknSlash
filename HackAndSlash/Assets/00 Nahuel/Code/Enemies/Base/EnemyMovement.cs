@@ -79,17 +79,6 @@ public class EnemyMovement : MonoBehaviour
             StartCoroutine(_enemy.animations.IncreaseOverTime(0f, 1f));
         }
 
-        //if (Time.frameCount % 30 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
-        //{
-        //    _path = new NavMeshPath();
-        //    _isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _path);
-
-        //    if (!_isPathValid && _enemy._player.states != PlayerControl.States.JUMP)
-        //    {
-        //        _enemy.events.Idle();
-        //    }
-        //}
-
         _agent.destination = GameManager.Instance.Player.gameObject.transform.position;
         HandleRotation();
     }
