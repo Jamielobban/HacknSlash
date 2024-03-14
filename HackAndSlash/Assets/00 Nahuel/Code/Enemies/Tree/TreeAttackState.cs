@@ -11,8 +11,7 @@ public class TreeAttackState : AttackState
     }
     public override void UpdateState(Enemy enemy)
     {
-        HandleRotationFacePlayer();
-        if (enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && enemy.movements.InRangeToChase() && enemy.movements.DistanceToPlayer() > 3)
+        if (enemy.attackHolder.attacks[0].IsAtkAnimaitonOver() && enemy.movements.InRangeToChase() && enemy.movements.DistanceToPlayer() > 2.5f)
         {
             enemy.events.Following();
         }
@@ -25,6 +24,8 @@ public class TreeAttackState : AttackState
         {
             if (enemy.attackHolder.attacks[0].IsInRangeToAttack(_enemy.movements.DistanceToPlayer()) && enemy.attackHolder.attacks[0].IsReadToUse() && enemy.canAttack)
             {
+                HandleRotationFacePlayer();
+
                 enemy.attackHolder.UseAbility(0);
             }
         }

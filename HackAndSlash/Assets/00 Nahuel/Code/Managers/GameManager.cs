@@ -117,6 +117,10 @@ using UnityEngine.UI;
         {
             if (!isInMenu)
             {
+                foreach (var feedback in _player.feedbacksPlayer)
+                {
+                    feedback.StopFeedbacks();
+                }
                 _isPaused = !_isPaused;
                 Time.timeScale = _isPaused ? 0 : 1;
             }
@@ -124,6 +128,10 @@ using UnityEngine.UI;
 
         public void PauseMenuGame()
         {
+            foreach (var feedback in _player.feedbacksPlayer)
+            {
+                feedback.StopFeedbacks();
+            }
             isInMenu = true;
             _isPaused = true;
             Time.timeScale = 0;

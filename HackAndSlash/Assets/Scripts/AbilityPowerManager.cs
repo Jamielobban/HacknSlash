@@ -81,14 +81,18 @@ public class AbilityPowerManager : MonoBehaviour
             Destroy(gameObject);
         }
         //comboCount = 0;
+
         _itemManager = GetComponent<ItemManager>();
         player = FindObjectOfType<PlayerControl>();
         inventory = FindObjectOfType<Inventory>();
+
+        InitializeRarityColorMap();
+        SetUpControllerNavigation();
+
         option1Button.onClick.AddListener(OnOption1Clicked);
         option2Button.onClick.AddListener(OnOption2Clicked);
         option3Button.onClick.AddListener(OnOption3Clicked);
-        InitializeRarityColorMap();
-        SetUpControllerNavigation();
+
     }
     private void Start()
     {
@@ -107,28 +111,13 @@ public class AbilityPowerManager : MonoBehaviour
                 ShowNewOptions();
             }
         }
-    }
-
-    public void SetOptionClicked()
-    {
-        if(EventSystem.current != null)
+        if(isOpen && EventSystem.current.currentSelectedGameObject == null)
         {
-            if (EventSystem.current.currentSelectedGameObject == option1Button.gameObject)
-            {
-                OnOption1Clicked();
-            }
-            if (EventSystem.current.currentSelectedGameObject == option2Button.gameObject)
-            {
-                OnOption2Clicked();
-            }
-            if (EventSystem.current.currentSelectedGameObject == option3Button.gameObject)
-            {
-                OnOption3Clicked();
-            }
+            EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
         }
-
-        levelUpEffects.SetActive(false);
     }
+
+
 
     public void OnOption1Clicked()
     {
@@ -155,6 +144,7 @@ public class AbilityPowerManager : MonoBehaviour
 
     private void ChooseItem(Item chosenItem)
     {
+        isOpen = false;
         // Add the chosen item to the player's inventory and perform any other actions
         //PlaySound select item
         AudioManager.Instance.PlayFx(Effects.SelectItem);
@@ -171,7 +161,6 @@ public class AbilityPowerManager : MonoBehaviour
         StartCoroutine(SetActiveFalseCouroutine(itemChoice, 0.3f));
 
         GameManager.Instance.UnPauseMenuGame();
-        isOpen = false;
         Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -193,6 +182,8 @@ public class AbilityPowerManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        StartCoroutine(Activef());
+
         AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         option1Button.GetComponent<Animator>().SetTrigger("Normal");
         option2Button.GetComponent<Animator>().SetTrigger("Normal");
@@ -203,11 +194,11 @@ public class AbilityPowerManager : MonoBehaviour
         itemChoice.SetActive(true);
         isOpen = true;
         menuActive = true;
+
         option1Button.GetComponent<Button>().enabled = true;
         option2Button.GetComponent<Button>().enabled = true;
         option3Button.GetComponent<Button>().enabled = true;
 
-        //player.GetComponent<PlayerInventory>().enabled = false;
         EventSystem.current.SetSelectedGameObject(option1Button.gameObject);
 
         // Generate new items for options
@@ -247,9 +238,18 @@ public class AbilityPowerManager : MonoBehaviour
         currentButton2Rarity.transform.localPosition = Vector3.zero;
         currentButton3Rarity.transform.localPosition = Vector3.zero;
         GameManager.Instance.PauseMenuGame();
-
     }
 
+    private IEnumerator Activef()
+    {
+        option1Button.GetComponent<Button>().interactable = false;
+        option2Button.GetComponent<Button>().interactable = false;
+        option3Button.GetComponent<Button>().interactable = false;
+        yield return new WaitForSecondsRealtime(.75f);
+        option1Button.GetComponent<Button>().interactable = true;
+        option2Button.GetComponent<Button>().interactable = true;
+        option3Button.GetComponent<Button>().interactable = true;
+    }
     private bool CheckItemEqual(Item item1, Item item2)
     {
         if(item1.GiveName() == item2.GiveName())

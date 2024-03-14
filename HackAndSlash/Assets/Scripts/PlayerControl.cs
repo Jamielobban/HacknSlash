@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField]
     LayerMask layerSuelo;
+    public List<MMF_Player> feedbacksPlayer = new List<MMF_Player>();
 
     public PlayerHealthSystem healthSystem;
     public DamageNumber healPixel;

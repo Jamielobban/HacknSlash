@@ -7,6 +7,7 @@ public class TutorialCombat : MonoBehaviour
 {
     [SerializeField] string[] dialoguesIntro;
     [SerializeField] string[] dialoguesItems;
+    [SerializeField] string[] dialoguesChest;
     [SerializeField] string[] dialoguesEvent;
     [SerializeField] string[] endTutorial;
 
@@ -15,16 +16,19 @@ public class TutorialCombat : MonoBehaviour
     public GameObject loadingGo;
     public Image fillLoadingGo;
     public GameObject eventActivable;
+    public GameObject campEnemies;
     
     readonly string name = "Cyborg Sergeant";
 
     private bool hasReadedItems = false;
+    private bool hasReadedChest = false;
     private bool hasReadedEvents = false;
     private bool hasReadEndTutorial = false;
 
     private void Awake()
     {
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
+        campEnemies.SetActive(false);
     }
 
     void Start()
@@ -41,11 +45,20 @@ public class TutorialCombat : MonoBehaviour
             GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesItems));
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 70 && !hasReadedEvents)
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 70 && !hasReadedChest)
+        {
+            hasReadedChest = true;
+            campEnemies.SetActive(true);
+            GameManager.Instance.PauseGame();
+            StartCoroutine(Speak(dialoguesChest));
+        }
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 95 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
-            StartCoroutine(Speak(dialoguesEvent));
             eventActivable.SetActive(true);
+            GameManager.Instance.PauseGame();
+            StartCoroutine(Speak(dialoguesEvent));
+            campEnemies.SetActive(false);
         }
         else if(eventActivable.activeSelf && !hasReadEndTutorial)
         {

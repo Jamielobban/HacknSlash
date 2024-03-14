@@ -53,6 +53,11 @@ public class ProtectEvent : EventMap
 
         foreach (SpawnerBase spawner in enemiesSpawner)
         {
+            foreach (var enemy in spawner.enemiesFromThisSpawner)
+            {
+                enemy.events.Die();
+            }
+            spawner.enemiesFromThisSpawner.Clear();
             spawner.gameObject.SetActive(false);
             spawner.allEnemiesSpawned = false;
         }

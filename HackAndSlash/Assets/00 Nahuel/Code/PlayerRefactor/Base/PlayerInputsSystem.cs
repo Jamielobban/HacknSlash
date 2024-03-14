@@ -174,11 +174,11 @@ public class PlayerInputsSystem : MonoBehaviour
     }
     private void Interact_performed(InputAction.CallbackContext context)
     {
-        if(AbilityPowerManager.instance.menuActive)
-        {
-            AbilityPowerManager.instance.SetOptionClicked();
-        }
-        _player.collision.InteractPerformed();
+        //if(AbilityPowerManager.instance.menuActive)
+        //{
+        //    AbilityPowerManager.instance.SetOptionClicked();
+        //}
+        //_player.collision.InteractPerformed();
     }
     private void LockOn_performed(InputAction.CallbackContext context)
     {

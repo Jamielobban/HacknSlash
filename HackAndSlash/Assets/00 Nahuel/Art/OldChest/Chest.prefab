@@ -222,7 +222,7 @@ Transform:
   - {fileID: 6957597913409687547}
   - {fileID: 5291643696489080941}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2829898230445419006
 Animator:
@@ -258,7 +258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeUnlocked: 0
-  particleSystem: {fileID: 0}
+  particleSystem: {fileID: 7376413343997616359}
+  particle: {fileID: 6955020927174478479}
 --- !u!65 &6909978465281215196
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10570,6 +10571,12 @@ PrefabInstance:
       addedObject: {fileID: 6263654409497064072}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9467a10b94fb3b428cc539326c9579b, type: 3}
+--- !u!1 &6955020927174478479 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1171190231128718, guid: d9467a10b94fb3b428cc539326c9579b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6953869673109934081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6957597913409687547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4294621934706682, guid: d9467a10b94fb3b428cc539326c9579b,
@@ -10698,6 +10705,12 @@ PrefabInstance:
 --- !u!4 &7370848782385867515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4699859197922338, guid: 8652f0d8dce1bd1459ad09e8131ca6b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7375261857852319449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7376413343997616359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1259283466126910, guid: 8652f0d8dce1bd1459ad09e8131ca6b6,
     type: 3}
   m_PrefabInstance: {fileID: 7375261857852319449}
   m_PrefabAsset: {fileID: 0}

@@ -25,6 +25,7 @@ public abstract class EventMap : Interactive, IInteractable
 
     public EventsManager manager;
 
+
     public void Interact()
     {
         if (!canInteract) return;
@@ -40,7 +41,7 @@ public abstract class EventMap : Interactive, IInteractable
         timer = timeToActivate;
         timeToRestart = timeToActivate * 0.5f;
         forceField.SetSpeed(0f);
-        CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
+         CreateTangentColliders(forceField.GetComponentInChildren<SphereCollider>(), 40);
         _currentEventState = Enums.EventState.INACTIVE;
         timersText = timers.GetComponentsInChildren<TextMeshProUGUI>().ToList();
     }
@@ -121,6 +122,7 @@ public abstract class EventMap : Interactive, IInteractable
     }
     protected virtual void RestartEvent()
     {
+        FindObjectOfType<CanvasAnnouncements>()?.ShowEventDefeated(); 
         AudioManager.Instance.PlayFx(Enums.Effects.FailEvent);
         GetComponent<Collider>().enabled = true;
         timer = timeToRestart;
@@ -142,7 +144,6 @@ public abstract class EventMap : Interactive, IInteractable
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
         AudioManager.Instance.PlayFx(Enums.Effects.SuccessEvent);
 
-
         FindObjectOfType<CanvasAnnouncements>()?.ShowEventCompleted();
         forceField.SetSpeed(-0.2f);        
         foreach (BoxCollider col in tangentColliders)
@@ -150,7 +151,7 @@ public abstract class EventMap : Interactive, IInteractable
             col.isTrigger = true;
         }
         _currentEventState = Enums.EventState.FINISHED;
-    }    
+    }
     protected void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders)
     {
         StartCoroutine(CreateTangentCollidersCoroutine(sphereCollider, numberOfColliders));
