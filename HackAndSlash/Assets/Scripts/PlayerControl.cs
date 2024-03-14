@@ -1161,7 +1161,6 @@ public class PlayerControl : MonoBehaviour
                 break;
             case States.MOVE:
                 rb.drag = 15;
-                this.gameObject.layer = 3;
 
                 if (CheckIfDash())
                 {

@@ -30,9 +30,6 @@ public class EnemyMovement : MonoBehaviour
     private bool reached = false;
     #endregion
 
-    [Range(-1, 1)]
-    public float movementsPredictionThreshold = 0;
-    public bool useMovementPrediction = false;
     protected virtual void Awake()
     {
         chaseSight.baseValue = Random.Range(chaseSightMin, chaseSightMax);
@@ -44,8 +41,6 @@ public class EnemyMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _player = FindObjectOfType<PlayerControl>();
         target = _player.transform;
-
-        //useMovementPrediction = Random.value > 0.5f;
     }
 
     private void Start()
@@ -83,7 +78,8 @@ public class EnemyMovement : MonoBehaviour
         {
             StartCoroutine(_enemy.animations.IncreaseOverTime(0f, 1f));
         }
-        //if (Time.frameCount % 20 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
+
+        //if (Time.frameCount % 30 == 0 && _enemy._player.states != PlayerControl.States.JUMP)
         //{
         //    _path = new NavMeshPath();
         //    _isPathValid = _enemy.movements.Agent.CalculatePath(_enemy.movements.target.position, _path);
@@ -93,30 +89,9 @@ public class EnemyMovement : MonoBehaviour
         //        _enemy.events.Idle();
         //    }
         //}
-        if(!useMovementPrediction)
-        {
-            _agent.destination = target.position;
-            HandleRotation();
-        }
-        else
-        {
-            float timeToPlayer = Vector3.Distance(_player.transform.position, transform.position) / _agent.velocity.magnitude;
-            if(timeToPlayer > predictionTime)
-            {
-                timeToPlayer = predictionTime;
-            }
 
-            Vector3 targetPosition = target.position + _player.rb.velocity * timeToPlayer;
-            Vector3 directionToTarget = (targetPosition - transform.position).normalized;
-            Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
-
-            float dot = Vector3.Dot(directionToPlayer, directionToTarget);
-            if(dot < movementsPredictionThreshold)
-            {
-                targetPosition = _player.transform.position;
-            }
-            _agent.SetDestination(targetPosition);
-        }
+        _agent.destination = GameManager.Instance.Player.gameObject.transform.position;
+        HandleRotation();
     }
 
     public void HandlePatrollInArea()
