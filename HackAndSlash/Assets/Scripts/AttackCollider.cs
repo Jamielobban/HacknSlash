@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using DamageNumbersPro;
+using MoreMountains.Feedbacks;
 
 
 public class AttackCollider : MonoBehaviour
@@ -10,6 +11,8 @@ public class AttackCollider : MonoBehaviour
     PlayerControl _player;
     public PlayerControl.HitState state;
     public GameObject[] hitEffect;
+    public GameObject critHitEffect;
+    public MMFeedbacks critHitFeedback;
 
     public List<GameObject> targets;
     void Start()
@@ -38,37 +41,58 @@ public class AttackCollider : MonoBehaviour
         float damage = (int)state * _player.attackDamage;
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
-        if (rand < _player.critChance)
-        {
-            damage *= _player.critDamageMultiplier;
-        }
 
-        //if(_player.currentComboAttacks.combo == PlayerControl.ComboAtaques.air1)
-        //{
         Vector3 pos = _player.gameObject.transform.position;
         pos.y = enemyPos.position.y;
         Vector3 dir = pos - enemyPos.position;
         dir = dir.normalized;
-        dir *= 2;
+        dir *= 0.5f;
 
-
-
-        for (int i = 0; i < hitEffect.Length; i++)
+        if (rand < _player.critChance)
         {
-            hitEffect[i].transform.position = enemyPos.position + dir;
+            damage *= _player.critDamageMultiplier;
+            critHitEffect.transform.position = enemyPos.position + dir;
             if (_player.currentComboAttacks.combo == PlayerControl.ComboAtaques.air1)
             {
-                hitEffect[i].transform.position += new Vector3(0, ((_player.gameObject.transform.position.y - enemyPos.position.y)/4)*3, 0);
+                critHitEffect.transform.position += new Vector3(0, ((_player.gameObject.transform.position.y - enemyPos.position.y) / 4) * 3, 0);
             }
             else
             {
-                hitEffect[i].transform.position += new Vector3(0, 1, 0);
+                critHitEffect.transform.position += new Vector3(0, 1, 0);
 
             }
-            StartCoroutine(ReturnEffect(0.5f, hitEffect[i].transform.GetChild(0).gameObject, hitEffect[i]));
-            hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
-            hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+            StartCoroutine(ReturnEffect(0.5f, critHitEffect.transform.GetChild(0).gameObject, critHitEffect));
+            critHitEffect.transform.GetChild(0).gameObject.SetActive(true);
+            critHitEffect.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+            critHitFeedback.PlayFeedbacks();
         }
+        else
+        {
+            for (int i = 0; i < hitEffect.Length; i++)
+            {
+                hitEffect[i].transform.position = enemyPos.position + dir;
+                if (_player.currentComboAttacks.combo == PlayerControl.ComboAtaques.air1)
+                {
+                    hitEffect[i].transform.position += new Vector3(0, ((_player.gameObject.transform.position.y - enemyPos.position.y) / 4) * 3, 0);
+                }
+                else
+                {
+                    hitEffect[i].transform.position += new Vector3(0, 1, 0);
+
+                }
+                StartCoroutine(ReturnEffect(0.5f, hitEffect[i].transform.GetChild(0).gameObject, hitEffect[i]));
+                hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
+                hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+            }
+        }
+
+        //if(_player.currentComboAttacks.combo == PlayerControl.ComboAtaques.air1)
+        //{
+      
+
+
+
+      
 
 
 
