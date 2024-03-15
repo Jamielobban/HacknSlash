@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 namespace MoreMountains.Feedbacks
 {
 	/// <summary>
@@ -68,7 +65,8 @@ namespace MoreMountains.Feedbacks
 			if (!Active || !FeedbackTypeAuthorized)
 			{
 				return;
-			}
+			}			
+
 			switch (Mode)
 			{
 				case Modes.Shake:

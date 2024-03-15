@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.Rendering;
 
 public class Inventory : MonoBehaviour
 {
-
-
     [SerializeReference] public List<ItemSlotInfo> items = new List<ItemSlotInfo>();
 
     [Space]
@@ -22,23 +17,19 @@ public class Inventory : MonoBehaviour
     [Space]
     public int inventorySize = 14;
 
-    public PlayerStats playerStats;
+    public GameObject itemDescription;
     ControllerManager controller;
-
-    // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindAnyObjectByType<ControllerManager>().GetComponent<ControllerManager>();
+        controller = FindAnyObjectByType<ControllerManager>();
 
         for (int i = 0; i < inventorySize; i++)
         {
             items.Add(new ItemSlotInfo(null, 0));
         }
-        //AddItem(new HealingItem(), 15);
-        //AddItem(new FireDamage(), 15);
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (controller.GetTabButton().action != null)
@@ -49,28 +40,31 @@ public class Inventory : MonoBehaviour
                 {
                     inventorymenu.SetActive(false);
 
+                    if (!AbilityPowerManager.instance.isOpen)
+                    {
+                        GameManager.Instance.UnPauseMenuGame();
+                    }
                 }
                 else
                 {
-                    inventorymenu.SetActive(true);
-                    //AddItem(new HealingItem(), 1);
-                    //Debug.Log("Hola");
-                    RefreshInventory();
+                    if(!GameManager.Instance.isInMenu)
+                    {
+                        inventorymenu.SetActive(true);
+                        AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
+
+                        RefreshInventory();
+
+                        GameManager.Instance.PauseMenuGame();
+                    }
                 }
             }
         }
-        if(Input.GetKeyDown(KeyCode.K))
-        {
 
-                ItemManager.instance.SpawnRandomItem(GameObject.FindObjectOfType<PlayerControl>().transform.position + new Vector3(0f, 5f, 0f));
-
-            
-        }
     }
 
     public void RefreshInventory()
     {
-        playerStats.RefreshStats();
+        //playerStats.RefreshStats();
         existingPanels = itemPanelGrid.GetComponentsInChildren<ItemPanel>().ToList();
 
         if (existingPanels.Count < inventorySize)
@@ -82,39 +76,34 @@ public class Inventory : MonoBehaviour
                 existingPanels.Add(newPanel.GetComponent<ItemPanel>());
             }
         }
-            int index = 0;
-            foreach (ItemSlotInfo i in items)
+        int index = 0;
+        foreach (ItemSlotInfo i in items)
+        {
+            i.name = "" + (index + 1);
+            if (i.item != null) i.name += ": " + i.item.GiveName();
+            else i.name += ": -";
+
+            ItemPanel panel = existingPanels[index];
+            if (panel != null)
             {
-                i.name = "" + (index + 1);
-                if (i.item != null) i.name += ": " + i.item.GiveName();
-                else i.name += ": -";
-
-                ItemPanel panel = existingPanels[index];
-                if (panel != null)
+                panel.name = i.name + " Panel";
+                panel.inventory = this;
+                panel.itemSlot = i;
+                if (i.item != null)
                 {
-                    panel.name = i.name + " Panel";
-                    panel.inventory = this;
-                    panel.itemSlot = i;
-                    if (i.item != null)
-                    {
-                        panel.itemImage.gameObject.SetActive(true);
-                        panel.itemImage.sprite = i.item.GiveSprite();
-                        panel.stacksText.gameObject.SetActive(true);
-                        panel.stacksText.text = " " + i.stacks;
-                        //Debug.Log("refresh");
-                        //Debug.Log(i.stacks);
-                    }
-                    else
-                    {
-                        panel.itemImage.gameObject.SetActive(false);
-
-                        panel.stacksText.gameObject.SetActive(false);
-
-                    }
+                    panel.itemImage.gameObject.SetActive(true);
+                    panel.itemImage.sprite = i.item.GiveSprite();
+                    panel.stacksText.gameObject.SetActive(true);
+                    panel.stacksText.text = " " + i.stacks;
                 }
-                index++;
-            
+                else
+                {
+                    panel.itemImage.gameObject.SetActive(false);
+                    panel.stacksText.gameObject.SetActive(false);
+                }
             }
+            index++;
+        }
     }
     const int max = 99;
     public int AddItem(Item item, int amount)
@@ -133,7 +122,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        i.stacks += amount;
+                        i.stacks = amount;
                         if (inventorymenu.activeSelf) RefreshInventory();
                         return 0;
                     }

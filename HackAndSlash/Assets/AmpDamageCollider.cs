@@ -13,8 +13,8 @@ public class AmpDamageCollider : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             Debug.Log("Enemy inside me");
-            other.GetComponent<EnemySkeletonSword>().health -= ampDamage;
-            DamageNumber ampDamageNumberSpawn = ampDamageNumber.Spawn(other.GetComponent<EnemySkeletonSword>().transform.position, -ampDamage);
+            other.GetComponent<Enemy>().healthSystem.CurrentHealth -= ampDamage;
+            DamageNumber ampDamageNumberSpawn = ampDamageNumber.Spawn(other.GetComponent<Enemy>().transform.position, -ampDamage);
         }
     }
 }

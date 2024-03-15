@@ -4,18 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GolpeVertical
-  - GolpeAire
   - PlayerCenter
-  - GolpeLigero
-  - GolpeFuerte
-  - GolpeVerticalCircular
   - Enemy
   - ItemText
   - ItemImage
   - ItemPopup
   - Slashes
-  - EnemyAttack
+  - Effects
+  - Interactable
+  - GolpeVertical
+  - Event
   layers:
   - Default
   - TransparentFX
@@ -24,17 +22,17 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - Suelo
-  - Invencible
+  - Ground
+  - Damageable
+  - PlayerDealDamage
+  - EnemyDealDamage
+  - PlayerGetDamage
   - PlayerIgnore
-  - PlayerAir
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - emessive
+  - mapa
+  - TrasparentToCamera
+  - Interactable
+  - PlayerCheckGround
   - 
   - 
   - 
@@ -52,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Menu
+    uniqueID: 1494680421
     locked: 0
