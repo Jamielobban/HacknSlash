@@ -30,8 +30,8 @@ public class PlayerInputsSystem : MonoBehaviour
         // -- Attack inputs -- // 
         _action.Player.L2.performed += L2_performed;
         _action.Player.L2.canceled += L2_canceled;
-        _action.Player.Square.performed += Square_performed;
-        _action.Player.Triangle.performed += Triangle_performed;
+        //_action.Player.Square.performed += Square_performed;
+        //_action.Player.Triangle.performed += Triangle_performed;
 
         // -- Camera and Settings inputs -- //
         _action.Player.Rotation.performed += MoveRightStick_performed;
@@ -90,84 +90,84 @@ public class PlayerInputsSystem : MonoBehaviour
     {
         _player.dash.HandleDash();
     }
-    private void Square_performed(InputAction.CallbackContext context)
-    {
-        if(_player.groundCheck.isGrounded)
-        {
-            if (context.interaction is HoldInteraction)
-            {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
-                _player.comboController.inAirCombo = true;
-            }
-            else
-            {
-                if (!_isL2Performed)
-                {
-                    _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
-                }
-                else
-                {
-                    _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Square);
-                }
-            }
-        }
-        else
-        {
-            if (context.interaction is HoldInteraction)
-            {
-                //Chupamela
-            }
-            else
-            {
-                if (!_isL2Performed && _player.comboController.inAirCombo)
-                {
-                    _player.isAirAttacking = true;
-                    _player.animations.Animator.SetBool("isAirAttacking", true);
-                    _player.comboController.AddInputToSequence(Enums.InputsAttack.AirSquare);
-                }
-                else
-                {
-                }
-            }
-        }
+    //private void Square_performed(InputAction.CallbackContext context)
+    //{
+    //    if(_player.groundCheck.isGrounded)
+    //    {
+    //        if (context.interaction is HoldInteraction)
+    //        {
+    //            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldSquare);
+    //            _player.comboController.inAirCombo = true;
+    //        }
+    //        else
+    //        {
+    //            if (!_isL2Performed)
+    //            {
+    //                _player.comboController.AddInputToSequence(Enums.InputsAttack.Square);
+    //            }
+    //            else
+    //            {
+    //                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Square);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (context.interaction is HoldInteraction)
+    //        {
+    //            //Chupamela
+    //        }
+    //        else
+    //        {
+    //            if (!_isL2Performed && _player.comboController.inAirCombo)
+    //            {
+    //                _player.isAirAttacking = true;
+    //                _player.animations.Animator.SetBool("isAirAttacking", true);
+    //                _player.comboController.AddInputToSequence(Enums.InputsAttack.AirSquare);
+    //            }
+    //            else
+    //            {
+    //            }
+    //        }
+    //    }
 
-    }
-    private void Triangle_performed(InputAction.CallbackContext context)
-    {
-        if (_player.groundCheck.isGrounded)
-        {
-            if (context.interaction is HoldInteraction)
-            {
-                _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
-            }
-            else
-            {
-                if (!_isL2Performed)
-                {
-                    _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
-                }
-                else
-                {
-                    _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Triangle);
-                }
-            }
-        }
-        else
-        {
-            if (context.interaction is HoldInteraction)
-            {
-            }
-            else
-            {
-                if (!_isL2Performed)
-                {
-                }
-                else
-                {
-                }
-            }
-        }
-    }
+    //}
+    //private void Triangle_performed(InputAction.CallbackContext context)
+    //{
+    //    if (_player.groundCheck.isGrounded)
+    //    {
+    //        if (context.interaction is HoldInteraction)
+    //        {
+    //            _player.comboController.AddInputToSequence(Enums.InputsAttack.HoldTriangle);
+    //        }
+    //        else
+    //        {
+    //            if (!_isL2Performed)
+    //            {
+    //                _player.comboController.AddInputToSequence(Enums.InputsAttack.Triangle);
+    //            }
+    //            else
+    //            {
+    //                _player.comboController.AddInputToSequence(Enums.InputsAttack.L2Triangle);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (context.interaction is HoldInteraction)
+    //        {
+    //        }
+    //        else
+    //        {
+    //            if (!_isL2Performed)
+    //            {
+    //            }
+    //            else
+    //            {
+    //            }
+    //        }
+    //    }
+    //}
 
     private void Select_performed(InputAction.CallbackContext context)
     {
@@ -194,8 +194,8 @@ public class PlayerInputsSystem : MonoBehaviour
         _action.Player.Jump.performed -= Jump_performed;
         _action.Player.Dash.performed -= Dash_performed;
         _action.Player.L2.performed -= L2_performed;
-        _action.Player.Square.performed -= Square_performed;
-        _action.Player.Triangle.performed -= Triangle_performed;
+        //_action.Player.Square.performed -= Square_performed;
+        //_action.Player.Triangle.performed -= Triangle_performed;
         _action.Player.Rotation.performed -= MoveLeftStick_performed;
         _action.Player.Rotation.canceled -= MoveLeftStick_canceled;
         _action.Player.Select.performed -= Select_performed;

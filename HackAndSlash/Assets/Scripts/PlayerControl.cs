@@ -63,6 +63,15 @@ public class PlayerControl : MonoBehaviour
 
     public int currentScroll;
 
+    public Action OnAirSquarePress;
+    public Action OnAirTrianglePress;
+    public Action OnRunPress;
+    public Action OnDoubleJumpPress;
+    void AirSquarePress() => OnAirSquarePress?.Invoke();
+    void AirTrianglePress() => OnAirTrianglePress?.Invoke();
+    void RunPress() => OnRunPress?.Invoke();
+    void DoubleJumpPress() => OnDoubleJumpPress?.Invoke();
+
     [System.Serializable]
     public struct Ataques
     {
@@ -785,6 +794,7 @@ public class PlayerControl : MonoBehaviour
             }
             else if (!doubleJump && HasDoubleJump)
             {
+                DoubleJumpPress();
                 Move(1);
                 doubleJumpVFX.PlayDoubleJumpVFX(this.transform.position + new Vector3(0f, 4f, 0f));
                 doubleJump = true;
@@ -1576,6 +1586,8 @@ public class PlayerControl : MonoBehaviour
                     moveDirSaved = new Vector3();
                     attacks = Attacks.AIR;
                     currentComboAttacks = GetAttacks(ComboAtaques.air1);
+                    Debug.Log("AirCuadrado");
+                    AirSquarePress();
                     PlayAttack();
                 }               
                 else
@@ -1696,6 +1708,7 @@ public class PlayerControl : MonoBehaviour
 
                     attacks = Attacks.AIR;
                     currentComboAttacks = GetAttacks(ComboAtaques.air2);
+                    AirTrianglePress();
                     PlayAttack();
                 }
                 else if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
@@ -1731,7 +1744,7 @@ public class PlayerControl : MonoBehaviour
 
         if ((Time.time - attackStartTime) >= delay + delayDamage)
         {
-            currentComboAttacks = GetAttacks(ComboAtaques.air1);
+            currentComboAttacks = GetAttacks(ComboAtaques.air1);            
 
         }
 
@@ -1900,7 +1913,10 @@ public class PlayerControl : MonoBehaviour
     void StartRun()
     {
         if (states == States.MOVE && moves == Moves.RUN)
+        {
             runStartFeedback.PlayFeedbacks();
+            RunPress();
+        }
 
     }
     void EndRun()

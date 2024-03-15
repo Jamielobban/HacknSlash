@@ -40,6 +40,19 @@ public class Enums
         Attacking,
         Air
     }
+    public enum TutorialActions
+    {
+        JUMP,
+        DOBLEJUMP,
+        RUN,
+        ROLL,
+        SQUARE,
+        TRIANGLE,
+        HOLDSQUARE,
+        HOLDTRIANGLE,
+        AIRSQUARE,
+        AIRTRIANGLE
+    }
     public enum TutorialInputs
     {
         Cross,

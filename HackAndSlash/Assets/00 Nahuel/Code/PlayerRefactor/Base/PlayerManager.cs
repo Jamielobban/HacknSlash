@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerInventory inventory { get; private set; }
 
     public PlayerCollision collision;
-    public ComboController comboController { get; private set; }
+    //public ComboController comboController { get; private set; }
     public PlayerDash dash { get; private set; }
     public PlayerCombatLockFeel lockCombat { get; private set; }
 
@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour
     {
         _mainCamera = Camera.main;
         inventory = GetComponent<PlayerInventory>();
-        comboController = GetComponent<ComboController>();
+        //comboController = GetComponent<ComboController>();
         rb = GetComponent<Rigidbody>();
         animations = GetComponent<PlayerAnimations>();
         movement = GetComponent<PlayerMovement>();

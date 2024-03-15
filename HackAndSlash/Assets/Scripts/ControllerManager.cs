@@ -72,10 +72,15 @@ public class ControllerManager : MonoBehaviour
     public Action OnSquareHold;
     public Action OnTrianglePress;
     public Action OnTriangleHold;
-    public void SquarePress() => OnSquarePress?.Invoke();
-    public void SquareHold() => OnSquareHold?.Invoke();
-    public void TrianglePress() => OnTrianglePress?.Invoke();
-    public void TriangleHold() => OnTriangleHold?.Invoke();
+    public Action OnDashPerformed;
+    public Action OnJumpPerformed;
+    void SquarePress() => OnSquarePress?.Invoke();
+    void SquareHold() => OnSquareHold?.Invoke();
+    void TrianglePress() => OnTrianglePress?.Invoke();
+    void TriangleHold() => OnTriangleHold?.Invoke();
+    void DashDone()=> OnDashPerformed?.Invoke();
+    void JumpDone()=> OnJumpPerformed?.Invoke();
+
     void Start()
     {
         
@@ -221,6 +226,7 @@ public class ControllerManager : MonoBehaviour
             {
                 jump = true;
                 canJump = false;
+                JumpDone();
             }
 
         }
@@ -382,6 +388,8 @@ public class ControllerManager : MonoBehaviour
                 ResetBotonesAtaques();
 
                 dash = true;
+
+                DashDone();
             }
         }
 
