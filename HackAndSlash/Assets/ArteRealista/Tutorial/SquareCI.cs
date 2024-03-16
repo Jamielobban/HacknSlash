@@ -9,10 +9,20 @@ public class SquareCI : ComboInput
     public override void EndListening()
     {
         _player.controller.OnSquarePress -= InputDone;
+        _player.controller.OnTrianglePress -= InputFailed;
+        _player.controller.OnSquareHold -= InputFailed;
+        _player.controller.OnTriangleHold -= InputFailed;
+        _player.OnAirSquarePress -= InputFailed;
+        _player.OnAirTrianglePress -= InputFailed;
     }
 
     public override void StartListening()
     {
         _player.controller.OnSquarePress += InputDone;
+        _player.controller.OnTrianglePress += InputFailed;
+        _player.controller.OnSquareHold += InputFailed;
+        _player.controller.OnTriangleHold += InputFailed;
+        _player.OnAirSquarePress += InputFailed;
+        _player.OnAirTrianglePress += InputFailed;
     }
 }

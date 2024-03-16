@@ -9,10 +9,12 @@ public class AirSquareCI : ComboInput
     public override void EndListening()
     {
         _player.OnAirSquarePress -= InputDone;
+        _player.OnLand -= InputFailed;
     }
 
     public override void StartListening()
     {
         _player.OnAirSquarePress += InputDone;
+        _player.OnLand += InputFailed;
     }
 }

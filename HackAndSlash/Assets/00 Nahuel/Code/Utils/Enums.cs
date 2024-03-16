@@ -71,6 +71,13 @@ public class Enums
         FINISHED,
         INACTIVE
     }
+    public enum NewTutorialState
+    {
+        INACTIVE,
+        COMBOS,
+        PYRAMIDE,
+        FINISHED
+    }
     public enum InputsAttack
     {
         Square,

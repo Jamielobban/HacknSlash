@@ -9,10 +9,12 @@ public class DoubleJumpCI : ComboInput
     public override void EndListening()
     {
         _player.OnDoubleJumpPress -= InputDone;
+        _player.OnLand -= InputFailed;
     }
 
     public override void StartListening()
     {
         _player.OnDoubleJumpPress += InputDone;
+        _player.OnLand += InputFailed;
     }
 }

@@ -67,10 +67,12 @@ public class PlayerControl : MonoBehaviour
     public Action OnAirTrianglePress;
     public Action OnRunPress;
     public Action OnDoubleJumpPress;
+    public Action OnLand;
     void AirSquarePress() => OnAirSquarePress?.Invoke();
     void AirTrianglePress() => OnAirTrianglePress?.Invoke();
     void RunPress() => OnRunPress?.Invoke();
     void DoubleJumpPress() => OnDoubleJumpPress?.Invoke();
+    void PlayerLand() => OnLand?.Invoke();
 
     [System.Serializable]
     public struct Ataques
@@ -1155,7 +1157,7 @@ public class PlayerControl : MonoBehaviour
                         if ((Time.time - timeLanding) > 0.05f)
                         {
                             OnAir = false;
-
+                            PlayerLand();
                             //Debug.Log("Landed");
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public abstract class Interactive : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public abstract class Interactive : MonoBehaviour
     [SerializeField] protected List<Material> triggerMats;
     [SerializeField] protected List<Material> normalMats;
     protected bool canInteract = true;
+    public void SetCanInteract(bool _canInteract) => canInteract = _canInteract;
+
+    public Action OnInteract;
+    protected void InteractPerformed() => OnInteract?.Invoke();
 
     private void Awake()
     {
@@ -46,4 +51,5 @@ public abstract class Interactive : MonoBehaviour
         for (int i = 0; i < renderers.Count(); i++)
             renderers[i].material = normalMats[i];
     }
+
 }
