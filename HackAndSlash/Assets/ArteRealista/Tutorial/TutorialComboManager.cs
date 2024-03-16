@@ -39,7 +39,6 @@ public class TutorialComboManager : MonoBehaviour
             StartCoroutine(EndCurrentCombosList()); //Acabem phase
             if (currentPhase == tutorialCombos.Count - 1) //Si era ultima phase
             {
-                currentPhase = 0;
                 TutorialComboComplete(); //Acabem tutorial de combos                
             }
 
@@ -95,8 +94,8 @@ public class TutorialComboManager : MonoBehaviour
             uiImages[i].enabled = false;
             uiImages[i].gameObject.SetActive(false);
         }
-        uiImages[uiImages.Count - 1].sprite = emptySprite;
-        uiImages[uiImages.Count - 1].color = Color.white;
+        uiImages[0].sprite = emptySprite;
+        uiImages[0].color = Color.white;
 
         if(currentPhase < tutorialCombos.Count - 1) 
             currentPhase++;
