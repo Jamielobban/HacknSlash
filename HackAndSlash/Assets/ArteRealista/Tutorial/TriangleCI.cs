@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TriangleCI : ComboInput
 {
-    public TriangleCI(Image sceneImage) : base(sceneImage) { }
+    public TriangleCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.controller.OnTrianglePress -= InputDone;

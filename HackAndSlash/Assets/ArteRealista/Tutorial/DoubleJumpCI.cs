@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DoubleJumpCI : ComboInput
 {
-    public DoubleJumpCI(Image sceneImage) : base(sceneImage) { }
+    public DoubleJumpCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.OnDoubleJumpPress -= InputDone;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HoldSquareCI : ComboInput
 {
-    public HoldSquareCI(Image sceneImage) : base(sceneImage) { }
+    public HoldSquareCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.controller.OnSquareHold -= InputDone;

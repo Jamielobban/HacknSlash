@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AirTriangleCI : ComboInput
 {
-    public AirTriangleCI(Image sceneImage) : base(sceneImage) { }
+    public AirTriangleCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.OnAirTrianglePress -= InputDone;

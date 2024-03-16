@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HoldTriangleCI : ComboInput
 {
-    public HoldTriangleCI(Image sceneImage) : base(sceneImage) { }
+    public HoldTriangleCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.controller.OnTriangleHold -= InputDone;

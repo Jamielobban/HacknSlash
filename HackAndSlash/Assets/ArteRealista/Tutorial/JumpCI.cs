@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class JumpCI : ComboInput
 {
-    public JumpCI(Image sceneImage) : base(sceneImage) { }
+    public JumpCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
 
     public override void EndListening()
     {

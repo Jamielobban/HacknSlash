@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AirSquareCI : ComboInput
 {
-    public AirSquareCI(Image sceneImage) : base(sceneImage) { }
+    public AirSquareCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.OnAirSquarePress -= InputDone;

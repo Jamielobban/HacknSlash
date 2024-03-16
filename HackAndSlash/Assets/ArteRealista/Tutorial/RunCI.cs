@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RunCI : ComboInput
 {
-    public RunCI(Image sceneImage) : base(sceneImage) { }
+    public RunCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
         _player.OnRunPress -= InputDone;
