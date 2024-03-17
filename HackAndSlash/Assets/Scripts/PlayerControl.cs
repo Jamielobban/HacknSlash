@@ -68,11 +68,15 @@ public class PlayerControl : MonoBehaviour
     public Action OnRunPress;
     public Action OnDoubleJumpPress;
     public Action OnLand;
+    public Action OnComboTimeExpired;
     void AirSquarePress() => OnAirSquarePress?.Invoke();
     void AirTrianglePress() => OnAirTrianglePress?.Invoke();
     void RunPress() => OnRunPress?.Invoke();
     void DoubleJumpPress() => OnDoubleJumpPress?.Invoke();
     void PlayerLand() => OnLand?.Invoke();
+    void ComboTimeExpired() => OnComboTimeExpired?.Invoke();
+    public void StartComboTimeCountdown (float time) => Invoke(nameof(ComboTimeExpired), time);
+    public void CancelComboTimeCountdown () => CancelInvoke(nameof(ComboTimeExpired));
 
     [System.Serializable]
     public struct Ataques

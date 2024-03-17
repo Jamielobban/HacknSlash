@@ -21,7 +21,7 @@ public class Combo
 
     protected void ComboDone() => OnComboDone?.Invoke(); //Aqui es ficara la funció de color a verd
     protected void ComboFailed() => OnComboFailed?.Invoke();//Aqui es ficara la funció de color a vermell
-    public void StartCombo() => comboInputs[0].StartListening(); 
+    public void StartCombo() => comboInputs[0].StartListening(true); 
     public void LoadImages() => comboInputs.ForEach(ci => ci.LoadImage());
     public void Initialize(List<Image> comboImages, List<MultipleListElement<Enums.TutorialActions, Sprite>> mapActionWithSprite)
     {
@@ -43,7 +43,7 @@ public class Combo
         else
         {
             currentIndex++;
-            comboInputs[currentIndex].StartListening();
+            comboInputs[currentIndex].StartListening(false);
         }
     }
     void StepFailed()

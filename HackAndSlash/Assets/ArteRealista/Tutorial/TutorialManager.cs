@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
+    FadeScript fade;
     BlackCyborg blackCyborg;
     TutorialComboManager tutorialCM;
     PyramidTeleport pyramid;
@@ -16,12 +17,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject pyramidObjectiveMarker;
     [SerializeField] GameObject loadingMenu;
     [SerializeField] Image loadingFillBar;
+    [SerializeField] Image fadeImage;
 
     Enums.NewTutorialState tutorialState;
 
     private void Awake()
     {
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
+        fade = new FadeScript(fadeImage);
         tutorialCM = GetComponent<TutorialComboManager>();
         blackCyborg = FindObjectOfType<BlackCyborg>();
         pyramid = FindObjectOfType<PyramidTeleport>();
@@ -32,6 +35,8 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
+        //AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
+        fade.FadeIn();
         tutorialState = Enums.NewTutorialState.INACTIVE;
         blackCyborgObjectiveMarker.SetActive(true);
         enemyHealthUI.SetActive(false);

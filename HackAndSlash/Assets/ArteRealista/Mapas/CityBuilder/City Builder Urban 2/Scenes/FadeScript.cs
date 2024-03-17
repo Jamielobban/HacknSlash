@@ -8,9 +8,11 @@ using UnityEngine.SceneManagement;
 public class FadeScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]
-    Image blackIMage;
-    void OnEnable()
+    Image blackIMage;  
+
+    public FadeScript(Image _blackIMage) { blackIMage = _blackIMage; } 
+
+    public void FadeIn()
     {
         blackIMage.gameObject.SetActive(true);
         Color col = Color.black;
@@ -21,7 +23,7 @@ public class FadeScript : MonoBehaviour
         }).SetEase(Ease.InOutSine);
     }
 
-    public void DoTransition()
+    public void FadeOut()
     {
         Color col = Color.black;
         DOVirtual.Color(blackIMage.color, col, 0.8f, (col) =>

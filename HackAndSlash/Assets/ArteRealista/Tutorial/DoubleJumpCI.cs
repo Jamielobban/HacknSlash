@@ -12,7 +12,7 @@ public class DoubleJumpCI : ComboInput
         _player.OnLand -= InputFailed;
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.OnDoubleJumpPress += InputDone;
         _player.OnLand += InputFailed;

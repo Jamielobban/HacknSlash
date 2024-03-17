@@ -11,7 +11,7 @@ public class RollCI : ComboInput
         _player.controller.OnDashPerformed -= InputDone;
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.controller.OnDashPerformed += InputDone;
     }

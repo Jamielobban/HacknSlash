@@ -11,10 +11,10 @@ public abstract class ComboInput
     Image _sceneImage;
     public Sprite _inputSprite { get; private set; }
     protected PlayerControl _player;
-    public Action OnInputDone; //Aqui es ficara la funció de color a verd
-    public Action OnInputFailed; //Aqui es ficara la funció de color a vermell
-    protected void InputDone() => OnInputDone?.Invoke(); //Aqui es ficara la funció de color a verd
-    protected void InputFailed() => OnInputFailed?.Invoke();//Aqui es ficara la funció de color a vermell
+    public Action OnInputDone; 
+    public Action OnInputFailed; 
+    protected void InputDone() => OnInputDone?.Invoke(); 
+    protected void InputFailed() => OnInputFailed?.Invoke();
 
     public ComboInput(Image sceneImage, Sprite inputSprite)
     {
@@ -25,9 +25,9 @@ public abstract class ComboInput
         OnInputFailed += IncorrectInput;
     }
 
-    public abstract void StartListening(); //Action de ControllerManager += InputDone;
+    public abstract void StartListening(bool firstOfChain); 
     
-    public abstract void EndListening(); //Action de ControllerManager -= InputDone;
+    public abstract void EndListening(); 
 
     public void LoadImage()
     {

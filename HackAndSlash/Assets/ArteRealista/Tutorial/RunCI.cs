@@ -11,7 +11,7 @@ public class RunCI : ComboInput
         _player.OnRunPress -= InputDone;
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.OnRunPress += InputDone;
     }

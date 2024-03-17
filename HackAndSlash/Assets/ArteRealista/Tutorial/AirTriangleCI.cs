@@ -12,7 +12,7 @@ public class AirTriangleCI : ComboInput
         _player.OnLand -= InputFailed;
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.OnAirTrianglePress += InputDone;
         _player.OnLand += InputFailed;

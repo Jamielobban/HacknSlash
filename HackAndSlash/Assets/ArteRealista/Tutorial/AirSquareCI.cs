@@ -12,7 +12,7 @@ public class AirSquareCI : ComboInput
         _player.OnLand -= InputFailed;
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.OnAirSquarePress += InputDone;
         _player.OnLand += InputFailed;

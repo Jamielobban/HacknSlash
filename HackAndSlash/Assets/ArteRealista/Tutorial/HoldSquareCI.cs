@@ -14,9 +14,11 @@ public class HoldSquareCI : ComboInput
         _player.controller.OnTriangleHold -= InputFailed;
         _player.OnAirSquarePress -= InputFailed;
         _player.OnAirTrianglePress -= InputFailed;
+        _player.OnComboTimeExpired -= InputFailed;
+        _player.CancelComboTimeCountdown();
     }
 
-    public override void StartListening()
+    public override void StartListening(bool firstOfChain)
     {
         _player.controller.OnSquareHold += InputDone;
         _player.controller.OnTrianglePress += InputFailed;
@@ -24,5 +26,10 @@ public class HoldSquareCI : ComboInput
         _player.controller.OnTriangleHold += InputFailed;
         _player.OnAirSquarePress += InputFailed;
         _player.OnAirTrianglePress += InputFailed;
+        if (!firstOfChain)
+        {
+            _player.OnComboTimeExpired += InputFailed;
+            _player.StartComboTimeCountdown(0.8f);
+        }
     }
 }
