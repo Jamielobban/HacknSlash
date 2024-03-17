@@ -5,38 +5,15 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public class FadeScript : MonoBehaviour
+public class FadeScript
 {
     // Start is called before the first frame update
-    Image blackIMage;  
+    Image blackImage;  
 
-    public FadeScript(Image _blackIMage) { blackIMage = _blackIMage; } 
+    public FadeScript(Image _blackIMage) { blackImage = _blackIMage; } 
 
-    public void FadeIn()
-    {
-        blackIMage.gameObject.SetActive(true);
-        Color col = Color.black;
-        col.a = 0;
-        DOVirtual.Color(blackIMage.color, col, 1.8f, (col) =>
-        {
-            blackIMage.color = col;
-        }).SetEase(Ease.InOutSine);
-    }
+    public void FadeIn(float fadeInTime) => DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 0f, fadeInTime).SetEase(Ease.Linear);
 
-    public void FadeOut()
-    {
-        Color col = Color.black;
-        DOVirtual.Color(blackIMage.color, col, 0.8f, (col) =>
-        {
-            blackIMage.color = col;
-        }).SetEase(Ease.InOutSine);
-
-        StartCoroutine(ChangeScene());
-    }
-
-    IEnumerator ChangeScene()
-    {
-        yield return new WaitForSeconds(0.9f);
-        SceneManager.LoadScene(2);
-    }
+    public void FadeOut(float fadeInTime) => DOTween.To(() => blackImage.color.a, x => blackImage.color = new Color(blackImage.color.r, blackImage.color.g, blackImage.color.b, x), 1f, fadeInTime).SetEase(Ease.Linear);
+        
 }

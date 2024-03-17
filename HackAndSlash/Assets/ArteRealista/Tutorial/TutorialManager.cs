@@ -36,7 +36,7 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         //AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
-        fade.FadeIn();
+        fade.FadeIn(1.8f);
         tutorialState = Enums.NewTutorialState.INACTIVE;
         blackCyborgObjectiveMarker.SetActive(true);
         enemyHealthUI.SetActive(false);
@@ -91,4 +91,12 @@ public class TutorialManager : MonoBehaviour
     }
 
     private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
+
+    private void OnDestroy()
+    {
+        blackCyborg.OnInteract -= RobotInteraction;
+        pyramid.OnInteract -= PyramidInteraction;
+        tutorialCM.OnCombosListComplete -= PhaseComplete;
+        tutorialCM.OnTutorialComboComplete -= ChangeStateToPyramid;
+    }
 }

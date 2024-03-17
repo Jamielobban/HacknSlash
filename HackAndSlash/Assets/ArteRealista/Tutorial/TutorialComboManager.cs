@@ -102,4 +102,14 @@ public class TutorialComboManager : MonoBehaviour
 
         CombosListComplete();
     }
+
+    private void OnDestroy()
+    {
+        tutorialCombos.ForEach(lw => lw.collection.ForEach(c =>
+        {
+            c.Initialize(uiImages.GetRange(0, c.ComboSize), mapActionWithSprite);
+            c.OnComboDone -= CurrentComboDone;
+            c.OnComboFailed -= CurrentComboFailed;
+        }));
+    }
 }

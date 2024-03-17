@@ -59,7 +59,7 @@ public abstract class ComboInput
         }).SetEase(Ease.InOutSine);
     }
 
-    ~ComboInput()
+    ~ComboInput()    
     {
         OnInputDone -= CorrectInput;
         OnInputFailed -= IncorrectInput;

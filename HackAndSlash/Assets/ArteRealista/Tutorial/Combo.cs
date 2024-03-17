@@ -113,4 +113,7 @@ public class Combo
                 return null;
         }
     }
+
+    ~Combo() => comboInputs.ForEach(ci => { ci.OnInputFailed -= StepFailed; ci.OnInputDone -= StepCompleted; });
+    
 }
