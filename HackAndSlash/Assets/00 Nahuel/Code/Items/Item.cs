@@ -23,15 +23,15 @@ public abstract class Item : MonoBehaviour
 
     }
 
-    public virtual void OnKill(PlayerControl player, Enemy enemy, int stacks)
-    {
-
-    }
-
-    public virtual void OnCrit(PlayerControl player, Enemy enemy, int stacks)
-    {
-
-    }
+    // public virtual void OnKill(PlayerControl player, Enemy enemy, int stacks)
+    // {
+    //
+    // }
+    //
+    // public virtual void OnCrit(PlayerControl player, Enemy enemy, int stacks)
+    // {
+    //
+    // }
 
     public virtual void OnItemPickup(PlayerControl player)
     {

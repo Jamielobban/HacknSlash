@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AmpDamageCollider : MonoBehaviour
 {
-    public int ampDamage;
+    /*public int ampDamage;
     public DamageNumber ampDamageNumber;
     private void OnTriggerEnter(Collider other)
     {
@@ -16,5 +16,5 @@ public class AmpDamageCollider : MonoBehaviour
             other.GetComponent<Enemy>().healthSystem.CurrentHealth -= ampDamage;
             DamageNumber ampDamageNumberSpawn = ampDamageNumber.Spawn(other.GetComponent<Enemy>().transform.position, -ampDamage);
         }
-    }
+    }*/
 }

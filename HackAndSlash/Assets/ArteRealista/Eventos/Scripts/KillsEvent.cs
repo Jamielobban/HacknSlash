@@ -5,8 +5,8 @@ using System.Linq;
 
 public class KillsEvent : EventMap
 {
-    [SerializeField] GameObject spawnerParent;
-    List<SpawnerBase> enemiesSpawner;
+    /*[SerializeField] GameObject spawnerParent;
+   // List<SpawnerBase> enemiesSpawner;
 
     protected override void Start()
     {
@@ -49,6 +49,6 @@ public class KillsEvent : EventMap
     bool AllEnemiesDefeated()
     {
         return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
-    }
+    }*/
 
 }
