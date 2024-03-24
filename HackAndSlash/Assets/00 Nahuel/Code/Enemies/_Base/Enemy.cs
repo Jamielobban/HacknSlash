@@ -5,10 +5,10 @@ using UnityHFSM;
 [RequireComponent(typeof(Animator),typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    private Animator _animator;
-    private NavMeshAgent _agent;
-    private StateMachine<Enums.EnemyStates, Enums.StateEvent> _enemyFSM;
-    private void Awake()
+    protected Animator _animator;
+    protected NavMeshAgent _agent;
+    protected StateMachine<Enums.EnemyStates, Enums.StateEvent> _enemyFSM;
+    protected void Awake()
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         _enemyFSM.Init();
     }
 
-    private void Update()
+    protected void Update()
     {
         _enemyFSM.OnLogic();
     }
