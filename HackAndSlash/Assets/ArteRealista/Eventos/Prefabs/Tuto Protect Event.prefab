@@ -16370,29 +16370,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aa0812e85bd924994bdb968dd4ef01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerMat: {fileID: 0}
-  normalMat: {fileID: 0}
-  objectiveMarker: {fileID: 8666888089932901147}
   renderers:
   - {fileID: 8559553162835051597}
   - {fileID: 4184220017596018824}
   - {fileID: 3298888016297556080}
   - {fileID: 8531394974787881887}
   - {fileID: 9081843518493836146}
-  normalMats:
-  - {fileID: 2100000, guid: 0232a5bca523aff4c824e66993775c7f, type: 2}
-  - {fileID: 2100000, guid: 586b414707353424b87dcfda4bb1dfcd, type: 2}
-  - {fileID: 2100000, guid: 3984ac14c5954974a9a4c8cfc3c6e20c, type: 2}
-  - {fileID: 2100000, guid: 750da0b824b7b47488205f7acbf2808f, type: 2}
-  - {fileID: 2100000, guid: 0c8988ddf35219c4489bfa0256d35081, type: 2}
   triggerMats:
   - {fileID: 2100000, guid: 4f9874d9fd7c9cd45ac36cf3bf61a7c2, type: 2}
   - {fileID: 2100000, guid: 45769567611711941baa225812c59cd1, type: 2}
   - {fileID: 2100000, guid: b66227387deccf44aab761a411aa8602, type: 2}
   - {fileID: 2100000, guid: ffc7368ccb7776141afc17e123ca9ee9, type: 2}
   - {fileID: 2100000, guid: c0dd335c7f96c194686c5d16c079ceb0, type: 2}
+  normalMats:
+  - {fileID: 2100000, guid: 0232a5bca523aff4c824e66993775c7f, type: 2}
+  - {fileID: 2100000, guid: 586b414707353424b87dcfda4bb1dfcd, type: 2}
+  - {fileID: 2100000, guid: 3984ac14c5954974a9a4c8cfc3c6e20c, type: 2}
+  - {fileID: 2100000, guid: 750da0b824b7b47488205f7acbf2808f, type: 2}
+  - {fileID: 2100000, guid: 0c8988ddf35219c4489bfa0256d35081, type: 2}
+  objectiveMarker: {fileID: 8666888089932901147}
   timers: {fileID: 7007929064656724441}
   forceField: {fileID: 7183862432129391673}
+  noiseSound: {fileID: 0}
   timeToActivate: 10
   timeToRestart: 10
   timer: 0
@@ -16422,8 +16421,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3.5
-  MaxDistance: 10
+  MinDistance: 13
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
