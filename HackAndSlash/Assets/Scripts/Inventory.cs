@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -19,6 +21,9 @@ public class Inventory : MonoBehaviour
 
     public GameObject itemDescription;
     ControllerManager controller;
+    public GameObject selectedObject;
+
+
     void Start()
     {
         controller = FindAnyObjectByType<ControllerManager>();
@@ -27,7 +32,6 @@ public class Inventory : MonoBehaviour
         {
             items.Add(new ItemSlotInfo(null, 0));
         }
-
     }
 
     void Update()
@@ -43,6 +47,7 @@ public class Inventory : MonoBehaviour
                     if (!AbilityPowerManager.instance.isOpen)
                     {
                         GameManager.Instance.UnPauseMenuGame();
+                        EventSystem.current.SetSelectedGameObject(null);
                     }
                 }
                 else
@@ -51,7 +56,8 @@ public class Inventory : MonoBehaviour
                     {
                         inventorymenu.SetActive(true);
                         AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
-
+                        //Set
+                        EventSystem.current.SetSelectedGameObject(selectedObject);
                         RefreshInventory();
 
                         GameManager.Instance.PauseMenuGame();
