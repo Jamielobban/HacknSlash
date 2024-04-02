@@ -24,7 +24,8 @@ public class AudioManager : MonoBehaviour
             {
                 GameObject go = new GameObject("Audio Manager");
                 go.AddComponent<AudioManager>();
-                DontDestroyOnLoad(go);
+                _instance = go.GetComponent<AudioManager>();
+                DontDestroyOnLoad(go);                
             }
             return _instance;
         }

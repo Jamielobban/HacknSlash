@@ -33,6 +33,7 @@ using UnityEngine.UI;
 
         public bool isInMenu = false;
 
+
         private void Awake()
         {
             if(_instance == null)
@@ -40,7 +41,6 @@ using UnityEngine.UI;
                 _instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-
 
             _player = FindObjectOfType<PlayerControl>();
         }
