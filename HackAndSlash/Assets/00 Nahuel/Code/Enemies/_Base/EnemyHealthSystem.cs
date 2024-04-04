@@ -22,7 +22,9 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
             return;
         }
         _currentHealth -= damage;
-        //Invoke Hit Transition(?)
+        
+        _enemy.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
+        
         hud.UpdateHealthBar(_currentHealth, _currentMaxHealth);
         if (_currentHealth <= 0)
         {

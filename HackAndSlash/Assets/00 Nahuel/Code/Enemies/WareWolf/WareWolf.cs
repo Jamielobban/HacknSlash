@@ -24,16 +24,29 @@ public class WareWolf : Enemy
     {
         base.InitializeTransitions();
         
-        //Roll Transitions
+        InitializeRollTransitions();
+
+    }
+
+    protected override void InitializeTriggerTransitions()
+    {
+        base.InitializeTriggerTransitions();
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
+      //  _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Hit));
+    }
+
+    protected virtual void InitializeRollTransitions()
+    {
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Roll, ShouldRoll, null, null,true));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Roll, ShouldRoll,null, null, true));
-        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, IsWithinIdleRange));
-        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, IsNotWithinIdleRange));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, IsNotWithinIdleRange));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, IsWithinIdleRange));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Roll, ShouldRoll,null, null, true));
+
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
     
-    protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange;
+    protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => !IsHit && _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange;
     
     protected virtual void RollImpactSensor_OnCollision(Collision collision)
     {

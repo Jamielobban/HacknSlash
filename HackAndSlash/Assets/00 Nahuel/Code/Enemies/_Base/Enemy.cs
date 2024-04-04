@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [Header("Debug Info")]
     [SerializeField] protected bool _isInFollowRange;
     [SerializeField] protected bool _isInBasicRange;
+    public bool IsHit = false;
 
     [Space] [Header("Base Attacks")] 
     [SerializeField] protected MeleeAttack _meleeAttack;
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
     protected NavMeshAgent _agent;
     protected StateMachine<Enums.EnemyStates, Enums.StateEvent> _enemyFSM;
     public StateMachine<Enums.EnemyStates, Enums.StateEvent> EnemyFSM => _enemyFSM;
+
+    public Transform target;
     protected virtual void Awake()
     {
         _player = GameManager.Instance.Player;
@@ -36,6 +39,11 @@ public class Enemy : MonoBehaviour
 
         _enemyFSM.SetStartState(Enums.EnemyStates.Idle);
         _enemyFSM.Init();
+
+        if (target == null)
+        {
+            target = _player.transform;
+        }
     }
 
     protected virtual void Start()
@@ -48,38 +56,52 @@ public class Enemy : MonoBehaviour
 
     protected virtual void InitializeStates()
     {
-        // Adding States
+        // Base States
         _enemyFSM.AddState(Enums.EnemyStates.Idle, new IdleState(false, this));
-        _enemyFSM.AddState(Enums.EnemyStates.Chase, new ChaseState(false, this, _player.transform));
-        _enemyFSM.AddState(Enums.EnemyStates.Wander, new WanderState(false, this));
+        _enemyFSM.AddState(Enums.EnemyStates.Chase, new ChaseState(false, this, target));
         _enemyFSM.AddState(Enums.EnemyStates.Hit, new HitState(false, this));
         _enemyFSM.AddState(Enums.EnemyStates.Stun, new StunState(false, this, 2));
         _enemyFSM.AddState(Enums.EnemyStates.Attack, new AttackState(false, this, _meleeAttack.OnAttack));
-        _enemyFSM.AddState(Enums.EnemyStates.Countering, new CounteringState(false, this));
         _enemyFSM.AddState(Enums.EnemyStates.Dead, new DeadState(false, this));
+        //_enemyFSM.AddState(Enums.EnemyStates.Countering, new CounteringState(false, this));
+        //_enemyFSM.AddState(Enums.EnemyStates.Wander, new WanderState(false, this));
     }
 
     protected virtual void InitializeTransitions()
     {
-        // Adding Transitions
+        InitializeTriggerTransitions();
+        InitializeHitTransitions();
+        
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
+        
+        InitializeAttackTransitons();
+    }
+    protected virtual void InitializeTriggerTransitions()
+    {
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.DetectPlayer, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Chase));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.LostPlayer, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Idle));
-        
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Chase, 
-            (transition) => _isInFollowRange && Vector3.Distance(_player.transform.position, transform.position) > _agent.stoppingDistance));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Idle, 
-            (transition) => !_isInFollowRange || Vector3.Distance(_player.transform.position, transform.position) <= _agent.stoppingDistance));
-        
-        // Adding Attack Transitions
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Hit));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Hit));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Hit));
+    }
+    protected virtual void InitializeHitTransitions()
+    {
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Attack, ShouldMeleeAttack));
+    }
+    protected virtual void InitializeAttackTransitons()
+    {
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Attack, ShouldMeleeAttack,null, null, true));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Attack, ShouldMeleeAttack,null, null, true));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Chase, IsNotWithinIdleRange));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Idle, IsWithinIdleRange));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
-    protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange;
-    protected virtual bool IsWithinIdleRange(Transition<Enums.EnemyStates> transition) => _agent.remainingDistance <= _agent.stoppingDistance;
-    protected virtual bool IsNotWithinIdleRange(Transition<Enums.EnemyStates> transition) => !IsWithinIdleRange(transition);
     
+    protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => !IsHit && _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange;
+    protected virtual bool IsInIdleRange() => (!_isInFollowRange || Vector3.Distance(target.position, transform.position) <= _agent.stoppingDistance) && !IsHit ;
+    protected virtual bool InRangeToChase() => _isInFollowRange && Vector3.Distance(target.position, transform.position) > _agent.stoppingDistance && !IsHit;
     protected virtual void Update()
     {
         _enemyFSM.OnLogic();
@@ -90,7 +112,6 @@ public class Enemy : MonoBehaviour
         _enemyFSM.Trigger(Enums.StateEvent.DetectPlayer);
         _isInFollowRange = true;  
     }
-
     protected virtual void FollowPlayerSensor_OnPlayerSensorExit(Vector3 lastKnownPosition)
     {
         _enemyFSM.Trigger(Enums.StateEvent.LostPlayer);

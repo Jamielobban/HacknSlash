@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityHFSM;
 
 public class AttackState : EnemyStateBase
@@ -8,6 +9,7 @@ public class AttackState : EnemyStateBase
     public override void OnEnter()
     {
         _agent.isStopped = true;
+        _agent.velocity = Vector3.zero;
         base.OnEnter();
     }
 }

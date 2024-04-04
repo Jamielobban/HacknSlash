@@ -6,7 +6,7 @@ using UnityEngine.XR;
 public class BaseEnemyAttack : MonoBehaviour
 {
     protected PlayerControl _player;
-    [Range(1, 20f)] [SerializeField] protected float _cooldown;
+    [Range(0, 15f)] [SerializeField] protected float _cooldown;
     [SerializeField] protected Enums.AttackState _currentAttackState = Enums.AttackState.ReadyToUse;
     [SerializeField] protected float _baseDamage;
     [SerializeField] protected float _currentDamage;

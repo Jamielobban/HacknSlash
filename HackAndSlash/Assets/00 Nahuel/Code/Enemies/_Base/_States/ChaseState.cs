@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class ChaseState : EnemyStateBase
 {
-    private Transform _target;
 
     public ChaseState(bool needsExitTime, Enemy enemy, Transform target) : base(needsExitTime, enemy)
     {
-        _target = target;
+        _enemy.target = target;
     }
 
     public override void OnEnter()
@@ -24,7 +23,7 @@ public class ChaseState : EnemyStateBase
         if (!_requestedExit)
         {
             //More complex movement can be added Overriding Chase State
-            _agent.SetDestination(_target.position);
+            _agent.SetDestination(_enemy.target.position);
         }
         else if (_agent.remainingDistance <= _agent.stoppingDistance)
         {

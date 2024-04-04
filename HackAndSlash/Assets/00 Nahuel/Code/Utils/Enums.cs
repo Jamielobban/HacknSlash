@@ -19,6 +19,7 @@ public class Enums
     {
         DetectPlayer,
         LostPlayer,
+        HitEnemy,
         RollImpact
     }
     

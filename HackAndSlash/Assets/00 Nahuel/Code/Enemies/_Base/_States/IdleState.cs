@@ -1,4 +1,5 @@
-﻿public class IdleState : EnemyStateBase
+﻿using UnityEngine;
+public class IdleState : EnemyStateBase
 {
     public IdleState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
 
@@ -6,6 +7,7 @@
     {
         base.OnEnter();
         _agent.isStopped = true;
+        _agent.velocity = Vector3.zero;
         _animator.Play("Idle");
     }
 }

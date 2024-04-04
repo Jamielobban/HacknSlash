@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class WanderState : EnemyStateBase
 {
-    private Transform _target;
+    private Vector3 _target;
     public WanderState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
 
     public override void OnEnter()
@@ -12,22 +12,17 @@ public class WanderState : EnemyStateBase
         _agent.enabled = true;
         _agent.isStopped = false;
         _animator.Play("Wander State");
-        _target.position = GetRandomPosition();
+        _target = GetRandomPosition();
+        _agent.SetDestination(_target);
     }
 
     public override void OnLogic()
     {
         base.OnLogic();
-        if (!_requestedExit)
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            _agent.SetDestination(_target.position);
-        }
-        else if (_agent.remainingDistance <= _agent.stoppingDistance)
-        {
-            _target.position = GetRandomPosition();
-
-            // //If we request exit, we will continue move to last known pos prior to idle
-            // fsm.StateCanExit();
+            _target = GetRandomPosition();
+            _agent.SetDestination(_target);
         }
     }
 

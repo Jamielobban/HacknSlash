@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHUD
+public class EnemyHUD : MonoBehaviour
 {
     public Image healthBar;
 
