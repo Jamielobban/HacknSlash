@@ -1,0 +1,49 @@
+﻿using UnityEngine;
+using UnityHFSM;
+
+public class WareWolf : Enemy
+{
+    [Header("Custom Attacks")]
+    [SerializeField] protected RollAttack _roll;
+
+    [SerializeField] protected ImpactSensor _rollImpactSensor;
+
+    protected override void Start()
+    {
+        base.Start();
+        _rollImpactSensor.OnCollision += RollImpactSensor_OnCollision;
+    }
+
+    protected override void InitializeStates()
+    {
+        base.InitializeStates();
+        _enemyFSM.AddState(Enums.EnemyStates.Roll, new RollState(false, this, _roll.OnRoll));
+    }
+
+    protected override void InitializeTransitions()
+    {
+        base.InitializeTransitions();
+        
+        //Roll Transitions
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Roll, ShouldRoll, null, null,true));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Roll, ShouldRoll,null, null, true));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, IsWithinIdleRange));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, IsNotWithinIdleRange));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, IsNotWithinIdleRange));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, IsWithinIdleRange));
+    }
+    
+    protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange;
+    
+    protected virtual void RollImpactSensor_OnCollision(Collision collision)
+    {
+        _enemyFSM.Trigger(Enums.StateEvent.RollImpact);
+        _rollImpactSensor.gameObject.SetActive(false);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        _rollImpactSensor.OnCollision -= RollImpactSensor_OnCollision;
+    }
+}

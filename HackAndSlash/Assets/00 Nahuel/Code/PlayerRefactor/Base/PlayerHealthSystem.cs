@@ -57,10 +57,6 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
             }
         }
     }
-    public void AirDamageable()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public void Heal(float amount)
     {

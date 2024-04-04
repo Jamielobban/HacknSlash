@@ -10,7 +10,6 @@ public class RollState : EnemyStateBase
     {
         _agent.isStopped = true;
         base.OnEnter();
-        _animator.Play("Roll");
     }
 
     public override void OnLogic()

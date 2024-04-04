@@ -15,7 +15,7 @@ public class ChaseState : EnemyStateBase
         base.OnEnter();
         _agent.enabled = true;
         _agent.isStopped = false;
-        _animator.Play("Walk");
+        _animator.Play("Chase State");
     }
 
     public override void OnLogic()

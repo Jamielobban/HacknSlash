@@ -6,7 +6,7 @@
     {
         _agent.isStopped = true;
         base.OnEnter();
-        _animator.Play("die");
+        _animator.Play("Dead State");
     }
 
     public override void OnLogic()

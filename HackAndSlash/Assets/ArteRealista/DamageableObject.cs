@@ -43,9 +43,5 @@ public class DamageableObject : MonoBehaviour, IDamageable
     public void MaxHeal() => currentHealth = maxHealth;
 
     public bool IsDead => currentHealth <= 0;
-
-    public void AirDamageable()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }
