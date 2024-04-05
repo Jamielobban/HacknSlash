@@ -8,6 +8,6 @@ public class IdleState : EnemyStateBase
         base.OnEnter();
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
-        _animator.Play("Idle");
+        _animator.CrossFade("Idle", 0.2f);
     }
 }

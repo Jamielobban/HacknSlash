@@ -33,6 +33,7 @@ public class WareWolf : Enemy
         base.InitializeTriggerTransitions();
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.RollImpact,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.DeadEnemy,new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Dead));
       //  _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Hit));
     }
 

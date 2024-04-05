@@ -20,6 +20,7 @@ public class Enums
         DetectPlayer,
         LostPlayer,
         HitEnemy,
+        DeadEnemy,
         RollImpact
     }
     

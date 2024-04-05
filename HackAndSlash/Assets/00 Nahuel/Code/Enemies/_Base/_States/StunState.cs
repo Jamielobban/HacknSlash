@@ -13,7 +13,7 @@ public class StunState : EnemyStateBase
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
-        _animator.Play("Stun");
+        _animator.CrossFade("Stun", 0.2f);
     }
 
     public override void OnLogic()

@@ -11,7 +11,7 @@ public class WanderState : EnemyStateBase
         base.OnEnter();
         _agent.enabled = true;
         _agent.isStopped = false;
-        _animator.Play("Wander State");
+        _animator.CrossFade("Wander State", 0.2f);
         _target = GetRandomPosition();
         _agent.SetDestination(_target);
     }

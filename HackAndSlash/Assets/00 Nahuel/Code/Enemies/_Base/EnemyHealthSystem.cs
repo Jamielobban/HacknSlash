@@ -28,7 +28,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         hud.UpdateHealthBar(_currentHealth, _currentMaxHealth);
         if (_currentHealth <= 0)
         {
-            //Invoke Die Transition (?)
+            _enemy.EnemyFSM.Trigger(Enums.StateEvent.DeadEnemy);
         }
     }
 

@@ -17,7 +17,7 @@ public class BaseEnemyAttack : MonoBehaviour
     protected Animator _animator;
     protected virtual void Awake()
     {
-        _animator = transform.parent.GetComponent<Animator>();
+        _animator = transform.parent.parent.GetComponent<Animator>();
         _currentDamage = _baseDamage;
         _player = GameManager.Instance.Player;
         _currentTime = _cooldown;
@@ -53,7 +53,7 @@ public class BaseEnemyAttack : MonoBehaviour
 
     protected virtual void PlayAttackAnimation()
     {
-        _animator.Play(_animationName);
+        _animator.CrossFade(_animationName, 0.2f);
         this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
             //Animation Over

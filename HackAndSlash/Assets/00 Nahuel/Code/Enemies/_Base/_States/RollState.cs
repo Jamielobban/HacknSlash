@@ -9,12 +9,13 @@ public class RollState : EnemyStateBase
     public override void OnEnter()
     {
         _agent.isStopped = true;
+        _agent.velocity = Vector3.zero;
         base.OnEnter();
     }
 
     public override void OnLogic()
     {
-        _agent.Move(1.5f * _agent.speed * Time.deltaTime * _agent.transform.forward);
+        _agent.Move(4f * _agent.speed * Time.deltaTime * _agent.transform.forward);
         base.OnLogic();
     }
 }

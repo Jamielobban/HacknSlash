@@ -8,11 +8,7 @@ public class DeadState : EnemyStateBase
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
-        _animator.Play("Dead State");
+        _animator.CrossFade("Dead State", 0.2f);
     }
-
-    public override void OnLogic()
-    {
-        base.OnLogic();
-    }
+    
 }

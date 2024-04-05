@@ -8,7 +8,7 @@ public class HitState : EnemyStateBase
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
-        _animator.Play("Hit State");
+        _animator.CrossFade("Hit State", 0.2f);
         _enemy.IsHit = true;
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
