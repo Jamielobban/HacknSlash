@@ -13,7 +13,7 @@ public class EnemySensor : MonoBehaviour
     private GameObject _player;
     private bool _playerEnter = false;
 
-    private void Awake()
+    private void Start()
     {
         _player = GameManager.Instance.Player.gameObject;
     }
