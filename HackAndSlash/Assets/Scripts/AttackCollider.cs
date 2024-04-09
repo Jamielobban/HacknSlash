@@ -124,8 +124,7 @@ public class AttackCollider : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
-        other.GetComponent<IDamageableEnemy>()?.TakeDamage(state, CalculateDamage(other.gameObject.transform));
+        other.GetComponent<IDamageable>()?.TakeDamage(CalculateDamage(other.gameObject.transform));
     }
 
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CampSpawnerEnemy : MonoBehaviour
 {
-    public CampManager _campParent;
+    /*public CampManager _campParent;
     private Enemy _enemy;
 
     private void Awake()
@@ -13,6 +13,6 @@ public class CampSpawnerEnemy : MonoBehaviour
     private void Start()
     {
         _enemy.events.OnDie += () => { _campParent.RemoveEnemy(gameObject); };
-    }
+    }*/
 
 }

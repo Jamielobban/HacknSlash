@@ -41,7 +41,6 @@ using UnityEngine.UI;
                 _instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-
             _player = FindObjectOfType<PlayerControl>();
         }
 

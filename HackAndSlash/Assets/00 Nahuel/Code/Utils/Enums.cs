@@ -2,7 +2,28 @@ using System;
 
 public class Enums
 {
+    public enum EnemyStates
+    {
+        Idle,
+        Wander,
+        Chase,
+        Attack,
+        Roll,
+        Stun,
+        Countering,
+        Hit,
+        Dead
+    }
 
+    public enum StateEvent
+    {
+        DetectPlayer,
+        LostPlayer,
+        HitEnemy,
+        DeadEnemy,
+        RollImpact
+    }
+    
     public enum CameraType
     {
         FreeLook,

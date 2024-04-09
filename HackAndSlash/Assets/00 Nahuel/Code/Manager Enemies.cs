@@ -46,8 +46,8 @@ public class ManagerEnemies : MonoBehaviour
 
     // -- Enemies Settings --//
     [Header("Enemies Settings: ")]
-    public List<Enemy> enemies = new List<Enemy>();
-    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    //public List<Enemy> enemies = new List<Enemy>();
+    //public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
     public List<GameObject> parentObjectPools = new List<GameObject>(); 
 
     private int _spawnedEnemies = 0;
@@ -100,7 +100,7 @@ public class ManagerEnemies : MonoBehaviour
             {
                 for (int i = 0; i < pool.transform.childCount; i++)
                 {
-                    pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                  //  pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
                 }
             }
 
@@ -115,7 +115,7 @@ public class ManagerEnemies : MonoBehaviour
         isInEvent = true;
         if(_currentSpawner != null)
         {
-            _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+           // _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
         }
     }
 
@@ -139,10 +139,10 @@ public class ManagerEnemies : MonoBehaviour
 
     private void InitializePools()
     {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
-        }
+        // for (int i = 0; i < enemies.Count; i++)
+        // {
+        //     enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
+        // }
     }
 
     private void ResetScore()

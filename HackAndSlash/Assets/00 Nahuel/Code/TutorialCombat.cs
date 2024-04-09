@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TutorialCombat : MonoBehaviour
 {
-    [SerializeField] string[] dialoguesIntro;
+    /*[SerializeField] string[] dialoguesIntro;
     [SerializeField] string[] dialoguesItems;
     [SerializeField] string[] dialoguesChest;
     [SerializeField] string[] dialoguesEvent;
@@ -106,6 +106,6 @@ public class TutorialCombat : MonoBehaviour
         {
             GameManager.Instance.PauseGame();
         }
-    }
+    }*/
 
 }

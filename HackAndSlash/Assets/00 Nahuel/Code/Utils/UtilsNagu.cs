@@ -81,7 +81,7 @@ public static class UtilsNagu
         list = withoutInactive;
     }
 
-    public static T RandomWeightedElement<T>(this IEnumerable<T> collection) where T : EnemyProbability
+    /*public static T RandomWeightedElement<T>(this IEnumerable<T> collection) where T : EnemyProbability
     {
         var random = UnityEngine.Random.value * 100;
 
@@ -95,5 +95,5 @@ public static class UtilsNagu
             current += element.probability;
         }
         return default(T);
-    }
+    }*/
 }

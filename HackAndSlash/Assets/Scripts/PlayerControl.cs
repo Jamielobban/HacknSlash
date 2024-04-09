@@ -1290,7 +1290,7 @@ public class PlayerControl : MonoBehaviour
     //    StartCoroutine(CallItemUpdate());
     //}
 
-    public void CallItemOnKill(Enemy enemy)
+    /*public void CallItemOnKill(Enemy enemy)
     {
         foreach (ItemList i in items)
         {
@@ -1303,7 +1303,7 @@ public class PlayerControl : MonoBehaviour
         {
             i.item.OnCrit(this, enemy, i.stacks);
         }
-    }
+    }*/
 
     //public void CallItemOnPickup(int id)
     //{

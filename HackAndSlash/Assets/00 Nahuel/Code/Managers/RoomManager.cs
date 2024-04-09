@@ -7,7 +7,7 @@ public class RoomManager : MonoBehaviour
 {
 
 
-    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    /*public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
 
     public float scaleDivision = 4;
     public GameObject spawnerPrefab;
@@ -153,5 +153,5 @@ public class RoomManager : MonoBehaviour
         _enemiesToKill.Clear();
         firstEnemySpawned = false;
         NextStage();
-    }
+    }*/
 }

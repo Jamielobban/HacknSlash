@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ProtectEvent : EventMap
 {
-    [SerializeField] GameObject spawnerParent;
+    /*[SerializeField] GameObject spawnerParent;
     [SerializeField] List<Transform> targetsToProtect;    
     List<SpawnerBase> enemiesSpawner;
 
@@ -144,5 +144,5 @@ public class ProtectEvent : EventMap
             //}
 
         }
-    }    
+    }    */
 }

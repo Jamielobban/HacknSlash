@@ -149,24 +149,24 @@ public abstract class EventMap : Interactive, IInteractable
 
     IEnumerator CreateTangentCollidersCoroutine(SphereCollider sphereCollider, int numberOfColliders)
     {
-        // Obtener la posici髇 del centro del Sphere Collider
+        // Obtener la posici贸n del centro del Sphere Collider
         Vector3 colliderCenter = sphereCollider.bounds.center;
 
         // Calcular el radio del Sphere Collider
         float colliderRadius = sphereCollider.radius;
 
-        // Crear una posici髇 para los colliders, inicialmente centrada en el centro de la esfera
+        // Crear una posici贸n para los colliders, inicialmente centrada en el centro de la esfera
         Vector3 colliderPosition = colliderCenter;
 
-        // Calcular el 醤gulo entre cada Box Collider
+        // Calcular el 谩ngulo entre cada Box Collider
         float angleBetweenColliders = 360f / numberOfColliders;
 
-        // Calcular el tama駉 de los BoxColliders para cubrir el per韒etro del SphereCollider
+        // Calcular el tama帽o de los BoxColliders para cubrir el per铆metro del SphereCollider
         float colliderWidth = 2f * colliderRadius * Mathf.Sin(Mathf.PI / numberOfColliders);
 
         for (int i = 0; i < numberOfColliders; i++)
         {
-            // Calcular la posici髇 del nuevo Box Collider
+            // Calcular la posici贸n del nuevo Box Collider
             float angle = i * angleBetweenColliders * Mathf.Deg2Rad;
             colliderPosition.x = colliderCenter.x + Mathf.Cos(angle) * colliderRadius;
             colliderPosition.z = colliderCenter.z + Mathf.Sin(angle) * colliderRadius;
@@ -180,10 +180,10 @@ public abstract class EventMap : Interactive, IInteractable
             BoxCollider boxCollider = newColliderObject.AddComponent<BoxCollider>();
 
             boxCollider.isTrigger = true;
-            // Ajustar el tama駉 del Box Collider para cubrir el per韒etro del SphereCollider
+            // Ajustar el tama帽o del Box Collider para cubrir el per铆metro del SphereCollider
             boxCollider.size = new Vector3(colliderWidth, 100f, 0.1f);
 
-            // Mantener la posici髇 en el eje Y igual al centro de la esfera
+            // Mantener la posici贸n en el eje Y igual al centro de la esfera
             newColliderObject.transform.position = new Vector3(colliderPosition.x, colliderCenter.y, colliderPosition.z);
 
             // Orientar el Box Collider hacia el centro de la esfera
@@ -191,7 +191,7 @@ public abstract class EventMap : Interactive, IInteractable
 
             tangentColliders.Add(boxCollider);
 
-            // Pausa por un frame antes de continuar con el pr髕imo Box Collider
+            // Pausa por un frame antes de continuar con el pr贸ximo Box Collider
             yield return null;
         }
     }
