@@ -161,7 +161,6 @@ public class PlayerControl : MonoBehaviour
     bool stopAttack;
 
     public DoubleJumpVFXController doubleJumpVFX;
-    public LandingVFXController landVFX;
     public SingleJumpVFXController singleJumpVFX;
 
     public int dashConsecutivos;
