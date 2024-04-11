@@ -4,10 +4,31 @@ using UnityHFSM;
 public class RollAttack : BaseEnemyAttack
 {
     [SerializeField] private GameObject _sensor;
-    public void OnRoll(State<Enums.EnemyStates, Enums.StateEvent> state)
+    private Collider _colliderDamage;
+    public float rollDuration;
+    protected override void Awake()
+    {
+        base.Awake();
+        _colliderDamage = GetComponent<Collider>();
+        _colliderDamage.enabled = false;
+    }
+    
+    public void OnRoll()
     {
         _sensor.gameObject.SetActive(true);
-        transform.LookAt(_player.transform.position);
+        _enemy.transform.LookAt(_enemy.Player.transform.position);
         Use();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!_enemy.attackInterrumpted)
+        {
+            other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
+        }
+        else
+        {
+            _enemy.attackInterrumpted = false;
+        }
     }
 }

@@ -7,6 +7,7 @@ public class HitState : EnemyStateBase
     {
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
+        _enemy.attackInterrumpted = true;
         base.OnEnter();
         _animator.CrossFade("Hit State", 0.2f);
         _enemy.IsHit = true;

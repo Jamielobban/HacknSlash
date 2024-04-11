@@ -8,7 +8,12 @@ public class DeadState : EnemyStateBase
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
-        _animator.CrossFade("Dead State", 0.2f);
+        
+        _animator.Play("Dead State");
+        
+        WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + 1f, () =>
+        {
+            _enemy.gameObject.SetActive(false);
+        });
     }
-    
 }

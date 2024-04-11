@@ -9,6 +9,8 @@ using DamageNumbersPro;
 
 public class PlayerControl : MonoBehaviour
 {
+    public DamageNumber basicDamageHit, criticalDamageHit;
+    
     [SerializeField]
     LayerMask layerSuelo;
     public List<MMF_Player> feedbacksPlayer = new List<MMF_Player>();

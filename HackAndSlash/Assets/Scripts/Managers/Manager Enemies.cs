@@ -20,15 +20,7 @@ public class ManagerEnemies : MonoBehaviour
             return _instance;
         }
     }
-
-    //-//-//-//-//-//
-    // Timer -> every X time object with chance by enemiesKilled and enemiesPoints acumulated in the time period
-    // Spawning enemies all the time each X seg, with enemies cap
-    // If enemies are to far from player deactive and respawn
-    //-//-//-//-//-//
-
-
-    private float _enemiesKilled = 0;
+    
     private float _enemiesScore = 0;
 
     public int timeToGetItem = 60;
@@ -39,15 +31,12 @@ public class ManagerEnemies : MonoBehaviour
     public TextMeshProUGUI currentSpawnedEnemies;
     public TextMeshProUGUI currentScoreText;
 
-    // -- Spawner Settings -- //
     [Header("Spawn Settings:")]
     public List<GameObject> spawners = new List<GameObject>();
 
-
-    // -- Enemies Settings --//
     [Header("Enemies Settings: ")]
-    //public List<Enemy> enemies = new List<Enemy>();
-    //public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    public List<Enemy> enemies = new List<Enemy>();
+    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
     public List<GameObject> parentObjectPools = new List<GameObject>(); 
 
     private int _spawnedEnemies = 0;
@@ -100,7 +89,11 @@ public class ManagerEnemies : MonoBehaviour
             {
                 for (int i = 0; i < pool.transform.childCount; i++)
                 {
-                  //  pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                    GameObject enemy = pool.transform.GetChild(i).gameObject;
+                    if (enemy.activeSelf)
+                    {
+                        enemy.GetComponent<Enemy>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                    }
                 }
             }
 
@@ -111,7 +104,6 @@ public class ManagerEnemies : MonoBehaviour
 
     public void StartEvent()
     {
-        
         isInEvent = true;
         if(_currentSpawner != null)
         {
@@ -139,10 +131,10 @@ public class ManagerEnemies : MonoBehaviour
 
     private void InitializePools()
     {
-        // for (int i = 0; i < enemies.Count; i++)
-        // {
-        //     enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
-        // }
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
+        }
     }
 
     private void ResetScore()
@@ -157,7 +149,6 @@ public class ManagerEnemies : MonoBehaviour
         _enemiesScore += val;
         UpdateScore();
     }
-    public void AddEnemyKilled() => _enemiesKilled++;
 
     public void SetSpawnedEnemies(int val)
     {

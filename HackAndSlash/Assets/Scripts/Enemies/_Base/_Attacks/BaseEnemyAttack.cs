@@ -1,26 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR;
 
 public class BaseEnemyAttack : MonoBehaviour
 {
-    protected PlayerControl _player;
-    [Range(0, 15f)] [SerializeField] protected float _cooldown;
+    protected Enemy _enemy;
     [SerializeField] protected Enums.AttackState _currentAttackState = Enums.AttackState.ReadyToUse;
-    [SerializeField] protected float _baseDamage;
-    [SerializeField] protected float _currentDamage;
-    [SerializeField] protected float _castTime;
-    [SerializeField] protected string _animationName;
-    protected float _currentTime;
     public Enums.AttackState CurrentAttackState => _currentAttackState;
+    protected float _currentTime;
     protected Animator _animator;
+    protected float _currentDamage;
+ 
+    [Header("Enemy Stats:")] 
+    public float baseDamage;
+    public float minCooldown, maxCooldown;
+    [SerializeField] protected float _castTime;
+    [SerializeField] protected string _animationName; 
+    
+    protected float _cooldown;
+    
     protected virtual void Awake()
     {
         _animator = transform.parent.parent.GetComponent<Animator>();
-        _currentDamage = _baseDamage;
-        _player = GameManager.Instance.Player;
-        _currentTime = _cooldown;
+        _currentDamage = baseDamage;
+        _enemy = transform.parent.parent.GetComponent<Enemy>();
+        _cooldown = Random.Range(minCooldown, maxCooldown);
+        _currentTime = 0f;
+        _enemy.attackInterrumpted = false;
     }
 
     protected virtual void Update()
@@ -62,4 +70,6 @@ public class BaseEnemyAttack : MonoBehaviour
     protected virtual void SetVisualEffects() { }
     protected virtual void AttackAction() { }
     protected virtual bool IsInCd() => _currentTime < _cooldown && _currentTime >= 0;
+
+    public void SetCurrentDamage(float value) => _currentDamage = value;
 }

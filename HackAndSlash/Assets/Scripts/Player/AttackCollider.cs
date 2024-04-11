@@ -23,13 +23,10 @@ public class AttackCollider : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
 
-
             slash.transform.parent = parent.transform;
             slash.transform.localPosition = Vector3.zero;
             slash.transform.localEulerAngles = Vector3.zero;
             slash.SetActive(false);
-        
-
     }
 
     float CalculateDamage(Transform enemyPos)
@@ -38,7 +35,7 @@ public class AttackCollider : MonoBehaviour
         {
             return 0;
         }
-        float damage = (int)state * _player.attackDamage;
+        float damage = (int)state * _player.attackDamage + Random.Range(0.5f, 1.5f);
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
 
@@ -65,6 +62,7 @@ public class AttackCollider : MonoBehaviour
             critHitEffect.transform.GetChild(0).gameObject.SetActive(true);
             critHitEffect.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
             critHitFeedback.PlayFeedbacks();
+            _player.criticalDamageHit.Spawn(enemyPos.position+ new Vector3(0f, 2f, 0f), (int)damage);
         }
         else
         {
@@ -84,35 +82,9 @@ public class AttackCollider : MonoBehaviour
                 hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
                 hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
             }
+            _player.basicDamageHit.Spawn(enemyPos.position+ new Vector3(0f, 2f, 0f), (int)damage);
         }
-
-        //if(_player.currentComboAttacks.combo == PlayerControl.ComboAtaques.air1)
-        //{
-      
-
-
-
-      
-
-
-
-
-
-        //}
-        //else
-        //{
-        //    Vector3 pos = enemyPos.gameObject.transform.position;
-        //    pos.y = _player.gameObject.transform.position.y;
-        //    Vector3 dir = pos - _player.gameObject.transform.position;
-        //    dir = dir.normalized;
-        //    dir *= 3;
-
-        //    hitEffect.transform.position = pos + dir;
-
-        //    hitEffect.transform.GetChild(0).gameObject.SetActive(true);
-        //    StartCoroutine(ReturnEffect(1, hitEffect.transform.GetChild(0).gameObject));
-        //    hitEffect.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
-        //}
+        
         targets.Add(enemyPos.gameObject);
 
         Invoke("ClearList", 0.2f);
@@ -124,6 +96,7 @@ public class AttackCollider : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        
         other.GetComponent<IDamageable>()?.TakeDamage(CalculateDamage(other.gameObject.transform));
     }
 
