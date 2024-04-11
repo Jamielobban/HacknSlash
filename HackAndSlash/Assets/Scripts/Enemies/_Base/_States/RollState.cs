@@ -14,14 +14,27 @@ public class RollState : EnemyStateBase
 
     public override void OnLogic()
     {
-        Vector3 forwardDirection = _agent.transform.forward.normalized;
-        _agent.Move( 15f * _agent.speed * forwardDirection * Time.deltaTime);
-        base.OnLogic();
         _timer += Time.deltaTime;
-        
-        if (_timer >= _exitTime)
+        base.OnLogic();
+        if (_timer < 2)
         {
+            // Perform dash movement
+            Vector3 dashMovement = _agent.transform.forward.normalized * 2f * (_agent.speed * Time.deltaTime);
+            _agent.Move(dashMovement);
+        }
+        else
+        {
+            _agent.isStopped = false;
+            _enemy.isRolling = false;
+            _timer = 0;
             fsm.StateCanExit();
         }
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+        _enemy.isRolling = false;
+        _timer = 0;
     }
 }

@@ -70,7 +70,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.029}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7242336195018388560
@@ -90,7 +90,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSightDistance: 75
-  maxSightDistance: 100
+  minSightDistance: 50
+  maxSightDistance: 75
 --- !u!1 &1947129706595014304
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 7180334077411500435}
   - component: {fileID: 8048678887657378046}
   - component: {fileID: 8600913752020013327}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Jump Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,15 +283,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb6650ba30643b8920144b43551cb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentAttackState: 0
-  baseDamage: 5
-  minCooldown: 7
-  maxCooldown: 15
-  _castTime: 0.25
+  _currentAttackState: 2
+  baseDamage: 1
+  minCooldown: 6
+  maxCooldown: 12
+  _castTime: 0.5
   _animationName: Roll
   _sensor: {fileID: 2673095096977501363}
-  timeToDeactiveCollider: 0.1
-  rollDuration: 50
+  rollDuration: 1.2
 --- !u!65 &8600913752020013327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -393,8 +392,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.1664429, y: 2.3170586, z: 0.5470581}
-  m_Center: {x: 0.04953003, y: 1.0903416, z: 0.18133545}
+  m_Size: {x: 1.6421509, y: 1.5152168, z: 0.5470581}
+  m_Center: {x: -0.064575195, y: 1.4912624, z: 0.18133545}
 --- !u!114 &1159209860011419327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,13 +519,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb458fd785ee449aa90adcd14e38b1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentAttackState: 0
+  _currentAttackState: 2
   baseDamage: 5
   minCooldown: 1
   maxCooldown: 2
-  _castTime: 0.13
+  _castTime: 0.5
   _animationName: MeleeAttack
-  timeToDeactiveCollider: 0.07
 --- !u!65 &110260239139023604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -546,8 +544,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2472482, y: 0.99999976, z: 2.716498}
-  m_Center: {x: -0.43264246, y: 0.95999724, z: 2.2594712}
+  m_Size: {x: 3.720821, y: 0.99999976, z: 2.716498}
+  m_Center: {x: -0.6694288, y: 0.9599973, z: 2.2594712}
 --- !u!1 &8112893916876805239
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +560,8 @@ GameObject:
   - component: {fileID: 9041268222350785868}
   - component: {fileID: 2474399760132936369}
   - component: {fileID: 8054913695108714313}
+  - component: {fileID: 6469552712513051028}
+  - component: {fileID: 1199579625342059642}
   m_Layer: 6
   m_Name: Warewolf
   m_TagString: Enemy
@@ -587,7 +587,7 @@ Transform:
   - {fileID: 6998626803320752396}
   - {fileID: 2923417976840200546}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &890727011982053577
 NavMeshAgent:
@@ -649,14 +649,19 @@ MonoBehaviour:
   _healthSystem: {fileID: 0}
   _followPlayerSensor: {fileID: 342646836659753922}
   _meleeAttackSensor: {fileID: 6857980035165182135}
-  attacks: []
+  attacks:
+  - {fileID: 8048678887657378046}
+  - {fileID: 4053585163082966077}
   _meleeAttack: {fileID: 4053585163082966077}
   target: {fileID: 0}
   spawner: {fileID: 0}
+  score: 0
   _isInFollowRange: 0
   _isInBasicRange: 0
   IsHit: 0
   IsDead: 0
+  attackInterrumpted: 0
+  isRolling: 0
   _roll: {fileID: 8048678887657378046}
   _rollImpactSensor: {fileID: 1159209860011419327}
 --- !u!114 &2474399760132936369
@@ -695,6 +700,37 @@ CapsuleCollider:
   m_Height: 2.8009415
   m_Direction: 1
   m_Center: {x: 0, y: 0.90047073, z: 0.48646545}
+--- !u!114 &6469552712513051028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112893916876805239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c27173a05b3de49a3f5b980734d692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeDamages: {fileID: 110260239139023604}
+  jumpCollider: {fileID: 8600913752020013327}
+--- !u!114 &1199579625342059642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112893916876805239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4e224f43494b11b7f5c63a5cc5fa07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMesh:
+  - {fileID: 4722240000220727542}
+  undissolveDuration: 3
+  dissolveDuration: 2
+  targetDissolveAmount: 1
 --- !u!1 &8781099483093849672
 GameObject:
   m_ObjectHideFlags: 0
@@ -4016,6 +4052,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 677729754446102776, guid: 119acf59dd2a1fc4c91221c1b5765bf9,
         type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.581
+      objectReference: {fileID: 0}
+    - target: {fileID: 677729754446102776, guid: 119acf59dd2a1fc4c91221c1b5765bf9,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
@@ -4094,12 +4135,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Werewolf_Legacy
       objectReference: {fileID: 0}
+    - target: {fileID: 677729754449580456, guid: 119acf59dd2a1fc4c91221c1b5765bf9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 807177168bf1de24b9ef1c925ea5768b, type: 2}
     m_RemovedComponents:
     - {fileID: 677729754453897066, guid: 119acf59dd2a1fc4c91221c1b5765bf9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 119acf59dd2a1fc4c91221c1b5765bf9, type: 3}
+--- !u!137 &4722240000220727542 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 677729754449580456, guid: 119acf59dd2a1fc4c91221c1b5765bf9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5255423534915787102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4722240000225909204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 677729754446102666, guid: 119acf59dd2a1fc4c91221c1b5765bf9,

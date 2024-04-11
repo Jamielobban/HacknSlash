@@ -17,7 +17,8 @@ public class WareWolf : Enemy
     protected override void InitializeStates()
     {
         base.InitializeStates();
-        _enemyFSM.AddState(Enums.EnemyStates.Roll, new RollState(false, this, _roll.OnRoll, _roll.rollDuration));
+        _enemyFSM.AddState(Enums.EnemyStates.Roll, new RollState(false, this, (onEnter) =>
+        { _roll.OnRoll(); isRolling = true; }, _roll.rollDuration));
     }
 
     protected override void InitializeTransitions()
@@ -25,7 +26,6 @@ public class WareWolf : Enemy
         base.InitializeTransitions();
         
         InitializeRollTransitions();
-
     }
 
     protected override void InitializeTriggerTransitions()
@@ -46,9 +46,12 @@ public class WareWolf : Enemy
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Roll, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
-    
+
+    protected override bool InRangeToChase() => base.InRangeToChase() && !isRolling;
+    protected override bool IsInIdleRange() => base.IsInIdleRange() && !isRolling;
+
     protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => !IsHit && _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange &&
-        Vector3.Distance(_player.transform.position, transform.position) >= 4;
+                                                                                   Vector3.Distance(_player.transform.position, transform.position) >= 4;
     
     protected virtual void RollImpactSensor_OnCollision(Collision collision)
     {

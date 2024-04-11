@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ChaseState : EnemyStateBase
 {
-
     public ChaseState(bool needsExitTime, Enemy enemy, Transform target) : base(needsExitTime, enemy)
     {
         _enemy.target = target;
@@ -23,7 +22,11 @@ public class ChaseState : EnemyStateBase
         if (!_requestedExit)
         {
             //More complex movement can be added Overriding Chase State
+            // Vector3 lookDirection = _enemy.target.position - _enemy.transform.position;
+            // Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+            // _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation,targetRotation, _extraRotationSpeed * Time.deltaTime);
             _agent.SetDestination(_enemy.target.position);
+
         }
         else if (_agent.remainingDistance <= _agent.stoppingDistance)
         {

@@ -126,7 +126,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -233,13 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb458fd785ee449aa90adcd14e38b1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentAttackState: 0
+  _currentAttackState: 2
   baseDamage: 5
   minCooldown: 1
   maxCooldown: 1.7
   _castTime: 0.05
   _animationName: MeleeAttack
-  timeToDeactiveCollider: 0.08
 --- !u!65 &1152944888767383108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -275,6 +274,8 @@ GameObject:
   - component: {fileID: 4668597380385546604}
   - component: {fileID: 402235160911303111}
   - component: {fileID: 5115768012773138344}
+  - component: {fileID: 427001661827136008}
+  - component: {fileID: 6442333469647931899}
   m_Layer: 6
   m_Name: Wolf
   m_TagString: Enemy
@@ -300,7 +301,7 @@ Transform:
   - {fileID: 2808344050841042665}
   - {fileID: 535492601020928872}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8760300774179846682
 NavMeshAgent:
@@ -362,14 +363,18 @@ MonoBehaviour:
   _healthSystem: {fileID: 0}
   _followPlayerSensor: {fileID: 3759602350710042056}
   _meleeAttackSensor: {fileID: 1301884354103081471}
-  attacks: []
+  attacks:
+  - {fileID: 6440882938012723302}
   _meleeAttack: {fileID: 6440882938012723302}
   target: {fileID: 0}
   spawner: {fileID: 0}
+  score: 0
   _isInFollowRange: 0
   _isInBasicRange: 0
   IsHit: 0
   IsDead: 0
+  attackInterrumpted: 0
+  isRolling: 0
 --- !u!114 &402235160911303111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,6 +411,36 @@ CapsuleCollider:
   m_Height: 2.1078186
   m_Direction: 2
   m_Center: {x: 0, y: 0.6622467, z: 0.28933716}
+--- !u!114 &427001661827136008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3708257749440662834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a2013ac7ac0fa4c9ee56130714517c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeDamages: {fileID: 1152944888767383108}
+--- !u!114 &6442333469647931899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3708257749440662834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4e224f43494b11b7f5c63a5cc5fa07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMesh:
+  - {fileID: 4908433725776185438}
+  undissolveDuration: 3
+  dissolveDuration: 2
+  targetDissolveAmount: 0.07
 --- !u!1 &6636096841348905546
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,8 +540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSightDistance: 75
-  maxSightDistance: 100
+  minSightDistance: 50
+  maxSightDistance: 75
 --- !u!1 &8563432231608888539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,12 +2342,22 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 98c1a82f2586bd8438d1d04ba2336bb3, type: 2}
+    - target: {fileID: 13777774, guid: aedbd60e2d85ee240b7af8956da0f2bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9028ee306c52a61429efcc02a7cedef2, type: 2}
     m_RemovedComponents:
     - {fileID: 9511170, guid: aedbd60e2d85ee240b7af8956da0f2bb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aedbd60e2d85ee240b7af8956da0f2bb, type: 3}
+--- !u!137 &4908433725776185438 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13777774, guid: aedbd60e2d85ee240b7af8956da0f2bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4908433725781308208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4908433725781155868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 414508, guid: aedbd60e2d85ee240b7af8956da0f2bb,

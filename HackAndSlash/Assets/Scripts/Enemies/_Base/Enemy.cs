@@ -12,6 +12,7 @@ public class Enemy : PoolableObject
     [Header("References")] 
     [SerializeField] protected PlayerControl _player;
     [SerializeField] protected EnemyHealthSystem _healthSystem;
+    public EnemySpawnEffect _spawnEffect { get; private set; }
     
     [Header("Sensors")] 
     [SerializeField] protected EnemySensor _followPlayerSensor;
@@ -24,6 +25,7 @@ public class Enemy : PoolableObject
     [Header("Variables")]
     public Transform target;
     public GameObject spawner;
+    public float score;
     
     protected Animator _animator;
     protected NavMeshAgent _agent;
@@ -35,6 +37,8 @@ public class Enemy : PoolableObject
     [SerializeField] protected bool _isInBasicRange;
     public bool IsHit = false;
     public bool IsDead = false;
+    public bool attackInterrumpted = false;
+    public bool isRolling = false;
     
     // -- Getters -- //
     public PlayerControl Player => _player;
@@ -45,13 +49,14 @@ public class Enemy : PoolableObject
     {
         _player = GameManager.Instance.Player;
         _healthSystem = transform.GetChild(0).GetComponent<EnemyHealthSystem>();
+        _spawnEffect = GetComponent<EnemySpawnEffect>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _enemyFSM = new StateMachine<Enums.EnemyStates, Enums.StateEvent>();
         
         InitializeStates();
         InitializeTransitions();
-        OnSpawnEnemy();
+
 
         if (target == null)
         {
@@ -76,19 +81,19 @@ public class Enemy : PoolableObject
         _enemyFSM.AddState(Enums.EnemyStates.Stun, new StunState(false, this, 2));
         _enemyFSM.AddState(Enums.EnemyStates.Attack, new AttackState(false, this, _meleeAttack.OnAttack));
         _enemyFSM.AddState(Enums.EnemyStates.Dead, new DeadState(false, this));
+        _enemyFSM.AddState(Enums.EnemyStates.Spawning, new SpawnState(false, this));
         //_enemyFSM.AddState(Enums.EnemyStates.Countering, new CounteringState(false, this));
         //_enemyFSM.AddState(Enums.EnemyStates.Wander, new WanderState(false, this));
     }
-
+    
+    #region Initialize Transitions
     protected virtual void InitializeTransitions()
     {
         InitializeTriggerTransitions();
         InitializeHitTransitions();
-        
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Dead, (transition) => IsDead));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Dead, (transition) => IsDead));
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Dead, (transition) => IsDead));
-        
+        InitializeDeadTransitions();
+
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Spawning, Enums.EnemyStates.Idle, (transition) => !_spawnEffect.IsSpawning));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
         
@@ -100,15 +105,35 @@ public class Enemy : PoolableObject
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.DetectPlayer, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Chase));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.LostPlayer, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Idle));
         
+        // Hit Transitions
+        
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Hit));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Hit));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Hit));
+        
+        // Spawning Transitions
+        
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Spawning));
+        
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Spawning));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Spawning));
     }
     protected virtual void InitializeHitTransitions()
     {
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Attack, ShouldMeleeAttack));
+    }
+    protected virtual void InitializeDeadTransitions()
+    {
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Dead, (transition) => IsDead));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Dead, (transition) => IsDead));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Dead, (transition) => IsDead)); 
     }
     protected virtual void InitializeAttackTransitons()
     {
@@ -117,6 +142,7 @@ public class Enemy : PoolableObject
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
+    #endregion
     
     protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => !IsHit && _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange;
     protected virtual bool IsInIdleRange() => (!_isInFollowRange || Vector3.Distance(target.position, transform.position) <= _agent.stoppingDistance) && !IsHit ;
@@ -139,6 +165,7 @@ public class Enemy : PoolableObject
                     {
                         ManagerEnemies.Instance.SetSpawnedEnemies(-1);
                     }
+                    ResetEnemy();
                     gameObject.SetActive(false);
                 }
             }
@@ -160,23 +187,47 @@ public class Enemy : PoolableObject
 
     public void OnSpawnEnemy()
     {
-        ResetEnemy();
-        // SetActive true
-        // Shader To Spawn
-        _enemyFSM.SetStartState(Enums.EnemyStates.Idle);
+        _enemyFSM.SetStartState(Enums.EnemyStates.Spawning);
         _enemyFSM.Init();
+        _enemyFSM.Trigger(Enums.StateEvent.SpawnEnemy);
+        ResetEnemy();
+        gameObject.SetActive(true);
+        _spawnEffect.InitializeSpawnEffect();
     }
 
     public void OnDespawnEnemy()
     {
-        // Shader To Despawn
-        // Deactive GameObject if it's pooleable // or Destroy if else
+        _enemyFSM.Trigger(Enums.StateEvent.DespawnEnemy);
+        _spawnEffect.InitializeDespawnEffect();
     }
     
     public virtual void ResetEnemy()
     {
         IsDead = false;
+        _spawnEffect.ResetDissolveAmount();
         _healthSystem.ResetEnemyHealth();
+    }
+
+    public virtual void OnDie()
+    {
+        if (isPooleable)
+        {
+            if (spawner?.GetComponent<SpawnerBase>())
+            {
+                spawner.GetComponent<SpawnerBase>().RemoveEnemy(this);
+            }
+            else
+            {
+                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+            }
+            spawner = null;
+            ResetEnemy();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
     
     public virtual void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)

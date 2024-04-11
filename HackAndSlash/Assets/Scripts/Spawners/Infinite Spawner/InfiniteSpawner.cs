@@ -117,8 +117,8 @@ public class InfiniteSpawner : MonoBehaviour
         {
             Enemy enemy = poolable.GetComponent<Enemy>();
             enemy.target = GameManager.Instance.Player.transform;
-            //enemy.animations.OnSpawn();
             enemy.spawner = this.gameObject;
+            enemy.OnSpawnEnemy();
             AddEnemy(enemy);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))

@@ -5,6 +5,7 @@ public class Enums
     public enum EnemyStates
     {
         Idle,
+        Spawning,
         Wander,
         Chase,
         Attack,
@@ -21,14 +22,10 @@ public class Enums
         LostPlayer,
         HitEnemy,
         DeadEnemy,
+        SpawnEnemy,
+        DespawnEnemy,
         RollImpact
     }
-    
-    public enum CameraType
-    {
-        FreeLook,
-        Locked
-    };
 
     public enum AttackState
     {
@@ -43,24 +40,7 @@ public class Enums
         Random, 
         Probability
     };
-
-    public enum CharacterState
-    {
-        Idle,
-        Moving,
-        Dashing,
-        Air,
-        Attacking
-    };
-    public enum PlayerMovementState
-    {
-        Stop,
-        Walking,
-        Sprinting,
-        Dashing,
-        Attacking,
-        Air
-    }
+    
     public enum TutorialActions
     {
         JUMP,

@@ -27,7 +27,8 @@ public class BaseEnemyAttack : MonoBehaviour
         _currentDamage = baseDamage;
         _enemy = transform.parent.parent.GetComponent<Enemy>();
         _cooldown = Random.Range(minCooldown, maxCooldown);
-        _currentTime = _cooldown;
+        _currentTime = 0f;
+        _enemy.attackInterrumpted = false;
     }
 
     protected virtual void Update()

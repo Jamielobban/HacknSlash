@@ -10,8 +10,6 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public EnemyHUD hud;
     public float MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
-
-    public DamageNumber lowDamage, mediumDamage, highDamage;
     
     private void Awake()
     {
@@ -29,12 +27,12 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         _currentHealth -= damage;
         
         _enemy.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
-        ShowDamageEffects(damage);
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
         
         if (_currentHealth <= 0)
         {
             _enemy.IsDead = true;
+            _enemy.OnDespawnEnemy();
         }
     }
 
@@ -60,12 +58,4 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }
 
-
-    private void ShowDamageEffects(float damage)
-    {
-        if (damage <= currentMaxHealth * .2f)
-        {
-            
-        }
-    }
 }
