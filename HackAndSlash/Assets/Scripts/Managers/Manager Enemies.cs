@@ -35,8 +35,8 @@ public class ManagerEnemies : MonoBehaviour
     public List<GameObject> spawners = new List<GameObject>();
 
     [Header("Enemies Settings: ")]
-    public List<Enemy> enemies = new List<Enemy>();
-    public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    public List<EnemyBase> enemies = new List<EnemyBase>();
+    public Dictionary<EnemyBase, ObjectPool> enemyObjectsPools = new Dictionary<EnemyBase, ObjectPool>();
     public List<GameObject> parentObjectPools = new List<GameObject>(); 
 
     private int _spawnedEnemies = 0;
@@ -92,7 +92,7 @@ public class ManagerEnemies : MonoBehaviour
                     GameObject enemy = pool.transform.GetChild(i).gameObject;
                     if (enemy.activeSelf)
                     {
-                        enemy.GetComponent<Enemy>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                        enemy.GetComponent<EnemyBase>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
                     }
                 }
             }

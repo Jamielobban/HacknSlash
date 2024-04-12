@@ -13,12 +13,12 @@ public class EnemySpawnEffect : MonoBehaviour
     public bool IsSpawning => _isSpawning;
     private List<Material> _skinnedMaterials = new List<Material>();
     private bool _isSpawning = false;
-    private Enemy _enemy;
+    private EnemyBase _enemyBase;
 
     private void Awake()
     {
         SetSkinnedMaterials();
-        _enemy = GetComponent<Enemy>();
+        _enemyBase = GetComponent<EnemyBase>();
         ResetDissolveAmount();
     }
 
@@ -61,8 +61,8 @@ public class EnemySpawnEffect : MonoBehaviour
             _skinnedMaterials[i].SetFloat("_EdgeThickness", 0f);
         }
         
-        ManagerEnemies.Instance.AddEnemyScore(_enemy.score);
-        _enemy.OnDie();
+        ManagerEnemies.Instance.AddEnemyScore(_enemyBase.score);
+        _enemyBase.OnDie();
         _isSpawning = false;
     }
     

@@ -3,7 +3,7 @@ public class StunState : EnemyStateBase
 {
     private float _stunTime;
     private float _currentTime;
-    public StunState(bool needsExitTime, Enemy enemy, float stunTime) : base(needsExitTime, enemy, stunTime)
+    public StunState(bool needsExitTime, EnemyBase enemyBase, float stunTime) : base(needsExitTime, enemyBase, stunTime)
     {
         _stunTime = stunTime;
     }

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class ProbabilitySpawner : SpawnerBase
 {
     [SerializeField] private List<EnemyProbability> _enemyProbabilities = new List<EnemyProbability>();
-    protected Dictionary<Enemy, int> _enemiesDict = new Dictionary<Enemy, int>();
+    protected Dictionary<EnemyBase, int> _enemiesDict = new Dictionary<EnemyBase, int>();
 
     protected override void Awake()
     {
@@ -18,7 +18,7 @@ public class ProbabilitySpawner : SpawnerBase
 
         foreach (var enemyProbability in _enemyProbabilities)
         {
-            _enemiesDict.Add(enemyProbability.enemy, enemyProbability.probability);
+            _enemiesDict.Add(enemyProbability.enemyBase, enemyProbability.probability);
         }        
     }
 
@@ -31,7 +31,7 @@ public class ProbabilitySpawner : SpawnerBase
         DoSpawnEnemy(GetProbableEnemeyKey(randomValue), ChooseRandomPositionOnNavMesh());
     }
 
-    private Enemy GetProbableEnemeyKey(int value)
+    private EnemyBase GetProbableEnemeyKey(int value)
     {
         foreach (var kvp in _enemiesDict)
         {

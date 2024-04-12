@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityHFSM;
 
-public class WareWolf : Enemy
+public class WareWolf : EnemyBaseMelee
 {
     [Header("Custom Attacks")]
     [SerializeField] protected RollAttack _roll;

@@ -16,19 +16,19 @@ public class RollAttack : BaseEnemyAttack
     public void OnRoll()
     {
         _sensor.gameObject.SetActive(true);
-        _enemy.transform.LookAt(_enemy.Player.transform.position);
+        EnemyBase.transform.LookAt(EnemyBase.Player.transform.position);
         Use();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_enemy.attackInterrumpted)
+        if (!EnemyBase.attackInterrumpted)
         {
             other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
         }
         else
         {
-            _enemy.attackInterrumpted = false;
+            EnemyBase.attackInterrumpted = false;
         }
     }
 }

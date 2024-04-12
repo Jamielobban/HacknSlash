@@ -6,7 +6,7 @@ using UnityEngine.XR;
 
 public class BaseEnemyAttack : MonoBehaviour
 {
-    protected Enemy _enemy;
+    protected EnemyBase EnemyBase;
     [SerializeField] protected Enums.AttackState _currentAttackState = Enums.AttackState.ReadyToUse;
     public Enums.AttackState CurrentAttackState => _currentAttackState;
     protected float _currentTime;
@@ -25,10 +25,10 @@ public class BaseEnemyAttack : MonoBehaviour
     {
         _animator = transform.parent.parent.GetComponent<Animator>();
         _currentDamage = baseDamage;
-        _enemy = transform.parent.parent.GetComponent<Enemy>();
+        EnemyBase = transform.parent.parent.GetComponent<EnemyBase>();
         _cooldown = Random.Range(minCooldown, maxCooldown);
         _currentTime = 0f;
-        _enemy.attackInterrumpted = false;
+        EnemyBase.attackInterrumpted = false;
     }
 
     protected virtual void Update()

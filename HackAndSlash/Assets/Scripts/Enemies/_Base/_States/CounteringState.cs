@@ -1,6 +1,6 @@
 ﻿public class CounteringState : EnemyStateBase
 {
-    public CounteringState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
+    public CounteringState(bool needsExitTime, EnemyBase enemyBase) : base(needsExitTime, enemyBase) { }
 
     public override void OnEnter()
     {

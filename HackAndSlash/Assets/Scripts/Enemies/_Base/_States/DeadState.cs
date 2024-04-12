@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public class DeadState : EnemyStateBase
 {
-    public DeadState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
+    public DeadState(bool needsExitTime, EnemyBase enemyBase) : base(needsExitTime, enemyBase) { }
 
     public override void OnEnter()
     {
@@ -13,7 +13,7 @@ public class DeadState : EnemyStateBase
         
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + 1f, () =>
         {
-            _enemy.gameObject.SetActive(false);
+            EnemyBase.gameObject.SetActive(false);
         });
     }
 }
