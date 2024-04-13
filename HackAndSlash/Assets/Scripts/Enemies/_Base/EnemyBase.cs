@@ -36,7 +36,7 @@ public class EnemyBase : PoolableObject
     public bool IsHit = false;
     public bool IsDead = false;
     public bool attackInterrumpted = false;
-    public bool isRolling = false;
+    public bool isAttacking = false;
     
     // -- Getters -- //
     public PlayerControl Player => _player;

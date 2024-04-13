@@ -147,10 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentAttackState: 2
-  baseDamage: 5
-  minCooldown: 1
-  maxCooldown: 1.7
-  _castTime: 0.05
+  baseDamage: 1
+  minCooldown: 0.7
+  maxCooldown: 1.2
+  _castTime: 0
   _animationName: MeleeAttack
 --- !u!65 &119197553877656281
 BoxCollider:
@@ -171,8 +171,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0359802, y: 1.087265, z: 1.0784454}
-  m_Center: {x: -0.069869995, y: 0.754364, z: 0.96930695}
+  m_Size: {x: 1.6436768, y: 0.9685402, z: 1.791565}
+  m_Center: {x: -0.02456665, y: 0.3758297, z: 0.16494751}
 --- !u!1 &5761432086925407271
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 2142552240414237236}
   - component: {fileID: 8871688364313702261}
   - component: {fileID: 800646338441468430}
-  - component: {fileID: 7444541442724377641}
+  - component: {fileID: 356562006128749138}
   - component: {fileID: 3431994665453700156}
   - component: {fileID: 7271604990027501715}
   - component: {fileID: 4004969910057550612}
@@ -366,7 +366,7 @@ Transform:
   - {fileID: 3388758997386883307}
   - {fileID: 5408745972123823343}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8871688364313702261
 NavMeshAgent:
@@ -379,10 +379,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 12
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 250
-  m_StoppingDistance: 1.7
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -411,7 +411,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7444541442724377641
+--- !u!114 &356562006128749138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,25 +420,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 8016352695908973705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f660bcab531a43d29f615fa073e0aee0, type: 3}
+  m_Script: {fileID: 11500000, guid: cc2a2096246c46bd98608844cb7a52d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPooleable: 1
   _player: {fileID: 0}
   _healthSystem: {fileID: 0}
   _followPlayerSensor: {fileID: 1942737458255966505}
-  _meleeAttackSensor: {fileID: 8499002988419007534}
-  attacks: []
-  _meleeAttack: {fileID: 434670817661210696}
+  attacks:
+  - {fileID: 434670817661210696}
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
   _isInFollowRange: 0
-  _isInBasicRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
   isRolling: 0
+  _meleeAttackSensor: {fileID: 8499002988419007534}
+  _meleeAttack: {fileID: 434670817661210696}
 --- !u!114 &3431994665453700156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
   - {fileID: 7828634997236062876}
   undissolveDuration: 3
   dissolveDuration: 2
-  targetDissolveAmount: 1
+  targetDissolveAmount: 0.4
 --- !u!1 &8352956954268936645
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +907,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2142552240414237236}
     m_Modifications:
+    - target: {fileID: 2872082521708906949, guid: 4bce4cac38bc36c41b64b43e529a9e1c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 629e9e16619040a42b4f434fcf75f67d, type: 2}
     - target: {fileID: 2872082521720472953, guid: 4bce4cac38bc36c41b64b43e529a9e1c,
         type: 3}
       propertyPath: m_IsActive

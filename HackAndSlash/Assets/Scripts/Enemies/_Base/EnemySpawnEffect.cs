@@ -115,7 +115,7 @@ public class EnemySpawnEffect : MonoBehaviour
         {
             for (int i = 0; i < skinnedMesh.Count; i++)
             {
-                for (int j = 0; j < skinnedMesh[j].materials.Length; j++)
+                for (int j = 0; j < skinnedMesh[i].materials.Length; j++)
                 {
                     _skinnedMaterials.Add(skinnedMesh[i].materials[j]);
 

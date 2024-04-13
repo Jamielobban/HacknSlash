@@ -1230,28 +1230,19 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case States.HIT:
-
-                if ((Time.time - hitTime) > 0.15f)
+                if (CheckIfDash())
                 {
-                    if (CheckIfDash())
-                    {
-                        dashDown = false;
-
-                        break;
-                    }
+                    dashDown = false;
+                    break;
                 }
-                if ((Time.time - hitTime) > 0.5f)
-                {
-                    CheckIfReturnIdle();
-                    CheckIfStartMove();
-                }
+                CheckIfReturnIdle();
+                CheckIfStartMove();
+                /*if ((Time.time - hitTime) > 0.15f) if
+                if ((Time.time - hitTime) > 0.5f) idle and startmove                
+                */
 
                 break;
             case States.DEATH:
-                //if ((Time.time - deathTime) > 2)  
-                //{
-                //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                //}
 
                 break;
             case States.TELEPORT:
@@ -2079,36 +2070,7 @@ public class PlayerControl : MonoBehaviour
 
         }
     }
-    //public void GetDamage(float damage)
-    //{
-    //    if ((states != States.HIT) && states != States.DEATH)
-    //    {
-    //        currentHealth -= damage;
-    //        SetHealth();
-    //        if (currentHealth <= 0)
-    //        {
-    //            states = States.DEATH;
-    //            deathTime = Time.time;
-    //            RoomManager.Instance.ResetRoomManager();
-    //            playerAnim.CrossFadeInFixedTime("Death", 0.2f);
-    //            cameraAAnims.CrossFadeInFixedTime("Death", 0.2f);
-    //        }
-    //        else
-    //        {
-    //            states = States.HIT;
-    //            hitTime = Time.time;
-    //            playerAnim.speed = 1;
-    //            playerAnim.CrossFadeInFixedTime("Hit1", 0.2f);
-    //            hitFeedback.PlayFeedbacks();
-    //        }
-
-    //    }
-    //}
-    private void OnTriggerEnter(Collider other)
-    {
-
-    }
-
+    
     public void HitEffect()
     {
         hitTime = Time.time;

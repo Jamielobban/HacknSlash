@@ -25,7 +25,7 @@ public class RollState : EnemyStateBase
         else
         {
             _agent.isStopped = false;
-            EnemyBase.isRolling = false;
+            EnemyBase.isAttacking = false;
             _timer = 0;
             fsm.StateCanExit();
         }
@@ -34,7 +34,7 @@ public class RollState : EnemyStateBase
     public override void OnExit()
     {
         base.OnExit();
-        EnemyBase.isRolling = false;
+        EnemyBase.isAttacking = false;
         _timer = 0;
     }
 }

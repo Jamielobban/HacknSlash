@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df28a95b45982743bdaf93b44cde3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToSpawn: 2
+  _timeToSpawn: 0.5
   _isBurstSpawner: 0
   enemySpawnMethod: 2
   _enemies:
@@ -52,15 +52,24 @@ MonoBehaviour:
   - {fileID: 3441910430522070975, guid: e4fc51f81faca21419336d7b30f2339a, type: 3}
   timeMinToSpawn: 0.8
   timeMaxToSpawn: 2.5
-  enemiesCap: 30
+  enemiesCap: 5
   delayStartTime: 0
   canStartSpawn: 1
   _enemyProbabilities:
-  - enemy: {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363, type: 3}
+  - enemyBase: {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363,
+      type: 3}
     probability: 1
-  - enemy: {fileID: 4668597380385546604, guid: 0e42be49c4388094b8f0553a073fa483, type: 3}
+  - enemyBase: {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483,
+      type: 3}
     probability: 0
-  - enemy: {fileID: 8824323476384328923, guid: 80693bab60b4e2e44b4a82f1ba586fa4, type: 3}
+  - enemyBase: {fileID: 2820150917280834003, guid: 80693bab60b4e2e44b4a82f1ba586fa4,
+      type: 3}
     probability: 100
+  - enemyBase: {fileID: 356562006128749138, guid: daa4c232bf970694b85a560c7c6d9d56,
+      type: 3}
+    probability: 0
+  - enemyBase: {fileID: 1022414631580474550, guid: 729b0d4864457d3429ea9d0004efc5e2,
+      type: 3}
+    probability: 0
   maxFarDistToSpawn: 45
   minFarDistToSpawn: 7

@@ -5,38 +5,386 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e0c4a22-202c-4bc4-ac5f-83591f1a661d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyBaseRanged.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyBaseRanged.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseMelee.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseMelee.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/RangedAttack.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/RangedAttack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree/Tree.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree/Tree.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enable Damages/TreeEnableDamages.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enable Damages/TreeEnableDamages.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/AreaAttack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/AreaAttack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/DamageDealer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/DamageDealer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/AreaState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/AreaState.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HackAndSlash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HackAndSlash/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Spider_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Spider_Animator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Tree_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Tree_Animator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Player/Frank_SlashPack_Dual/Dual Animation Set/PlasyerMask.mask" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Player/Frank_SlashPack_Dual/Dual Animation Set/PlasyerMask.mask" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Fantasy Animals Pack/Darkness Spider/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Fantasy Animals Pack/Darkness Spider/Materials/M_DarknessSpider.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Fantasy Animals Pack/Darkness Spider/Materials/M_DarknessSpider.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Fantasy Animals Pack/Darkness Spider/Materials/M_DarknessSpider_Legacy.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Fantasy Animals Pack/Darkness Spider/Materials/M_DarknessSpider_Legacy.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Materials/Mat_Necromanser_Body.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Materials/Mat_Necromanser_Body.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Materials/Mat_Necromanser_Weapon.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Materials/Mat_Necromanser_Weapon.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Texture/Necromancer_body.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Texture/Necromancer_body.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Texture/Necromancer_weapon.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Necromanser/Texture/Necromancer_weapon.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 3.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/Tips &amp; Documentations HitSplatterEffectPack1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/Tips &amp; Documentations HitSplatterEffectPack1.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/WebBuild.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/WebBuild/texture.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/WebBuild/texture/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/WebBuild/texture/icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Large_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Large_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Medium_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Medium_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Small_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Arterial_Small_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Dripping_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Dripping_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Large_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Large_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Medium_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Medium_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Small_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Impact_Small_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Large_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Large_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Medium_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Medium_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Small_Black.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Black/Blood_Smash_Small_Black.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Large_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Large_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Medium_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Medium_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Small_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Arterial_Small_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Dripping_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Dripping_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Large_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Large_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Medium_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Medium_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Small_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Impact_Small_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Large_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Large_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Medium_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Medium_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Small_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Blue/Blood_Smash_Small_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Large_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Large_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Medium_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Medium_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Small_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Arterial_Small_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Dripping_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Dripping_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Large_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Large_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Medium_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Medium_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Small_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Impact_Small_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Large_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Large_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Medium_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Medium_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Small_BluePurpleGlow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/BluePurpleGlow/Blood_Smash_Small_BluePurpleGlow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Large_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Large_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Medium_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Medium_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Small_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Arterial_Small_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Dripping_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Dripping_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Large_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Large_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Medium_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Medium_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Small_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Impact_Small_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Large_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Large_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Medium_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Medium_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Small_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Green/Blood_Smash_Small_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Large_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Large_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Medium_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Medium_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Small_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Arterial_Small_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Dripping_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Dripping_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Large_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Large_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Medium_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Medium_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Small_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Impact_Small_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Large_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Large_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Medium_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Medium_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Small_Lava.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Lava/Blood_Smash_Small_Lava.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Large_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Large_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Medium_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Medium_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Small_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Arterial_Small_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Dripping_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Dripping_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Large_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Large_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Medium_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Medium_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Small_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Impact_Small_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Large_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Large_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Medium_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Medium_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Small_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/Red/Blood_Smash_Small_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Large_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Large_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Medium_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Medium_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Small_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Arterial_Small_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Dripping_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Dripping_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Large_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Large_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Medium_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Medium_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Small_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Impact_Small_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Large_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Large_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Medium_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Medium_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Small_RedBright.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedBright/Blood_Smash_Small_RedBright.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Large_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Large_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Medium_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Medium_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Small_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Arterial_Small_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Dripping_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Dripping_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Large_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Large_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Medium_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Medium_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Small_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Impact_Small_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Large_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Large_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Medium_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Medium_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Small_RedDark.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/prefab/RedDark/Blood_Smash_Small_RedDark.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/LightingData.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/LightingData.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-0_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-0_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-10_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-10_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-11_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-11_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-12_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-12_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-1_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-1_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-2_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-2_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-3_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-3_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-4_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-4_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-5_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-5_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-6_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-6_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-7_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-7_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-8_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-8_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-9_comp_light.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/Lightmap-9_comp_light.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/ReflectionProbe-0.exr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/HitSplatterEffectPack1/scenes/HitSplatterEffectPack1/ReflectionProbe-0.exr.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/animators.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/animators/CameraAC_Master.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/animators/CameraAC_Master.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/animators/RotateCamera.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/animators/RotateCamera.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/character.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/character.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/cube.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/cube.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/ground.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/ground.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/groundScrap.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/groundScrap.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/sphere.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/sphere.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/wall.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/example_scene_environment/wall.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/models/character.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/models/character.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShake.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShake.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShakeCaller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShakeCaller.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShakeProjectile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/CameraShakeProjectile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/EffectActor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/EffectActor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/ExplodingProjectile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/ExplodingProjectile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/Projectile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/Projectile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/projectileActor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/EffectCore/packs/WebDemoAssets/scripts/projectileActor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 10.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 10.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 14.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 14.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 15.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 15.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 20.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 20.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 21.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 21.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 22.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 22.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 23.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 23.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 24.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 24.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 25.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 25.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 26.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 26.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 27.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 27.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 5.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 5.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 7.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 7.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 9.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AAA Projectiles Vol 1/Prefabs/Projectiles(transform)/Projectile 9.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AOE Magic spells Vol.1/Prefabs/Knives.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AOE Magic spells Vol.1/Prefabs/Knives.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AOE Magic spells Vol.1/Prefabs/Meteor shower.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Effects/Hovl Studio/AOE Magic spells Vol.1/Prefabs/Meteor shower.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Documentation.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Documentation.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans - OFL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans - OFL.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans - OFL.txt.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans - OFL.txt.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans.ttf.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Fonts/LiberationSans.ttf.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/LineBreaking Following Characters.txt.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/LineBreaking Following Characters.txt.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/LineBreaking Leading Characters.txt.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/LineBreaking Leading Characters.txt.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/TMP Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/TMP Settings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/TMP Settings.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Resources/TMP Settings.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Bitmap.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF Overlay.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF Overlay.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF SSD.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF SSD.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF SSD.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF SSD.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF-Surface.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_SDF.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Sprite.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Sprite.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Sprite.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMP_Sprite.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro.cginc.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro.cginc.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Mobile.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Mobile.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Mobile.cginc.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Mobile.cginc.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Properties.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Properties.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Properties.cginc.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Properties.cginc.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Surface.cginc" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Surface.cginc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Surface.cginc.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Extra/TextMesh Pro/Shaders/TMPro_Surface.cginc.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_BaseColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_BaseColor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_Moss.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_Moss.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayerController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayerController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Necromancer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Necromancer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Tree.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Tree.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/CHest.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/CHest.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Camps Enemies.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Camps Enemies.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Enemy Spawned.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Enemy Spawned.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Player.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/Material Map Signs/Player.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/MiniBoss.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/MiniBoss.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Spawners/Ice World/Infinity Spawner.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/P_Spawners/Ice World/Infinity Spawner.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scenes_Nahuel/Main Enemies.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scenes_Nahuel/Main Enemies.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/WareWolf/WareWolf.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/WareWolf/WareWolf.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enemy.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyHealthSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyHealthSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyProbability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyProbability.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enable Damages/WWEnableDamages.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enable Damages/WWEnableDamages.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemySpawnEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemySpawnEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/BaseEnemyAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/BaseEnemyAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/MeleeAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/MeleeAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/RollAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_Attacks/RollAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/AttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/AttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/ChaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/ChaseState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/CounteringState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/CounteringState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/DeadState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/DeadState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/EnemyStateBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/EnemyStateBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/HitState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/HitState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/IdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/IdleState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/RollState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/RollState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/SpawnState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/SpawnState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/StunState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/StunState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/WanderState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/WanderState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Manager Enemies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Manager Enemies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawners/Infinite Spawner/InfiniteSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawners/Infinite Spawner/InfiniteSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawners/Infinite Spawner/InfinityProbabilitySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawners/Infinite Spawner/InfinityProbabilitySpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawners/ProbabilitySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawners/ProbabilitySpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawners/SpawnerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawners/SpawnerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/Enums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utils/Enums.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,27 +411,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/NewEnemies__Base",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/NewEnemies__Base&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\nahue\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\nahue\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\nahue\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\nahue\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\nahue\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\nahue\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.3f1\Editor\Unity.exe" />
@@ -136,7 +484,8 @@
       <workItem from="1712749426267" duration="8536000" />
       <workItem from="1712769796548" duration="5281000" />
       <workItem from="1712820397958" duration="17725000" />
-      <workItem from="1712940514513" duration="1606000" />
+      <workItem from="1712940514513" duration="1822000" />
+      <workItem from="1713004377642" duration="6379000" />
     </task>
     <servers />
   </component>

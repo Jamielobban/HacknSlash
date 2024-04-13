@@ -9,6 +9,7 @@ public class Enums
         Wander,
         Chase,
         Attack,
+        AreaAttack,
         Roll,
         Stun,
         Countering,
