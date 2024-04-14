@@ -457,7 +457,7 @@ MonoBehaviour:
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
-  timeBetweenAttacks: 1.5
+  timeBetweenAttacks: 1
   _currentTime: 0
   _isInFollowRange: 0
   IsHit: 0
@@ -466,7 +466,6 @@ MonoBehaviour:
   isAttacking: 0
   _shootAttackSensor: {fileID: 3340102413424144712}
   _rangedAttack: {fileID: 8441819074929750980}
-  _meleeAttackSensor: {fileID: 4539307820643965553}
   _meleeAttack: {fileID: 2167516397289081775}
 --- !u!1 &2460902706625831649
 GameObject:
@@ -933,7 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentAttackState: 0
   baseDamage: 5
-  minCooldown: 1.5
+  minCooldown: 1
   maxCooldown: 2
   _castTime: 0
   _animationName: MeleeAttack
@@ -1025,8 +1024,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeMinBetween: 0
-  minSightDistance: 1
-  maxSightDistance: 1.5
+  minSightDistance: 2.2
+  maxSightDistance: 3
 --- !u!1 &8504286676147957103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,9 +1092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 4.5
-  minSightDistance: 5.5
-  maxSightDistance: 7.5
+  rangeMinBetween: 7
+  minSightDistance: 7.5
+  maxSightDistance: 9.5
 --- !u!1001 &636689334004871167
 PrefabInstance:
   m_ObjectHideFlags: 0
