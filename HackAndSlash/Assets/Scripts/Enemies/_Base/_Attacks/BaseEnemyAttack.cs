@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.XR;
+
 
 public class BaseEnemyAttack : MonoBehaviour
 {
-    protected EnemyBase EnemyBase;
+    protected EnemyBase _enemyBase;
     [SerializeField] protected Enums.AttackState _currentAttackState = Enums.AttackState.ReadyToUse;
     public Enums.AttackState CurrentAttackState => _currentAttackState;
     protected float _currentTime;
@@ -25,10 +23,10 @@ public class BaseEnemyAttack : MonoBehaviour
     {
         _animator = transform.parent.parent.GetComponent<Animator>();
         _currentDamage = baseDamage;
-        EnemyBase = transform.parent.parent.GetComponent<EnemyBase>();
+        _enemyBase = transform.parent.parent.GetComponent<EnemyBase>();
         _cooldown = Random.Range(minCooldown, maxCooldown);
         _currentTime = 0f;
-        EnemyBase.attackInterrumpted = false;
+        _enemyBase.attackInterrumpted = false;
     }
 
     protected virtual void Update()

@@ -15,7 +15,8 @@ public class AreaAttack : BaseEnemyAttack
     }
     public void OnAreaAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        EnemyBase.transform.LookAt(EnemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase._currentTime = 0f;
         Use();
     }
     protected override void AttackAction()
@@ -25,13 +26,13 @@ public class AreaAttack : BaseEnemyAttack
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!EnemyBase.attackInterrumpted)
+        if (!_enemyBase.attackInterrumpted)
         {
             other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
         }
         else
         {
-            EnemyBase.attackInterrumpted = false;
+            _enemyBase.attackInterrumpted = false;
         }
     }
 }

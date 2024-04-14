@@ -24,7 +24,9 @@ public class EnemyBase : PoolableObject
     public Transform target;
     public GameObject spawner;
     public float score;
-    
+    public float timeBetweenAttacks = 1.5f;
+
+    public float _currentTime = 0f;
     protected Animator _animator;
     protected NavMeshAgent _agent;
     protected StateMachine<Enums.EnemyStates, Enums.StateEvent> _enemyFSM;
@@ -33,6 +35,7 @@ public class EnemyBase : PoolableObject
     [Header("Debug Info")]
     [SerializeField] protected bool _isInFollowRange;
     protected bool _isInBasicRange;
+    protected bool _enableMeleeAttack = false;
     public bool IsHit = false;
     public bool IsDead = false;
     public bool attackInterrumpted = false;
@@ -54,7 +57,6 @@ public class EnemyBase : PoolableObject
         
         InitializeStates();
         InitializeTransitions();
-
 
         if (target == null)
         {
@@ -126,10 +128,11 @@ public class EnemyBase : PoolableObject
     protected virtual void InitializeAttackTransitons() { }
     #endregion
     
-    protected virtual bool IsInIdleRange() => (!_isInFollowRange || Vector3.Distance(target.position, transform.position) <= _agent.stoppingDistance) && !IsHit ;
-    protected virtual bool InRangeToChase() => _isInFollowRange && Vector3.Distance(target.position, transform.position) > _agent.stoppingDistance && !IsHit;
+    protected virtual bool IsInIdleRange() => (!_isInFollowRange || Vector3.Distance(target.position, transform.position) <= _agent.stoppingDistance) && !IsHit && !isAttacking;
+    protected virtual bool InRangeToChase() => _isInFollowRange && Vector3.Distance(target.position, transform.position) > _agent.stoppingDistance && !IsHit && !isAttacking;
     protected virtual void Update()
     {
+        _currentTime += Time.deltaTime;
         _enemyFSM.OnLogic();
         // If enemy is to far despawn
         if(Time.frameCount % 30 == 0 && gameObject.activeSelf)
@@ -151,6 +154,14 @@ public class EnemyBase : PoolableObject
                 }
             }
         }
+        if (_currentTime >= timeBetweenAttacks && !_enableMeleeAttack)
+        {
+            _enableMeleeAttack = true;
+        }
+        else
+        {
+            _enableMeleeAttack = false;
+        }
     }
 
     protected virtual void FollowPlayerSensor_OnPlayerSensorEnter(Transform player)
@@ -163,7 +174,6 @@ public class EnemyBase : PoolableObject
         _enemyFSM.Trigger(Enums.StateEvent.LostPlayer);
         _isInFollowRange = false;
     } 
-
 
     public void OnSpawnEnemy()
     {

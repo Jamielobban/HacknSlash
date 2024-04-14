@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963b17ccf344561bfdf8c8269b78e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 50
+  _maxHealth: 25
   hud: {fileID: 402235160911303111}
 --- !u!1 &2025587535224696922
 GameObject:
@@ -258,8 +258,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0359802, y: 1.087265, z: 1.0784454}
-  m_Center: {x: -0.069869995, y: 0.754364, z: 0.96930695}
+  m_Size: {x: 1.1456299, y: 1.087265, z: 1.3150024}
+  m_Center: {x: -0.015045166, y: 0.754364, z: 1.0875854}
 --- !u!1 &3708257749440662834
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeDamages: {fileID: 1152944888767383108}
+  _enemy: {fileID: 2892188975883952240}
 --- !u!114 &6442333469647931899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,9 +410,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinnedMesh:
   - {fileID: 4908433725776185438}
-  undissolveDuration: 3
+  undissolveDuration: 2
   dissolveDuration: 2
   targetDissolveAmount: 0.07
+  edgeThickness: 0.3
 --- !u!114 &2892188975883952240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,11 +435,13 @@ MonoBehaviour:
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
+  timeBetweenAttacks: 1.5
+  _currentTime: 0
   _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
-  isRolling: 0
+  isAttacking: 0
   _meleeAttackSensor: {fileID: 1301884354103081471}
   _meleeAttack: {fileID: 6440882938012723302}
 --- !u!1 &6636096841348905546

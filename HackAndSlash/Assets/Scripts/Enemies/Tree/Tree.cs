@@ -43,7 +43,7 @@ public class Tree : EnemyBaseMelee
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.AreaAttack, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
     
-    protected virtual bool ShouldArea(Transition<Enums.EnemyStates> transition) => !IsHit && _areaAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _inRangeToArea;
+    protected virtual bool ShouldArea(Transition<Enums.EnemyStates> transition) => !IsHit && _areaAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _inRangeToArea && !isAttacking;
 
     protected virtual void AreaAttackSensor_OnPlayerEnter(Transform player) => _inRangeToArea = true;
     protected virtual void AreaAttackSensor_OnPlayerExit(Vector3 lastKnownPosition) => _inRangeToArea = false;

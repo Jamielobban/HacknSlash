@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963b17ccf344561bfdf8c8269b78e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 50
+  _maxHealth: 15
   hud: {fileID: 3431994665453700156}
 --- !u!1 &1674649079174814807
 GameObject:
@@ -432,11 +432,13 @@ MonoBehaviour:
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
+  timeBetweenAttacks: 1.5
+  _currentTime: 0
   _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
-  isRolling: 0
+  isAttacking: 0
   _meleeAttackSensor: {fileID: 8499002988419007534}
   _meleeAttack: {fileID: 434670817661210696}
 --- !u!114 &3431994665453700156
@@ -488,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeDamages: {fileID: 119197553877656281}
+  _enemy: {fileID: 356562006128749138}
 --- !u!114 &3822584550228994197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,9 +505,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinnedMesh:
   - {fileID: 7828634997236062876}
-  undissolveDuration: 3
+  undissolveDuration: 1.5
   dissolveDuration: 2
   targetDissolveAmount: 0.4
+  edgeThickness: 0.3
 --- !u!1 &8352956954268936645
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeMinBetween: 0
   minSightDistance: 1.7
   maxSightDistance: 2.2
 --- !u!1 &9018795815592097184
@@ -639,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeMinBetween: 0
   minSightDistance: 50
   maxSightDistance: 75
 --- !u!1001 &4122019173388154879

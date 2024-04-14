@@ -51,7 +51,7 @@ public class WareWolf : EnemyBaseMelee
     protected override bool IsInIdleRange() => base.IsInIdleRange() && !isAttacking;
 
     protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => !IsHit && _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange &&
-                                                                                   Vector3.Distance(_player.transform.position, transform.position) >= 4;
+                                                                                   Vector3.Distance(_player.transform.position, transform.position) >= 4 && !isAttacking;
     
     protected virtual void RollImpactSensor_OnCollision(Collision collision)
     {
