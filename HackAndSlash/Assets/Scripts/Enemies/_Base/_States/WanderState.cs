@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class WanderState : EnemyStateBase
 {
     private Vector3 _target;
-    public WanderState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
+    public WanderState(bool needsExitTime, EnemyBase enemyBase) : base(needsExitTime, enemyBase) { }
 
     public override void OnEnter()
     {

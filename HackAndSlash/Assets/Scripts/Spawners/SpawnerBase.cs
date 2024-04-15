@@ -13,7 +13,7 @@ public class SpawnerBase : MonoBehaviour
     [SerializeField] protected float _timeToSpawn;
     [SerializeField] protected bool _isBurstSpawner;
     public Enums.SpawnMethod enemySpawnMethod = Enums.SpawnMethod.RoundRobin;
-    [SerializeField] protected List<Enemy> _enemies = new List<Enemy>();
+    [SerializeField] protected List<EnemyBase> _enemies = new List<EnemyBase>();
 
     public int EnemiesToSpawn
     {
@@ -34,7 +34,7 @@ public class SpawnerBase : MonoBehaviour
 
     protected Coroutine _spawnCoroutine; // !! Can only be called once !! //
     protected NavMeshTriangulation _triangulation;
-    public List<Enemy> enemiesFromThisSpawner = new List<Enemy>();
+    public List<EnemyBase> enemiesFromThisSpawner = new List<EnemyBase>();
     public bool allEnemiesSpawned = false;
     protected ManagerEnemies _managerEnemies;
 
@@ -84,22 +84,22 @@ public class SpawnerBase : MonoBehaviour
         }
     }
 
-    protected virtual void DoSpawnEnemy(Enemy e, Vector3 spawnPos)
+    protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
         PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
 
         if (poolable != null)
         {
-            Enemy enemy = poolable.GetComponent<Enemy>();
+            EnemyBase enemyBase = poolable.GetComponent<EnemyBase>();
             //enemy.animations.OnSpawn();
-            enemy.spawner = this.gameObject;
-            AddEnemy(enemy);
+            enemyBase.spawner = this.gameObject;
+            AddEnemy(enemyBase);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
             {
-                enemy.Agent.Warp(hit.position);
-                enemy.Agent.enabled = true;
+                enemyBase.Agent.Warp(hit.position);
+                enemyBase.Agent.enabled = true;
             }
             else
             {
@@ -131,18 +131,18 @@ public class SpawnerBase : MonoBehaviour
     {
         // Fill in ProbabilitySpawner Class
     }
-    public void AddEnemy(Enemy enemy)
+    public void AddEnemy(EnemyBase enemyBase)
     {
-        if (!enemiesFromThisSpawner.Contains(enemy))
+        if (!enemiesFromThisSpawner.Contains(enemyBase))
         {
-            enemiesFromThisSpawner.Add(enemy);
+            enemiesFromThisSpawner.Add(enemyBase);
         }
     }
-    public void RemoveEnemy(Enemy enemy)
+    public void RemoveEnemy(EnemyBase enemyBase)
     {
-        if(enemiesFromThisSpawner.Contains(enemy))
+        if(enemiesFromThisSpawner.Contains(enemyBase))
         {
-            enemiesFromThisSpawner.Remove(enemy);
+            enemiesFromThisSpawner.Remove(enemyBase);
         }
     }
     protected virtual void OnEnable()

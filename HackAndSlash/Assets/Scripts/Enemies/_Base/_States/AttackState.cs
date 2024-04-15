@@ -4,12 +4,21 @@ using UnityHFSM;
 
 public class AttackState : EnemyStateBase
 {
-    public AttackState(bool needsExitTime, Enemy enemy, Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter, float exitTime = 3f) : base(needsExitTime, enemy, exitTime, onEnter) { }
+    public AttackState(bool needsExitTime, EnemyBase enemyBase, Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter, float exitTime = 3f) : base(needsExitTime, enemyBase, exitTime, onEnter) { }
 
     public override void OnEnter()
     {
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
+    }
+
+    public override void OnLogic()
+    {
+        base.OnLogic();
+        if (!_enemyBase.isAttacking)
+        {
+            fsm.StateCanExit();
+        }
     }
 }

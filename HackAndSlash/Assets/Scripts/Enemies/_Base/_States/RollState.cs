@@ -4,7 +4,7 @@ using UnityHFSM;
 
 public class RollState : EnemyStateBase
 {
-    public RollState(bool needsExitTime, Enemy enemy, Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter, float exitTime) : base (needsExitTime, enemy, exitTime, onEnter) {}
+    public RollState(bool needsExitTime, EnemyBase enemyBase, Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter, float exitTime) : base (needsExitTime, enemyBase, exitTime, onEnter) {}
     private float _timer;
     public override void OnEnter()
     {
@@ -25,7 +25,7 @@ public class RollState : EnemyStateBase
         else
         {
             _agent.isStopped = false;
-            _enemy.isRolling = false;
+            _enemyBase.isAttacking = false;
             _timer = 0;
             fsm.StateCanExit();
         }
@@ -34,7 +34,7 @@ public class RollState : EnemyStateBase
     public override void OnExit()
     {
         base.OnExit();
-        _enemy.isRolling = false;
+        _enemyBase.isAttacking = false;
         _timer = 0;
     }
 }

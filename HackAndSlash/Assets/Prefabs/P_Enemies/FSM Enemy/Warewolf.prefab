@@ -290,7 +290,7 @@ MonoBehaviour:
   _castTime: 0.5
   _animationName: Roll
   _sensor: {fileID: 2673095096977501363}
-  rollDuration: 1.2
+  rollDuration: 1
 --- !u!65 &8600913752020013327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -310,8 +310,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.4028444, y: 1.7394657, z: 3.685558}
-  m_Center: {x: 0.95791006, y: 1.2298944, z: 1.9312552}
+  m_Size: {x: 4.4028444, y: 2.0956683, z: 4.0829005}
+  m_Center: {x: 0.9579163, y: 1.186713, z: 1.3246086}
 --- !u!1 &2673095096977501363
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963b17ccf344561bfdf8c8269b78e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 150
+  _maxHealth: 75
   hud: {fileID: 2474399760132936369}
 --- !u!1 &3797730452351459973
 GameObject:
@@ -544,8 +544,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.720821, y: 0.99999976, z: 2.716498}
-  m_Center: {x: -0.6694288, y: 0.9599973, z: 2.2594712}
+  m_Size: {x: 3.720821, y: 1.4046208, z: 2.716498}
+  m_Center: {x: -0.6694289, y: 1.0214629, z: 2.2594712}
 --- !u!1 &8112893916876805239
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,20 +648,21 @@ MonoBehaviour:
   _player: {fileID: 0}
   _healthSystem: {fileID: 0}
   _followPlayerSensor: {fileID: 342646836659753922}
-  _meleeAttackSensor: {fileID: 6857980035165182135}
   attacks:
   - {fileID: 8048678887657378046}
   - {fileID: 4053585163082966077}
-  _meleeAttack: {fileID: 4053585163082966077}
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
+  timeBetweenAttacks: 1.5
+  _currentTime: 0
   _isInFollowRange: 0
-  _isInBasicRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
-  isRolling: 0
+  isAttacking: 0
+  _meleeAttackSensor: {fileID: 6857980035165182135}
+  _meleeAttack: {fileID: 4053585163082966077}
   _roll: {fileID: 8048678887657378046}
   _rollImpactSensor: {fileID: 1159209860011419327}
 --- !u!114 &2474399760132936369
@@ -713,6 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeDamages: {fileID: 110260239139023604}
+  _enemy: {fileID: 9041268222350785868}
   jumpCollider: {fileID: 8600913752020013327}
 --- !u!114 &1199579625342059642
 MonoBehaviour:
@@ -731,6 +733,7 @@ MonoBehaviour:
   undissolveDuration: 3
   dissolveDuration: 2
   targetDissolveAmount: 1
+  edgeThickness: 0.3
 --- !u!1 &8781099483093849672
 GameObject:
   m_ObjectHideFlags: 0

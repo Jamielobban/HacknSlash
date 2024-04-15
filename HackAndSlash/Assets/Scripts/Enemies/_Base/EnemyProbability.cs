@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class EnemyProbability
 {
-    public Enemy enemy;
+    [FormerlySerializedAs("enemy")] public EnemyBase enemyBase;
     [Range(0, 100)] public int probability;
 }

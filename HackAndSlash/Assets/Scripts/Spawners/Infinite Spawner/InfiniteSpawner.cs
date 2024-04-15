@@ -10,7 +10,7 @@ public class InfiniteSpawner : MonoBehaviour
     [SerializeField] protected float _timeToSpawn;
     [SerializeField] protected bool _isBurstSpawner;
     public Enums.SpawnMethod enemySpawnMethod = Enums.SpawnMethod.RoundRobin;
-    [SerializeField] protected List<Enemy> _enemies = new List<Enemy>();
+    [SerializeField] protected List<EnemyBase> _enemies = new List<EnemyBase>();
 
     public float TimeToSpawn
     {
@@ -32,7 +32,7 @@ public class InfiniteSpawner : MonoBehaviour
     public float timeMaxToSpawn = 2.5f;
 
     private ManagerEnemies _managerEnemies;
-    private List<Enemy> _spawnedEnemies = new List<Enemy>();
+    private List<EnemyBase> _spawnedEnemies = new List<EnemyBase>();
 
     public int enemiesCap;
 
@@ -109,22 +109,22 @@ public class InfiniteSpawner : MonoBehaviour
         // Fill in ProbabilitySpawner Class
     }
 
-    protected virtual void DoSpawnEnemy(Enemy e, Vector3 spawnPos)
+    protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
         PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
 
         if (poolable != null)
         {
-            Enemy enemy = poolable.GetComponent<Enemy>();
-            enemy.target = GameManager.Instance.Player.transform;
-            enemy.spawner = this.gameObject;
-            enemy.OnSpawnEnemy();
-            AddEnemy(enemy);
+            EnemyBase enemyBase = poolable.GetComponent<EnemyBase>();
+            enemyBase.target = GameManager.Instance.Player.transform;
+            enemyBase.spawner = this.gameObject;
+            enemyBase.OnSpawnEnemy();
+            AddEnemy(enemyBase);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
             {
-                enemy.Agent.Warp(hit.position);
-                enemy.Agent.enabled = true;
+                enemyBase.Agent.Warp(hit.position);
+                enemyBase.Agent.enabled = true;
             }
             else
             {
@@ -137,18 +137,18 @@ public class InfiniteSpawner : MonoBehaviour
         }
     }
 
-    public void AddEnemy(Enemy enemy)
+    public void AddEnemy(EnemyBase enemyBase)
     {
-        if(!_spawnedEnemies.Contains(enemy))
+        if(!_spawnedEnemies.Contains(enemyBase))
         {
-            _spawnedEnemies.Add(enemy);
+            _spawnedEnemies.Add(enemyBase);
         }
     }
-    public void RemoveEnemy(Enemy enemy)
+    public void RemoveEnemy(EnemyBase enemyBase)
     {
-        if (_spawnedEnemies.Contains(enemy))
+        if (_spawnedEnemies.Contains(enemyBase))
         {
-            _spawnedEnemies.Remove(enemy);
+            _spawnedEnemies.Remove(enemyBase);
         }
     }
 

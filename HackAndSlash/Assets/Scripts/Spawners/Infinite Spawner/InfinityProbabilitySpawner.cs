@@ -4,7 +4,7 @@ using UnityEngine;
 public class InfinityProbabilitySpawner : InfiniteSpawner
 {
     [SerializeField] private List<EnemyProbability> _enemyProbabilities = new List<EnemyProbability>();
-    protected Dictionary<Enemy, int> _enemiesDict = new Dictionary<Enemy, int>();
+    protected Dictionary<EnemyBase, int> _enemiesDict = new Dictionary<EnemyBase, int>();
 
     protected override void Start()
     {
@@ -15,7 +15,7 @@ public class InfinityProbabilitySpawner : InfiniteSpawner
 
         foreach (var enemyProbability in _enemyProbabilities)
         {
-            _enemiesDict.Add(enemyProbability.enemy, enemyProbability.probability);
+            _enemiesDict.Add(enemyProbability.enemyBase, enemyProbability.probability);
         }
     }
     protected override void SpawnProbabilityEnemy()
@@ -27,7 +27,7 @@ public class InfinityProbabilitySpawner : InfiniteSpawner
         DoSpawnEnemy(GetProbableEnemeyKey(randomValue), ChooseRandomPositionOnNavMesh());
     }
 
-    private Enemy GetProbableEnemeyKey(int value)
+    private EnemyBase GetProbableEnemeyKey(int value)
     {
         foreach (var kvp in _enemiesDict)
         {

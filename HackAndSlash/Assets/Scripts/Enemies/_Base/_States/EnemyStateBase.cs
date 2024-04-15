@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public abstract class EnemyStateBase : State<Enums.EnemyStates, Enums.StateEvent>
 {
-    protected readonly Enemy _enemy;
+    protected readonly EnemyBase _enemyBase;
     protected readonly NavMeshAgent _agent;
     protected readonly Animator _animator;
     
@@ -17,19 +17,19 @@ public abstract class EnemyStateBase : State<Enums.EnemyStates, Enums.StateEvent
     protected readonly Action<State<Enums.EnemyStates, Enums.StateEvent>> onExit;
     protected readonly Func<State<Enums.EnemyStates, Enums.StateEvent>, bool> canExit;
     
-    public EnemyStateBase(bool needsExitTime, Enemy Enemy, float ExitTime = 0.1f,
+    public EnemyStateBase(bool needsExitTime, EnemyBase enemyBase, float ExitTime = 0.1f,
         Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter = null, Action<State<Enums.EnemyStates, Enums.StateEvent>> onLogic = null,
         Action<State<Enums.EnemyStates, Enums.StateEvent>> onExit = null, Func<State<Enums.EnemyStates, Enums.StateEvent>, bool> canExit = null)
     {
-        this._enemy = Enemy;
+        this._enemyBase = enemyBase;
         this.onEnter = onEnter;
         this.onLogic = onLogic;
         this.onExit = onExit;
         this.canExit = canExit;
         this._exitTime = ExitTime;
         this.needsExitTime = needsExitTime;
-        _agent = Enemy.GetComponent<NavMeshAgent>();
-        _animator = Enemy.GetComponent<Animator>();
+        _agent = enemyBase.GetComponent<NavMeshAgent>();
+        _animator = enemyBase.GetComponent<Animator>();
     }
     public override void OnEnter()
     {

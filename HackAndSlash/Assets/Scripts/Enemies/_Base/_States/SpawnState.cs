@@ -2,7 +2,7 @@
 
 public class SpawnState : EnemyStateBase
 {
-    public SpawnState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
+    public SpawnState(bool needsExitTime, EnemyBase enemyBase) : base(needsExitTime, enemyBase) { }
 
     public override void OnEnter()
     {
@@ -13,7 +13,7 @@ public class SpawnState : EnemyStateBase
     public override void OnLogic()
     {
         base.OnLogic();
-        if (!_enemy._spawnEffect.IsSpawning)
+        if (!_enemyBase._spawnEffect.IsSpawning)
         {
             fsm.StateCanExit();
         }

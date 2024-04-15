@@ -16,7 +16,7 @@ public class MeleeAttack : BaseEnemyAttack
 
     public void OnAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        _enemy.transform.LookAt(_enemy.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
         Use();
 
     }
@@ -28,13 +28,13 @@ public class MeleeAttack : BaseEnemyAttack
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_enemy.attackInterrumpted)
+        if (!_enemyBase.attackInterrumpted)
         {
             other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
         }
         else
         {
-            _enemy.attackInterrumpted = false;
+            _enemyBase.attackInterrumpted = false;
         }
     }
 }
