@@ -13,7 +13,7 @@ public class SpawnState : EnemyStateBase
     public override void OnLogic()
     {
         base.OnLogic();
-        if (!EnemyBase._spawnEffect.IsSpawning)
+        if (!_enemyBase._spawnEffect.IsSpawning)
         {
             fsm.StateCanExit();
         }

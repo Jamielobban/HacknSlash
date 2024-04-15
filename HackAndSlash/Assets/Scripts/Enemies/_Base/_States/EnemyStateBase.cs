@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public abstract class EnemyStateBase : State<Enums.EnemyStates, Enums.StateEvent>
 {
-    protected readonly EnemyBase EnemyBase;
+    protected readonly EnemyBase _enemyBase;
     protected readonly NavMeshAgent _agent;
     protected readonly Animator _animator;
     
@@ -21,7 +21,7 @@ public abstract class EnemyStateBase : State<Enums.EnemyStates, Enums.StateEvent
         Action<State<Enums.EnemyStates, Enums.StateEvent>> onEnter = null, Action<State<Enums.EnemyStates, Enums.StateEvent>> onLogic = null,
         Action<State<Enums.EnemyStates, Enums.StateEvent>> onExit = null, Func<State<Enums.EnemyStates, Enums.StateEvent>, bool> canExit = null)
     {
-        this.EnemyBase = enemyBase;
+        this._enemyBase = enemyBase;
         this.onEnter = onEnter;
         this.onLogic = onLogic;
         this.onExit = onExit;

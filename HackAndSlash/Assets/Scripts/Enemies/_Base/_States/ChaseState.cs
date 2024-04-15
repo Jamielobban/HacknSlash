@@ -5,7 +5,7 @@ public class ChaseState : EnemyStateBase
 {
     public ChaseState(bool needsExitTime, EnemyBase enemyBase, Transform target) : base(needsExitTime, enemyBase)
     {
-        EnemyBase.target = target;
+        _enemyBase.target = target;
     }
 
     public override void OnEnter()
@@ -25,7 +25,7 @@ public class ChaseState : EnemyStateBase
             // Vector3 lookDirection = _enemy.target.position - _enemy.transform.position;
             // Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
             // _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation,targetRotation, _extraRotationSpeed * Time.deltaTime);
-            _agent.SetDestination(EnemyBase.target.position);
+            _agent.SetDestination(_enemyBase.target.position);
 
         }
         else if (_agent.remainingDistance <= _agent.stoppingDistance)

@@ -7,14 +7,14 @@ public class HitState : EnemyStateBase
     {
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
-        EnemyBase.attackInterrumpted = true;
+        _enemyBase.attackInterrumpted = true;
         base.OnEnter();
         _animator.CrossFade("Hit State", 0.2f);
-        EnemyBase.IsHit = true;
+        _enemyBase.IsHit = true;
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
             Debug.Log("end");
-            EnemyBase.IsHit = false;
+            _enemyBase.IsHit = false;
             fsm.StateCanExit();
         });
     }

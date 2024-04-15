@@ -12,4 +12,13 @@ public class AttackState : EnemyStateBase
         _agent.velocity = Vector3.zero;
         base.OnEnter();
     }
+
+    public override void OnLogic()
+    {
+        base.OnLogic();
+        if (!_enemyBase.isAttacking)
+        {
+            fsm.StateCanExit();
+        }
+    }
 }

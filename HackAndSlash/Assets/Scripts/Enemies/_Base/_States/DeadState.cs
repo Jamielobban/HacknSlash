@@ -13,7 +13,7 @@ public class DeadState : EnemyStateBase
         
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + 1f, () =>
         {
-            EnemyBase.gameObject.SetActive(false);
+            _enemyBase.gameObject.SetActive(false);
         });
     }
 }

@@ -8,7 +8,6 @@ public class EnemySensor : MonoBehaviour
     public event PlayerEnterEvent OnPlayerEnter;
     public event PlayerExitEvent OnPlayerExit;
 
-    public float rangeMinBetween = 0f;
     public float minSightDistance, maxSightDistance;
     private float _sightDistance;
     private GameObject _player;
@@ -23,12 +22,12 @@ public class EnemySensor : MonoBehaviour
     private void Update()
     {
         float distToPlayer = Vector3.Distance(_player.transform.position, transform.position);
-        if (distToPlayer < _sightDistance && distToPlayer > rangeMinBetween && !_playerEnter)
+        if (distToPlayer < _sightDistance && !_playerEnter)
         {
             OnPlayerEnter?.Invoke(_player.transform);
             _playerEnter = true;
         }
-        else if (distToPlayer > _sightDistance && distToPlayer < rangeMinBetween &&_playerEnter)
+        else if (distToPlayer > _sightDistance && _playerEnter)
         {
             OnPlayerExit?.Invoke(_player.transform.position);
             _playerEnter = false;
