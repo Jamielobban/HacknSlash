@@ -115,11 +115,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     private void SetBloodEffect()
     {
-        if (_currentHealth <= (maxHealth * 0.7) && _currentHealth > (maxHealth * 0.25f))
+        if (_currentHealth <= (maxHealth * 0.85) && _currentHealth > (maxHealth * 0.25f))
         {
             bloodImages[1].SetActive(true);
         }
-        else if (_currentHealth <= (maxHealth * 0.25) && _currentHealth > 0)
+        else if (_currentHealth <= (maxHealth * 0.35) && _currentHealth > 0)
         {
             lowHpAudio.Play();
             bloodImages[2].SetActive(true);

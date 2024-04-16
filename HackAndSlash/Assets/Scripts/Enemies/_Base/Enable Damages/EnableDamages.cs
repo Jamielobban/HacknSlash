@@ -5,7 +5,8 @@ public class EnableDamages : MonoBehaviour
     public Collider meleeDamages;
     [SerializeField]protected EnemyBase _enemy;
     
-    protected virtual void Awake()
+    protected virtual void Awake() {}
+    protected virtual void Start()
     {
         _enemy.GetComponent<EnemyBase>();
         meleeDamages.enabled = false;

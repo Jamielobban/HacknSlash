@@ -113,8 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentAttackState: 0
   baseDamage: 5
-  minCooldown: 1.5
-  maxCooldown: 2
+  minCooldown: 2
+  maxCooldown: 3.5
   _castTime: 0
   _animationName: Shoot
   bulletPrefab: {fileID: 8859350068207838406, guid: 6cd16c66899690941a51fcea8a64c8e1,
@@ -454,6 +454,7 @@ MonoBehaviour:
   attacks:
   - {fileID: 2167516397289081775}
   - {fileID: 8441819074929750980}
+  - {fileID: 8134917275716758317}
   target: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
@@ -467,6 +468,7 @@ MonoBehaviour:
   _shootAttackSensor: {fileID: 3340102413424144712}
   _rangedAttack: {fileID: 8441819074929750980}
   _meleeAttack: {fileID: 2167516397289081775}
+  _invokeAttack: {fileID: 8134917275716758317}
 --- !u!1 &2460902706625831649
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7134709634452455924}
+  - component: {fileID: 8134917275716758317}
   m_Layer: 6
   m_Name: Invoke Attack
   m_TagString: Untagged
@@ -717,6 +720,32 @@ Transform:
   m_Father: {fileID: 2951788154017317152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8134917275716758317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4708093080409773720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6972cab37584bb6b4e548fd60324c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAttackState: 2
+  baseDamage: 0
+  minCooldown: 20
+  maxCooldown: 25
+  _castTime: 2.2
+  _animationName: Invoke
+  instantiableEnemies:
+  - {fileID: 7031328145753526208, guid: 5961b3ea9f783e642b535bc83b2f890f, type: 3}
+  instantiablePoints:
+  - {fileID: 880141810047994648}
+  - {fileID: 6538327090711553052}
+  - {fileID: 2589226049698450234}
+  invokeEffect: {fileID: 2000936492863374258, guid: e96fadec466cd6b489f3ba45796523bf,
+    type: 3}
 --- !u!1 &5313148468473386301
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 0
   minSightDistance: 50
   maxSightDistance: 75
 --- !u!1 &6538327090711553052
@@ -1023,8 +1051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 0
-  minSightDistance: 2.2
+  minSightDistance: 1
   maxSightDistance: 3
 --- !u!1 &8504286676147957103
 GameObject:
@@ -1092,7 +1119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 7
   minSightDistance: 7.5
   maxSightDistance: 9.5
 --- !u!1001 &636689334004871167
@@ -2610,7 +2636,7 @@ PrefabInstance:
     - target: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.247
       objectReference: {fileID: 0}
     - target: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}
@@ -2640,7 +2666,7 @@ PrefabInstance:
     - target: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.024
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}

@@ -19,7 +19,7 @@ public class Tree : EnemyBaseMelee
     protected override void InitializeStates()
     {
         base.InitializeStates();
-        _enemyFSM.AddState(Enums.EnemyStates.AreaAttack, new AreaState(false, this, _areaAttack.OnAreaAttack));
+        _enemyFSM.AddState(Enums.EnemyStates.AreaAttack, new AttackState(false, this, _areaAttack.OnAreaAttack));
     }
     protected override void InitializeTransitions()
     {
