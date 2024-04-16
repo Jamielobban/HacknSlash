@@ -147,7 +147,7 @@ public class EnemyBase : PoolableObject
                     }
                     else
                     {
-                        ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+                        ManagerEnemies.Instance.AddSpawnedEnemies(-1);
                     }
                     ResetEnemy();
                     gameObject.SetActive(false);
@@ -209,7 +209,7 @@ public class EnemyBase : PoolableObject
             }
             else
             {
-                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
+                ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             }
             spawner = null;
             ResetEnemy();

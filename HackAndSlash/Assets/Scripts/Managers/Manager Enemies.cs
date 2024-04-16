@@ -21,10 +21,6 @@ public class ManagerEnemies : MonoBehaviour
         }
     }
     
-    private float _enemiesScore = 0;
-
-    public int timeToGetItem = 60;
-
     #region Settings
     [Header("Texts Settings:")]
     public TextMeshProUGUI textTime;
@@ -39,36 +35,39 @@ public class ManagerEnemies : MonoBehaviour
     public Dictionary<EnemyBase, ObjectPool> enemyObjectsPools = new Dictionary<EnemyBase, ObjectPool>();
     public List<GameObject> parentObjectPools = new List<GameObject>(); 
 
-    private int _spawnedEnemies = 0;
-    public int SpawnedEnemies => _spawnedEnemies;
-
-    // -- Timer Settings -- //
-    private float _timerGlobal = 0f;
-    public float CurrentGlobalTime => _timerGlobal;
-
-    private float _timerItems = 0f;
-    private int minutes = 0;
-    private int seconds = 0;
-    public bool isInEvent = false;
-    private GameObject _currentSpawner = null;
-
-    private int _currentSpawnerIndex = 0;
-
-    // -- Scaling Propierties -- //
-    public float scaleLifeMultiplier = 0f;
-    public float scaleDamageMultiplier = 0f;
-
-    #endregion
-
+    [Header("Scaling Settings: ")]
     public float maxMultiplierLife = 30f;
     public float maxMultiplierAttack = 1.8f;
     public float timeToReachMax = 1800f;
+    public int timeToGetItem = 60;
+    
+    public bool isInEvent = false;
+
+    private GameObject _currentSpawner = null;
+    private InfiniteSpawner _currentSpawnerScript = null;
+    private int _currentSpawnerIndex = 0;
+    private int _spawnedEnemies = 0;
+    private float _enemiesScore = 0;
+    
+    private float _timerGlobal = 0f;
+    private float _timerItems = 0f;
+    private int minutes = 0;
+    private int seconds = 0;
+    
+    private float _scaleLifeMultiplier = 0f;
+    private float _scaleDamageMultiplier = 0f;
+    #endregion
+    
+    public int SpawnedEnemies => _spawnedEnemies;
+    public float CurrentGlobalTime => _timerGlobal;
 
     private void Awake()
     {
         _instance = this;
         InitializePools();
         _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
+        _currentSpawnerScript = spawners[_currentSpawnerIndex].GetComponent<InfiniteSpawner>();
+        _currentSpawner.transform.parent = GameManager.Instance.Player.transform;
     }
 
     void Update()
@@ -84,13 +83,21 @@ public class ManagerEnemies : MonoBehaviour
             AbilityPowerManager.instance.ShowNewOptions();
             ResetScore();
         }
+
+        if (_timerGlobal >= _currentSpawnerScript.lifeTime)
+        {
+            if (spawners.Count <= _currentSpawnerIndex)
+            {
+                NextSpawner();
+            }
+        }
     }
 
     private void UpgradeEnemies()
     {
         float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
-        scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
-        scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
+        _scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
+        _scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
         foreach (var pool in parentObjectPools)
         {
             for (int i = 0; i < pool.transform.childCount; i++)
@@ -98,7 +105,7 @@ public class ManagerEnemies : MonoBehaviour
                 GameObject enemy = pool.transform.GetChild(i).gameObject;
                 if (enemy.activeSelf)
                 {
-                    enemy.GetComponent<EnemyBase>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                    enemy.GetComponent<EnemyBase>().UpgradeEnemy(_scaleLifeMultiplier, _scaleDamageMultiplier);
                 }
             }
         }
@@ -151,7 +158,7 @@ public class ManagerEnemies : MonoBehaviour
         UpdateScore();
     }
 
-    public void SetSpawnedEnemies(int val)
+    public void AddSpawnedEnemies(int val)
     {
         _spawnedEnemies += val;
         UpdateEnemiesSpawned();
@@ -162,6 +169,8 @@ public class ManagerEnemies : MonoBehaviour
         Destroy(_currentSpawner);
         _currentSpawnerIndex++;
         _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
+        _currentSpawnerScript = spawners[_currentSpawnerIndex].GetComponent<InfiniteSpawner>();
+        _currentSpawner.transform.parent = GameManager.Instance.Player.transform;
     }
 
 }
