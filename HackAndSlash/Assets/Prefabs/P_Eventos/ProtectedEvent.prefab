@@ -16396,10 +16396,6 @@ MonoBehaviour:
   timeToRestart: 10
   timer: 0
   manager: {fileID: 0}
-  spawnerParent: {fileID: 6299693437192419624}
-  targetsToProtect:
-  - {fileID: 2678672324569475006}
-  damageEventScript: {fileID: 8330017564254651709}
 --- !u!82 &8617413015368183641
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27530,6 +27526,18 @@ PrefabInstance:
       propertyPath: _isBurstSpawner
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
+        type: 3}
+      propertyPath: _enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483,
+        type: 3}
+    - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
+        type: 3}
+      propertyPath: _enemyProbabilities.Array.data[0].enemyBase
+      value: 
+      objectReference: {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483,
+        type: 3}
     - target: {fileID: 7228848566190967868, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
         type: 3}
       propertyPath: m_Radius
@@ -27847,9 +27855,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
         type: 3}
+      propertyPath: _enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 2820150917280834003, guid: 80693bab60b4e2e44b4a82f1ba586fa4,
+        type: 3}
+    - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
+        type: 3}
       propertyPath: _enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 3441910430522070975, guid: e4fc51f81faca21419336d7b30f2339a,
+      objectReference: {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}
     - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
         type: 3}
@@ -27861,6 +27875,18 @@ PrefabInstance:
       propertyPath: _enemyProbabilities.Array.data[1].enemy
       value: 
       objectReference: {fileID: 3441910430522070975, guid: e4fc51f81faca21419336d7b30f2339a,
+        type: 3}
+    - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
+        type: 3}
+      propertyPath: _enemyProbabilities.Array.data[0].enemyBase
+      value: 
+      objectReference: {fileID: 2820150917280834003, guid: 80693bab60b4e2e44b4a82f1ba586fa4,
+        type: 3}
+    - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
+        type: 3}
+      propertyPath: _enemyProbabilities.Array.data[1].enemyBase
+      value: 
+      objectReference: {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}
     - target: {fileID: 5576708509731029722, guid: e60b4c0aa4ee19f438c5ae5b8dff61f4,
         type: 3}

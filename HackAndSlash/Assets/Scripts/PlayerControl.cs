@@ -251,20 +251,6 @@ public class PlayerControl : MonoBehaviour
         moves = Moves.IDLE;
     }
 
-    //public void SetHealth()
-    //{
-    //    if(currentHealth > maxHealth)
-    //    {
-    //        currentHealth = maxHealth;
-    //    }
-    //    currentHealthText.text = currentHealth.ToString();
-    //    maxHealthText.text = maxHealth.ToString();
-    //    healthSlider.value = currentHealth / maxHealth;
-    //}
-
-
-
-
     public ListaAtaques GetAttacks(ComboAtaques combo)
     {
         for (int i = 0; i < ataques.Length; i++)

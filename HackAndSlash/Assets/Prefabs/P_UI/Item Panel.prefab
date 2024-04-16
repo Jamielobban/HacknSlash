@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4471343480316660221}
   - component: {fileID: 6320404366323428807}
   - component: {fileID: 8319565115623283473}
-  - component: {fileID: 1464117897757392152}
+  - component: {fileID: 441728431689408861}
   m_Layer: 5
   m_Name: Item Panel
   m_TagString: Untagged
@@ -114,7 +114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 171.49779, y: -48.967102}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6320404366323428807
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
---- !u!114 &1464117897757392152
+--- !u!114 &441728431689408861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,15 +164,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6780965007823909466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e459e9e9b966684d9dd0cf12991954d, type: 3}
+  m_Script: {fileID: 11500000, guid: c3fa1046372a3b94ab5c49efa04e4568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  itemSlot:
-    name: 
-    stacks: 0
-  itemImage: {fileID: 7953842852578614657}
-  stacksText: {fileID: 678670399258950628}
 --- !u!1 &7084126451234303289
 GameObject:
   m_ObjectHideFlags: 0
