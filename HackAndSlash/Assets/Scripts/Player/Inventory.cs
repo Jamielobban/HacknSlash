@@ -86,7 +86,7 @@ public class Inventory : MonoBehaviour
         foreach (ItemSlotInfo i in items)
         {
             i.name = "" + (index + 1);
-            if (i.item != null) i.name += ": " + i.item.GiveName();
+            if (i.item != null) i.name += ": " + i.item.GetName();
             else i.name += ": -";
 
             ItemPanel panel = existingPanels[index];
@@ -98,7 +98,7 @@ public class Inventory : MonoBehaviour
                 if (i.item != null)
                 {
                     panel.itemImage.gameObject.SetActive(true);
-                    panel.itemImage.sprite = i.item.GiveSprite();
+                    panel.itemImage.sprite = i.item.GetSprite();
                     panel.stacksText.gameObject.SetActive(true);
                     panel.stacksText.text = " " + i.stacks;
                 }
@@ -119,7 +119,7 @@ public class Inventory : MonoBehaviour
         {
             if (i.item != null)
             {
-                if (i.item.GiveName() == item.GiveName())
+                if (i.item.GetName() == item.GetName())
                 {
                     if (amount > max - i.stacks)
                     {
@@ -169,7 +169,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (ItemSlotInfo i in items)
         {
-            if (i.item != null && i.item.GiveName() == item.GiveName())
+            if (i.item != null && i.item.GetName() == item.GetName())
             {
                 return i.stacks;
             }

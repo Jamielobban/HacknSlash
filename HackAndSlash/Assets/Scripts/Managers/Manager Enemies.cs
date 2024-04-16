@@ -80,39 +80,40 @@ public class ManagerEnemies : MonoBehaviour
         if (_timerItems >= timeToGetItem)
         {
             _timerItems = 0f;
-
-            float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
-            scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
-            scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
-            //Take All enemies and Upgrade them (?)
-            foreach (var pool in parentObjectPools)
-            {
-                for (int i = 0; i < pool.transform.childCount; i++)
-                {
-                    GameObject enemy = pool.transform.GetChild(i).gameObject;
-                    if (enemy.activeSelf)
-                    {
-                        enemy.GetComponent<EnemyBase>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
-                    }
-                }
-            }
-
+            UpgradeEnemies();
             AbilityPowerManager.instance.ShowNewOptions();
             ResetScore();
         }
     }
 
+    private void UpgradeEnemies()
+    {
+        float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
+        scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
+        scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
+        foreach (var pool in parentObjectPools)
+        {
+            for (int i = 0; i < pool.transform.childCount; i++)
+            {
+                GameObject enemy = pool.transform.GetChild(i).gameObject;
+                if (enemy.activeSelf)
+                {
+                    enemy.GetComponent<EnemyBase>().UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                }
+            }
+        }
+    }
+    
     public void StartEvent()
     {
         isInEvent = true;
         if(_currentSpawner != null)
         {
-           // _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+            _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
         }
     }
 
     public void EndEvent() => isInEvent = false;
-    
 
     private void UpdateTimeText()
     {
@@ -126,7 +127,7 @@ public class ManagerEnemies : MonoBehaviour
     public void UpdateScore()
     {
         currentScoreText.text = "Score: " + _enemiesScore;
-        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore, 1500);
+        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore);
     }
 
     private void InitializePools()

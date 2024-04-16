@@ -149,7 +149,7 @@ public class AbilityPowerManager : MonoBehaviour
         //PlaySound select item
         AudioManager.Instance.PlayFx(Effects.SelectItem);
         AddItemHere(player, chosenItem);
-        inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GiveName()));
+        inventory.AddItem(chosenItem, player.GetItemStacks(chosenItem.GetName()));
         inventory.RefreshInventory();
         chosenItem.OnItemPickup(player);
        // player.CallItemOnPickup(chosenItem.data.id);
@@ -216,19 +216,19 @@ public class AbilityPowerManager : MonoBehaviour
             } while (CheckItemEqual(item1, item3) || CheckItemEqual(item2, item3));
         }
 
-        item1Image.sprite = item1.GiveSprite();
-        item1Name.text = item1.GiveName();
-        item1Description.text = item1.GiveDescription();
+        item1Image.sprite = item1.GetSprite();
+        item1Name.text = item1.GetName();
+        item1Description.text = item1.GetDescription();
 
 
-        item2Image.sprite = item2.GiveSprite();
-        item2Name.text = item2.GiveName();
-        item2Description.text = item2.GiveDescription();
+        item2Image.sprite = item2.GetSprite();
+        item2Name.text = item2.GetName();
+        item2Description.text = item2.GetDescription();
 
 
-        item3Image.sprite = item3.GiveSprite();
-        item3Name.text = item3.GiveName();
-        item3Description.text = item3.GiveDescription();
+        item3Image.sprite = item3.GetSprite();
+        item3Name.text = item3.GetName();
+        item3Description.text = item3.GetDescription();
 
 
         currentButton1Rarity = Instantiate(itemRarityEffect[(int)item1.GetRarity()], option1Button.transform);
@@ -252,7 +252,7 @@ public class AbilityPowerManager : MonoBehaviour
     }
     private bool CheckItemEqual(Item item1, Item item2)
     {
-        if(item1.GiveName() == item2.GiveName())
+        if(item1.GetName() == item2.GetName())
         {
             if(item1.GetRarity() == item2.GetRarity())
             {
@@ -278,7 +278,7 @@ public class AbilityPowerManager : MonoBehaviour
     {
         foreach (ItemList i in player.items)
         {
-            if (i.item.GiveName() == item.GiveName())
+            if (i.item.GetName() == item.GetName())
             {
                 i.stacks++;
                 return;
