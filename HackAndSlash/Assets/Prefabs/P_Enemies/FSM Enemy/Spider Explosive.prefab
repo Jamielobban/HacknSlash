@@ -176,6 +176,7 @@ MonoBehaviour:
   areaPrefab: {fileID: 5724113216187629376, guid: e8849e89a4c96db45a12ce661834ecb7,
     type: 3}
   pointToInstantiate: {fileID: 4558447167580810794}
+  _healthSystem: {fileID: 2280279397696677574}
 --- !u!1 &5761432086925407271
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,8 +509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinnedMesh:
   - {fileID: 7828634997236062876}
-  undissolveDuration: 1.5
-  dissolveDuration: 2
+  undissolveDuration: 1
+  dissolveDuration: 0.5
   targetDissolveAmount: 0.4
   edgeThickness: 0.3
 --- !u!114 &3939329213115127053

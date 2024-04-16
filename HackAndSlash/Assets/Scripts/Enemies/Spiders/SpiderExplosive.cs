@@ -8,6 +8,7 @@ public class SpiderExplosive : EnemyBase
     [SerializeField] protected AutoDestructionAttack _autoDestructionAttack;
     [SerializeField] protected EnemySensor _autoDestructionSensor;
 
+    
     protected bool _inRangeToArea;
     
     protected override void Start()

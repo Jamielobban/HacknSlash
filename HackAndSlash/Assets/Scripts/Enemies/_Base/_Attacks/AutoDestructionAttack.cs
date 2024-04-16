@@ -2,6 +2,8 @@
 using UnityHFSM;
 public class AutoDestructionAttack : AreaAttack
 {
+    [SerializeField] protected EnemyHealthSystem _healthSystem;
+    
     protected override void AttackAction()
     {
         GameObject go = Instantiate(areaPrefab, pointToInstantiate.position, Quaternion.identity);
@@ -11,7 +13,6 @@ public class AutoDestructionAttack : AreaAttack
     protected override void OnAnimationEnd()
     {
         base.OnAnimationEnd();
-        _enemyBase.IsDead = true;
-        _enemyBase.OnDespawnEnemy();
+        _healthSystem.TakeDamage(_healthSystem.CurrentHealth);
     }
 }

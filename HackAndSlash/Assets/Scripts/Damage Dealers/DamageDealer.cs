@@ -4,6 +4,11 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour
 {
     public float damage;
+
+    protected virtual void Awake()
+    {
+        
+    }
     protected virtual void Update()
     {
     }

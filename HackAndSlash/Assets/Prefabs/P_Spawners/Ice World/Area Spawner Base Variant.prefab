@@ -76,8 +76,14 @@ PrefabInstance:
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
       propertyPath: _enemies.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
+        type: 3}
+      propertyPath: _enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363,
+        type: 3}
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
       propertyPath: _enemies.Array.data[1]
@@ -87,8 +93,14 @@ PrefabInstance:
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
       propertyPath: _enemyProbabilities.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
+        type: 3}
+      propertyPath: _enemyProbabilities.Array.data[0].enemyBase
+      value: 
+      objectReference: {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363,
+        type: 3}
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
       propertyPath: _enemyProbabilities.Array.data[1].enemyBase
@@ -98,7 +110,7 @@ PrefabInstance:
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
       propertyPath: _enemyProbabilities.Array.data[0].probability
-      value: 20
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6881311404810838284, guid: 43b369038bbd7c1498385b9a3f69e680,
         type: 3}
