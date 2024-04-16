@@ -47,12 +47,13 @@ public class BaseEnemyAttack : MonoBehaviour
     }
     protected IEnumerator HandleAttack()
     {
+        _enemyBase.isAttacking = true;
         _currentAttackState = Enums.AttackState.Casting;
         PlayAttackAnimation();
-        yield return new WaitForSeconds(_castTime);
         SetVisualEffects();
+        yield return new WaitForSeconds(_castTime);
         AttackAction();
-        //enemy.attackInterrupted = false;
+        
         _currentTime = _cooldown;
         _currentAttackState = Enums.AttackState.Cooldown;
     }
@@ -62,8 +63,14 @@ public class BaseEnemyAttack : MonoBehaviour
         _animator.CrossFade(_animationName, 0.2f);
         this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
-            //Animation Over
+            OnAnimationEnd();
         });
+    }
+
+    protected virtual void OnAnimationEnd()
+    {
+        _enemyBase.isAttacking = false;
+        _enemyBase.attackInterrumpted = false;
     }
     protected virtual void SetVisualEffects() { }
     protected virtual void AttackAction() { }

@@ -200,6 +200,7 @@ public class EnemyBase : PoolableObject
 
     public virtual void OnDie()
     {
+        attackInterrumpted = false;
         if (isPooleable)
         {
             if (spawner?.GetComponent<SpawnerBase>())

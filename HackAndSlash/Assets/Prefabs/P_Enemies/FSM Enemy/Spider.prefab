@@ -171,8 +171,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6436768, y: 0.9685402, z: 1.791565}
-  m_Center: {x: -0.02456665, y: 0.3758297, z: 0.16494751}
+  m_Size: {x: 1.8760071, y: 0.9685402, z: 2.0030975}
+  m_Center: {x: -0.033676147, y: 0.3758297, z: 0.2707138}
 --- !u!1 &5761432086925407271
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 2142552240414237236}
   - component: {fileID: 8871688364313702261}
   - component: {fileID: 800646338441468430}
-  - component: {fileID: 356562006128749138}
+  - component: {fileID: 2162306917833488104}
   - component: {fileID: 3431994665453700156}
   - component: {fileID: 7271604990027501715}
   - component: {fileID: 4004969910057550612}
@@ -357,7 +357,7 @@ Transform:
   m_GameObject: {fileID: 8016352695908973705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 266.68, y: 57.93, z: 254.35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1083502714195743557}
@@ -411,7 +411,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &356562006128749138
+--- !u!114 &2162306917833488104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8016352695908973705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc2a2096246c46bd98608844cb7a52d3, type: 3}
+  m_Script: {fileID: 11500000, guid: c9be2694b54a4784ba2d6bdf4a26a948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isPooleable: 1
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeDamages: {fileID: 119197553877656281}
-  _enemy: {fileID: 356562006128749138}
+  _enemy: {fileID: 2162306917833488104}
 --- !u!114 &3822584550228994197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,7 +575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 0
   minSightDistance: 1.7
   maxSightDistance: 2.2
 --- !u!1 &9018795815592097184
@@ -644,7 +643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeMinBetween: 0
   minSightDistance: 50
   maxSightDistance: 75
 --- !u!1001 &4122019173388154879

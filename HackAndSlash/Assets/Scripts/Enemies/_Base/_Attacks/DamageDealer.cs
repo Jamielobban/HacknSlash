@@ -11,7 +11,6 @@ public class DamageDealer : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         other.GetComponent<IDamageable>().TakeDamage(damage);
-        
     }
     protected virtual void DestroyGameObject()
     {

@@ -10,11 +10,13 @@ public class Enums
         Chase,
         Attack,
         Ranged,
+        Invoking,
         AreaAttack,
         Roll,
         Stun,
         Countering,
         Hit,
+        AutoDestruction,
         Dead
     }
 

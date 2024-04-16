@@ -13,7 +13,6 @@ public class HitState : EnemyStateBase
         _enemyBase.IsHit = true;
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {
-            Debug.Log("end");
             _enemyBase.IsHit = false;
             fsm.StateCanExit();
         });
