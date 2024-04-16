@@ -86,7 +86,7 @@ public class ManagerEnemies : MonoBehaviour
 
         if (_timerGlobal >= _currentSpawnerScript.lifeTime)
         {
-            if (spawners.Count <= _currentSpawnerIndex)
+            if (spawners.Count - 1 > _currentSpawnerIndex)
             {
                 NextSpawner();
             }
@@ -164,8 +164,13 @@ public class ManagerEnemies : MonoBehaviour
         UpdateEnemiesSpawned();
     }
 
+    private void ResetSpawnedEnemies() => _spawnedEnemies = 0;
+
     public void NextSpawner()
     {
+        ResetSpawnedEnemies();
+        UpdateEnemiesSpawned();
+        
         Destroy(_currentSpawner);
         _currentSpawnerIndex++;
         _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
