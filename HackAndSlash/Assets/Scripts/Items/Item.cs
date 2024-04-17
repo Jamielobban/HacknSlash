@@ -4,8 +4,8 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     public ItemData data;
+    
     protected string _defaultDescription;
-
     public string DefaultDescription => _defaultDescription;
     public virtual string GetName() => data.itemName;
     public virtual string GetDescription() => data.itemDescription;
