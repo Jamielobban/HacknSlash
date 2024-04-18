@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour
                 {
                     inventorymenu.SetActive(false);
 
-                    if (!AbilityPowerManager.instance.isOpen)
+                    if (!ItemsLootBoxManager.instance.isOpen)
                     {
                         GameManager.Instance.UnPauseMenuGame();
                         EventSystem.current.SetSelectedGameObject(null);
