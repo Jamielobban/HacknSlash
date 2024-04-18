@@ -10,7 +10,7 @@ using DamageNumbersPro;
 public class PlayerControl : MonoBehaviour
 {
     public DamageNumber basicDamageHit, criticalDamageHit;
-    
+    public InventorySO inventory;
     [SerializeField]
     LayerMask layerSuelo;
     public List<MMF_Player> feedbacksPlayer = new List<MMF_Player>();
@@ -18,12 +18,9 @@ public class PlayerControl : MonoBehaviour
     public PlayerHealthSystem healthSystem;
     public DamageNumber healPixel;
     public ParticleSystem flash;
-    public UnityEngine.UI.Slider healthSlider;
 
     public Animator cameraAAnims;
-    public List<ItemList> items = new List<ItemList>();
-    public enum HealthState { FROZEN, BURNED, POSIONED, AMPED, WEAKENED, NORMAL };
-
+   
     public enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE, HIT, DEATH, TELEPORT };
 
     enum Attacks { GROUND, AIR, RUN, FALL, LAND };
@@ -151,7 +148,6 @@ public class PlayerControl : MonoBehaviour
     public float delayDashes;
     public GetEnemies enemieTarget;
     public GetEnemies attackTeleport;
-    public GetEnemies attackTeleport2;
     public GetEnemies remate;
 
 
@@ -226,7 +222,6 @@ public class PlayerControl : MonoBehaviour
     public float critDamageMultiplier;
     public Rigidbody rb;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -686,67 +681,6 @@ public class PlayerControl : MonoBehaviour
     }
     #endregion
 
-    #region Cosas de items del Jamie
-
-    public int GetItemStacks(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.stacks;
-            }
-        }
-        return 0;
-    }
-    public bool CheckIfHasItem(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public string GetItemDescription(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.item.DefaultDescription;
-            }
-        }
-        return null;
-    }
-    public Sprite GetItemImage(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.item.data.itemIcon;
-            }
-        }
-        return null;
-    }
-
-    //public Enums.RarityType GetItemRarity(string itemName)
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        if (i.name == itemName)
-    //        {
-    //            return i.rarity;
-    //        }
-    //    }
-    //    return 0;
-    //}
-    #endregion
-
     #region Funcion que devuelve el ataque actual que estas haciendo (enum ComboAtaques)
 
     ComboAtaques GetCurrentAttackCombo()
@@ -1152,7 +1086,6 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             //landVFX.PlayDustVFX(this.transform.position);
-                            CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.3f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
@@ -1256,66 +1189,6 @@ public class PlayerControl : MonoBehaviour
 
     ////////////
 
-
-    //IEnumerator CallItemUpdate()
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        i.item.Update(this, i.stacks);
-    //    }
-    //    yield return new WaitForSeconds(1);
-    //    StartCoroutine(CallItemUpdate());
-    //}
-
-    /*public void CallItemOnKill(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnKill(this, enemy, i.stacks);
-        }
-    }
-    public void CallItemOnCrit(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnCrit(this, enemy, i.stacks);
-        }
-    }*/
-
-    //public void CallItemOnPickup(int id)
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        if (i.item.data.id == id)
-    //        {
-    //            i.item.OnItemPickup(this, i.stacks);
-    //        }
-    //    }
-    //}
-
-    public void CallItemOnHit()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnHit(this, i.stacks);
-        }
-    }
-
-
-    public void CallItemOnJump()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnJump(this, i.stacks);
-        }
-    }
-    //public void CallItemOnPickup()
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        i.item.OnItemPickup(this, i.stacks);
-    //    }
-    //}
     float damageMult = 1;
     public float delayDamage = 0.5f;
     bool atackPress = false;

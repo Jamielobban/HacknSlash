@@ -58,4 +58,12 @@ public class UIInventoryPage : MonoBehaviour
     {
         _itemDescription.SetDescription(icon, name, description);
     }
+
+    internal void ResetAllItems()
+    {
+        foreach (var uiItem in _listOfUIItems)
+        {
+            uiItem.ResetData();
+        }
+    }
 }

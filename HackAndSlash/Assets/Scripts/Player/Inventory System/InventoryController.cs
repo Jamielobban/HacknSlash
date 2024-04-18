@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -13,9 +14,20 @@ public class InventoryController : MonoBehaviour
     private void Start()
     {
         _controller = FindAnyObjectByType<ControllerManager>();
+        _inventoryData.Initialize();
         _inventoryUI.InitializeInventoryUI(_inventoryData.Size);
+        _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
         _inventoryUI.OnDescriptionRequested += HandleDescriptionRequested;
         _inventoryUI.OnItemActionRequested += HandleItemActionnRequested;
+    }
+
+    private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
+    {
+        _inventoryUI.ResetAllItems();
+        foreach (var item in inventoryState)
+        {
+            _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDefaultDescription);
+        }
     }
 
     private void HandleItemActionnRequested(int itemIndex)
@@ -31,7 +43,7 @@ public class InventoryController : MonoBehaviour
         }
 
         ItemData item = inventoryItem.item;
-        _inventoryUI.UpdateDescription(itemIndex, item.itemIcon, item.itemName, item.itemDescription);
+        _inventoryUI.UpdateDescription(itemIndex, item.itemIcon, item.itemName, item.itemDefaultDescription);
     }
 
 
@@ -46,7 +58,7 @@ public class InventoryController : MonoBehaviour
                     _inventoryUI.Show();
                     foreach (var item in _inventoryData.GetCurrentInventoryState())
                     {
-                        _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDescription);
+                        _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDefaultDescription);
                     }
                     AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
                     EventSystem.current.SetSelectedGameObject(_inventoryUI.ListOfUIItems[0].gameObject); //selectedObject

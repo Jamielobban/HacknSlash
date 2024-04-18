@@ -80,7 +80,7 @@ public class ManagerEnemies : MonoBehaviour
         {
             _timerItems = 0f;
             UpgradeEnemies();
-            ItemsLootBoxManager.instance.ShowNewOptions();
+            ItemsLootBoxManager.Instance.ShowNewOptions();
             ResetScore();
         }
 

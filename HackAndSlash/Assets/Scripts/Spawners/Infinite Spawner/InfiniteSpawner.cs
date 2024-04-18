@@ -64,7 +64,7 @@ public class InfiniteSpawner : MonoBehaviour
                         Debug.LogError("Unsuported spawn method");
                         break;
                 }
-                _managerEnemies.AddSpawnedEnemies(+1);
+                
                 _timer = 0;
             }
         }        
@@ -111,6 +111,7 @@ public class InfiniteSpawner : MonoBehaviour
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
+                _managerEnemies.AddSpawnedEnemies(+1);
             }
             else
             {

@@ -43,7 +43,7 @@ public class Chest : MonoBehaviour, IInteractable
     {
         particle.SetActive(false);
         particleSystem.SetActive(false);
-        ItemsLootBoxManager.instance.ShowNewOptions();
+        ItemsLootBoxManager.Instance.ShowNewOptions();
         isUnlocked = true;
 
     }

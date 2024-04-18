@@ -33,7 +33,7 @@ public class CanvasAnnouncements : MonoBehaviour
         {
             fade.gameObject.GetComponent<Image>().color = Color.Lerp(fade.firstColor, fade.lastColor, 255);
         }
-        ItemsLootBoxManager.instance.ShowNewOptions();
+        ItemsLootBoxManager.Instance.ShowNewOptions();
     }
     public void ShowEventDefeated()
     {
