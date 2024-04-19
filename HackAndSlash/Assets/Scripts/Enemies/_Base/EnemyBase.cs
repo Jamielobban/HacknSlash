@@ -46,6 +46,7 @@ public class EnemyBase : PoolableObject
     public PlayerControl Player => _player;
     public NavMeshAgent Agent => _agent;
     public StateMachine<Enums.EnemyStates, Enums.StateEvent> EnemyFSM => _enemyFSM;
+    public EnemyHealthSystem HealthSystem => _healthSystem;
 
     protected virtual void Awake()
     {
@@ -227,7 +228,7 @@ public class EnemyBase : PoolableObject
         }
         else
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
     }

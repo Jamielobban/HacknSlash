@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class AreaProbabilitySpawner : ProbabilitySpawner
 {
@@ -14,13 +12,6 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
     }
   
     // Si quieres que se active al entrar a un sitio concreto
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (_spawnCoroutine == null)
-        //{
-        //    _spawnCoroutine = StartCoroutine(SpawnEnemies());
-        //}
-    }
 
     protected override void OnEnable()
     {
@@ -44,7 +35,6 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
             pointToInstantiate = new Vector3(Random.Range(worldMinBounds.x, worldMaxBounds.x), (worldMinBounds.y + worldMaxBounds.y ) * 0.5f, Random.Range(worldMinBounds.z, worldMaxBounds.z));
         } while (Vector3.Distance(transform.position, pointToInstantiate) < .5f && Vector3.Distance(transform.position, pointToInstantiate) > 10f);
 
-         Debug.Log("Hit point: " + pointToInstantiate);
         return pointToInstantiate; 
     }
 }

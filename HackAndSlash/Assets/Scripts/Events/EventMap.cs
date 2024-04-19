@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,35 +6,40 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 
+[Serializable]
+public struct EnemiesToKill
+{
+    public GameObject parent;
+    public List<GameObject> enemiesToKill;
+}
+
 public abstract class EventMap : Interactive, IInteractable
 {
-    [SerializeField] GameObject objectiveMarker;        
-    [SerializeField] Transform timers;
-    [SerializeField] protected ForceFieldController forceField;
-    [SerializeField] AudioSource noiseSound;
-    public float timeToActivate, timeToRestart;
-
-    bool scaling = false;
-    List<TextMeshProUGUI> timersText;
-    public float timer = 0;
-    protected List<BoxCollider>tangentColliders = new List<BoxCollider>();
-    protected Enums.EventState _currentEventState;
-    protected int currentRound = 0;
-    public Enums.EventState CurrentEventState => _currentEventState;
-
     public EventsManager manager;
+    [SerializeField] private GameObject objectiveMarker;        
+    [SerializeField] private Transform timers;
+    public float timeToActivate, timeToRestart;
+    protected Enums.EventState _currentEventState;
 
+    public List<EnemiesToKill> roundsOfEnemies = new List<EnemiesToKill>();
+    protected int currentRound = 0;
+    public float timer = 0;
+    
+    
+    public Enums.EventState CurrentEventState => _currentEventState;
+    
+    [SerializeField] protected ForceFieldController forceField;
+    [SerializeField] private AudioSource noiseSound;
+    private bool scaling = false;
+    protected List<BoxCollider> tangentColliders = new List<BoxCollider>();
+    private List<TextMeshProUGUI> timersText;
 
     public void Interact()
     {
         if (!canInteract) return;
-
-        GetComponent<Collider>().enabled = false;
         StartEvent();
-        objectiveMarker.SetActive(false);
-        canInteract = false;
-        FindObjectOfType<PlayerCollision>().canInteract = false;
     }
+    
     protected virtual void Start()
     {
         timer = timeToActivate;
@@ -49,7 +55,7 @@ public abstract class EventMap : Interactive, IInteractable
         HandleTimer();
     }
 
-    void HandleTimer()
+    private void HandleTimer()
     {
         if(timer <= 0)
         {            
@@ -89,24 +95,26 @@ public abstract class EventMap : Interactive, IInteractable
             objectiveMarker.SetActive(true);
         }
     }
-
-    void StopScale() { scaling = false; }
-    
     protected virtual void StartEvent()
     {
+        GetComponent<Collider>().enabled = false;
+        
         AudioManager.Instance.PlayFx(Enums.Effects.Evento);
         AudioManager.Instance.PlayMusic(Enums.Music.EpicTheme);
-        ManagerEnemies.Instance.StartEvent();
+        
+        ManagerEnemies.Instance.StartEvent(); //Clears all the current enemies and sets isInEvent
+        
         forceField.SetSpeed(0.15f);
+        
         foreach (Collider col in tangentColliders)
         {
             col.isTrigger = false;
         }
         _currentEventState = Enums.EventState.PLAYING;
-    }
-    protected virtual void NextRound()
-    {
-        currentRound++;
+        
+        objectiveMarker.SetActive(false);
+        canInteract = false;
+        FindObjectOfType<PlayerCollision>().canInteract = false;
     }
     protected virtual void RestartEvent()
     {
@@ -142,11 +150,21 @@ public abstract class EventMap : Interactive, IInteractable
         foreach(Material mat in normalMats)
             mat.DOFloat(-0.4f, "_EmissiveMapForce", 0.5f);
     }
-    protected void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders)
-    {
-        StartCoroutine(CreateTangentCollidersCoroutine(sphereCollider, numberOfColliders));
-    }
+    
+    protected virtual void NextRound() => currentRound++;
+    void StopScale() { scaling = false; }
+    private void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders) => StartCoroutine(CreateTangentCollidersCoroutine(sphereCollider, numberOfColliders));
+    
+    protected bool AllEnemiesDefeated() => roundsOfEnemies[currentRound].enemiesToKill.Count <= 0;
 
+    public void RemoveEnemy(GameObject enemy)
+    {
+        if (roundsOfEnemies[currentRound].enemiesToKill.Contains(enemy))
+        {
+            roundsOfEnemies[currentRound].enemiesToKill.Remove(enemy);
+        }
+    }
+    
     IEnumerator CreateTangentCollidersCoroutine(SphereCollider sphereCollider, int numberOfColliders)
     {
         // Obtener la posición del centro del Sphere Collider
@@ -193,6 +211,14 @@ public abstract class EventMap : Interactive, IInteractable
 
             // Pausa por un frame antes de continuar con el próximo Box Collider
             yield return null;
+        }
+    }
+
+    protected virtual void StartSpawningEnemies()
+    {
+        foreach (var enemy in roundsOfEnemies[currentRound].enemiesToKill)
+        {
+            enemy.GetComponent<EnemyBase>().OnSpawnEnemy();
         }
     }
 }
