@@ -51,6 +51,7 @@ public class ManagerEnemies : MonoBehaviour
     
     private float _timerGlobal = 0f;
     private float _timerItems = 0f;
+    private float _timerSpawners = 0f;
     private int minutes = 0;
     private int seconds = 0;
     
@@ -65,15 +66,15 @@ public class ManagerEnemies : MonoBehaviour
     {
         _instance = this;
         InitializePools();
-        _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
-        _currentSpawnerScript = spawners[_currentSpawnerIndex].GetComponent<InfiniteSpawner>();
-        _currentSpawner.transform.parent = GameManager.Instance.Player.transform;
+        InitializeNewSpawner();
     }
 
     void Update()
     {
         _timerGlobal += Time.deltaTime;
         _timerItems += Time.deltaTime;
+        _timerSpawners += Time.deltaTime;
+        
         UpdateTimeText();
 
         if (_timerItems >= timeToGetItem)
@@ -84,12 +85,13 @@ public class ManagerEnemies : MonoBehaviour
             ResetScore();
         }
 
-        if (_timerGlobal >= _currentSpawnerScript.lifeTime)
+        if (_timerSpawners >= _currentSpawnerScript.lifeTime)
         {
             if (spawners.Count - 1 > _currentSpawnerIndex)
             {
                 NextSpawner();
             }
+            _timerSpawners = 0f;
         }
     }
 
@@ -141,7 +143,7 @@ public class ManagerEnemies : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
+            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 0));
         }
     }
 
@@ -173,9 +175,17 @@ public class ManagerEnemies : MonoBehaviour
         
         Destroy(_currentSpawner);
         _currentSpawnerIndex++;
+        InitializeNewSpawner();
+    }
+
+    private void InitializeNewSpawner()
+    {
         _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
         _currentSpawnerScript = spawners[_currentSpawnerIndex].GetComponent<InfiniteSpawner>();
         _currentSpawner.transform.parent = GameManager.Instance.Player.transform;
+        _currentSpawner.transform.localRotation = Quaternion.identity;
+        _currentSpawner.transform.localPosition = Vector3.zero;
+        _currentSpawner.transform.localScale = Vector3.one;
     }
 
 }

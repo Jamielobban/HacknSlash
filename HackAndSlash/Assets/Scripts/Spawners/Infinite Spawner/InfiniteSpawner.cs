@@ -115,6 +115,7 @@ public class InfiniteSpawner : MonoBehaviour
             }
             else
             {
+                _managerEnemies.AddSpawnedEnemies(-1);
                 Debug.LogError($"Unable to place NavmeshAgent on Navmesh chau");
             }
         }

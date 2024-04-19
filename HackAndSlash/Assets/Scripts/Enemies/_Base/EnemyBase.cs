@@ -154,10 +154,7 @@ public class EnemyBase : PoolableObject
                             _baseInfinity.RemoveEnemy(this);
                         }
                     }
-                    else
-                    {
-                        ManagerEnemies.Instance.AddSpawnedEnemies(-1);
-                    }
+                    ManagerEnemies.Instance.AddSpawnedEnemies(-1);
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }
@@ -223,10 +220,7 @@ public class EnemyBase : PoolableObject
                     spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
                 }
             }
-            else
-            {
-               // ManagerEnemies.Instance.AddSpawnedEnemies(-1);
-            }
+            ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             spawner = null;
             ResetEnemy();
             gameObject.SetActive(false);

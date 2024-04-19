@@ -10,10 +10,13 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public EnemyHUD hud;
     public float MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
+
+    private Collider _getDamageCollider;
     
     private void Awake()
     {
         _enemyBase = transform.parent.GetComponent<EnemyBase>();
+        _getDamageCollider = GetComponent<Collider>();
         currentMaxHealth = _maxHealth;
         _currentHealth = currentMaxHealth;
     }
@@ -31,6 +34,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         
         if (_currentHealth <= 0)
         {
+            _getDamageCollider.enabled = false;
             _enemyBase.IsDead = true;
             _enemyBase.OnDespawnEnemy();
         }
@@ -54,6 +58,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
     public void ResetEnemyHealth()
     {
+        _getDamageCollider.enabled = true;
         _currentHealth = currentMaxHealth;
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }

@@ -14,8 +14,10 @@ public class UIItemChoice : MonoBehaviour
 
     public void OnSelect()
     {
-        transform.localScale = new Vector3(1.9f, 1.9f, 1.9f);
-        rarityEffect.SetActive(true);
+        transform.localScale = new Vector3(scaleOnSelect, scaleOnSelect, scaleOnSelect);
+        //rarityEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        image.color = Color.gray;
+       // rarityEffect.SetActive(true);
     }
 
     public void OnPerform()
@@ -32,7 +34,8 @@ public class UIItemChoice : MonoBehaviour
     public void OnDeselect()
     {
         transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
-        rarityEffect.SetActive(false);
+        image.color = Color.white;
+        //rarityEffect.transform.localScale = Vector3.one;
     }
 
     private IEnumerator IncreaseScale(float _targetScale)
