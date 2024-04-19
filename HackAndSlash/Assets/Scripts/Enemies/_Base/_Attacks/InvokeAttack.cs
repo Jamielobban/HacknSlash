@@ -5,9 +5,8 @@ using UnityHFSM;
 
 public class InvokeAttack : BaseEnemyAttack
 {
-    public List<EnemyBase> instantiableEnemies = new List<EnemyBase>();
-    public List<GameObject> instantiablePoints = new List<GameObject>();
     public GameObject invokeEffect;
+    public GameObject _spawner;
     private ManagerEnemies _manager;
 
     protected override void Awake()
@@ -36,33 +35,10 @@ public class InvokeAttack : BaseEnemyAttack
     protected override void AttackAction()
     {
         base.AttackAction();
-        foreach (var point in instantiablePoints)
-        {
-            int enemy = Random.Range(0, instantiableEnemies.Count);
-            EnemyBase enemyToSpawn = instantiableEnemies[enemy];
-            PoolableObject poolable = _manager.enemyObjectsPools[enemyToSpawn].GetObject();
+        GameObject go = Instantiate(_spawner);
+        go.transform.SetParent(gameObject.transform);
+        go.transform.localPosition = Vector3.zero;
+        go.transform.localScale = Vector3.one;
 
-            if (poolable != null)
-            {
-                EnemyBase enemyBase = poolable.GetComponent<EnemyBase>();
-                enemyBase.target = GameManager.Instance.Player.transform;
-                enemyBase.spawner = this.gameObject;
-                enemyBase.OnSpawnEnemy();
-                NavMeshHit hit;
-                if (UnityEngine.AI.NavMesh.SamplePosition(point.transform.position, out hit, 50f, -1))
-                {
-                    enemyBase.Agent.Warp(hit.position);
-                    enemyBase.Agent.enabled = true;
-                }
-                else
-                {
-                    Debug.LogError($"Unable to place NavmeshAgent on Navmesh chau");
-                }
-            }
-            else
-            {
-                Debug.LogError($"Unable to fetch enemy of type {point.transform.position} from object pool. Out of objects?");
-            }
-        }
     }
 }

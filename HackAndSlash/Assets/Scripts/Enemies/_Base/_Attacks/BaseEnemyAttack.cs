@@ -61,12 +61,17 @@ public class BaseEnemyAttack : MonoBehaviour
     protected virtual void PlayAttackAnimation()
     {
         _animator.CrossFade(_animationName, 0.2f);
-        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        Invoke(nameof(WaitForAnimation), 0.22f);
+    }
+
+    private void WaitForAnimation() 
+    {
+        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length +1f, () =>
         {
+            Debug.Log("Ends Attack Animation");
             OnAnimationEnd();
         });
     }
-
     protected virtual void OnAnimationEnd()
     {
         _enemyBase.isAttacking = false;

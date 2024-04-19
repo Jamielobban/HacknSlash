@@ -28,7 +28,7 @@ public class ChaseState : EnemyStateBase
             _agent.SetDestination(_enemyBase.target.position);
 
         }
-        else if (_agent.remainingDistance <= _agent.stoppingDistance)
+        else if (_agent.remainingDistance <= _agent.stoppingDistance || _enemyBase.isAttacking)
         {
             //If we request exit, we will continue move to last known pos prior to idle
             fsm.StateCanExit();

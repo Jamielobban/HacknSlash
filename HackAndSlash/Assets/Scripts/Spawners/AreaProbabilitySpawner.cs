@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AreaProbabilitySpawner : ProbabilitySpawner
 {
@@ -12,13 +12,7 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
         Collider _collider = GetComponent<Collider>();
         _bounds = _collider.bounds;
     }
-    protected override void Start()
-    {
-        base.Start();
-        //_spawnCoroutine = StartCoroutine(SpawnEnemies());
-    }
-        
-
+  
     // Si quieres que se active al entrar a un sitio concreto
     private void OnTriggerEnter(Collider other)
     {
@@ -31,15 +25,26 @@ public class AreaProbabilitySpawner : ProbabilitySpawner
     protected override void OnEnable()
     {
         base.OnEnable();
-        _spawnCoroutine = StartCoroutine(SpawnEnemies());
+        Invoke(nameof(EnableCoroutine), 0.15f);
     }
 
     protected override void OnDisable()
     {
         _spawnCoroutine = null;
-
     }
+    private void EnableCoroutine() => _spawnCoroutine = StartCoroutine(SpawnEnemies());
+    protected override Vector3 ChooseRandomPositionOnNavMesh()
+    {
+        Vector3 pointToInstantiate = Vector3.zero;
+        Vector3 worldMinBounds = transform.TransformPoint(_bounds.min); 
+        Vector3 worldMaxBounds = transform.TransformPoint(_bounds.max); 
+            
+        do
+        {
+            pointToInstantiate = new Vector3(Random.Range(worldMinBounds.x, worldMaxBounds.x), (worldMinBounds.y + worldMaxBounds.y ) * 0.5f, Random.Range(worldMinBounds.z, worldMaxBounds.z));
+        } while (Vector3.Distance(transform.position, pointToInstantiate) < .5f && Vector3.Distance(transform.position, pointToInstantiate) > 10f);
 
-    protected override Vector3 ChooseRandomPositionOnNavMesh() => new Vector3(Random.Range(_bounds.min.x, _bounds.max.x), _bounds.min.y, Random.Range(_bounds.min.z, _bounds.max.z));
-
+         Debug.Log("Hit point: " + pointToInstantiate);
+        return pointToInstantiate; 
+    }
 }

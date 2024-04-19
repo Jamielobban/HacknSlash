@@ -97,7 +97,7 @@ public class InfiniteSpawner : MonoBehaviour
 
     protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
-        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
+        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject(Vector3.zero);
 
         if (poolable != null)
         {

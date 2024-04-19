@@ -48,7 +48,7 @@ public class SpawnerBase : MonoBehaviour
         _triangulation = NavMesh.CalculateTriangulation();
     }
 
-    protected IEnumerator SpawnEnemies()
+    protected virtual IEnumerator SpawnEnemies()
     {      
         WaitForSeconds wait = new WaitForSeconds(_timeToSpawn);
 
@@ -86,17 +86,17 @@ public class SpawnerBase : MonoBehaviour
 
     protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
-        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
+        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject(Vector3.zero);
 
         if (poolable != null)
         {
             EnemyBase enemyBase = poolable.GetComponent<EnemyBase>();
             //enemy.animations.OnSpawn();
+            enemyBase.target = GameManager.Instance.Player.transform;
             enemyBase.spawner = this.gameObject;
-            AddEnemy(enemyBase);
-
+            enemyBase.OnSpawnEnemy();
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
+            if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
