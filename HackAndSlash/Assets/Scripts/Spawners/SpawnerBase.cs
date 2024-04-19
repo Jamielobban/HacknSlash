@@ -86,7 +86,7 @@ public class SpawnerBase : MonoBehaviour
 
     protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
-        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject(Vector3.zero);
+        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject(spawnPos);
 
         if (poolable != null)
         {
@@ -100,6 +100,7 @@ public class SpawnerBase : MonoBehaviour
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
+                ManagerEnemies.Instance.AddSpawnedEnemies(+1);
             }
             else
             {

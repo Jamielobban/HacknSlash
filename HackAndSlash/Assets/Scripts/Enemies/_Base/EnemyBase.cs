@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 using UnityEngine.AI;
@@ -154,7 +155,6 @@ public class EnemyBase : PoolableObject
                             _baseInfinity.RemoveEnemy(this);
                         }
                     }
-                    ManagerEnemies.Instance.AddSpawnedEnemies(-1);
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }
@@ -219,8 +219,8 @@ public class EnemyBase : PoolableObject
                 {
                     spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
                 }
+                ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             }
-            ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             spawner = null;
             ResetEnemy();
             gameObject.SetActive(false);
@@ -262,4 +262,5 @@ public class EnemyBase : PoolableObject
         _followPlayerSensor.OnPlayerEnter -= FollowPlayerSensor_OnPlayerSensorEnter;
         _followPlayerSensor.OnPlayerExit -= FollowPlayerSensor_OnPlayerSensorExit;      
     }
+    
 }
