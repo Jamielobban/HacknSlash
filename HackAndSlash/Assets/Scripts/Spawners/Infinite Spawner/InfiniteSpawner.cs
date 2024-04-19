@@ -7,41 +7,27 @@ public class InfiniteSpawner : MonoBehaviour
 {
     #region Spawner Stats
     [Header("Stadistics: ")]
-    [SerializeField] protected float _timeToSpawn;
-    [SerializeField] protected bool _isBurstSpawner;
-    public Enums.SpawnMethod enemySpawnMethod = Enums.SpawnMethod.RoundRobin;
-    [SerializeField] protected List<EnemyBase> _enemies = new List<EnemyBase>();
-
-    public float TimeToSpawn
-    {
-        get => _timeToSpawn;
-        set => _timeToSpawn = Mathf.Max(0f, value);
-    }
-    public bool IsBurstSpawner
-    {
-        get => _isBurstSpawner;
-        set => _isBurstSpawner = value;
-    }
-    #endregion
-
-    protected NavMeshTriangulation _triangulation;
-    //protected RoomManager _roomManager;
-    protected float _timer = 0f;
-
+    public int enemiesCap;
+    [Tooltip("Time to destroy spawner, must be in seconds")] public float lifeTime;
     public float timeMinToSpawn = .8f;
     public float timeMaxToSpawn = 2.5f;
+    public float delayStartTime = 0f;
+    public Enums.SpawnMethod enemySpawnMethod = Enums.SpawnMethod.RoundRobin;
+    [SerializeField] protected List<EnemyBase> _enemies = new List<EnemyBase>();
+    [SerializeField] protected bool canStartSpawn = false;
+    [SerializeField] protected bool _isBurstSpawner;
+    #endregion
 
+    protected float _timeToSpawn;
+    protected NavMeshTriangulation _triangulation;
+    protected float _timer = 0f;
     private ManagerEnemies _managerEnemies;
     private List<EnemyBase> _spawnedEnemies = new List<EnemyBase>();
-
-    public int enemiesCap;
-
-    public float delayStartTime = 0f;
     private float _timerDelay;
 
-    public bool canStartSpawn = false;
     protected virtual void Start()
     {
+        _timeToSpawn = Random.Range(timeMinToSpawn, timeMaxToSpawn);
         _triangulation = NavMesh.CalculateTriangulation();
         _managerEnemies = ManagerEnemies.Instance;
     }
@@ -60,7 +46,7 @@ public class InfiniteSpawner : MonoBehaviour
         }
         else
         {
-            if (_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies <= enemiesCap && !_managerEnemies.isInEvent)
+            if (_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies < enemiesCap && !_managerEnemies.isInEvent)
             {
                 //Spawn Enemy
                 switch (enemySpawnMethod)
@@ -78,7 +64,7 @@ public class InfiniteSpawner : MonoBehaviour
                         Debug.LogError("Unsuported spawn method");
                         break;
                 }
-                _managerEnemies.SetSpawnedEnemies(+1);
+                
                 _timer = 0;
             }
         }        
@@ -88,8 +74,8 @@ public class InfiniteSpawner : MonoBehaviour
     {
         foreach (var enemy in _spawnedEnemies)
         {
-            //enemy.animations.EnemyDieApply();
             enemy.IsDead = true;
+            enemy.OnDespawnEnemy();
         }
         _spawnedEnemies.Clear();
     }
@@ -121,13 +107,15 @@ public class InfiniteSpawner : MonoBehaviour
             enemyBase.OnSpawnEnemy();
             AddEnemy(enemyBase);
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
+            if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
+                _managerEnemies.AddSpawnedEnemies(+1);
             }
             else
             {
+                _managerEnemies.AddSpawnedEnemies(-1);
                 Debug.LogError($"Unable to place NavmeshAgent on Navmesh chau");
             }
         }

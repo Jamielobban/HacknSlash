@@ -6,11 +6,12 @@ using System.Linq;
 using System;
 using DG.Tweening;
 using DamageNumbersPro;
+using UnityEngine.Serialization;
 
 public class PlayerControl : MonoBehaviour
 {
     public DamageNumber basicDamageHit, criticalDamageHit;
-    
+    public InventorySO inventory;
     [SerializeField]
     LayerMask layerSuelo;
     public List<MMF_Player> feedbacksPlayer = new List<MMF_Player>();
@@ -18,12 +19,9 @@ public class PlayerControl : MonoBehaviour
     public PlayerHealthSystem healthSystem;
     public DamageNumber healPixel;
     public ParticleSystem flash;
-    public UnityEngine.UI.Slider healthSlider;
 
     public Animator cameraAAnims;
-    public List<ItemList> items = new List<ItemList>();
-    public enum HealthState { FROZEN, BURNED, POSIONED, AMPED, WEAKENED, NORMAL };
-
+   
     public enum States { MOVE, DASH, JUMP, ATTACK, IDLE, DELAYMOVE, HIT, DEATH, TELEPORT };
 
     enum Attacks { GROUND, AIR, RUN, FALL, LAND };
@@ -40,7 +38,7 @@ public class PlayerControl : MonoBehaviour
     Dash dash;
     Jump jump;
 
-    public GameObject camera;
+    public GameObject cameraGo;
     public float CameraRotatSpeed;
     public float walkSpeed;
     public float runSpeed;
@@ -151,7 +149,6 @@ public class PlayerControl : MonoBehaviour
     public float delayDashes;
     public GetEnemies enemieTarget;
     public GetEnemies attackTeleport;
-    public GetEnemies attackTeleport2;
     public GetEnemies remate;
 
 
@@ -226,7 +223,6 @@ public class PlayerControl : MonoBehaviour
     public float critDamageMultiplier;
     public Rigidbody rb;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -250,20 +246,6 @@ public class PlayerControl : MonoBehaviour
         states = States.IDLE;
         moves = Moves.IDLE;
     }
-
-    //public void SetHealth()
-    //{
-    //    if(currentHealth > maxHealth)
-    //    {
-    //        currentHealth = maxHealth;
-    //    }
-    //    currentHealthText.text = currentHealth.ToString();
-    //    maxHealthText.text = maxHealth.ToString();
-    //    healthSlider.value = currentHealth / maxHealth;
-    //}
-
-
-
 
     public ListaAtaques GetAttacks(ComboAtaques combo)
     {
@@ -516,7 +498,7 @@ public class PlayerControl : MonoBehaviour
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) < 6 
             && currentComboAttacks.combo != ComboAtaques.Teleport && currentComboAttacks.combo != ComboAtaques.HoldQuadrat && currentComboAttacks.combo != ComboAtaques.HoldTriangle)
         {
-            Vector3 d = this.transform.position + ((camera.transform.forward * controller.LeftStickValue().y * 6) + (camera.transform.right * controller.LeftStickValue().x * 6));
+            Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
 
             enemy = attackTeleport.GetEnemie(d);
             Vector3 enem = enemy;
@@ -547,7 +529,6 @@ public class PlayerControl : MonoBehaviour
                 dir.y = player.transform.position.y;
 
             RaycastHit hit;
-            RaycastHit hit2;
 
             if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
             {
@@ -630,10 +611,6 @@ public class PlayerControl : MonoBehaviour
         {
             if (states == States.MOVE)
             {
-                Vector3 pos;
-
-
-
                 if (Mathf.Abs(hit.point.y - this.transform.position.y) < 2)
                     player.transform.GetChild(3).transform.position = new Vector3(movementController.transform.position.x, hit.point.y, movementController.transform.position.z);
 
@@ -698,67 +675,6 @@ public class PlayerControl : MonoBehaviour
 
 
     }
-    #endregion
-
-    #region Cosas de items del Jamie
-
-    public int GetItemStacks(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.stacks;
-            }
-        }
-        return 0;
-    }
-    public bool CheckIfHasItem(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public string GetItemDescription(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.item.DefaultDescription;
-            }
-        }
-        return null;
-    }
-    public Sprite GetItemImage(string itemName)
-    {
-        foreach (ItemList i in items)
-        {
-            if (i.item.data.itemName == itemName)
-            {
-                return i.item.data.itemIcon;
-            }
-        }
-        return null;
-    }
-
-    //public Enums.RarityType GetItemRarity(string itemName)
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        if (i.name == itemName)
-    //        {
-    //            return i.rarity;
-    //        }
-    //    }
-    //    return 0;
-    //}
     #endregion
 
     #region Funcion que devuelve el ataque actual que estas haciendo (enum ComboAtaques)
@@ -1166,7 +1082,6 @@ public class PlayerControl : MonoBehaviour
                             //landVFX.transform.position = this.transform.position;
                             //landVFX.Play();
                             //landVFX.PlayDustVFX(this.transform.position);
-                            CallItemOnJump();
                             player.transform.GetChild(1).Rotate(new Vector3(0, 1, 0), -90);
                             playerAnim.CrossFadeInFixedTime("Idle", 0.3f);
                             //this.transform.position = new Vector3(this.transform.position.x, landHeight+0.2f, this.transform.position.z);
@@ -1270,66 +1185,6 @@ public class PlayerControl : MonoBehaviour
 
     ////////////
 
-
-    //IEnumerator CallItemUpdate()
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        i.item.Update(this, i.stacks);
-    //    }
-    //    yield return new WaitForSeconds(1);
-    //    StartCoroutine(CallItemUpdate());
-    //}
-
-    /*public void CallItemOnKill(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnKill(this, enemy, i.stacks);
-        }
-    }
-    public void CallItemOnCrit(Enemy enemy)
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnCrit(this, enemy, i.stacks);
-        }
-    }*/
-
-    //public void CallItemOnPickup(int id)
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        if (i.item.data.id == id)
-    //        {
-    //            i.item.OnItemPickup(this, i.stacks);
-    //        }
-    //    }
-    //}
-
-    public void CallItemOnHit()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnHit(this, i.stacks);
-        }
-    }
-
-
-    public void CallItemOnJump()
-    {
-        foreach (ItemList i in items)
-        {
-            i.item.OnJump(this, i.stacks);
-        }
-    }
-    //public void CallItemOnPickup()
-    //{
-    //    foreach (ItemList i in items)
-    //    {
-    //        i.item.OnItemPickup(this, i.stacks);
-    //    }
-    //}
     float damageMult = 1;
     public float delayDamage = 0.5f;
     bool atackPress = false;
@@ -2028,7 +1883,6 @@ public class PlayerControl : MonoBehaviour
                     movementController.transform.position = new Vector3(movementController.transform.position.x, hit.point.y, movementController.transform.position.z);
                 else
                 {
-                    int sdf = 0;
 
                 }
 
@@ -2047,10 +1901,10 @@ public class PlayerControl : MonoBehaviour
         if (controller.RightStickValue().magnitude > 0.2f && states != States.DEATH)
         {
 
-            camera.transform.Rotate(new Vector3(0, controller.RightStickValue().x, 0) * Time.deltaTime * CameraRotatSpeed);
-            camera.transform.GetChild(0).Rotate(new Vector3(-controller.RightStickValue().y, 0, 0) * Time.deltaTime * CameraRotatSpeed * 0.5f);
+            cameraGo.transform.Rotate(new Vector3(0, controller.RightStickValue().x, 0) * Time.deltaTime * CameraRotatSpeed);
+            cameraGo.transform.GetChild(0).Rotate(new Vector3(-controller.RightStickValue().y, 0, 0) * Time.deltaTime * CameraRotatSpeed * 0.5f);
 
-            float rotation = camera.transform.GetChild(0).localEulerAngles.x;
+            float rotation = cameraGo.transform.GetChild(0).localEulerAngles.x;
             if (rotation < 300)
             {
                 rotation += 360;
@@ -2060,12 +1914,12 @@ public class PlayerControl : MonoBehaviour
 
             if (rotation < 330)
             {
-                camera.transform.GetChild(0).localEulerAngles = new Vector3(330, 0, 0);
+                cameraGo.transform.GetChild(0).localEulerAngles = new Vector3(330, 0, 0);
 
             }
             if (rotation > 390)
             {
-                camera.transform.GetChild(0).localEulerAngles = new Vector3(390, 0, 0);
+                cameraGo.transform.GetChild(0).localEulerAngles = new Vector3(390, 0, 0);
             }
 
         }

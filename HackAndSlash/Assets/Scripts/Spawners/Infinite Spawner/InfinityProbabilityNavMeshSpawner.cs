@@ -16,7 +16,7 @@ public class InfinityProbabilityNavMeshSpawner : InfinityProbabilitySpawner
         do
         {
             _vertexIndex = Random.Range(0, _triangulation.vertices.Length);
-        } while (Vector3.Distance(_triangulation.vertices[_vertexIndex], FindObjectOfType<PlayerControl>().transform.position) < minFarDistToSpawn && Vector3.Distance(_triangulation.vertices[_vertexIndex], FindObjectOfType<PlayerControl>().transform.position) > maxFarDistToSpawn);
+        } while (Vector3.Distance(_triangulation.vertices[_vertexIndex], GameManager.Instance.Player.transform.position) < minFarDistToSpawn && Vector3.Distance(_triangulation.vertices[_vertexIndex], FindObjectOfType<PlayerControl>().transform.position) > maxFarDistToSpawn);
         return _triangulation.vertices[_vertexIndex];
     }
 }

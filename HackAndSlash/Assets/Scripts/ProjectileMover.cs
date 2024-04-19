@@ -13,7 +13,7 @@ public class ProjectileMover : DamageDealer
     private float _timer;
     private Rigidbody rb;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         GetComponent<Collider>().enabled = false;
         rb = GetComponent<Rigidbody>();

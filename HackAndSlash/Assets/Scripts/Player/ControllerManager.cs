@@ -104,84 +104,23 @@ public class ControllerManager : MonoBehaviour
         }
     }
 
-    public bool GetController()
-    {
-        return true;
-    }
-    public InputAction.CallbackContext GetTabButton()
-    {
-        return Tab;
-    }
-    public InputAction.CallbackContext GetInteractButton()
-    {
-        return interact;
-    }
-    public void GetLeftJoystick(InputAction.CallbackContext context)
-    {
-        leftStick = context.ReadValue<Vector2>();
-    }
-    public void GetTeleport(InputAction.CallbackContext context)
-    {
-        Teleport = context;
-    }
-    public void GetRightJoystick(InputAction.CallbackContext context)
-    {
-        rightStick = context.ReadValue<Vector2>();
-    }
-    public void GetR2(InputAction.CallbackContext context)
-    {
-        R2 = context;
-    }
-    public void GetInteract(InputAction.CallbackContext context)
-    {
-        interact = context;
-    }
-
-    public void GetTab(InputAction.CallbackContext context)
-    {
-        Tab = context;
-    }
-    public void GetL2(InputAction.CallbackContext context)
-    {
-        L2 = context;
-    }
-    public void GetX(InputAction.CallbackContext context)
-    {
-        X = context;
-    }
-    public void GetO(InputAction.CallbackContext context)
-    {
-        O = context;
-    }
-    public void GetBox(InputAction.CallbackContext context)
-    {
-        Box = context;
-    }
-    public void GetTriangle(InputAction.CallbackContext context)
-    {
-        Triangle = context;
-    }
-    public bool StartMove()
-    {
-
-        return leftStick.magnitude > 0.3f;
-
-
-
-    }
-    public Vector2 LeftStickValue()
-    {
-
-        return leftStick;
-
-
-
-    }
-    public Vector2 RightStickValue()
-    {
-
-        return rightStick;
-    }
+    public bool GetController() => true;
+    public InputAction.CallbackContext GetTabButton() => Tab;
+    public InputAction.CallbackContext GetInteractButton() => interact;
+    public void GetLeftJoystick(InputAction.CallbackContext context) => leftStick = context.ReadValue<Vector2>();
+    public void GetTeleport(InputAction.CallbackContext context) => Teleport = context;
+    public void GetRightJoystick(InputAction.CallbackContext context)  => rightStick = context.ReadValue<Vector2>();
+    public void GetR2(InputAction.CallbackContext context) => R2 = context;
+    public void GetInteract(InputAction.CallbackContext context) => interact = context;
+    public void GetTab(InputAction.CallbackContext context) => Tab = context;
+    public void GetL2(InputAction.CallbackContext context) => L2 = context;
+    public void GetX(InputAction.CallbackContext context) => X = context;
+    public void GetO(InputAction.CallbackContext context) => O = context;
+    public void GetBox(InputAction.CallbackContext context) => Box = context;
+    public void GetTriangle(InputAction.CallbackContext context) => Triangle = context;
+    public bool StartMove() => leftStick.magnitude > 0.3f;
+    public Vector2 LeftStickValue() => leftStick;
+    public Vector2 RightStickValue() => rightStick;
     public bool CheckIfPressed()
     {
         if (X.action == null)
@@ -214,27 +153,23 @@ public class ControllerManager : MonoBehaviour
 
     public bool CheckIfJump()
     {
-        
         if (X.action == null)
             return false;
         if (X.action.WasPressedThisFrame() && canJump)
         {
-     
+            
             Interact.InteractPerformed();
 
-            if(!Interact.canInteract && !AbilityPowerManager.instance.menuActive)
+            if(!Interact.canInteract && !ItemsLootBoxManager.Instance.menuActive)
             {
                 jump = true;
                 canJump = false;
                 JumpDone();
             }
-
         }
-
 
         if (jump)
         {
-
             jump = false;
             canJump = true;
 
@@ -392,11 +327,7 @@ public class ControllerManager : MonoBehaviour
                 DashDone();
             }
         }
-
-
-
     }
-
     bool holdTeleport = false;
     void Update()
     {
@@ -444,14 +375,9 @@ public class ControllerManager : MonoBehaviour
                     Teleport1 = true;
                 }
             }
-
         }
-
-
         ControlesAtaques();
     }
-
-
 
     public bool GetDash()
     {
@@ -464,12 +390,6 @@ public class ControllerManager : MonoBehaviour
         else
         {
             return O.action.WasPressedThisFrame() && !L2.action.IsPressed();
-
         }
-
     }
-
-
-
-
 }

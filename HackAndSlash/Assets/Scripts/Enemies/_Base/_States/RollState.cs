@@ -16,7 +16,12 @@ public class RollState : EnemyStateBase
     {
         _timer += Time.deltaTime;
         base.OnLogic();
-        if (_timer < 2)
+        if (_timer <= 0.75f)
+        {
+            Vector3 dashMove = (_enemyBase.Player.transform.position - _enemyBase.transform.position).normalized * 2f * (_agent.speed * Time.deltaTime);
+            _agent.Move(dashMove);
+        }
+        else if (_timer < 2 && _timer > 0.75f)
         {
             // Perform dash movement
             Vector3 dashMovement = _agent.transform.forward.normalized * 2f * (_agent.speed * Time.deltaTime);

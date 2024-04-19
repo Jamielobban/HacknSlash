@@ -141,14 +141,20 @@ public class EnemyBase : PoolableObject
             {
                 if (isPooleable)
                 {
-                    if (spawner.GetComponent<SpawnerBase>())
+                    if (spawner != null)
                     {
-                        spawner.GetComponent<SpawnerBase>().RemoveEnemy(this);
+                        SpawnerBase _baseSpawner = spawner.GetComponent<SpawnerBase>();
+                        InfiniteSpawner _baseInfinity = spawner.GetComponent<InfiniteSpawner>();
+                        if (_baseSpawner != null)
+                        {
+                            _baseSpawner.RemoveEnemy(this);
+                        }
+                        else if (_baseInfinity != null)
+                        {
+                            _baseInfinity.RemoveEnemy(this);
+                        }
                     }
-                    else
-                    {
-                        ManagerEnemies.Instance.SetSpawnedEnemies(-1);
-                    }
+                    ManagerEnemies.Instance.AddSpawnedEnemies(-1);
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }
@@ -203,14 +209,18 @@ public class EnemyBase : PoolableObject
         attackInterrumpted = false;
         if (isPooleable)
         {
-            if (spawner?.GetComponent<SpawnerBase>())
+            if (spawner != null)
             {
-                spawner.GetComponent<SpawnerBase>().RemoveEnemy(this);
+                if (spawner.GetComponent<SpawnerBase>())
+                {
+                    spawner.GetComponent<SpawnerBase>().RemoveEnemy(this);
+                }
+                else if (spawner.GetComponent<InfiniteSpawner>())
+                {
+                    spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
+                }
             }
-            else
-            {
-                ManagerEnemies.Instance.SetSpawnedEnemies(-1);
-            }
+            ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             spawner = null;
             ResetEnemy();
             gameObject.SetActive(false);
@@ -219,6 +229,7 @@ public class EnemyBase : PoolableObject
         {
             gameObject.SetActive(false);
         }
+
     }
     
     public virtual void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)

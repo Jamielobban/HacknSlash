@@ -53,7 +53,6 @@ namespace DuloGames.UI
 
             if (res.Equals(Screen.currentResolution))
                 return;
-
             Screen.SetResolution(res.width, res.height, true, res.refreshRate);
         }
     }

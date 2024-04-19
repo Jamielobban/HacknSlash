@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2225245468559193641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8367556996948620060}
+  - component: {fileID: 9079243986045792170}
+  m_Layer: 0
+  m_Name: Base Manager Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8367556996948620060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225245468559193641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 272.47, y: 57.63, z: 253.78}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9079243986045792170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225245468559193641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e34754a2ea7d4498fdb4a4ab2ffb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textTime: {fileID: 0}
+  currentSpawnedEnemies: {fileID: 0}
+  currentScoreText: {fileID: 0}
+  spawners:
+  - {fileID: 2184565002689474694, guid: 43b369038bbd7c1498385b9a3f69e680, type: 3}
+  - {fileID: 9058649433420978236, guid: 02f0ee1fce284f848be73f37b4305204, type: 3}
+  enemies:
+  - {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363, type: 3}
+  - {fileID: 2820150917280834003, guid: 80693bab60b4e2e44b4a82f1ba586fa4, type: 3}
+  - {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483, type: 3}
+  - {fileID: 2162306917833488104, guid: daa4c232bf970694b85a560c7c6d9d56, type: 3}
+  - {fileID: 8326841416910868969, guid: 729b0d4864457d3429ea9d0004efc5e2, type: 3}
+  - {fileID: 7031328145753526208, guid: 5961b3ea9f783e642b535bc83b2f890f, type: 3}
+  parentObjectPools: []
+  maxMultiplierLife: 30
+  maxMultiplierAttack: 1.8
+  timeToReachMax: 1800
+  timeToGetItem: 60
+  isInEvent: 0
