@@ -10,7 +10,7 @@ public class UIInventoryPage : MonoBehaviour
     private List<UIInventoryItem> _listOfUIItems = new List<UIInventoryItem>();
     public List<UIInventoryItem> ListOfUIItems => _listOfUIItems;
 
-    public event Action<int> OnDescriptionRequested, OnItemActionRequested; 
+    public event Action<int> OnDescriptionRequested; 
     
     private void Awake()
     {

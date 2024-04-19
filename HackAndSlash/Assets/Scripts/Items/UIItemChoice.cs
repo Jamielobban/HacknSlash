@@ -7,7 +7,7 @@ public class UIItemChoice : MonoBehaviour
 {
     public Item item;
     public Image image;
-    public TextMeshProUGUI name;
+    public TextMeshProUGUI itemName;
     public TextMeshProUGUI description;
     public GameObject rarityEffect;
     public float scaleOnSelect = 2f;

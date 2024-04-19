@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Chest : MonoBehaviour, IInteractable
 {
     private Animator _anim;
     private Collider _collider;
     public bool canBeUnlocked = false;
-    public GameObject particleSystem;
+    public GameObject particles;
     public GameObject particle;
     public bool isUnlocked = false;
     
@@ -37,12 +38,12 @@ public class Chest : MonoBehaviour, IInteractable
     }
 
     public void EnableCollider() => _collider.enabled = true;
-    public void EnableParticle() => particleSystem.SetActive(true);
+    public void EnableParticle() => particles.SetActive(true);
 
     public void GetItem()
     {
         particle.SetActive(false);
-        particleSystem.SetActive(false);
+        particles.SetActive(false);
         ItemsLootBoxManager.Instance.ShowNewOptions();
         isUnlocked = true;
 

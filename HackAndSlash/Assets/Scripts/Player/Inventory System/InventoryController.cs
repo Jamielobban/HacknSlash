@@ -18,7 +18,6 @@ public class InventoryController : MonoBehaviour
         _inventoryUI.InitializeInventoryUI(_inventoryData.Size);
         _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
         _inventoryUI.OnDescriptionRequested += HandleDescriptionRequested;
-        _inventoryUI.OnItemActionRequested += HandleItemActionnRequested;
     }
 
     private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
@@ -28,10 +27,6 @@ public class InventoryController : MonoBehaviour
         {
             _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDefaultDescription);
         }
-    }
-
-    private void HandleItemActionnRequested(int itemIndex)
-    {
     }
 
     private void HandleDescriptionRequested(int itemIndex)

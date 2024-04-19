@@ -10,7 +10,6 @@ public class UIInventoryItem : MonoBehaviour
     public string description;
     [SerializeField] private Image _borderImage;
     [SerializeField] private UIInventoryPage _inventoryPage;
-    private bool empty = true;
 
     private void Awake()
     {
@@ -27,7 +26,6 @@ public class UIInventoryItem : MonoBehaviour
     {
         _itemImage.gameObject.SetActive(false);
         _borderImage.gameObject.SetActive(false);
-        empty = true;
     }
     
     public void SetData(Sprite sprite, int quantity, string desc)
@@ -36,7 +34,6 @@ public class UIInventoryItem : MonoBehaviour
         _itemImage.sprite = sprite;
         _stackText.text = "" + quantity;
         description = desc;
-        empty = false;
     }
 
     public void Select()

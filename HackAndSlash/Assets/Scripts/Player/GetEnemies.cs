@@ -189,7 +189,6 @@ public class GetEnemies : MonoBehaviour
             }
         }
         GameObject position = null;
-        float distance = 100;
         for (int i = 0; i < enemies.Count; i++)
         {
             //if (enemies[i].GetComponent<EnemySkeletonSword>().debil == true)

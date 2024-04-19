@@ -161,7 +161,7 @@ public class ItemsLootBoxManager : MonoBehaviour
             UIItemChoice itemUIChoice = go.GetComponent<UIItemChoice>();
             itemUIChoice.item = itemsToSpawn[i];
             itemUIChoice.image.sprite = itemsToSpawn[i].GetSprite();
-            itemUIChoice.name.text = itemsToSpawn[i].GetName();
+            itemUIChoice.itemName.text = itemsToSpawn[i].GetName();
             itemUIChoice.description.text = itemsToSpawn[i].GetDescription();
 
             GameObject rarityEffect = Instantiate(itemRarityEffect[(int)itemsToSpawn[i].GetRarity()]);

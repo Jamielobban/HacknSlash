@@ -107,7 +107,7 @@ public class InfiniteSpawner : MonoBehaviour
             enemyBase.OnSpawnEnemy();
             AddEnemy(enemyBase);
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(spawnPos, out hit, 50f, -1))
+            if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;

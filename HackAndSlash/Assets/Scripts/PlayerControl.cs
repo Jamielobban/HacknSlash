@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using DG.Tweening;
 using DamageNumbersPro;
+using UnityEngine.Serialization;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class PlayerControl : MonoBehaviour
     Dash dash;
     Jump jump;
 
-    public GameObject camera;
+    public GameObject cameraGo;
     public float CameraRotatSpeed;
     public float walkSpeed;
     public float runSpeed;
@@ -497,7 +498,7 @@ public class PlayerControl : MonoBehaviour
         if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) < 6 
             && currentComboAttacks.combo != ComboAtaques.Teleport && currentComboAttacks.combo != ComboAtaques.HoldQuadrat && currentComboAttacks.combo != ComboAtaques.HoldTriangle)
         {
-            Vector3 d = this.transform.position + ((camera.transform.forward * controller.LeftStickValue().y * 6) + (camera.transform.right * controller.LeftStickValue().x * 6));
+            Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
 
             enemy = attackTeleport.GetEnemie(d);
             Vector3 enem = enemy;
@@ -528,7 +529,6 @@ public class PlayerControl : MonoBehaviour
                 dir.y = player.transform.position.y;
 
             RaycastHit hit;
-            RaycastHit hit2;
 
             if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
             {
@@ -611,10 +611,6 @@ public class PlayerControl : MonoBehaviour
         {
             if (states == States.MOVE)
             {
-                Vector3 pos;
-
-
-
                 if (Mathf.Abs(hit.point.y - this.transform.position.y) < 2)
                     player.transform.GetChild(3).transform.position = new Vector3(movementController.transform.position.x, hit.point.y, movementController.transform.position.z);
 
@@ -1887,7 +1883,6 @@ public class PlayerControl : MonoBehaviour
                     movementController.transform.position = new Vector3(movementController.transform.position.x, hit.point.y, movementController.transform.position.z);
                 else
                 {
-                    int sdf = 0;
 
                 }
 
@@ -1906,10 +1901,10 @@ public class PlayerControl : MonoBehaviour
         if (controller.RightStickValue().magnitude > 0.2f && states != States.DEATH)
         {
 
-            camera.transform.Rotate(new Vector3(0, controller.RightStickValue().x, 0) * Time.deltaTime * CameraRotatSpeed);
-            camera.transform.GetChild(0).Rotate(new Vector3(-controller.RightStickValue().y, 0, 0) * Time.deltaTime * CameraRotatSpeed * 0.5f);
+            cameraGo.transform.Rotate(new Vector3(0, controller.RightStickValue().x, 0) * Time.deltaTime * CameraRotatSpeed);
+            cameraGo.transform.GetChild(0).Rotate(new Vector3(-controller.RightStickValue().y, 0, 0) * Time.deltaTime * CameraRotatSpeed * 0.5f);
 
-            float rotation = camera.transform.GetChild(0).localEulerAngles.x;
+            float rotation = cameraGo.transform.GetChild(0).localEulerAngles.x;
             if (rotation < 300)
             {
                 rotation += 360;
@@ -1919,12 +1914,12 @@ public class PlayerControl : MonoBehaviour
 
             if (rotation < 330)
             {
-                camera.transform.GetChild(0).localEulerAngles = new Vector3(330, 0, 0);
+                cameraGo.transform.GetChild(0).localEulerAngles = new Vector3(330, 0, 0);
 
             }
             if (rotation > 390)
             {
-                camera.transform.GetChild(0).localEulerAngles = new Vector3(390, 0, 0);
+                cameraGo.transform.GetChild(0).localEulerAngles = new Vector3(390, 0, 0);
             }
 
         }
