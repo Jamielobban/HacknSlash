@@ -7,16 +7,14 @@ using UnityEngine;
 public class ProtectEvent : EventMap
 {
     [SerializeField] List<Transform> targetsToProtect;
-    public DamageableObject damageEventScript;
+    public GameObject[] activables;
 
     protected override void Start()
     {
         base.Start();
-        damageEventScript.CurrentHealth = damageEventScript.MaxHealth;
-        
-        foreach (Transform t in targetsToProtect)
+        foreach (var activable in activables)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
+            activable.SetActive(false);
         }
     }
     protected override void Update()
@@ -34,6 +32,12 @@ public class ProtectEvent : EventMap
         base.StartEvent();
         
         roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
+        
+        foreach (var activable in activables)
+        {
+            activable.SetActive(true);
+        }
+        
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
@@ -63,7 +67,10 @@ public class ProtectEvent : EventMap
             enemy.enemiesToKill.Clear();
             enemy.parent.gameObject.SetActive(false);
         }
-
+        foreach (var activable in activables)
+        {
+            activable.SetActive(false);
+        }
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
@@ -83,7 +90,10 @@ public class ProtectEvent : EventMap
             }
             enemy.enemiesToKill.Clear();
         }
-
+        foreach (var activable in activables)
+        {
+            activable.SetActive(false);
+        }
         RetargetSpawnedEnemies(false);
         foreach (Transform t in targetsToProtect)
         {
@@ -91,7 +101,7 @@ public class ProtectEvent : EventMap
             foreach (DamageableObject dam in damageables)
             {
                 dam.gameObject.SetActive(false);
-                dam.MaxHeal();
+                dam.RestartHeal();
             }
         }
     }

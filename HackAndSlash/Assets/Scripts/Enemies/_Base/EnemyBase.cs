@@ -23,10 +23,12 @@ public class EnemyBase : PoolableObject
     
     [Header("Variables")]
     public Transform target;
+    public Vector3 targetToSpecialMove;
     public GameObject spawner;
     public float score;
     public float timeBetweenAttacks = 1.5f;
-
+    public bool affectedBySpecialMove = false;
+    
     public float _currentTime = 0f;
     protected Animator _animator;
     protected NavMeshAgent _agent;
@@ -34,7 +36,7 @@ public class EnemyBase : PoolableObject
     #endregion
     
     [Header("Debug Info")]
-    [SerializeField] protected bool _isInFollowRange;
+    protected bool _isInFollowRange;
     protected bool _isInBasicRange;
     protected bool _enableMeleeAttack = false;
     public bool IsHit = false;
@@ -165,7 +167,7 @@ public class EnemyBase : PoolableObject
         {
             _enableMeleeAttack = true;
         }
-        else
+        else if(_currentTime <= timeBetweenAttacks && _enableMeleeAttack)
         {
             _enableMeleeAttack = false;
         }
@@ -256,6 +258,11 @@ public class EnemyBase : PoolableObject
         // {
         //
         // }
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        
     }
     
     protected virtual void OnDestroy()

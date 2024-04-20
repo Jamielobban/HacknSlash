@@ -15,7 +15,7 @@ public class AreaAttack : BaseEnemyAttack
     }
     public void OnAreaAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         _enemyBase._currentTime = 0f;
         Use();
     }

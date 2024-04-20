@@ -16,7 +16,7 @@ public class InvokeAttack : BaseEnemyAttack
     }
     public void OnInvoke(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         _enemyBase._currentTime = 0f;
         Ray ray = new Ray(_enemyBase.transform.position, Vector3.down);
         RaycastHit hitInfo;

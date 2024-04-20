@@ -18,7 +18,7 @@ public class RollState : EnemyStateBase
         base.OnLogic();
         if (_timer <= 0.75f)
         {
-            Vector3 dashMove = (_enemyBase.Player.transform.position - _enemyBase.transform.position).normalized * 2f * (_agent.speed * Time.deltaTime);
+            Vector3 dashMove = (_enemyBase.target.transform.position - _enemyBase.transform.position).normalized * 2f * (_agent.speed * Time.deltaTime);
             _agent.Move(dashMove);
         }
         else if (_timer < 2 && _timer > 0.75f)
