@@ -32,7 +32,7 @@ public class InventoryController : MonoBehaviour
     private void HandleDescriptionRequested(int itemIndex)
     {
         InventoryItem inventoryItem = _inventoryData.GetItemAt(itemIndex);
-        if (inventoryItem.isEmpty)
+        if (inventoryItem.IsEmpty)
         {
             return;
         }

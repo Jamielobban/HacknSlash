@@ -151,9 +151,6 @@ public class PlayerControl : MonoBehaviour
     public GetEnemies attackTeleport;
     public GetEnemies remate;
 
-
-    bool dashDown;
-
     float landHeight;
 
     bool stopAttack;
@@ -812,7 +809,6 @@ public class PlayerControl : MonoBehaviour
                 OnAir = false;
                 if (CheckIfDash())
                 {
-                    dashDown = false;
                     break;
                 }
                 if (CheckAtaques())
@@ -857,7 +853,6 @@ public class PlayerControl : MonoBehaviour
                     case Attacks.GROUND:
                         if (CheckIfDash())
                         {
-                            dashDown = false;
                             break;
                         }
                         if (CheckIfJump())
@@ -866,7 +861,6 @@ public class PlayerControl : MonoBehaviour
                     case Attacks.AIR:
                         if (CheckIfDash())
                         {
-                            dashDown = true;
                             break;
                         }
                         if (CheckIfJump())
@@ -875,7 +869,6 @@ public class PlayerControl : MonoBehaviour
                     case Attacks.FALL:
                         if (CheckIfDash())
                         {
-                            dashDown = true;
                             break;
                         }
                         if (CheckIfJump())
@@ -884,7 +877,6 @@ public class PlayerControl : MonoBehaviour
                     case Attacks.RUN:
                         if (CheckIfDash())
                         {
-                            dashDown = false;
                             break;
                         }
                         if (CheckIfJump())
@@ -1097,7 +1089,6 @@ public class PlayerControl : MonoBehaviour
                 OnAir = false;
                 if (CheckIfDash())
                 {
-                    dashDown = false;
 
                     break;
                 }
@@ -1131,7 +1122,6 @@ public class PlayerControl : MonoBehaviour
                 OnAir = false;
                 if (CheckIfDash())
                 {
-                    dashDown = false;
 
                     break;
                 }
@@ -1147,7 +1137,6 @@ public class PlayerControl : MonoBehaviour
             case States.HIT:
                 if (CheckIfDash())
                 {
-                    dashDown = false;
                     break;
                 }
                 CheckIfReturnIdle();
@@ -1187,8 +1176,7 @@ public class PlayerControl : MonoBehaviour
 
     float damageMult = 1;
     public float delayDamage = 0.5f;
-    bool atackPress = false;
-
+    //bool atackPress = false;
     //void CheckPerfectHit()
     //{
     //    if (currentComboAttacks == null || currentComboAttack == -1 || currentComboAttack >= currentComboAttacks.attacks.Length)
@@ -1655,7 +1643,6 @@ public class PlayerControl : MonoBehaviour
     float dashDuration;
     bool CheckIfDash()
     {
-
         if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
             healthSystem.IsDamageable = false;

@@ -24,6 +24,11 @@ public class WanderState : EnemyStateBase
             _target = GetRandomPosition();
             _agent.SetDestination(_target);
         }
+
+        if (_enemyBase.isAttacking)
+        {
+            fsm.StateCanExit();
+        }
     }
 
     private Vector3 GetRandomPosition()

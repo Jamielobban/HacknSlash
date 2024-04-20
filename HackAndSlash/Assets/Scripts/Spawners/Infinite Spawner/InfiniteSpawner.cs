@@ -97,7 +97,7 @@ public class InfiniteSpawner : MonoBehaviour
 
     protected virtual void DoSpawnEnemy(EnemyBase e, Vector3 spawnPos)
     {
-        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject();
+        PoolableObject poolable = _managerEnemies.enemyObjectsPools[e].GetObject(spawnPos);
 
         if (poolable != null)
         {
@@ -111,11 +111,11 @@ public class InfiniteSpawner : MonoBehaviour
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
-                _managerEnemies.AddSpawnedEnemies(+1);
+                poolable.gameObject.SetActive(true);
+                ManagerEnemies.Instance.AddSpawnedEnemies(+1);
             }
             else
             {
-                _managerEnemies.AddSpawnedEnemies(-1);
                 Debug.LogError($"Unable to place NavmeshAgent on Navmesh chau");
             }
         }

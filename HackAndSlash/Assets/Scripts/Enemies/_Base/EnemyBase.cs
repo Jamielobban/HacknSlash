@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,10 +23,12 @@ public class EnemyBase : PoolableObject
     
     [Header("Variables")]
     public Transform target;
+    public Vector3 targetToSpecialMove;
     public GameObject spawner;
     public float score;
     public float timeBetweenAttacks = 1.5f;
-
+    public bool affectedBySpecialMove = false;
+    
     public float _currentTime = 0f;
     protected Animator _animator;
     protected NavMeshAgent _agent;
@@ -33,7 +36,7 @@ public class EnemyBase : PoolableObject
     #endregion
     
     [Header("Debug Info")]
-    [SerializeField] protected bool _isInFollowRange;
+    protected bool _isInFollowRange;
     protected bool _isInBasicRange;
     protected bool _enableMeleeAttack = false;
     public bool IsHit = false;
@@ -45,6 +48,7 @@ public class EnemyBase : PoolableObject
     public PlayerControl Player => _player;
     public NavMeshAgent Agent => _agent;
     public StateMachine<Enums.EnemyStates, Enums.StateEvent> EnemyFSM => _enemyFSM;
+    public EnemyHealthSystem HealthSystem => _healthSystem;
 
     protected virtual void Awake()
     {
@@ -154,7 +158,6 @@ public class EnemyBase : PoolableObject
                             _baseInfinity.RemoveEnemy(this);
                         }
                     }
-                    ManagerEnemies.Instance.AddSpawnedEnemies(-1);
                     ResetEnemy();
                     gameObject.SetActive(false);
                 }
@@ -164,7 +167,7 @@ public class EnemyBase : PoolableObject
         {
             _enableMeleeAttack = true;
         }
-        else
+        else if(_currentTime <= timeBetweenAttacks && _enableMeleeAttack)
         {
             _enableMeleeAttack = false;
         }
@@ -219,15 +222,15 @@ public class EnemyBase : PoolableObject
                 {
                     spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
                 }
+                ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             }
-            ManagerEnemies.Instance.AddSpawnedEnemies(-1);
             spawner = null;
             ResetEnemy();
             gameObject.SetActive(false);
         }
         else
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
     }
@@ -256,10 +259,16 @@ public class EnemyBase : PoolableObject
         //
         // }
     }
+
+    public void MoveTo(Vector3 position)
+    {
+        
+    }
     
     protected virtual void OnDestroy()
     {
         _followPlayerSensor.OnPlayerEnter -= FollowPlayerSensor_OnPlayerSensorEnter;
         _followPlayerSensor.OnPlayerExit -= FollowPlayerSensor_OnPlayerSensorExit;      
     }
+    
 }

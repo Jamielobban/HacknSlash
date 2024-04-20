@@ -28,7 +28,7 @@ public class InventorySO : ScriptableObject
         }
     }
 
-    public int AddItem(ItemData item, int quantity)
+    private int AddItem(ItemData item, int quantity)
     {
         if (!item.isStackable)
         {
@@ -56,7 +56,7 @@ public class InventorySO : ScriptableObject
         };
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].isEmpty)
+            if (items[i].IsEmpty)
             {
                 items[i] = newItem;
                 return quantity;
@@ -66,13 +66,13 @@ public class InventorySO : ScriptableObject
         return 0;
     }
 
-    private bool IsInventoryFull() => items.Where(item => item.isEmpty).Any() == false;
+    private bool IsInventoryFull() => items.Where(item => item.IsEmpty).Any() == false;
 
     private int AddStackableItem(ItemData item, int quantity)
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].isEmpty)
+            if (items[i].IsEmpty)
                 continue;
             if(items[i].item.ID == item.ID)
             {
@@ -106,7 +106,7 @@ public class InventorySO : ScriptableObject
     {
         if (items.Count > itemIndex)
         {
-            if (items[itemIndex].isEmpty)
+            if (items[itemIndex].IsEmpty)
                 return;
             int reminder = items[itemIndex].quantity - amount;
             if (reminder <= 0)
@@ -125,7 +125,7 @@ public class InventorySO : ScriptableObject
 
         for (int i = 0; i < items.Count; i++)
         {
-            if(items[i].isEmpty)
+            if(items[i].IsEmpty)
                 continue;
             returnValue[i] = items[i];
         }
@@ -137,12 +137,12 @@ public class InventorySO : ScriptableObject
     public void AddItem(InventoryItem item) => AddItem(item.item, item.quantity);
 }
 
-[System.Serializable]
+[Serializable]
 public struct InventoryItem
 {
     public int quantity;
     public ItemData item;
-    public bool isEmpty => item == null;
+    public bool IsEmpty => item == null;
     public InventoryItem ChangeQuantity(int newQuantity)
     {
         return new InventoryItem

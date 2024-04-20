@@ -1,18 +1,21 @@
+using System;
 using UnityEngine;
 
 public class CampSpawnerEnemy : MonoBehaviour
 {
-    /*public CampManager _campParent;
-    private Enemy _enemy;
+    public CampManager _campParent;
+    private EnemyBase _enemy;
 
     private void Awake()
     {
-        _enemy = GetComponent<Enemy>();
+        _enemy = GetComponent<EnemyBase>();
     }
 
-    private void Start()
+    private void Update()
     {
-        _enemy.events.OnDie += () => { _campParent.RemoveEnemy(gameObject); };
-    }*/
-
+        if (_enemy.HealthSystem.CurrentHealth <= 0)
+        {
+            _campParent.RemoveEnemy(gameObject);
+        }
+    }
 }

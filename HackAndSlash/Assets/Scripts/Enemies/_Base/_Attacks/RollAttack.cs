@@ -16,7 +16,7 @@ public class RollAttack : BaseEnemyAttack
     public void OnRoll()
     {
         _sensor.gameObject.SetActive(true);
-        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         _enemyBase._currentTime = 0f;
         Use();
     }

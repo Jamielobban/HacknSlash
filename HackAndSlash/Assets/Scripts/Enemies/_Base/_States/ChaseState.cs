@@ -25,10 +25,17 @@ public class ChaseState : EnemyStateBase
             // Vector3 lookDirection = _enemy.target.position - _enemy.transform.position;
             // Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
             // _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation,targetRotation, _extraRotationSpeed * Time.deltaTime);
-            _agent.SetDestination(_enemyBase.target.position);
+            if (_enemyBase.affectedBySpecialMove)
+            {
+                _agent.SetDestination(_enemyBase.targetToSpecialMove);
+            }
+            else
+            {
+                _agent.SetDestination(_enemyBase.target.position);
+            }
 
         }
-        else if (_agent.remainingDistance <= _agent.stoppingDistance)
+        else if (_agent.remainingDistance <= _agent.stoppingDistance || _enemyBase.isAttacking)
         {
             //If we request exit, we will continue move to last known pos prior to idle
             fsm.StateCanExit();

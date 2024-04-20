@@ -19,7 +19,6 @@ public abstract class Interactive : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("fent");
 
         for (int i = 0; i < triggerMats.Count(); i++)
             triggerMats[i] = new Material(triggerMats[i]);
@@ -30,7 +29,6 @@ public abstract class Interactive : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("fent");
 
         if (!canInteract && renderers.First().material != normalMats.First())
             for (int i = 0; i < renderers.Count(); i++)

@@ -9,7 +9,7 @@ public class RangedAttack : BaseEnemyAttack
     private GameObject channellingPrefab;
     public void OnShoot(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         Use();
     }
 

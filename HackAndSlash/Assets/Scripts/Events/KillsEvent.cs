@@ -5,14 +5,7 @@ using System.Linq;
 
 public class KillsEvent : EventMap
 {
-    /*[SerializeField] GameObject spawnerParent;
-   // List<SpawnerBase> enemiesSpawner;
 
-    protected override void Start()
-    {
-        base.Start();
-        enemiesSpawner = spawnerParent.GetComponentsInChildren<SpawnerBase>(true).ToList();
-    }
     protected override void Update()
     {
         base.Update();
@@ -21,17 +14,19 @@ public class KillsEvent : EventMap
     protected override void StartEvent()
     {
         base.StartEvent();
-        enemiesSpawner[currentRound].gameObject.SetActive(true);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
+        StartSpawningEnemies();
     }
     protected override void NextRound()
     {
-        enemiesSpawner[currentRound].gameObject.SetActive(false);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
         base.NextRound();
-        enemiesSpawner[currentRound].gameObject.SetActive(true);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
+        StartSpawningEnemies();
     }
     protected override void FinishEvent()
     {
-        enemiesSpawner[currentRound].gameObject.SetActive(false);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
         base.FinishEvent();
     }
 
@@ -39,16 +34,11 @@ public class KillsEvent : EventMap
     {
         if (_currentEventState == Enums.EventState.PLAYING && AllEnemiesDefeated())
         {
-            if (currentRound >= enemiesSpawner.Count - 1)
+            if (currentRound >= roundsOfEnemies.Count - 1)
                 FinishEvent();
             else
                 NextRound();
         }
     }
-
-    bool AllEnemiesDefeated()
-    {
-        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0;
-    }*/
 
 }

@@ -35,8 +35,8 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueCuadradoL2Press;
     public bool ataqueTrianguloL2Press;
 
-    bool dejarMantenerCuadrado;
-    bool dejarMantenerTriangulo;
+    //bool dejarMantenerCuadrado;
+   // bool dejarMantenerTriangulo;
 
     bool dejarMantenerCuadradoL2;
     bool dejarMantenerTrianguloL2;
@@ -96,8 +96,8 @@ public class ControllerManager : MonoBehaviour
         ataqueCuadradoCargadoL2 = false;
         jump = false;
         canJump = true;
-        dejarMantenerCuadrado = false;
-        dejarMantenerTriangulo = false;
+       // dejarMantenerCuadrado = false;
+       // dejarMantenerTriangulo = false;
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
             controller = Gamepad.all[i];

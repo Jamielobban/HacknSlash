@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public class ProtectEvent : EventMap
 {
-    /*[SerializeField] GameObject spawnerParent;
-    [SerializeField] List<Transform> targetsToProtect;    
-    List<SpawnerBase> enemiesSpawner;
-
-    public DamageableObject damageEventScript;
+    [SerializeField] List<Transform> targetsToProtect;
+    public GameObject[] activables;
 
     protected override void Start()
     {
         base.Start();
-        damageEventScript.CurrentHealth = damageEventScript.MaxHealth;
-        enemiesSpawner = spawnerParent.GetComponentsInChildren<SpawnerBase>(true).ToList();
-        foreach (Transform t in targetsToProtect)
+        foreach (var activable in activables)
         {
-            t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
+            activable.SetActive(false);
         }
     }
     protected override void Update()
@@ -34,36 +30,47 @@ public class ProtectEvent : EventMap
     protected override void StartEvent()
     {
         base.StartEvent();
-
-
-        enemiesSpawner[currentRound].gameObject.SetActive(true);
+        
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
+        
+        foreach (var activable in activables)
+        {
+            activable.SetActive(true);
+        }
+        
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
         }
+        StartSpawningEnemies();
+
     }
     protected override void NextRound()
     {
-        enemiesSpawner[currentRound].gameObject.SetActive(false);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
         base.NextRound();
-        enemiesSpawner[currentRound].gameObject.SetActive(true);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
+        StartSpawningEnemies();
+
     }
     protected override void FinishEvent()
     {
-        enemiesSpawner[currentRound].gameObject.SetActive(false);
+        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
         base.FinishEvent();
 
-        foreach (SpawnerBase spawner in enemiesSpawner)
+        foreach (EnemiesToKill enemy in roundsOfEnemies)
         {
-            foreach (var enemy in spawner.enemiesFromThisSpawner)
+            foreach (var e in enemy.enemiesToKill)
             {
-                enemy.events.Die();
+                e.GetComponent<EnemyBase>().OnDespawnEnemy();
             }
-            spawner.enemiesFromThisSpawner.Clear();
-            spawner.gameObject.SetActive(false);
-            spawner.allEnemiesSpawned = false;
+            enemy.enemiesToKill.Clear();
+            enemy.parent.gameObject.SetActive(false);
         }
-
+        foreach (var activable in activables)
+        {
+            activable.SetActive(false);
+        }
         foreach (Transform t in targetsToProtect)
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
@@ -74,18 +81,19 @@ public class ProtectEvent : EventMap
         base.RestartEvent();
 
         currentRound = 0;
-
-        foreach (SpawnerBase spawner in enemiesSpawner)
+        foreach (EnemiesToKill enemy in roundsOfEnemies)
         {
-            spawner.allEnemiesSpawned = false;
-            spawner.gameObject.SetActive(false);
-            for (int i = 0; i < spawner.enemiesFromThisSpawner.Count; i++)
+            enemy.parent.gameObject.SetActive(false);
+            foreach (var e in enemy.enemiesToKill)
             {
-                spawner.enemiesFromThisSpawner[i].events.Die();
+                e.GetComponent<EnemyBase>().OnDespawnEnemy();
             }
-            spawner.enemiesFromThisSpawner.Clear();
+            enemy.enemiesToKill.Clear();
         }
-
+        foreach (var activable in activables)
+        {
+            activable.SetActive(false);
+        }
         RetargetSpawnedEnemies(false);
         foreach (Transform t in targetsToProtect)
         {
@@ -93,7 +101,7 @@ public class ProtectEvent : EventMap
             foreach (DamageableObject dam in damageables)
             {
                 dam.gameObject.SetActive(false);
-                dam.MaxHeal();
+                dam.RestartHeal();
             }
         }
     }
@@ -101,7 +109,7 @@ public class ProtectEvent : EventMap
     {
         if (AllEnemiesDefeated())
         {
-            if (currentRound >= enemiesSpawner.Count - 1)
+            if (currentRound >= roundsOfEnemies.Count - 1)
                 FinishEvent();
             else
                 NextRound();
@@ -122,27 +130,14 @@ public class ProtectEvent : EventMap
             }
         }
     }
-    bool AllEnemiesDefeated()
-    {
-        return enemiesSpawner[currentRound].enemiesFromThisSpawner.Count <= 0 && enemiesSpawner[currentRound].allEnemiesSpawned;
-    }
 
     void RetargetSpawnedEnemies(bool toPillar = true)
     {
         Transform target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
 
-        foreach (Enemy e in enemiesSpawner[currentRound].enemiesFromThisSpawner)
+        foreach (GameObject e in roundsOfEnemies[currentRound].enemiesToKill)
         {
-            if (e.movements.target != target)
-                e.movements.target = target;
-
-            //}
-            //else
-            //{
-            //    if (e.movements.target != GameManager.Instance.Player.transform)
-            //        e.movements.target = GameManager.Instance.Player.transform;
-            //}
-
+            e.GetComponent<EnemyBase>().target = target;
         }
-    }    */
+    }    
 }

@@ -10,4 +10,13 @@ public class IdleState : EnemyStateBase
         _agent.velocity = Vector3.zero;
         _animator.CrossFade("Idle", 0.2f);
     }
+
+    public override void OnLogic()
+    {
+        base.OnLogic();
+        if(_enemyBase.isAttacking)
+        {
+            fsm.StateCanExit();
+        }
+    }
 }

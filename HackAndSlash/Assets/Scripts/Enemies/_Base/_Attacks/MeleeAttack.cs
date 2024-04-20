@@ -16,14 +16,8 @@ public class MeleeAttack : BaseEnemyAttack
 
     public void OnAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
-        _enemyBase.transform.LookAt(_enemyBase.Player.transform.position);
+        _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         Use();
-
-    }
-
-    protected override void AttackAction()
-    {
-        base.AttackAction();
     }
 
     private void OnTriggerEnter(Collider other)
