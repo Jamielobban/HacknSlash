@@ -16,6 +16,8 @@ public class KillsEvent : EventMap
         base.StartEvent();
         roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
         StartSpawningEnemies();
+        canCheckEnemiesDead = true;
+
     }
     protected override void NextRound()
     {

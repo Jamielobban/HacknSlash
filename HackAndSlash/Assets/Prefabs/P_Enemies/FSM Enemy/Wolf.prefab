@@ -434,11 +434,14 @@ MonoBehaviour:
   attacks:
   - {fileID: 6440882938012723302}
   target: {fileID: 0}
+  targetToSpecialMove: {x: 0, y: 0, z: 0}
+  healthBar: {fileID: 2540487993275845086}
+  getDamageGo: {fileID: 452907212740965395}
   spawner: {fileID: 0}
   score: 0
   timeBetweenAttacks: 1.5
+  affectedBySpecialMove: 0
   _currentTime: 0
-  _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
@@ -2718,6 +2721,12 @@ MonoBehaviour:
 --- !u!224 &2540487993275845085 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7734498416979535873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2540487993275845086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
     type: 3}
   m_PrefabInstance: {fileID: 7734498416979535873}
   m_PrefabAsset: {fileID: 0}

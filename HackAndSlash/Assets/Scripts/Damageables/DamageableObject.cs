@@ -6,9 +6,9 @@ public class DamageableObject : MonoBehaviour, IDamageable
     public GameObject canvas;
     [SerializeField] float maxHealth;
     [SerializeField] Image progressBar;
-    float currentHealth;
+    float currentHealth = 100;
     public GameObject onHitVfx;
-
+    private bool _isPlayer = false;
     public float CurrentHealth { get => currentHealth; set => currentHealth = value;  }
     public float MaxHealth => maxHealth;
 
@@ -17,6 +17,7 @@ public class DamageableObject : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         progressBar.material = new Material(progressBar.material); ;
     }
+    public bool IsPlayer() => _isPlayer;
 
     public void TakeDamage(float damage)
     {

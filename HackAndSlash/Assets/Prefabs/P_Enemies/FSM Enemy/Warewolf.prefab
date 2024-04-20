@@ -653,11 +653,14 @@ MonoBehaviour:
   - {fileID: 8048678887657378046}
   - {fileID: 4053585163082966077}
   target: {fileID: 0}
+  targetToSpecialMove: {x: 0, y: 0, z: 0}
+  healthBar: {fileID: 4691683271548145437}
+  getDamage: {fileID: 3513622236761180200}
   spawner: {fileID: 0}
   score: 0
   timeBetweenAttacks: 1.5
+  affectedBySpecialMove: 0
   _currentTime: 0
-  _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
@@ -1150,6 +1153,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4691683271548145437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
+    type: 3}
+  m_PrefabInstance: {fileID: 651860971345538754}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4691683271548145438 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,

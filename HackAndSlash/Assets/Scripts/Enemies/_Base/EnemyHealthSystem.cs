@@ -12,6 +12,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     public float CurrentHealth => _currentHealth;
 
     private Collider _getDamageCollider;
+    public Collider GetDamageCollider => _getDamageCollider;
+    private bool _isPlayer = false;
     
     private void Awake()
     {
@@ -20,6 +22,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         currentMaxHealth = _maxHealth;
         _currentHealth = currentMaxHealth;
     }
+
+    public bool IsPlayer() => _isPlayer;
 
     public void TakeDamage(float damage)
     {

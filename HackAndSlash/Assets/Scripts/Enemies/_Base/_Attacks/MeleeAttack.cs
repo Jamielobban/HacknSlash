@@ -22,9 +22,17 @@ public class MeleeAttack : BaseEnemyAttack
 
     private void OnTriggerEnter(Collider other)
     {
+        IDamageable damageable = other.GetComponent<IDamageable>();
         if (!_enemyBase.attackInterrumpted)
         {
-            other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
+            if (_enemyBase.target == _enemyBase.Player.transform && damageable.IsPlayer())
+            {
+                damageable.TakeDamage(_currentDamage);
+            }
+            else if (_enemyBase.target != _enemyBase.Player.transform && !damageable.IsPlayer())
+            {
+                damageable.TakeDamage(_currentDamage);
+            }
         }
         else
         {

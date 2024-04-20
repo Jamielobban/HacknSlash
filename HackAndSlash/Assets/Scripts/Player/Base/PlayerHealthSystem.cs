@@ -18,7 +18,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     public AudioSource lowHpAudio;
 
     public GameObject onDie;
-
+    private bool _isPlayer = true;
     public bool IsDamageable;  
     public float CurrentHealth
     {
@@ -57,6 +57,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
             }
         }
     }
+    public bool IsPlayer() => _isPlayer;
 
     public void Heal(float amount)
     {
