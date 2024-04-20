@@ -16679,6 +16679,7 @@ GameObject:
   - component: {fileID: 2678672324569475006}
   - component: {fileID: 8330017564254651709}
   - component: {fileID: 7082628790743829482}
+  - component: {fileID: 2807157185985258627}
   m_Layer: 11
   m_Name: Damageable
   m_TagString: Untagged
@@ -16738,6 +16739,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 6, z: 5}
   m_Center: {x: 0, y: 3, z: 0}
+--- !u!54 &2807157185985258627
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845456801532519388}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &6067969148138406178
 GameObject:
   m_ObjectHideFlags: 0
@@ -27459,7 +27487,7 @@ PrefabInstance:
     - target: {fileID: 2762891991291423474, guid: 729b0d4864457d3429ea9d0004efc5e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.81
       objectReference: {fileID: 0}
     - target: {fileID: 2762891991291423474, guid: 729b0d4864457d3429ea9d0004efc5e2,
         type: 3}
@@ -27469,7 +27497,7 @@ PrefabInstance:
     - target: {fileID: 2762891991291423474, guid: 729b0d4864457d3429ea9d0004efc5e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -3.08
       objectReference: {fileID: 0}
     - target: {fileID: 2762891991291423474, guid: 729b0d4864457d3429ea9d0004efc5e2,
         type: 3}
@@ -28511,7 +28539,7 @@ PrefabInstance:
     - target: {fileID: 425902126143206328, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8
+      value: 2.89
       objectReference: {fileID: 0}
     - target: {fileID: 425902126143206328, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}
@@ -28521,7 +28549,7 @@ PrefabInstance:
     - target: {fileID: 425902126143206328, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.94
+      value: 8.19
       objectReference: {fileID: 0}
     - target: {fileID: 425902126143206328, guid: 0e42be49c4388094b8f0553a073fa483,
         type: 3}

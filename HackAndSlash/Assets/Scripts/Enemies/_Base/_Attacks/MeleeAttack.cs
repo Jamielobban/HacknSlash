@@ -20,8 +20,15 @@ public class MeleeAttack : BaseEnemyAttack
         Use();
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log("GO Stay " + other.gameObject);
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("GO" + other.gameObject);
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (!_enemyBase.attackInterrumpted)
         {

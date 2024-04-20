@@ -19,7 +19,7 @@ public class Enums
         AutoDestruction,
         Dead
     }
-
+    
     public enum StateEvent
     {
         DetectPlayer,
@@ -30,14 +30,14 @@ public class Enums
         DespawnEnemy,
         RollImpact
     }
-
+    
     public enum AttackState
     {
         ReadyToUse = 0,
         Casting,
         Cooldown
     };
-
+    
     public enum SpawnMethod 
     { 
         RoundRobin, 

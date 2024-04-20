@@ -119,6 +119,7 @@ public class ManagerEnemies : MonoBehaviour
         if(_currentSpawner != null)
         {
             _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+            ResetSpawnedEnemies();
         }
     }
 
@@ -163,6 +164,10 @@ public class ManagerEnemies : MonoBehaviour
     public void AddSpawnedEnemies(int val)
     {
         _spawnedEnemies += val;
+        if (_spawnedEnemies <= 0)
+        {
+            _spawnedEnemies = 0;
+        }
         UpdateEnemiesSpawned();
     }
 
