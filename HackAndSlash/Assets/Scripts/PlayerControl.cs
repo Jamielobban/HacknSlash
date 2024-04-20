@@ -53,12 +53,12 @@ public class PlayerControl : MonoBehaviour
     Vector3 moveDir;
     Vector3 moveDirSaved;
 
-    Animator playerAnim;
+    public Animator playerAnim;
 
     float delayMove;
 
     public float delayIdleToMoveTime;
-    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, Teleport, run3, run4, air3, air4 };
+    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, CircleL2, HoldCircleL2, Teleport, run3, run4, air3, air4 };
 
     public int currentScroll;
 

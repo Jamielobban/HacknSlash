@@ -531,11 +531,14 @@ MonoBehaviour:
   attacks:
   - {fileID: 434670817661210696}
   target: {fileID: 0}
+  targetToSpecialMove: {x: 0, y: 0, z: 0}
+  healthBar: {fileID: 8152517612591289888}
+  getDamage: {fileID: 124398801883941506}
   spawner: {fileID: 0}
   score: 0
   timeBetweenAttacks: 1.5
+  affectedBySpecialMove: 0
   _currentTime: 0
-  _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
@@ -962,7 +965,7 @@ PrefabInstance:
     - target: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}
       propertyPath: m_Name
-      value: Tree Name Plate
+      value: Spider Name Plate
       objectReference: {fileID: 0}
     - target: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
         type: 3}
@@ -998,6 +1001,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8152517612591289888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4122019173388154879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8152517612591289891 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,

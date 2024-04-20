@@ -20,11 +20,26 @@ public class MeleeAttack : BaseEnemyAttack
         Use();
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log("GO Stay " + other.gameObject);
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("GO" + other.gameObject);
+        IDamageable damageable = other.GetComponent<IDamageable>();
         if (!_enemyBase.attackInterrumpted)
         {
-            other.GetComponent<IDamageable>().TakeDamage(_currentDamage);
+            if (_enemyBase.target == _enemyBase.Player.transform && damageable.IsPlayer())
+            {
+                damageable.TakeDamage(_currentDamage);
+            }
+            else if (_enemyBase.target != _enemyBase.Player.transform && !damageable.IsPlayer())
+            {
+                damageable.TakeDamage(_currentDamage);
+            }
         }
         else
         {

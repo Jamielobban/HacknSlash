@@ -13,7 +13,7 @@ public class EnemyInEvent : MonoBehaviour
 
     private void Update()
     {
-        if (_enemy.HealthSystem.CurrentHealth <= 0)
+        if (_enemy.IsDead)
         {
             _event.RemoveEnemy(gameObject);
         }

@@ -242,10 +242,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.19483948
-  m_Height: 1.7878113
+  m_Radius: 0.39726502
+  m_Height: 2.9954107
   m_Direction: 1
-  m_Center: {x: 0.007904053, y: 0.81362534, z: -0.004470825}
+  m_Center: {x: 0.003649652, y: 1.417425, z: -0.004470825}
 --- !u!114 &8175702238091283099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,11 +426,13 @@ MonoBehaviour:
   - {fileID: 8441819074929750980}
   - {fileID: 8134917275716758317}
   target: {fileID: 0}
+  targetToSpecialMove: {x: 0, y: 0, z: 0}
+  healthBar: {fileID: 3037913376353726692}
   spawner: {fileID: 0}
   score: 0
   timeBetweenAttacks: 1
+  affectedBySpecialMove: 0
   _currentTime: 0
-  _isInFollowRange: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
@@ -599,7 +601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2951788154017317152}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Attacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -734,7 +736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7134709634452455924}
   - component: {fileID: 8134917275716758317}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Invoke Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2711,6 +2713,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2a648a4559b66145b55c3ceb4a3cdee, type: 3}
+--- !u!1 &3037913376353726692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5194854935878492639, guid: a2a648a4559b66145b55c3ceb4a3cdee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7079380526624166203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3037913376353726695 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5194854935878492636, guid: a2a648a4559b66145b55c3ceb4a3cdee,

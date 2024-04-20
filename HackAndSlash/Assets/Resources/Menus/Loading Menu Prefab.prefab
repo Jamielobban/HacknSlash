@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 3964776503169241699}
   - component: {fileID: 1905016384263196368}
   - component: {fileID: 7997518552561469117}
+  - component: {fileID: 7323861084158815254}
   m_Layer: 5
   m_Name: fillLoadingBar
   m_TagString: Untagged
@@ -693,11 +694,23 @@ MonoBehaviour:
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7323861084158815254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901420071937701699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf18e5a753d0cb4687742b9078de8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7566078160601487819
 GameObject:
   m_ObjectHideFlags: 0

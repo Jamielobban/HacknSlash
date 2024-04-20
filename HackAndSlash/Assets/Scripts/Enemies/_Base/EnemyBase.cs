@@ -24,6 +24,7 @@ public class EnemyBase : PoolableObject
     [Header("Variables")]
     public Transform target;
     public Vector3 targetToSpecialMove;
+    public GameObject healthBar;
     public GameObject spawner;
     public float score;
     public float timeBetweenAttacks = 1.5f;
@@ -51,13 +52,14 @@ public class EnemyBase : PoolableObject
     public EnemyHealthSystem HealthSystem => _healthSystem;
 
     protected virtual void Awake()
-    {
+    {        
         _player = GameManager.Instance.Player;
         _healthSystem = transform.GetChild(0).GetComponent<EnemyHealthSystem>();
         _spawnEffect = GetComponent<EnemySpawnEffect>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _enemyFSM = new StateMachine<Enums.EnemyStates, Enums.StateEvent>();
+
         
         InitializeStates();
         InitializeTransitions();
@@ -71,7 +73,9 @@ public class EnemyBase : PoolableObject
     protected virtual void Start()
     {
         _followPlayerSensor.OnPlayerEnter += FollowPlayerSensor_OnPlayerSensorEnter;
-        _followPlayerSensor.OnPlayerExit += FollowPlayerSensor_OnPlayerSensorExit;        
+        _followPlayerSensor.OnPlayerExit += FollowPlayerSensor_OnPlayerSensorExit;    
+        _healthSystem.GetDamageCollider.enabled = false;
+        healthBar.SetActive(false);
     }
 
     protected virtual void InitializeStates()
@@ -186,6 +190,10 @@ public class EnemyBase : PoolableObject
 
     public void OnSpawnEnemy()
     {
+        if (target == null)
+        {
+            target = Player.transform;
+        }
         _enemyFSM.SetStartState(Enums.EnemyStates.Spawning);
         _enemyFSM.Init();
         _enemyFSM.Trigger(Enums.StateEvent.SpawnEnemy);
@@ -232,10 +240,10 @@ public class EnemyBase : PoolableObject
         {
             Destroy(gameObject);
         }
-
+        healthBar.SetActive(false);
     }
     
-    public virtual void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)
+    public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)
     {
         float newHealth = _healthSystem.MaxHealth * scaleFactorHp;
         _healthSystem.currentMaxHealth = newHealth;
@@ -258,11 +266,6 @@ public class EnemyBase : PoolableObject
         // {
         //
         // }
-    }
-
-    public void MoveTo(Vector3 position)
-    {
-        
     }
     
     protected virtual void OnDestroy()

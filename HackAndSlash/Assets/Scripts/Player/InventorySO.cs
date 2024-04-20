@@ -38,11 +38,12 @@ public class InventorySO : ScriptableObject
                 {
                     quantity -= AddItemToFirstFreeSlot(item, 1);
                 }
-                InformAboutChange();
-                return quantity;
             }
         }
-        quantity = AddStackableItem(item, quantity);
+        else
+        {
+            quantity = AddStackableItem(item, quantity);
+        }
         InformAboutChange();
         return quantity;
     }

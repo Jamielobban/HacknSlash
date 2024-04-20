@@ -96,6 +96,8 @@ public class EnemySpawnEffect : MonoBehaviour
             _skinnedMaterials[i].SetFloat("_EdgeThickness", 0f);
         }
         _isSpawning = false;
+        _enemyBase.healthBar.SetActive(true); 
+        _enemyBase.HealthSystem.GetDamageCollider.enabled = true;
     }
 
     public void ResetDissolveAmount()

@@ -24,7 +24,8 @@ public abstract class EventMap : Interactive, IInteractable
     public List<EnemiesToKill> roundsOfEnemies = new List<EnemiesToKill>();
     protected int currentRound = 0;
     public float timer = 0;
-    
+    public bool canCheckEnemiesDead = false;
+
     
     public Enums.EventState CurrentEventState => _currentEventState;
     
@@ -155,7 +156,7 @@ public abstract class EventMap : Interactive, IInteractable
     void StopScale() { scaling = false; }
     private void CreateTangentColliders(SphereCollider sphereCollider, int numberOfColliders) => StartCoroutine(CreateTangentCollidersCoroutine(sphereCollider, numberOfColliders));
     
-    protected bool AllEnemiesDefeated() => roundsOfEnemies[currentRound].enemiesToKill.Count <= 0;
+    protected bool AllEnemiesDefeated() => roundsOfEnemies[currentRound].enemiesToKill.Count <= 0 && canCheckEnemiesDead;
 
     public void RemoveEnemy(GameObject enemy)
     {

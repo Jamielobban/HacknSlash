@@ -8,7 +8,6 @@ public class ProtectEvent : EventMap
 {
     [SerializeField] List<Transform> targetsToProtect;
     public GameObject[] activables;
-
     protected override void Start()
     {
         base.Start();
@@ -23,7 +22,7 @@ public class ProtectEvent : EventMap
 
         if(CurrentEventState == Enums.EventState.PLAYING)
         {
-            RetargetSpawnedEnemies();
+            //RetargetSpawnedEnemies();
             CheckEventState();
         }
     }
@@ -43,7 +42,7 @@ public class ProtectEvent : EventMap
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
         }
         StartSpawningEnemies();
-
+        canCheckEnemiesDead = true;
     }
     protected override void NextRound()
     {
@@ -94,7 +93,7 @@ public class ProtectEvent : EventMap
         {
             activable.SetActive(false);
         }
-        RetargetSpawnedEnemies(false);
+       // RetargetSpawnedEnemies(false);
         foreach (Transform t in targetsToProtect)
         {
             List<DamageableObject> damageables = GetComponentsInChildren<DamageableObject>().ToList();
@@ -131,7 +130,7 @@ public class ProtectEvent : EventMap
         }
     }
 
-    void RetargetSpawnedEnemies(bool toPillar = true)
+    /*void RetargetSpawnedEnemies(bool toPillar = true)
     {
         Transform target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
 
@@ -139,5 +138,6 @@ public class ProtectEvent : EventMap
         {
             e.GetComponent<EnemyBase>().target = target;
         }
-    }    
+    }   */ 
+    
 }
