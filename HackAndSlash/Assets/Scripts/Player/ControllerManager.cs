@@ -157,8 +157,10 @@ public class ControllerManager : MonoBehaviour
             return false;
         if (X.action.WasPressedThisFrame() && canJump)
         {
-            
-            Interact.InteractPerformed();
+            if (Interact.canInteract)
+            {
+                Interact.InteractPerformed();
+            }
 
             if(!Interact.canInteract && !ItemsLootBoxManager.Instance.menuActive)
             {
