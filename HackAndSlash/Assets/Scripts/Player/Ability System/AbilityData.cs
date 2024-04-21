@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Ability Data", fileName = "Ability/DataAbility")]
-public class AbilityData : ScriptableObject
+[CreateAssetMenu(fileName = "Ability Data", menuName = "Items/DataAbility")]
+public class AbilityData : ItemData
 {
-    [Header("Information: ")]
-    public Sprite icon;
-    public string name;
     public string animation;
-    [TextArea] public string description;
 
     [Header("Variables: ")] 
     public float baseCooldown;
     public float baseCastTime;
     public float baseDamage;
+    public AnimationCurve curvaDeVelocidadMovimiento;
+    public float velocidadMovimiento;
 
+    public AnimationCurve curvaDeVelocidadMovimientoY;
+    public float velocidadMovimientoY;
+    
+    
     [Header("References: ")] 
     public AudioSource audio;
     public GameObject effect;

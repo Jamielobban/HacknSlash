@@ -10,6 +10,7 @@ using UnityEngine.Serialization;
 
 public class PlayerControl : MonoBehaviour
 {
+    public AbilityHolder _abilityHolder;
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
     [SerializeField]
