@@ -22,6 +22,8 @@ public class DamageableObject : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        GameObject go = Instantiate(onHitVfx, new Vector3(transform.position.x, transform.position.y +0.5f, transform.position.z), Quaternion.identity);
+        go.transform.localScale = Vector3.one * 2;
         UpdateProgressBar();
         if (currentHealth < 0)
             currentHealth = 0;
