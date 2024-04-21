@@ -12,16 +12,6 @@ public abstract class Item : MonoBehaviour
     public virtual Sprite GetSprite() => data.itemIcon;
     public virtual Enums.RarityType GetRarity() => data.rarityType;
 
-    public virtual void OnHit(PlayerControl player, int stacks)
-    {
-
-    }
-
-    public virtual void OnJump(PlayerControl player, int stacks)
-    {
-
-    }
-
     public virtual void OnItemPickup(PlayerControl player)
     {
 

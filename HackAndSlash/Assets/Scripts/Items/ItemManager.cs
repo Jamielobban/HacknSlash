@@ -10,11 +10,12 @@ public class ItemManager : MonoBehaviour
     public int commonChance = 40;
     public int uncommonChance = 30;
     public int rareChance = 20;
-    public int legendaryChance = 10;
+    public int legendaryChance = 5;
+    public int abilityChance = 5;
     
     public Item GetRandomItem()
     {
-        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance;
+        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + abilityChance;
         int randomValue = Random.Range(0, totalChance);
 
         if (randomValue < commonChance)
@@ -29,9 +30,18 @@ public class ItemManager : MonoBehaviour
         {
             return GetRandomItemOfRarity(RarityType.Rare);
         }
-        else
+        else if(randomValue < commonChance + uncommonChance + rareChance + legendaryChance)
         {
             return GetRandomItemOfRarity(RarityType.Legendary);
+        }
+        else
+        {
+            if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
+                return GetRandomItemOfRarity(RarityType.Ability);
+            else
+            {
+                return GetRandomItemOfRarity(RarityType.Legendary);
+            }
         }
     }
 

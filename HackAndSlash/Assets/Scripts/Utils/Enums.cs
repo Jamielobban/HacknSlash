@@ -15,6 +15,7 @@ public class Enums
         Roll,
         Stun,
         Countering,
+        Returning,
         Hit,
         AutoDestruction,
         Dead
@@ -168,7 +169,8 @@ public class Enums
         Common,
         Uncommon,
         Rare,
-        Legendary
+        Legendary,
+        Ability
     }
 }
 
