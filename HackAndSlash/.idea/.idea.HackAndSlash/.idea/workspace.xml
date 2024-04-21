@@ -5,42 +5,98 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e0c4a22-202c-4bc4-ac5f-83591f1a661d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseMeleeCamp.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseMeleeCamp.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseRangedCamp.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/EnemyBaseRangedCamp.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/CustomOverrideStates.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Items/ItemsClases/AbilityItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Items/ItemsClases/AbilityItem.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HackAndSlash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HackAndSlash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/UI/GoodUIIconTrail/Sources/VFX/Materials/M_GoodUIIconTrail_GreenSpirit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/UI/GoodUIIconTrail/Sources/VFX/Materials/M_GoodUIIconTrail_GreenSpirit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 3.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 6.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/UI/VFX_Ui_ProgressBar/Material/M_ProgressBar_BorderNoise 6.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_BaseColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Enemies/Tree Mats/Tree_BaseColor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Player/PlayerPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/PlayerPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PlayerController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayerController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Necromancer.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Necromancer.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider Explosive.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider Explosive.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Spider.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Tree.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Tree.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Warewolf.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Warewolf.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Wolf.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/P_Enemies/FSM Enemy/Wolf.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Undead_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animations_Enemies/Animator Enemies Used/Undead_Animator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardWeapon.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardWeapon.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@2HitComboForwardWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@3HitComboForwardShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@3HitComboForwardShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@3HitComboForwardWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@3HitComboForwardWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardShield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack1ForwardWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardShield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack2ForwardWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardShield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@Attack3ForwardWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@BiteAttackBareHands_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@BiteAttackBareHands_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit1Normal.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit1Normal.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit1Shield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit1Shield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit2Normal.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit2Normal.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit2Shield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@GetHit2Shield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@RiseFromTheGroundNormal.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@RiseFromTheGroundNormal.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@RiseFromTheGroundShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@RiseFromTheGroundShield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBareHands.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBareHands.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBareHands_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBareHands_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBiteAttackBareHands.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBiteAttackBareHands.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBiteAttackBareHands_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkBiteAttackBareHands_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkFastWeapon.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkFastWeapon.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkFastWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkFastWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkShield.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkShield_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkShield_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkSlow.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkSlow.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkSlow_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkSlow_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkWeapon.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkWeapon.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkWeapon_RM.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@WalkWeapon_RM.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@death2.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@death2.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@idleNormal.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@idleNormal.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@idleShield.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Enemies/Heroic Creatures/Living Dead Pack/Undead/FBX Files/Undead@idleShield.FBX.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/04 Main Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/04 Main Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scenes_Nahuel/Main Enemies.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scenes_Nahuel/Main Enemies.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/WanderState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/WanderState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/ItemData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/ItemData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/ItemManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/ItemManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Ability System/AbilityData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Ability System/AbilityData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Ability System/AbilityHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Ability System/AbilityHolder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/Enums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utils/Enums.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/NecroMancer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/NecroMancer/Necromancer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/NecroMancer/Necromancer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spiders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spiders/SpiderExplosive.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spiders/SpiderExplosive.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spiders/SpiderNormal.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spiders/SpiderNormal.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spikes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spikes/Spike.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Spikes/Spike.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree/Tree.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Tree/Tree.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/WareWolf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/WareWolf/WareWolf.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/WareWolf/WareWolf.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +115,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/AIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/Enable Damages/WWEnableDamages.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/_Base/_States/CustomOverrideStates/ChaseCustomState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/_Overrides/Undead/Undead.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/UIItemChoice.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Ability System/Abilities/MagicCircle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Inventory System/UIInventoryDescription.cs" root0="FORCE_HIGHLIGHTING" />
@@ -87,7 +143,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.70454544",
-    "git-widget-placeholder": "feature/BaseAbilities",
+    "git-widget-placeholder": "feature/NewEnemies__Base__0.1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
