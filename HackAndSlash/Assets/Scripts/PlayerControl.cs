@@ -11,7 +11,12 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
+    #region Items & Abilities
     public AbilityHolder _abilityHolder;
+    public bool canAttackOnAir = false;
+    #endregion
+
+
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
     [SerializeField]
@@ -1152,10 +1157,6 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case States.HIT:
-                if (CheckIfDash())
-                {
-                    break;
-                }
                 CheckIfReturnIdle();
                 CheckIfStartMove();
                 /*if ((Time.time - hitTime) > 0.15f) if
@@ -1474,36 +1475,37 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     moveDirSaved = new Vector3();
                     attacks = Attacks.AIR;
                 }
 
 
-                if (states == States.JUMP)
+                if (states == States.JUMP )
                 {
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    if(canAttackOnAir)
                     {
-                        damageMult = 1;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
 
-                        currentComboAttack = -1;
-                        passiveCombo.Clear();
-                    }
-                    else if (GetAttacks(ComboAtaques.air1).attacks.Length - 1 <= currentComboAttack)
-                    {
-                        currentComboAttack = GetAttacks(ComboAtaques.air1).attacks.Length - 1;
-                    }
-                    passiveCombo.Add(PassiveCombo.QUADRATAIR);
+                            currentComboAttack = -1;
+                            passiveCombo.Clear();
+                        }
+                        else if (GetAttacks(ComboAtaques.air1).attacks.Length - 1 <= currentComboAttack)
+                        {
+                            currentComboAttack = GetAttacks(ComboAtaques.air1).attacks.Length - 1;
+                        }
+                        passiveCombo.Add(PassiveCombo.QUADRATAIR);
 
-                    moveDirSaved = new Vector3();
-                    attacks = Attacks.AIR;
-                    currentComboAttacks = GetAttacks(ComboAtaques.air1);
-                    Debug.Log("AirCuadrado");
-                    AirSquarePress();
-                    PlayAttack();
+                        moveDirSaved = new Vector3();
+                        attacks = Attacks.AIR;
+                        currentComboAttacks = GetAttacks(ComboAtaques.air1);
+                        Debug.Log("AirCuadrado");
+                        states = States.ATTACK;
+                        AirSquarePress();
+                        PlayAttack();
+                    }
                 }               
                 else
                 {
@@ -1526,10 +1528,9 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = GetAttacks(ComboAtaques.Quadrat);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-
-                states = States.ATTACK;
 
                 controller.ResetBotonesAtaques();
                 return true;
@@ -1539,36 +1540,10 @@ public class PlayerControl : MonoBehaviour
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
                 }
 
-                if (states == States.JUMP && (currentComboAttack == -1 || currentComboAttacks.combo == ComboAtaques.air1))
-                {
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
-                    {
-                        damageMult = 1;
-
-                        currentComboAttack = -1;
-                        passiveCombo.Clear();
-                    }
-                    else if (GetAttacks(ComboAtaques.air2).attacks.Length - 1 <= currentComboAttack)
-                    {
-                        currentComboAttack = GetAttacks(ComboAtaques.air2).attacks.Length - 2;
-                    }
-                    passiveCombo.Add(PassiveCombo.TRIANGLEAIR);
-
-                    moveDirSaved = new Vector3();
-
-                    attacks = Attacks.AIR;
-                    currentComboAttacks = GetAttacks(ComboAtaques.air2);
-                    AirTrianglePress();
-                    PlayAttack();
-                }
-                else if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
+                if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
                 {
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
@@ -1586,11 +1561,9 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = GetAttacks(ComboAtaques.Triangle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-
-
-                states = States.ATTACK;
 
                 controller.ResetBotonesAtaques();
                 return true;
