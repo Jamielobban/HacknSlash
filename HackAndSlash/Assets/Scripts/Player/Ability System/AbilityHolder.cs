@@ -13,6 +13,7 @@ public class AbilityHolder : MonoBehaviour
     public float timeL2Square, timeL2Triangle, timeL2Circle;
 
     public Image hudCooldownL2Square, hudCooldownL2Triangle, hudCooldownL2Circle;
+    public Image hudCooldownL2SquareParent, hudCooldownL2TriangleParent, hudCooldownL2CircleParent;
 
     public PlayerControl.Ataques L2Square => _l2Square;
     public PlayerControl.Ataques L2Triangle => _l2Triangle;
@@ -32,25 +33,86 @@ public class AbilityHolder : MonoBehaviour
             if (_l2Square.isEmpty)
             {
                 _l2Square = ability;
-                ability.hudCooldown = hudCooldownL2Square;
+                hudCooldownL2SquareParent.sprite = ability.spriteAbility;
+                hudCooldownL2Square.sprite = ability.spriteAbility;
                 _l2Square.isEmpty = false;
             }
             else if (_l2Triangle.isEmpty)
             {
                 _l2Triangle = ability;
-                ability.hudCooldown = hudCooldownL2Triangle;
+                hudCooldownL2TriangleParent.sprite = ability.spriteAbility;
+                hudCooldownL2Triangle.sprite = ability.spriteAbility;
+
                 _l2Triangle.isEmpty = false;
             }
             else
             {
                 _l2Circle = ability;
-                ability.hudCooldown = hudCooldownL2Circle;
+                hudCooldownL2CircleParent.sprite = ability.spriteAbility;
+                hudCooldownL2Circle.sprite = ability.spriteAbility;
+
                 _l2Circle.isEmpty = false;
             }
 
             _currentAbilities++;
         }
     }
+
+    private void Update()
+    {
+        if(!_l2Square.isEmpty)
+        {
+            if ((Time.time - timeL2Square) > _l2Square.baseCooldown)
+            {
+                hudCooldownL2Square.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2SquareCooldown(Time.time - timeL2Square);
+            }
+        }
+       if(!_l2Triangle.isEmpty)
+       {
+            if ((Time.time - timeL2Triangle) > _l2Triangle.baseCooldown)
+            {
+                hudCooldownL2Triangle.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2TriangleCooldown(Time.time - timeL2Triangle);
+
+            }
+        }
+
+       if(!_l2Circle.isEmpty)
+       {
+            if ((Time.time - timeL2Circle) > _l2Circle.baseCooldown)
+            {
+                hudCooldownL2Circle.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2CircleCooldown(Time.time - timeL2Circle);
+
+            }
+        }
+
+    }
+
+    public void UpdateHudL2SquareCooldown(float time)
+    {
+        hudCooldownL2Square.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
+    }
+    public void UpdateHudL2TriangleCooldown(float time)
+    {
+        hudCooldownL2Triangle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
+
+    }
+    public void UpdateHudL2CircleCooldown(float time)
+    {
+        hudCooldownL2Circle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
+    }
+
     public bool CanAddAbility() => _currentAbilities < MAX_ABILITIES;
 
 }

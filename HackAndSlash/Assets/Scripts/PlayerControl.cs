@@ -12,8 +12,11 @@ using UnityEngine.UI;
 public class PlayerControl : MonoBehaviour
 {
     #region Items & Abilities
+    [Header("Abilities & Items")]
+    public GameObject hudParent;
     public AbilityHolder _abilityHolder;
     public bool canAttackOnAir = false;
+    [Space]
     #endregion
 
 
@@ -111,7 +114,7 @@ public class PlayerControl : MonoBehaviour
 
         public HitState []hitState;
         public GameObject[] slash;
-        public Image hudCooldown;
+        public Sprite spriteAbility;
         public bool isEmpty;
         public float baseCooldown;
         public bool onAir;
@@ -821,6 +824,16 @@ public class PlayerControl : MonoBehaviour
         if (!controller.GetController())
             return;
         //CheckPerfectHit();
+
+        if(controller.L2Pressed && !hudParent.activeSelf)
+        {
+            hudParent.SetActive(true);
+        }
+        else if(!controller.L2Pressed && hudParent.activeSelf)
+        {
+            hudParent.SetActive(false);
+        }
+
 
         RotateCamera();
 
@@ -1577,8 +1590,6 @@ public class PlayerControl : MonoBehaviour
                 {
                     return false;
                 }
-
-                _abilityHolder.timeL2Square = Time.time;
                 //Retarget to enemy helper
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
@@ -1587,6 +1598,7 @@ public class PlayerControl : MonoBehaviour
                 
                 if (states == States.JUMP && _abilityHolder.L2Square.onAir)
                 {
+                    _abilityHolder.timeL2Square = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1597,11 +1609,13 @@ public class PlayerControl : MonoBehaviour
 
                     attacks = Attacks.AIR;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
                  // si no esta saltando haz el ataque
                 else if (states != States.JUMP && !_abilityHolder.L2Square.onAir)
                 {
+                    _abilityHolder.timeL2Square = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1613,9 +1627,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-                states = States.ATTACK;
+
                 controller.ResetBotonesAtaques();
                 return true;
             }
@@ -1628,7 +1643,6 @@ public class PlayerControl : MonoBehaviour
                 {
                     return false;
                 }
-                _abilityHolder.timeL2Triangle = Time.time;
 
                 //Retarget to enemy helper
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
@@ -1638,6 +1652,7 @@ public class PlayerControl : MonoBehaviour
                 
                 if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
                 {
+                    _abilityHolder.timeL2Triangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1648,11 +1663,13 @@ public class PlayerControl : MonoBehaviour
 
                     attacks = Attacks.AIR;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
                 // si no esta saltando haz el ataque
                 else if (states != States.JUMP && !_abilityHolder.L2Triangle.onAir)
                 {
+                    _abilityHolder.timeL2Triangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1664,9 +1681,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-                states = States.ATTACK;
+          
                 controller.ResetBotonesAtaques();
                 return true;
             }
@@ -1679,7 +1697,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     return false;
                 }
-                _abilityHolder.timeL2Circle = Time.time;
+
 
                 //Retarget to enemy helper
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
@@ -1689,6 +1707,7 @@ public class PlayerControl : MonoBehaviour
                 
                 if (states == States.JUMP && _abilityHolder.L2Circle.onAir)
                 {
+                    _abilityHolder.timeL2Circle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1699,11 +1718,13 @@ public class PlayerControl : MonoBehaviour
 
                     attacks = Attacks.AIR;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
                 // si no esta saltando haz el ataque
                 else if (states != States.JUMP && !_abilityHolder.L2Circle.onAir)
                 {
+                    _abilityHolder.timeL2Circle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1715,9 +1736,10 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-                states = States.ATTACK;
+
                 controller.ResetBotonesAtaques();
                 return true;
             }

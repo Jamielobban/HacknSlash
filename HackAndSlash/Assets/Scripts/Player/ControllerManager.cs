@@ -38,6 +38,7 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueCuadradoL2;
     public bool ataqueCircleL2;
     public bool ataqueTriangleL2;
+    public bool L2Pressed;
 
     bool dejarMantenerCuadradoL2;
     bool dejarMantenerTrianguloL2;
@@ -93,6 +94,7 @@ public class ControllerManager : MonoBehaviour
         ataqueTrianguloCargado = false;
         ataqueTrianguloCargadoL2 = false;
         ataqueCuadradoCargadoL2 = false;
+        L2Pressed = false;
         jump = false;
         canJump = true;
         for (int i = 0; i < Gamepad.all.Count; i++)
@@ -383,6 +385,10 @@ public class ControllerManager : MonoBehaviour
                     Teleport1 = true;
                 }
             }
+        }
+        if(L2.action != null)
+        {
+            L2Pressed = L2.action.IsPressed();
         }
         ControlesAtaques();
     }
