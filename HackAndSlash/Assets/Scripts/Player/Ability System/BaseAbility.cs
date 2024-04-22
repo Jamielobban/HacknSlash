@@ -23,9 +23,6 @@ public class BaseAbility : MonoBehaviour
 
     protected void InitializeVariables()
     {
-        _currentCooldown = data.baseCooldown;
-        _currentCastTime = data.baseCastTime;
-        _currentDamage = data.baseDamage;
     }
     
 
@@ -65,7 +62,7 @@ public class BaseAbility : MonoBehaviour
     private IEnumerator HandleAbility()
     {
         currentAbilityState = Enums.AttackState.Casting;
-        _player.playerAnim.CrossFadeInFixedTime(data.animation, 0.2f);
+        //_player.playerAnim.CrossFadeInFixedTime(data.animation, 0.2f);
         AddVoiceEffect();
         yield return new WaitForSeconds(_currentCastTime);
         SetVisualEffect();

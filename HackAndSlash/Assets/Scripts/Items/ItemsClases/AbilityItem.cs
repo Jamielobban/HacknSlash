@@ -1,6 +1,6 @@
 ﻿public class AbilityItem : Item
 {
-    public BaseAbility ability;
+    public PlayerControl.Ataques ability;
 
     private void Awake()
     {

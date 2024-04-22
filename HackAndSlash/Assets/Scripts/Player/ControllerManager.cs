@@ -9,6 +9,7 @@ public class ControllerManager : MonoBehaviour
 
     float delayCuadrado;
     float delayTriangulo;
+    float delayCircle;
     bool cuadradoHold;
     bool trianguloHold;
 
@@ -20,8 +21,6 @@ public class ControllerManager : MonoBehaviour
 
     public bool ataqueCuadradoCargadoL2;
     public bool ataqueTrianguloCargadoL2;
-    public bool ataqueCuadradoL2;
-    public bool ataqueTrianguloL2;
 
 
     public bool ataqueCuadradoPress;
@@ -34,9 +33,11 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueTrianguloCargadoL2Press;
     public bool ataqueCuadradoL2Press;
     public bool ataqueTrianguloL2Press;
-
-    //bool dejarMantenerCuadrado;
-   // bool dejarMantenerTriangulo;
+    
+    // -- Abilities -- //
+    public bool ataqueCuadradoL2;
+    public bool ataqueCircleL2;
+    public bool ataqueTriangleL2;
 
     bool dejarMantenerCuadradoL2;
     bool dejarMantenerTrianguloL2;
@@ -83,10 +84,8 @@ public class ControllerManager : MonoBehaviour
 
     void Start()
     {
-        
         leftStick = new Vector2();
         rightStick = new Vector2();
-
         dash = false;
         ataqueCuadrado = false;
         ataqueTriangulo = false;
@@ -96,8 +95,6 @@ public class ControllerManager : MonoBehaviour
         ataqueCuadradoCargadoL2 = false;
         jump = false;
         canJump = true;
-       // dejarMantenerCuadrado = false;
-       // dejarMantenerTriangulo = false;
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
             controller = Gamepad.all[i];
@@ -143,7 +140,8 @@ public class ControllerManager : MonoBehaviour
         ataqueTrianguloCargado = false;
         ataqueTrianguloCargadoL2 = false;
         ataqueCuadradoCargadoL2 = false;
-        ataqueTrianguloL2 = false;
+        ataqueTriangleL2 = false;
+        ataqueCircleL2 = false;
         ataqueCuadradoL2 = false;
         Teleport1 = false;
         Teleport2 = false;
@@ -193,11 +191,9 @@ public class ControllerManager : MonoBehaviour
             {
                 delayCuadrado = Time.time;
                 cuadradoHold = true;
-
-
             }
 
-            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.25f)
+            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.5f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
@@ -206,7 +202,6 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueCuadradoL2 = true;
                         ataqueCuadradoL2Press = true;
-
                     }
                     else
                     {
@@ -223,7 +218,7 @@ public class ControllerManager : MonoBehaviour
 
                 }
             }
-            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.25f && cuadradoHold)
+            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.5f && cuadradoHold)
             {
                 ResetBotonesAtaques();
 
@@ -260,16 +255,15 @@ public class ControllerManager : MonoBehaviour
                 trianguloHold = true;
 
             }
-            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.25f)
+            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.5f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
                 {
                     if (L2.action.IsPressed())
                     {
-                        ataqueTrianguloL2 = true;
+                        ataqueTriangleL2 = true;
                         ataqueTrianguloL2Press = true;
-
                     }
                     else
                     {
@@ -284,11 +278,9 @@ public class ControllerManager : MonoBehaviour
                     ataqueTrianguloPress = true;
                     TrianglePress();
                 }
-
-
             }
 
-            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.25f && trianguloHold)
+            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.5f && trianguloHold)
             {
                 ResetBotonesAtaques();
 
@@ -322,11 +314,27 @@ public class ControllerManager : MonoBehaviour
         {
             if (O.action.WasPressedThisFrame())
             {
+                if (L2.action != null)
+                {
+                    if (!L2.action.IsPressed())
+                    {
+                        ResetBotonesAtaques();
+                        dash = true;
+                        DashDone();
+                    }
+                }
+                delayCircle = Time.time;
+            }
+            if (O.action.WasReleasedThisFrame() && (Time.time - delayCircle) <= 0.5f)
+            {
                 ResetBotonesAtaques();
-
-                dash = true;
-
-                DashDone();
+                if (L2.action != null)
+                {
+                    if (L2.action.IsPressed())
+                    {
+                        ataqueCircleL2 = true;
+                    }
+                }
             }
         }
     }
@@ -367,13 +375,11 @@ public class ControllerManager : MonoBehaviour
                 if ((Time.time - time) >= 0.25f && L2.action.IsPressed() && O.action.IsPressed())
                 {
                     holdTeleport = false;
-
                     Teleport2 = true;
                 }
                 if ((Time.time - time) < 0.25f && (L2.action.IsPressed() && O.action.WasReleasedThisFrame()))
                 {
                     holdTeleport = false;
-
                     Teleport1 = true;
                 }
             }
