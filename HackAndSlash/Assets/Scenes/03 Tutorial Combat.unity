@@ -11906,6 +11906,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas Announcements
       objectReference: {fileID: 0}
+    - target: {fileID: 1679739116246535711, guid: 8d45216639cfea44bb59750a31e07f89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5821767646058275455, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
       propertyPath: m_Camera
@@ -12014,6 +12019,11 @@ PrefabInstance:
     - target: {fileID: 6233947910861563881, guid: 8d45216639cfea44bb59750a31e07f89,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621252869753918855, guid: 8d45216639cfea44bb59750a31e07f89,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -12192,6 +12202,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 174182170646665, guid: b2d8cb0ebb7dcd145877d22dda0eb429, type: 3}
+      propertyPath: onWin
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 174182170646665, guid: b2d8cb0ebb7dcd145877d22dda0eb429, type: 3}
       propertyPath: eventsText
       value: 
       objectReference: {fileID: 980497577}
@@ -12206,12 +12220,12 @@ PrefabInstance:
     - target: {fileID: 174182170646665, guid: b2d8cb0ebb7dcd145877d22dda0eb429, type: 3}
       propertyPath: eventsPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1459914399995422235, guid: 77274452eadc25d4bb739b6f71bd984d,
+      objectReference: {fileID: 1459914399995422235, guid: 196bd983ffdee0548b7e5f8fad6b339a,
         type: 3}
     - target: {fileID: 174182170646665, guid: b2d8cb0ebb7dcd145877d22dda0eb429, type: 3}
       propertyPath: eventsPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 5559189461469418704, guid: fb3a92e2a801d0645adf5f14616b840f,
+      objectReference: {fileID: 5559189461469418704, guid: c2e87e3a8893af448813ff9c2f8ee328,
         type: 3}
     - target: {fileID: 2129606338372009314, guid: b2d8cb0ebb7dcd145877d22dda0eb429,
         type: 3}
@@ -23313,6 +23327,7 @@ MonoBehaviour:
   - {fileID: 9058649433420978236, guid: 69994f015f9f4884a9e5f16293db8607, type: 3}
   - {fileID: 9058649433420978236, guid: 0349bc61a335f59428629f48cb323bba, type: 3}
   - {fileID: 9058649433420978236, guid: 142ec12e8c2e99043aaf02cda5eee0ef, type: 3}
+  lastSpawnerLastOne: 1
   enemies:
   - {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363, type: 3}
   - {fileID: 2162306917833488104, guid: daa4c232bf970694b85a560c7c6d9d56, type: 3}
