@@ -7,10 +7,19 @@ using System;
 using DG.Tweening;
 using DamageNumbersPro;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
+    #region Items & Abilities
+    [Header("Abilities & Items")]
+    public GameObject hudParent;
     public AbilityHolder _abilityHolder;
+    public bool canAttackOnAir = false;
+    [Space]
+    #endregion
+
+
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
     [SerializeField]
@@ -59,7 +68,7 @@ public class PlayerControl : MonoBehaviour
     float delayMove;
 
     public float delayIdleToMoveTime;
-    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, CircleL2, HoldCircleL2, Teleport, run3, run4, air3, air4 };
+    public enum ComboAtaques { Quadrat, HoldQuadrat, Triangle, HoldTriangle, combo5, air1, air2, run1, run2, QuadratL2, HoldQuadratL2, TriangleL2, HoldTriangleL2, CircleL2, HoldCircleL2, Teleport, air3, air4, None };
 
     public int currentScroll;
 
@@ -105,6 +114,10 @@ public class PlayerControl : MonoBehaviour
 
         public HitState []hitState;
         public GameObject[] slash;
+        public Sprite spriteAbility;
+        public bool isEmpty;
+        public float baseCooldown;
+        public bool onAir;
     }
 
     [System.Serializable]
@@ -112,7 +125,16 @@ public class PlayerControl : MonoBehaviour
     {
         public ComboAtaques combo;
         public Ataques[] attacks;
+
+        public ListaAtaques(Ataques attack)
+        {
+            combo = ComboAtaques.None;
+            attacks = new Ataques[1];
+            attacks[0] = attack;
+        }
     }
+
+
 
     public PlayerHUDSystem hud;
 
@@ -122,6 +144,8 @@ public class PlayerControl : MonoBehaviour
     public ListaAtaques currentComboAttacks;
     public ListaAtaques[] airCombo;
     public ListaAtaques[] runCombo;
+    
+
 
     public int currentComboAttack;
 
@@ -801,6 +825,16 @@ public class PlayerControl : MonoBehaviour
             return;
         //CheckPerfectHit();
 
+        if(controller.L2Pressed && !hudParent.activeSelf)
+        {
+            hudParent.SetActive(true);
+        }
+        else if(!controller.L2Pressed && hudParent.activeSelf)
+        {
+            hudParent.SetActive(false);
+        }
+
+
         RotateCamera();
 
         switch (states)
@@ -1136,10 +1170,6 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case States.HIT:
-                if (CheckIfDash())
-                {
-                    break;
-                }
                 CheckIfReturnIdle();
                 CheckIfStartMove();
                 /*if ((Time.time - hitTime) > 0.15f) if
@@ -1334,7 +1364,7 @@ public class PlayerControl : MonoBehaviour
             enemy = Vector3.zero;
 
 
-
+            /*
             if (controller.ataqueCuadradoCargado)
             {
                 this.gameObject.layer = 12;
@@ -1392,75 +1422,9 @@ public class PlayerControl : MonoBehaviour
                 controller.ResetBotonesAtaques();
                 return true;
             }
-
-
-
-
-            if (controller.ataqueCuadrado)
-            {
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                {
-                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    //this.transform.position = pos;
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                    moveDirSaved = new Vector3();
-                    attacks = Attacks.AIR;
-                }
-
-
-                if (states == States.JUMP)
-                {
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
-                    {
-                        damageMult = 1;
-
-                        currentComboAttack = -1;
-                        passiveCombo.Clear();
-                    }
-                    else if (GetAttacks(ComboAtaques.air1).attacks.Length - 1 <= currentComboAttack)
-                    {
-                        currentComboAttack = GetAttacks(ComboAtaques.air1).attacks.Length - 1;
-                    }
-                    passiveCombo.Add(PassiveCombo.QUADRATAIR);
-
-                    moveDirSaved = new Vector3();
-                    attacks = Attacks.AIR;
-                    currentComboAttacks = GetAttacks(ComboAtaques.air1);
-                    Debug.Log("AirCuadrado");
-                    AirSquarePress();
-                    PlayAttack();
-                }               
-                else
-                {
-
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
-                    {
-                        damageMult = 1;
-
-                        currentComboAttack = -1;
-                        passiveCombo.Clear();
-                    }
-                    else if (GetAttacks(ComboAtaques.Quadrat).attacks.Length - 1 <= currentComboAttack)
-                    {
-                        currentComboAttack = GetAttacks(ComboAtaques.Quadrat).attacks.Length - 1;
-
-                        Debug.Log("Attack");
-                    }
-                    passiveCombo.Add(PassiveCombo.QUADRATFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                    attacks = Attacks.GROUND;
-                    currentComboAttacks = GetAttacks(ComboAtaques.Quadrat);
-                    PlayAttack();
-                }
-
-                states = States.ATTACK;
-
-                controller.ResetBotonesAtaques();
-                return true;
-            }
-
+*/
+        
+            /*
             if ((controller.ataqueTrianguloCargado))
             {
                 this.gameObject.layer = 12;
@@ -1518,20 +1482,47 @@ public class PlayerControl : MonoBehaviour
                 controller.ResetBotonesAtaques();
                 return true;
             }
-
-            if ((controller.ataqueTriangulo))
+*/
+            
+            if (controller.ataqueCuadrado)
             {
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
-                    //Vector3 pos = (this.transform.position - enemieTarget.GetEnemie(this.transform.position)).normalized;
-                    //pos = enemieTarget.GetEnemie(this.transform.position) + (pos * 2);
-                    //this.transform.position = pos;
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-
+                    moveDirSaved = new Vector3();
+                    attacks = Attacks.AIR;
                 }
 
-                if (states == States.JUMP && (currentComboAttack == -1 || currentComboAttacks.combo == ComboAtaques.air1))
+
+                if (states == States.JUMP )
                 {
+                    if(canAttackOnAir)
+                    {
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+
+                            currentComboAttack = -1;
+                            passiveCombo.Clear();
+                        }
+                        else if (GetAttacks(ComboAtaques.air1).attacks.Length - 1 <= currentComboAttack)
+                        {
+                            currentComboAttack = GetAttacks(ComboAtaques.air1).attacks.Length - 1;
+                        }
+                        passiveCombo.Add(PassiveCombo.QUADRATAIR);
+
+                        moveDirSaved = new Vector3();
+                        attacks = Attacks.AIR;
+                        currentComboAttacks = GetAttacks(ComboAtaques.air1);
+                        Debug.Log("AirCuadrado");
+                        states = States.ATTACK;
+                        AirSquarePress();
+                        PlayAttack();
+                    }
+                }               
+                else
+                {
+
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1539,20 +1530,33 @@ public class PlayerControl : MonoBehaviour
                         currentComboAttack = -1;
                         passiveCombo.Clear();
                     }
-                    else if (GetAttacks(ComboAtaques.air2).attacks.Length - 1 <= currentComboAttack)
+                    else if (GetAttacks(ComboAtaques.Quadrat).attacks.Length - 1 <= currentComboAttack)
                     {
-                        currentComboAttack = GetAttacks(ComboAtaques.air2).attacks.Length - 2;
+                        currentComboAttack = GetAttacks(ComboAtaques.Quadrat).attacks.Length - 1;
+
+                        Debug.Log("Attack");
                     }
-                    passiveCombo.Add(PassiveCombo.TRIANGLEAIR);
-
-                    moveDirSaved = new Vector3();
-
-                    attacks = Attacks.AIR;
-                    currentComboAttacks = GetAttacks(ComboAtaques.air2);
-                    AirTrianglePress();
+                    passiveCombo.Add(PassiveCombo.QUADRATFLOOR);
+                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    attacks = Attacks.GROUND;
+                    currentComboAttacks = GetAttacks(ComboAtaques.Quadrat);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-                else if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
+
+                controller.ResetBotonesAtaques();
+                return true;
+            }
+            
+            if ((controller.ataqueTriangulo))
+            {
+                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                {
+                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                }
+
+                if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
                 {
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
@@ -1570,23 +1574,182 @@ public class PlayerControl : MonoBehaviour
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                     attacks = Attacks.GROUND;
                     currentComboAttacks = GetAttacks(ComboAtaques.Triangle);
+                    states = States.ATTACK;
                     PlayAttack();
                 }
-
-                states = States.ATTACK;
 
                 controller.ResetBotonesAtaques();
                 return true;
             }
 
-     
+            if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.baseCooldown)
+            {
+                this.gameObject.layer = 12;
+                //Si abilidad es == null return;
+                if (_abilityHolder.L2Square.isEmpty)
+                {
+                    return false;
+                }
+                //Retarget to enemy helper
+                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                {
+                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                }
+                
+                if (states == States.JUMP && _abilityHolder.L2Square.onAir)
+                {
+                    _abilityHolder.timeL2Square = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+
+                    moveDirSaved = new Vector3();
+
+                    attacks = Attacks.AIR;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+                 // si no esta saltando haz el ataque
+                else if (states != States.JUMP && !_abilityHolder.L2Square.onAir)
+                {
+                    _abilityHolder.timeL2Square = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+             
+                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    attacks = Attacks.GROUND;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+
+                controller.ResetBotonesAtaques();
+                return true;
+            }
+            
+            if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.baseCooldown)
+            {
+                this.gameObject.layer = 12;
+                //Si abilidad es == null return;
+                if (_abilityHolder.L2Triangle.isEmpty)
+                {
+                    return false;
+                }
+
+                //Retarget to enemy helper
+                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                {
+                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                }
+                
+                if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
+                {
+                    _abilityHolder.timeL2Triangle = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+
+                    moveDirSaved = new Vector3();
+
+                    attacks = Attacks.AIR;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+                // si no esta saltando haz el ataque
+                else if (states != States.JUMP && !_abilityHolder.L2Triangle.onAir)
+                {
+                    _abilityHolder.timeL2Triangle = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+             
+                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    attacks = Attacks.GROUND;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+          
+                controller.ResetBotonesAtaques();
+                return true;
+            }
+            
+            if (controller.ataqueCircleL2 && (Time.time - _abilityHolder.timeL2Circle) > _abilityHolder.L2Circle.baseCooldown)
+            {
+                this.gameObject.layer = 12;
+                //Si abilidad es == null return;
+                if (_abilityHolder.L2Circle.isEmpty)
+                {
+                    return false;
+                }
+
+
+                //Retarget to enemy helper
+                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                {
+                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                }
+                
+                if (states == States.JUMP && _abilityHolder.L2Circle.onAir)
+                {
+                    _abilityHolder.timeL2Circle = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+
+                    moveDirSaved = new Vector3();
+
+                    attacks = Attacks.AIR;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+                // si no esta saltando haz el ataque
+                else if (states != States.JUMP && !_abilityHolder.L2Circle.onAir)
+                {
+                    _abilityHolder.timeL2Circle = Time.time;
+                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    {
+                        damageMult = 1;
+                        currentComboAttack = -1;
+                    }
+             
+                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    attacks = Attacks.GROUND;
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
+                    states = States.ATTACK;
+                    PlayAttack();
+                }
+
+                controller.ResetBotonesAtaques();
+                return true;
+            }
+
         }
 
 
         if ((Time.time - attackStartTime) >= delay + delayDamage)
         {
-            currentComboAttacks = GetAttacks(ComboAtaques.air1);            
-
+            currentComboAttacks = GetAttacks(ComboAtaques.air1);          
         }
 
         return false;

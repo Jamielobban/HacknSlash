@@ -6,39 +6,130 @@ public class AbilityHolder : MonoBehaviour
 {
     public const int MAX_ABILITIES = 3;
     private int _currentAbilities = 0;
-    private BaseAbility _l2Square;
-    private BaseAbility _l2Triangle;
-    private BaseAbility _l2Circle;
+    private PlayerControl.Ataques _l2Square;
+    private PlayerControl.Ataques _l2Triangle;
+    private PlayerControl.Ataques _l2Circle;
+
+    public float timeL2Square, timeL2Triangle, timeL2Circle;
 
     public Image hudCooldownL2Square, hudCooldownL2Triangle, hudCooldownL2Circle;
+    public Image hudCooldownL2SquareParent, hudCooldownL2TriangleParent, hudCooldownL2CircleParent;
 
-    public BaseAbility L2Square => _l2Square;
-    public BaseAbility L2Triangle => _l2Triangle;
-    public BaseAbility L2Circle => _l2Circle;
+    public PlayerControl.Ataques L2Square => _l2Square;
+    public PlayerControl.Ataques L2Triangle => _l2Triangle;
+    public PlayerControl.Ataques L2Circle => _l2Circle;
 
-    public void AddAbility(BaseAbility ability)
+    private void Awake()
+    {
+        _l2Square.isEmpty = true;
+        _l2Triangle.isEmpty = true;
+        _l2Circle.isEmpty = true;
+    }
+
+    public void AddAbility(PlayerControl.Ataques ability)
     {
         if (CanAddAbility())
         {
-            if (_l2Square == null)
+            if (_l2Square.isEmpty)
             {
                 _l2Square = ability;
-                ability.hudCooldown = hudCooldownL2Square;
+                hudCooldownL2SquareParent.sprite = ability.spriteAbility;
+                hudCooldownL2Square.sprite = ability.spriteAbility;
+                _l2Square.isEmpty = false;
             }
-            else if (_l2Triangle == null)
+            else if (_l2Triangle.isEmpty)
             {
                 _l2Triangle = ability;
-                ability.hudCooldown = hudCooldownL2Triangle;
+                hudCooldownL2TriangleParent.sprite = ability.spriteAbility;
+                hudCooldownL2Triangle.sprite = ability.spriteAbility;
+
+                _l2Triangle.isEmpty = false;
             }
             else
             {
                 _l2Circle = ability;
-                ability.hudCooldown = hudCooldownL2Circle;
+                hudCooldownL2CircleParent.sprite = ability.spriteAbility;
+                hudCooldownL2Circle.sprite = ability.spriteAbility;
+
+                _l2Circle.isEmpty = false;
             }
 
             _currentAbilities++;
         }
     }
+
+    private void Update()
+    {
+        if(!_l2Square.isEmpty)
+        {
+            if ((Time.time - timeL2Square) > _l2Square.baseCooldown)
+            {
+                hudCooldownL2Square.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2SquareCooldown(Time.time - timeL2Square);
+            }
+        }
+       if(!_l2Triangle.isEmpty)
+       {
+            if ((Time.time - timeL2Triangle) > _l2Triangle.baseCooldown)
+            {
+                hudCooldownL2Triangle.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2TriangleCooldown(Time.time - timeL2Triangle);
+
+            }
+        }
+
+       if(!_l2Circle.isEmpty)
+       {
+            if ((Time.time - timeL2Circle) > _l2Circle.baseCooldown)
+            {
+                hudCooldownL2Circle.fillAmount = 0;
+            }
+            else
+            {
+                UpdateHudL2CircleCooldown(Time.time - timeL2Circle);
+
+            }
+        }
+
+    }
+
+    //public void UpdateHudL2SquareCooldown(float time)
+    //{
+    //    hudCooldownL2Square.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+    //}
+    //public void UpdateHudL2TriangleCooldown(float time)
+    //{
+    //    hudCooldownL2Triangle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+
+    //}
+    //public void UpdateHudL2CircleCooldown(float time)
+    //{
+    //    hudCooldownL2Circle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+    //}v
+    public void UpdateHudL2SquareCooldown(float time)
+    {
+        float progress = Mathf.Clamp01(1 - (time / L2Square.baseCooldown));
+        hudCooldownL2Square.fillAmount = progress;
+    }
+
+    public void UpdateHudL2TriangleCooldown(float time)
+    {
+        float progress = Mathf.Clamp01(1 - (time / L2Triangle.baseCooldown));
+        hudCooldownL2Triangle.fillAmount = progress;
+    }
+
+    public void UpdateHudL2CircleCooldown(float time)
+    {
+        float progress = Mathf.Clamp01(1 - (time / L2Circle.baseCooldown));
+        hudCooldownL2Circle.fillAmount = progress;
+    }
+
     public bool CanAddAbility() => _currentAbilities < MAX_ABILITIES;
 
 }
