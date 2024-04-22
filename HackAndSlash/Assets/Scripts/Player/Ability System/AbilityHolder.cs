@@ -99,18 +99,35 @@ public class AbilityHolder : MonoBehaviour
 
     }
 
+    //public void UpdateHudL2SquareCooldown(float time)
+    //{
+    //    hudCooldownL2Square.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+    //}
+    //public void UpdateHudL2TriangleCooldown(float time)
+    //{
+    //    hudCooldownL2Triangle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+
+    //}
+    //public void UpdateHudL2CircleCooldown(float time)
+    //{
+    //    hudCooldownL2Circle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
+    //}v
     public void UpdateHudL2SquareCooldown(float time)
     {
-        hudCooldownL2Square.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
+        float progress = Mathf.Clamp01(1 - (time / L2Square.baseCooldown));
+        hudCooldownL2Square.fillAmount = progress;
     }
+
     public void UpdateHudL2TriangleCooldown(float time)
     {
-        hudCooldownL2Triangle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
-
+        float progress = Mathf.Clamp01(1 - (time / L2Triangle.baseCooldown));
+        hudCooldownL2Triangle.fillAmount = progress;
     }
+
     public void UpdateHudL2CircleCooldown(float time)
     {
-        hudCooldownL2Circle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 0, 1);
+        float progress = Mathf.Clamp01(1 - (time / L2Circle.baseCooldown));
+        hudCooldownL2Circle.fillAmount = progress;
     }
 
     public bool CanAddAbility() => _currentAbilities < MAX_ABILITIES;
