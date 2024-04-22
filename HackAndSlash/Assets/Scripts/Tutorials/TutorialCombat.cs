@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TutorialCombat : MonoBehaviour
 {
-    /*[SerializeField] string[] dialoguesIntro;
+    [SerializeField] string[] dialoguesIntro;
     [SerializeField] string[] dialoguesItems;
     [SerializeField] string[] dialoguesChest;
     [SerializeField] string[] dialoguesEvent;
@@ -42,21 +42,18 @@ public class TutorialCombat : MonoBehaviour
         if(ManagerEnemies.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
-            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesItems));
         }
         else if(ManagerEnemies.Instance.CurrentGlobalTime >= 70 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);
-            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesChest));
         }
         else if(ManagerEnemies.Instance.CurrentGlobalTime >= 95 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
             eventActivable.SetActive(true);
-            GameManager.Instance.PauseGame();
             StartCoroutine(Speak(dialoguesEvent));
             campEnemies.SetActive(false);
         }
@@ -65,9 +62,7 @@ public class TutorialCombat : MonoBehaviour
             if(FindObjectOfType<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
             {
                 hasReadEndTutorial = true;
-
                 Invoke(nameof(StartEnd), 1.5f);
-
                 ManagerEnemies.Instance.isInEvent = true;
             }
         }
@@ -106,6 +101,6 @@ public class TutorialCombat : MonoBehaviour
         {
             GameManager.Instance.PauseGame();
         }
-    }*/
+    }
 
 }
