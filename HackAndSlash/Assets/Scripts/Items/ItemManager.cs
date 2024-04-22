@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using static Enums;
+using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
@@ -37,7 +38,15 @@ public class ItemManager : MonoBehaviour
         else
         {
             if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
-                return GetRandomItemOfRarity(RarityType.Ability);
+            {
+                Item _item;
+                do
+                {
+                    _item = GetRandomItemOfRarity(RarityType.Ability);
+
+                } while (GameManager.Instance.Player.inventory.IsItemInInventoryByID(_item.data.ID));
+                return _item;
+            }
             else
             {
                 return GetRandomItemOfRarity(RarityType.Legendary);

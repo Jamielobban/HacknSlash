@@ -133,7 +133,22 @@ public class InventorySO : ScriptableObject
 
         return returnValue;
     }
+    public bool IsItemInInventoryByID(int id)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (!items[i].IsEmpty)
+            {
+                if (items[i].item.ID == id)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
 
+
+    }
     public InventoryItem GetItemAt(int itemIndex) => items[itemIndex];
     public void AddItem(InventoryItem item) => AddItem(item.item, item.quantity);
 }
