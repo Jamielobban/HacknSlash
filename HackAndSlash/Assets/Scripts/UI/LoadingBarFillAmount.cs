@@ -10,6 +10,7 @@ public class LoadingBarFillAmount : MonoBehaviour
 
     private void OnEnable()
     {
+        imageLoading = GetComponent<Image>();
         imageLoading.fillAmount = 0;
     }
 }
