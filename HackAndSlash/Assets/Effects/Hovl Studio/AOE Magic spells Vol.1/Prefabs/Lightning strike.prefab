@@ -19668,7 +19668,6 @@ GameObject:
   - component: {fileID: 198326567477740528}
   - component: {fileID: 199239826631146052}
   - component: {fileID: 108431015627444874}
-  - component: {fileID: 4185375983719212116}
   m_Layer: 0
   m_Name: StartShoot
   m_TagString: Untagged
@@ -24677,34 +24676,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 1.68e-43, z: 1.3968e-41, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &4185375983719212116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1558425910830510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!1 &1573406218364202
 GameObject:
   m_ObjectHideFlags: 0
@@ -29618,7 +29594,7 @@ GameObject:
   - component: {fileID: 108990421757153786}
   - component: {fileID: 82033017084784452}
   - component: {fileID: 114635776230039818}
-  - component: {fileID: 488596749648677457}
+  - component: {fileID: 3716937156948371417}
   m_Layer: 0
   m_Name: Lightning strike
   m_TagString: Untagged
@@ -30282,7 +30258,7 @@ ParticleSystem:
         m_RotationOrder: 4
   ShapeModule:
     serializedVersion: 6
-    enabled: 0
+    enabled: 1
     type: 4
     angle: 10
     length: 5
@@ -30484,7 +30460,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -34846,7 +34822,7 @@ MonoBehaviour:
   RandomVolume: 0
   minVolume: 0.4
   maxVolume: 1
---- !u!114 &488596749648677457
+--- !u!114 &3716937156948371417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34886,7 +34862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4466093931513064
 Transform:
   m_ObjectHideFlags: 0
@@ -54421,7 +54397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4151675268404296
 Transform:
   m_ObjectHideFlags: 0

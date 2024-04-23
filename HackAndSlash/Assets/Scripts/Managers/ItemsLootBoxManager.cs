@@ -120,6 +120,10 @@ public class ItemsLootBoxManager : MonoBehaviour
 
     public void ShowNewOptions()
     {
+        if(GameManager.Instance.Player.states == PlayerControl.States.DEATH)
+        {
+            return;
+        }
         AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         levelUpEffects.SetActive(true);
         itemChoice.SetActive(true);
