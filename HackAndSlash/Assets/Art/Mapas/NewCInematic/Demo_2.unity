@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 963cf1896b72ff84dabaf18cf823a5a2,
+  m_LightingDataAsset: {fileID: 112000000, guid: ed88a4ded1d3a4e4e9cc98b6bcd4aedf,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: c6c79837122ccb64cb1bbc55da33bb4d,
     type: 2}
@@ -4163,7 +4163,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 888c78af598b9514e90de3f8b7dcce91, type: 2}
+  - {fileID: 2100000, guid: 70afcd2ce5a1d96488a0fa862f7466e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15208,6 +15208,7 @@ GameObject:
   - component: {fileID: 1215470765}
   - component: {fileID: 1215470764}
   - component: {fileID: 1215470763}
+  - component: {fileID: 1215470767}
   m_Layer: 0
   m_Name: Camera (1)
   m_TagString: Untagged
@@ -15333,6 +15334,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 13.26, y: 413.269, z: -1.923}
+--- !u!114 &1215470767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215470762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: d251ced776232ec438c1011270891b93, type: 2}
 --- !u!1001 &1225304206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20405,7 +20423,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 1500
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
