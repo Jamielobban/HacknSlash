@@ -16,9 +16,25 @@ public class PlayerControl : MonoBehaviour
     public GameObject hudParent;
     public AbilityHolder _abilityHolder;
     public bool canAttackOnAir = false;
+    public bool canLifeSteal = false;
     [Space]
     #endregion
+    #region Stadistics
+    [Header("Stadistics")]
+    public PlayerData stats;
+    
+    public float critChance;
+    public float attackDamage;
+    public float healthRegen;
+    public float timeToHeal;
+    public float critDamageMultiplier;
 
+    public float walkSpeed;
+    public float runSpeed;
+    public float walkSpeedAir;
+    public float runSpeedAir;
+    [Space]
+    #endregion
 
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
@@ -50,10 +66,6 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject cameraGo;
     public float CameraRotatSpeed;
-    public float walkSpeed;
-    public float runSpeed;
-    public float walkSpeedAir;
-    public float runSpeedAir;
 
     public bool HasDoubleJump;
 
@@ -236,13 +248,7 @@ public class PlayerControl : MonoBehaviour
 
     public Animator desaparecer;
 
-    public PlayerData stats;
 
-    public float critChance;
-    public float attackDamage;
-    public float healthRegen;
-    public float timeToHeal;
-    public float critDamageMultiplier;
     public Rigidbody rb;
 
     void Start()
