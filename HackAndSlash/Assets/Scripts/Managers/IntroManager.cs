@@ -49,7 +49,7 @@ public class IntroManager : MonoBehaviour
     {
         yield return new WaitForSeconds(enterWaitTime);
         blackCyborg.Speak();
-        blackCyborg.NextDialogue();
+        //blackCyborg.NextDialogue();
     }
 
     void ActivateScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL, imageFillLoading);    
