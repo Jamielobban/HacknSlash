@@ -99,19 +99,6 @@ public class AbilityHolder : MonoBehaviour
 
     }
 
-    //public void UpdateHudL2SquareCooldown(float time)
-    //{
-    //    hudCooldownL2Square.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
-    //}
-    //public void UpdateHudL2TriangleCooldown(float time)
-    //{
-    //    hudCooldownL2Triangle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
-
-    //}
-    //public void UpdateHudL2CircleCooldown(float time)
-    //{
-    //    hudCooldownL2Circle.fillAmount = Mathf.Lerp(time / L2Square.baseCooldown, 1, 0);
-    //}v
     public void UpdateHudL2SquareCooldown(float time)
     {
         float progress = Mathf.Clamp01(1 - (time / L2Square.baseCooldown));

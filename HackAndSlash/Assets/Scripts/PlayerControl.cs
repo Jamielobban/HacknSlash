@@ -309,52 +309,6 @@ public class PlayerControl : MonoBehaviour
     bool CheckIfNextAttack()
     {
 
-        //if (currentComboAttacks.combo == ComboAtaques.air2)
-        //{
-
-        //    if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.AIR)
-        //    {
-        //        attacks = Attacks.FALL;
-        //        playerAnim.CrossFadeInFixedTime("FallAttack", 0.1f);
-
-        //    }
-        //    else if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque && attacks == Attacks.FALL)
-        //    {
-        //        RaycastHit hit;
-
-        //        if (Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
-        //        {
-        //            if (hit.distance < 0.5f)
-        //            {
-        //                playerAnim.speed = 1;
-
-        //                StartCoroutine(DelayGolpe(0, 0, 1, damageMult));
-
-        //                playerAnim.CrossFadeInFixedTime("LandAttack", 0.1f);
-        //                doubleJump = false;
-
-        //                comboFinishedTime = Time.time;
-        //                attackFinished = true;
-        //                delayCombos = currentComboAttacks.attacks[currentComboAttack].delayFinal;
-        //                dealyAttackFall = Time.time;
-        //                attacks = Attacks.LAND;
-        //                currentComboAttack = -1;
-        //                moveDirSaved = new Vector3();
-        //                landHeight = hit.point.y;
-
-
-        //                return false;
-        //            }
-
-        //        }
-        //    }
-        //    if (CheckIfDash())
-        //    {
-        //        dashDown = true;
-        //    }
-        //    return false;
-        //}
-
         if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque)
         {
 
@@ -383,10 +337,6 @@ public class PlayerControl : MonoBehaviour
                 }
 
                 CheckIfIsFalling();
-
-
-
-
             }
 
             return true;
@@ -415,9 +365,6 @@ public class PlayerControl : MonoBehaviour
             {
                 return;
             }
-
-
-
         }
         player.transform.LookAt(player.transform.position + moveDirSaved);
         if (moves == Moves.IDLE)
@@ -471,7 +418,6 @@ public class PlayerControl : MonoBehaviour
             {
                 currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).localEulerAngles = new Vector3(0, 180, 0);
                 currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).localPosition += new Vector3(0, 0, 2);
-
             }
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject.SetActive(true);
@@ -491,18 +437,14 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator DesactivarCollisionGolpe(float time, GameObject col)
     {
-
         yield return new WaitForSeconds(time);
        col.GetComponent<Collider>().enabled = false;
-
     }
 
     private IEnumerator DesactivarCollisionGolpeBlessing(float time, Collider golpe)
     {
-
         yield return new WaitForSeconds(time);
         golpe.enabled = false;
-
     }
 
     Vector3 enemy;
@@ -510,7 +452,6 @@ public class PlayerControl : MonoBehaviour
     void Aparecer()
     {
         playerAnim.Play("Aparecer", 1);
-
     }
     void PlayAttack()
     {
@@ -825,14 +766,16 @@ public class PlayerControl : MonoBehaviour
             return;
         //CheckPerfectHit();
 
-        if(controller.L2Pressed && !hudParent.activeSelf)
-        {
-            hudParent.SetActive(true);
-        }
-        else if(!controller.L2Pressed && hudParent.activeSelf)
-        {
-            hudParent.SetActive(false);
-        }
+       
+
+        //if(controller.L2Pressed && !hudParent.activeSelf)
+        //{
+        //    hudParent.SetActive(true);
+        //}
+        //else if(!controller.L2Pressed && hudParent.activeSelf)
+        //{
+        //    hudParent.SetActive(false);
+        //}
 
 
         RotateCamera();

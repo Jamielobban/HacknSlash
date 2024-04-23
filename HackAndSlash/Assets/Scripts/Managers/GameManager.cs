@@ -26,7 +26,7 @@ using UnityEngine.UI;
 
         private bool _isPaused;
         private PlayerControl _player;
-        public PlayerControl Player => _player;
+        public PlayerControl Player => GetPlayer();
         public bool IsPaused => _isPaused;
 
         public bool isTutorialCompleted = false;
@@ -71,7 +71,6 @@ using UnityEngine.UI;
                 {
                     _progresionBar.fillAmount = 1;
                     async.allowSceneActivation = true;
-                
                 }
                 yield return null;
             }
@@ -152,5 +151,14 @@ using UnityEngine.UI;
             _isPaused = pause;
         }
 
-    }
+        public PlayerControl GetPlayer()
+        {
+            if(_player == null)
+            {
+                _player = FindObjectOfType<PlayerControl>();
+            }
+
+            return _player;
+        }
+}
 

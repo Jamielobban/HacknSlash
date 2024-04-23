@@ -44,13 +44,13 @@ public class TutorialCombat : MonoBehaviour
             hasReadedItems = true;
             StartCoroutine(Speak(dialoguesItems));
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 75 && !hasReadedChest)
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 82 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);
             StartCoroutine(Speak(dialoguesChest));
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 95 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
             eventActivable.SetActive(true);
