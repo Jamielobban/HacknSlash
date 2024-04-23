@@ -29,6 +29,7 @@ public class ManagerEnemies : MonoBehaviour
 
     [Header("Spawn Settings:")]
     public List<GameObject> spawners = new List<GameObject>();
+    public bool lastSpawnerLastOne = false;
 
     [Header("Enemies Settings: ")]
     public List<EnemyBase> enemies = new List<EnemyBase>();
@@ -90,6 +91,15 @@ public class ManagerEnemies : MonoBehaviour
             if (spawners.Count - 1 > _currentSpawnerIndex)
             {
                 NextSpawner();
+            }
+            else if(spawners.Count - 1 <= _currentSpawnerIndex && lastSpawnerLastOne)
+            {
+                if(_currentSpawner != null)
+                {
+                    ResetSpawnedEnemies();
+                    UpdateEnemiesSpawned();
+                    Destroy(_currentSpawner);
+                }
             }
             _timerSpawners = 0f;
         }
