@@ -8,31 +8,53 @@ public class BlackCyborg : Interactive, IInteractable
 {
     [Header("DIALOGUE AREA")]
 
-    [TextArea]
-    [SerializeField] string[] dialogues;
+    [SerializeField] List<ListWrapperDialogue> dialogues;
     [SerializeField] SimpleRTVoiceExample voice;
 
     int currentDialogue = 0;
-    
+    int currentDialogueLine = 0;
+
     public Action OnDialogueLineDone;
     public Action OnDialogueEnded;
-    public void NextDialogue() => currentDialogue++;    
-    private void DialogueLineDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
-    private void DialogueEnded() => OnDialogueEnded?.Invoke(); //Aqui es ficara la funció de color a verd
-    public void Speak() => StartCoroutine(SpeakCoroutine());     
+    public Action OnConversationEnded;
+    private void DialogueDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
+    private void ConversationEnded() => OnConversationEnded?.Invoke(); //Aqui es ficara la funció de color a verd
+    public void Speak() => StartCoroutine(SpeakCoroutine());
 
     IEnumerator SpeakCoroutine()
     {
-        if (currentDialogue > dialogues.Length - 1)
-            DialogueEnded();
-        voice.Speak(dialogues[currentDialogue], name);
+        voice.Speak(dialogues[currentDialogue].collection[currentDialogueLine], name);
         yield return new WaitUntil(() => voice.playing == false);
-        DialogueLineDone();       
-    }  
+
+        if (currentDialogueLine == dialogues[currentDialogue].collection.Count - 1)
+        {
+            if (currentDialogue == dialogues.Count - 1)
+            {
+                Debug.Log("end");
+                ConversationEnded();
+            }
+            else
+            {
+                Debug.Log("+ dialogue");
+                DialogueDone();
+                currentDialogue++;
+            }
+        }
+        else
+        {
+            Debug.Log("+ line");
+            currentDialogueLine++;
+            yield return new WaitForSeconds(0.5f);
+            Speak();
+        }
+
+    }
     public void Interact()
     {
         if (!canInteract) return;
 
         InteractPerformed();
     }
+
+
 }

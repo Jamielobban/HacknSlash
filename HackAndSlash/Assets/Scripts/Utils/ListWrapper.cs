@@ -11,6 +11,15 @@ public class ListWrapper<T>
 }
 
 [System.Serializable]
+public class ListWrapperDialogue
+{
+    [TextArea]
+    [SerializeField]
+    public List<string> collection;
+}
+
+
+[System.Serializable]
 public class MultipleListElement<T, T1>
 {
     [SerializeField]
@@ -18,4 +27,3 @@ public class MultipleListElement<T, T1>
     [SerializeField]
     public T1 value;
 }
-
