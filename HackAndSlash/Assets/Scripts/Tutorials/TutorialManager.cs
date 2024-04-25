@@ -21,7 +21,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] Animator animatorLeft;
     [SerializeField] Animator animatorRight;
 
-    [SerializeField] BoxCollider colliderBlockingPyramid;
+    [SerializeField] BoxCollider colliderBlockingPath;
 
     Enums.NewTutorialState tutorialState;
 
@@ -31,9 +31,9 @@ public class TutorialManager : MonoBehaviour
         fade = new FadeScript(fadeImage);
         tutorialCM = GetComponent<TutorialComboManager>();
         blackCyborg = FindObjectOfType<BlackCyborg>();
-        pyramid = FindObjectOfType<PyramidTeleport>();
+        //pyramid = FindObjectOfType<PyramidTeleport>();
         blackCyborg.OnInteract += RobotInteraction;
-        pyramid.OnInteract += PyramidInteraction;
+        //pyramid.OnInteract += PyramidInteraction;
         tutorialCM.OnCombosListComplete += PhaseComplete;
         tutorialCM.OnTutorialComboComplete += ChangeStateToPyramid;
         blackCyborg.OnConversationEnded += MoveRobots;
@@ -46,9 +46,9 @@ public class TutorialManager : MonoBehaviour
         fade.FadeIn(1.8f);
         tutorialState = Enums.NewTutorialState.INACTIVE;
         blackCyborgObjectiveMarker.SetActive(true);
-        pyramidObjectiveMarker.SetActive(false);
+        //pyramidObjectiveMarker.SetActive(false);
         blackCyborg.SetCanInteract(true);
-        pyramid.SetCanInteract(false);
+        //pyramid.SetCanInteract(false);
         loadingMenu.SetActive(false);
     }
 
@@ -77,8 +77,8 @@ public class TutorialManager : MonoBehaviour
                 blackCyborg.SetCanInteract(false);
                 break;
             case Enums.NewTutorialState.PYRAMIDE:
-                pyramid.SetCanInteract(true);
-                pyramidObjectiveMarker.SetActive(true);
+                //pyramid.SetCanInteract(true);
+                //pyramidObjectiveMarker.SetActive(true);
                 break;
             default:
                 break;
@@ -87,7 +87,7 @@ public class TutorialManager : MonoBehaviour
 
     private void PyramidInteraction()
     {
-        pyramid.SetCanInteract(false);
+        //pyramid.SetCanInteract(false);
         tutorialState = Enums.NewTutorialState.FINISHED;
         loadingMenu.SetActive(true);
         Invoke(nameof(ActiveScene), 1f);
@@ -98,7 +98,7 @@ public class TutorialManager : MonoBehaviour
     private void OnDestroy()
     {
         blackCyborg.OnInteract -= RobotInteraction;
-        pyramid.OnInteract -= PyramidInteraction;
+        //pyramid.OnInteract -= PyramidInteraction;
         tutorialCM.OnCombosListComplete -= PhaseComplete;
         tutorialCM.OnTutorialComboComplete -= ChangeStateToPyramid;
     }
@@ -115,8 +115,8 @@ public class TutorialManager : MonoBehaviour
     IEnumerator StopRobots()
     {
         yield return new WaitForSeconds(1.3f);
-        Vector3 currentPyramidPos = colliderBlockingPyramid.transform.position;
-        colliderBlockingPyramid.transform.position = new Vector3(currentPyramidPos.x, currentPyramidPos.y, currentPyramidPos.z - 3);
+        colliderBlockingPath.enabled = false;
+        //colliderBlockingPyramid.transform.position = new Vector3(currentPyramidPos.x, currentPyramidPos.y, currentPyramidPos.z - 3);
         animatorLeft.CrossFadeInFixedTime("IdleArmed", 0.2f);
         animatorRight.CrossFadeInFixedTime("IdleArmed", 0.2f);
     }
