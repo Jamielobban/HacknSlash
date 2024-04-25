@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 public class ProjectileMover : DamageDealer
 {
@@ -17,7 +18,7 @@ public class ProjectileMover : DamageDealer
     {
         GetComponent<Collider>().enabled = false;
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * speed);
+        //rb.AddForce(transform.forward * speed);
     }
     public void Shoot()
     {

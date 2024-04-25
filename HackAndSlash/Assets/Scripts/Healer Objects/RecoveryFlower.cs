@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecoveryFlower : MonoBehaviour
+public class RecoveryFlower : StructureEnemiesLife
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject gemsOfPower;
+
+    protected override void Awake()
     {
-        
+        gemsOfPower.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Activate()
     {
-        
+        base.Activate();
+        gemsOfPower.SetActive(true);
+    }
+
+    public override void ResetStructure()
+    {
+        base.ResetStructure();
+        gemsOfPower.SetActive(false);
     }
 }

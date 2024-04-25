@@ -1,22 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SimpleProjectileSphere : MonoBehaviour {
 
     public float force;
-
+    public Transform direction;
     private Rigidbody rb;
 
-    // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * force);
-        Destroy(gameObject, 2.5f);
+        rb.AddForce((direction.position - transform.position) * force);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void Update()
+    {
+        if(Vector3.Distance(transform.position, direction.position) < .75f)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
