@@ -37,6 +37,8 @@ public class AttackCollider : MonoBehaviour
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
 
+        _player.OnHit?.Invoke();
+
         Vector3 pos = _player.gameObject.transform.position;
         pos.y = enemyPos.position.y;
         Vector3 dir = pos - enemyPos.position;

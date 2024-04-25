@@ -44,6 +44,8 @@ public class EnemyBase : PoolableObject
     public bool IsDead = false;
     public bool attackInterrumpted = false;
     public bool isAttacking = false;
+
+    public StructureEnemiesLife nearStructure = null; // for check if it's near a structure that will stack enemy deaths
     
     // -- Getters -- //
     public PlayerControl Player => _player;
@@ -241,6 +243,14 @@ public class EnemyBase : PoolableObject
             Destroy(gameObject);
         }
         healthBar.SetActive(false);
+
+        if(nearStructure != null && !nearStructure.isActive)
+        {
+            nearStructure.AddKilledEnemy();
+            GameObject go = Instantiate(nearStructure.particleToCharge,
+                new Vector3(transform.position.x, transform.position.y + .75f ,transform.position.z), Quaternion.identity);
+            go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
+        }
     }
     
     public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)

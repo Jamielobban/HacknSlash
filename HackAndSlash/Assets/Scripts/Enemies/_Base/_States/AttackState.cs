@@ -15,10 +15,8 @@ public class AttackState : EnemyStateBase
 
     public override void OnLogic()
     {
-        Debug.Log("in Attacking");
         if (!_enemyBase.isAttacking)
         {
-            Debug.Log("End Attacking");
             fsm.StateCanExit();
         }
     }

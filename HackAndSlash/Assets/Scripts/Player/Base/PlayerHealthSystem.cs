@@ -61,7 +61,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        if (_currentHealth != maxHealth)
+        if (_currentHealth != maxHealth && amount >= 0.1)
         {
             _player.healPixel.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), amount);
         }

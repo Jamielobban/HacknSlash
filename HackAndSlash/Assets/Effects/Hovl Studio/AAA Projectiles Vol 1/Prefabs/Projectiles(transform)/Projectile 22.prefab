@@ -4803,7 +4803,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 09b4ce3140709214d891c32fdea6004c, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4885,7 +4884,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094010528761658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0.22, y: 1, z: 0.456}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9708,15 +9707,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   speed: 25
-  hitOffset: 0.1
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
+  timeToDestroy: 5
   hit: {fileID: 1296333435415890, guid: a1c8123c6777d6f45948a5e4b821a569, type: 3}
-  flash: {fileID: 1117997381529862, guid: 0254f8e683e300c4eb1b598011e9b7c8, type: 3}
   Detached:
   - {fileID: 1071474767691284}
   - {fileID: 1228953972368122}
+  UseFirePointRotation: 0
+  rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!199 &199290412375127048
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9847,7 +9846,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: -1, y: 8, z: 7, w: -9}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -14726,7 +14725,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9509d65f44bec55498ba99d0a564e28b, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

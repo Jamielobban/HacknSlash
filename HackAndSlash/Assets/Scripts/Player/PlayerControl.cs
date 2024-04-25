@@ -16,7 +16,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject hudParent;
     public AbilityHolder _abilityHolder;
     public bool canAttackOnAir = false;
-    public bool canLifeSteal = false;
+    [Range(0,1)]public float lifeStealPercent;
+    public Action OnHit;
     [Space]
     #endregion
     #region Stadistics
@@ -38,6 +39,9 @@ public class PlayerControl : MonoBehaviour
 
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
+
+    public bool blockCameraRotation;
+
     [SerializeField]
     LayerMask layerSuelo;
     public List<MMF_Player> feedbacksPlayer = new List<MMF_Player>();
@@ -146,8 +150,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-
-
     public PlayerHUDSystem hud;
 
     public Blessing[] blessing;
@@ -253,7 +255,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-
+        OnHit += StealHeal;
         rb = GetComponent<Rigidbody>();
         critChance = stats.critChance;
         attackDamage = stats.attackDamage;
@@ -273,6 +275,14 @@ public class PlayerControl : MonoBehaviour
 
         states = States.IDLE;
         moves = Moves.IDLE;
+    }
+    private void StealHeal()
+    {
+        float lifeToHeal = attackDamage * lifeStealPercent;
+        if(lifeToHeal != 0)
+        {
+            healthSystem.Heal(lifeToHeal);
+        }
     }
 
     public ListaAtaques GetAttacks(ComboAtaques combo)
@@ -356,10 +366,7 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 gravity = new Vector3(0, this.gravity * (Time.time - fallStartTime), 0);
 
-
-        rb.AddForce(gravity * Time.deltaTime, ForceMode.Force);
-        
-
+        rb.AddForce(gravity * Time.deltaTime, ForceMode.Force);     
     }
     void moveInAir(float vel)
     {
@@ -809,7 +816,10 @@ public class PlayerControl : MonoBehaviour
                 rb.drag = 15;
                 CheckNextAttack();
                 AttackMovement();
-                RotatePlayer(3);
+                if(!blockCameraRotation)
+                {
+                    RotatePlayer(3);
+                }
                 movementController.transform.localPosition = new Vector3();
 
 
