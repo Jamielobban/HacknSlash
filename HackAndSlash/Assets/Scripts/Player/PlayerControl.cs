@@ -37,6 +37,8 @@ public class PlayerControl : MonoBehaviour
     [Space]
     #endregion
 
+    public Collider getDamagePlayer;
+
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
 
@@ -893,7 +895,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case States.DASH:
                 this.gameObject.layer = 12;
-
+                getDamagePlayer.enabled = false;
                 rb.drag = 15;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, this.transform.GetChild(0).transform.localEulerAngles.y, 0);
                 if (CheckIfJump())
@@ -959,12 +961,14 @@ public class PlayerControl : MonoBehaviour
                             else
                             {
                                 gameObject.layer = 3;
+                                getDamagePlayer.enabled = true;
                                 OnAir = false;
                             }
                         }
                         else
                         {
                             gameObject.layer = 3;
+                            getDamagePlayer.enabled = true;
 
                             OnAir = false;
                         }                        
@@ -1544,6 +1548,8 @@ public class PlayerControl : MonoBehaviour
             if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.baseCooldown)
             {
                 this.gameObject.layer = 12;
+                getDamagePlayer.enabled = false;
+
                 //Si abilidad es == null return;
                 if (_abilityHolder.L2Square.isEmpty)
                 {
@@ -1597,6 +1603,8 @@ public class PlayerControl : MonoBehaviour
             if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.baseCooldown)
             {
                 this.gameObject.layer = 12;
+                getDamagePlayer.enabled = false;
+
                 //Si abilidad es == null return;
                 if (_abilityHolder.L2Triangle.isEmpty)
                 {
@@ -1651,6 +1659,8 @@ public class PlayerControl : MonoBehaviour
             if (controller.ataqueCircleL2 && (Time.time - _abilityHolder.timeL2Circle) > _abilityHolder.L2Circle.baseCooldown)
             {
                 this.gameObject.layer = 12;
+                getDamagePlayer.enabled = false;
+
                 //Si abilidad es == null return;
                 if (_abilityHolder.L2Circle.isEmpty)
                 {
@@ -1770,6 +1780,7 @@ public class PlayerControl : MonoBehaviour
         {
             healthSystem.IsDamageable = false;
             this.gameObject.layer = 12;
+            getDamagePlayer.enabled = false;
 
             controller.ResetBotonesAtaques();
 
@@ -1949,6 +1960,7 @@ public class PlayerControl : MonoBehaviour
         if (!controller.StartMove() && states != States.IDLE)
         {
             gameObject.layer = 3;
+            getDamagePlayer.enabled = true;
 
             healthSystem.IsDamageable = true;
 
