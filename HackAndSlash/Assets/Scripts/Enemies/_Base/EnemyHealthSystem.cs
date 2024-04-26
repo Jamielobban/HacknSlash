@@ -1,9 +1,11 @@
 ﻿using DamageNumbersPro;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class EnemyHealthSystem : MonoBehaviour, IDamageable
 {
     [SerializeField] private float _maxHealth;
+    public MMFeedbacks onHit;
     public float currentMaxHealth { get; set; }
     private float _currentHealth;
     private EnemyBase _enemyBase;
@@ -35,9 +37,10 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         }
         _currentHealth -= damage;
 
-        visualEffect.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)damage);
+        visualEffect.Spawn(transform.position + new Vector3(0f, Random.Range(1.8f, 2.2f), 0f), (int)damage);
 
-        // AUDIO GET DAMAGE
+
+        onHit.PlayFeedbacks();
 
         _enemyBase.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
