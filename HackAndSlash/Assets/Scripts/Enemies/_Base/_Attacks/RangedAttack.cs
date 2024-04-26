@@ -18,6 +18,7 @@ public class RangedAttack : BaseEnemyAttack
         GameObject bullet = Instantiate(bulletPrefab, instantiatePoint.position, Quaternion.identity);
         bullet.GetComponent<ProjectileMover>().damage = _currentDamage;
         bullet.GetComponent<ProjectileMover>().Shoot();
+        bullet.GetComponent<ProjectileMover>().getDamage = _enemyBase.playerGetDamageNumber;
     }
 
     public void EnableChannelAction()

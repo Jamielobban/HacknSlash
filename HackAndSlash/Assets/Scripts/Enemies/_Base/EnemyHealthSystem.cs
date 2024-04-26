@@ -25,14 +25,16 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
     public bool IsPlayer() => _isPlayer;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageNumber visualEffect)
     {
         if (_enemyBase.IsDead)
         {
             return;
         }
         _currentHealth -= damage;
-        
+
+        visualEffect.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)damage);
+
         _enemyBase.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
         

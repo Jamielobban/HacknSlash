@@ -19,8 +19,9 @@ public class Enums
         Hit,
         AutoDestruction,
         Dead
-    }
-    
+    }   
+
+
     public enum StateEvent
     {
         DetectPlayer,

@@ -1,3 +1,4 @@
+using DamageNumbersPro;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +9,11 @@ public class Spike : MonoBehaviour
     public float damage;
 
     public float knockbackForce = 1000;
+    public DamageNumber playerGetDamageNumber;
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IDamageable>().TakeDamage(damage);
+        other.GetComponent<IDamageable>().TakeDamage(damage, playerGetDamageNumber);
         GameObject player = other.gameObject.transform.parent.gameObject;
 
         Vector3 dir = (player.transform.position - transform.position).normalized;

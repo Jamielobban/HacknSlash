@@ -1,3 +1,4 @@
+using DamageNumbersPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ public class DamageableObject : MonoBehaviour, IDamageable
     }
     public bool IsPlayer() => _isPlayer;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageNumber visualEffect)
     {
         currentHealth -= damage;
         GameObject go = Instantiate(onHitVfx, new Vector3(transform.position.x, transform.position.y +0.5f, transform.position.z), Quaternion.identity);

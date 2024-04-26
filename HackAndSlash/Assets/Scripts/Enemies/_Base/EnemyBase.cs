@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DamageNumbersPro;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
@@ -20,8 +21,9 @@ public class EnemyBase : PoolableObject
     
     [Space] [Header("Base Attacks")] 
     public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
-    
+
     [Header("Variables")]
+    public DamageNumber playerGetDamageNumber;
     public Transform target;
     public Vector3 targetToSpecialMove;
     public GameObject healthBar;
@@ -45,8 +47,12 @@ public class EnemyBase : PoolableObject
     public bool attackInterrumpted = false;
     public bool isAttacking = false;
 
+
     public StructureEnemiesLife nearStructure = null; // for check if it's near a structure that will stack enemy deaths
-    
+
+    // Stadistics //
+    public float baseMoveSpeed;
+
     // -- Getters -- //
     public PlayerControl Player => _player;
     public NavMeshAgent Agent => _agent;
@@ -61,7 +67,7 @@ public class EnemyBase : PoolableObject
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _enemyFSM = new StateMachine<Enums.EnemyStates, Enums.StateEvent>();
-
+        baseMoveSpeed = Agent.speed;
         
         InitializeStates();
         InitializeTransitions();
@@ -144,8 +150,14 @@ public class EnemyBase : PoolableObject
     {
         _currentTime += Time.deltaTime;
         _enemyFSM.OnLogic();
-        // If enemy is to far despawn
-        if(Time.frameCount % 30 == 0 && gameObject.activeSelf)
+        DespawnByDistance();
+        SetMeleeAttackEnable();
+
+    }
+
+    protected void DespawnByDistance()
+    {
+        if (Time.frameCount % 30 == 0 && gameObject.activeSelf)
         {
             if (Mathf.Abs(Vector3.Distance(transform.position, _player.transform.position)) >= 80)
             {
@@ -169,11 +181,15 @@ public class EnemyBase : PoolableObject
                 }
             }
         }
+    }
+
+    protected void SetMeleeAttackEnable()
+    {
         if (_currentTime >= timeBetweenAttacks && !_enableMeleeAttack)
         {
             _enableMeleeAttack = true;
         }
-        else if(_currentTime <= timeBetweenAttacks && _enableMeleeAttack)
+        else if (_currentTime <= timeBetweenAttacks && _enableMeleeAttack)
         {
             _enableMeleeAttack = false;
         }
