@@ -69,6 +69,7 @@ public class ItemsLootBoxManager : MonoBehaviour
             if (itemChoice.activeSelf)
             {
                 itemChoice.SetActive(false);
+                ResetItemChoiceMenu();
             }
             else
             {
@@ -95,8 +96,7 @@ public class ItemsLootBoxManager : MonoBehaviour
         _player.inventory.AddItem(chosedItem);
         chosenItem.OnItemPickup(_player);
         
-        ResetItemChoiceMenu();
-        
+        ResetItemChoiceMenu();        
 
     }
 

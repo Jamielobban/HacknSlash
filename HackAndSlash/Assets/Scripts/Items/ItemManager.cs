@@ -2,70 +2,86 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using static Enums;
-using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
-    public List<Item> itemList = new List<Item>();
+
+    public Item[] commonItems;
+    public Item[] uncommonItems;
+    public Item[] rareItems;
+    public Item[] legendaryItems;
+
+    public List<Item> actionItems = new List<Item>();
+
+    public List<Item> abilityItems = new List<Item>();
 
     public int commonChance = 40;
     public int uncommonChance = 30;
     public int rareChance = 20;
-    public int legendaryChance = 5;
+    public int legendaryChance = 3;
+    public int itemActionChance = 2;
     public int abilityChance = 5;
     
     public Item GetRandomItem()
     {
-        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + abilityChance;
+        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance + abilityChance;
         int randomValue = Random.Range(0, totalChance);
 
         if (randomValue < commonChance)
         {
-            return GetRandomItemOfRarity(RarityType.Common);
+            return GetRandomItemInArray(commonItems);
         }
         else if (randomValue < commonChance + uncommonChance)
         {
-            return GetRandomItemOfRarity(RarityType.Uncommon);
+            return GetRandomItemInArray(uncommonItems);
         }
         else if (randomValue < commonChance + uncommonChance + rareChance)
         {
-            return GetRandomItemOfRarity(RarityType.Rare);
+            return GetRandomItemInArray(rareItems);
         }
         else if(randomValue < commonChance + uncommonChance + rareChance + legendaryChance)
         {
-            return GetRandomItemOfRarity(RarityType.Legendary);
+            return GetRandomItemInArray(legendaryItems);
+        }
+        else if(randomValue < commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance)
+        {
+            Item _item = GetRandomItemGuard(actionItems);
+            if(_item != null)
+            {
+                actionItems.Remove(_item);
+                return _item;
+            }
+            // Si no hay abilidades Legendary Item
+            return GetRandomItemInArray(legendaryItems);
         }
         else
         {
             if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
             {
-                Item _item;
-                do
-                {
-                    _item = GetRandomItemOfRarity(RarityType.Ability);
+                Item _item = GetRandomItemGuard(abilityItems);
 
-                } while (GameManager.Instance.Player.inventory.IsItemInInventoryByID(_item.data.ID));
-                return _item;
+                if (_item != null)
+                {
+                    abilityItems.Remove(_item);
+                    return _item;
+                }
             }
-            else
-            {
-                return GetRandomItemOfRarity(RarityType.Legendary);
-            }
+            // Si no hay abilidades Rare Item
+            return GetRandomItemInArray(rareItems); 
         }
     }
 
-    private Item GetRandomItemOfRarity(RarityType rarity)
+    private Item GetRandomItemGuard(List<Item> list)
     {
-        List<Item> itemsOfRarity = itemList.FindAll(item => item.data.rarityType == rarity);
-
-        if (itemsOfRarity.Count == 0)
+        if(list.Count <= 0)
         {
-            Debug.LogWarning("No items of rarity " + rarity + " found.");
             return null;
         }
 
-        return itemsOfRarity[Random.Range(0, itemsOfRarity.Count)];
+        return list[Random.Range(0, list.Count)];
     }
+
+    private Item GetRandomItemInArray(Item[] itemsArray) => itemsArray[Random.Range(0, itemsArray.Length)]; 
 
     public void SpawnItem(Vector3 initialPosition, GameObject itemSpawn)
     {
