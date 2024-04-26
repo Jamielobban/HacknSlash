@@ -37,8 +37,9 @@ public class PlayerControl : MonoBehaviour
     [Space]
     #endregion
 
+    float startRun;
     public Collider getDamagePlayer;
-
+    public CamZoom camZoom;
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
 
@@ -258,6 +259,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        startRun = Time.time;
         OnHit += StealHeal;
         rb = GetComponent<Rigidbody>();
         critChance = stats.critChance;
@@ -669,7 +671,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.CheckIfJump())
         {
-            gameObject.layer = 12;
+            gameObject.layer = 3;
             playerAnim.speed = 1f;
 
             controller.ResetBotonesAtaques();
@@ -782,7 +784,7 @@ public class PlayerControl : MonoBehaviour
             return;
         //CheckPerfectHit();
 
-       
+
 
         //if(controller.L2Pressed && !hudParent.activeSelf)
         //{
@@ -794,8 +796,10 @@ public class PlayerControl : MonoBehaviour
         //}
 
 
-        RotateCamera();
-
+        if (!blockCameraRotation)
+        {
+            RotateCamera();
+        }
         switch (states)
         {
             case States.IDLE:
@@ -817,11 +821,12 @@ public class PlayerControl : MonoBehaviour
                 break;
             case States.ATTACK:
                 rb.drag = 15;
+
                 CheckNextAttack();
                 AttackMovement();
                 if(!blockCameraRotation)
                 {
-                    RotatePlayer(3);
+                    RotatePlayer(1);
                 }
                 movementController.transform.localPosition = new Vector3();
 
@@ -872,12 +877,7 @@ public class PlayerControl : MonoBehaviour
                             break;
                         break;
                     case Attacks.RUN:
-                        if (CheckIfDash())
-                        {
-                            break;
-                        }
-                        if (CheckIfJump())
-                            break;
+
                         break;
                     case Attacks.LAND:
                         if ((Time.time - dealyAttackFall) < 0.5f)
@@ -895,7 +895,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case States.DASH:
-                this.gameObject.layer = 12;
+                this.gameObject.layer = 3;
                 getDamagePlayer.enabled = false;
                 rb.drag = 15;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, this.transform.GetChild(0).transform.localEulerAngles.y, 0);
@@ -1014,6 +1014,22 @@ public class PlayerControl : MonoBehaviour
                 if (CheckIfJump())
                     break;
 
+
+                if(doubleJump)
+                {
+                    float rotation = cameraGo.transform.GetChild(0).localEulerAngles.x;
+                    if (rotation < 300)
+                    {
+                        rotation += 360;
+
+                    }
+                    float rot = (rotation - 330)/60;
+                    
+                    float zoom = 50 + (20* rot);
+                    camZoom.SetFOVTarget(zoom);
+
+                    camZoom.StartFOVLerp(0.1f);
+                }
                 switch (jump)
                 {
 
@@ -1450,6 +1466,7 @@ public class PlayerControl : MonoBehaviour
             
             if (controller.ataqueCuadrado)
             {
+
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
@@ -1460,8 +1477,11 @@ public class PlayerControl : MonoBehaviour
 
                 if (states == States.JUMP )
                 {
+                        this.gameObject.layer = 3;
+
                     if(canAttackOnAir)
                     {
+
                         if ((Time.time - attackStartTime) >= delay + delayDamage)
                         {
                             damageMult = 1;
@@ -1486,6 +1506,7 @@ public class PlayerControl : MonoBehaviour
                 }               
                 else
                 {
+                    this.gameObject.layer = 12;
 
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
@@ -1515,12 +1536,14 @@ public class PlayerControl : MonoBehaviour
             
             if ((controller.ataqueTriangulo))
             {
+                this.gameObject.layer = 12;
+
                 if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                 {
                     player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
                 }
 
-                if (states != States.JUMP || states == States.JUMP && currentComboAttack != -1)
+                if (states != States.JUMP)
                 {
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
@@ -1548,7 +1571,6 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.baseCooldown)
             {
-                this.gameObject.layer = 12;
                 getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
@@ -1573,7 +1595,7 @@ public class PlayerControl : MonoBehaviour
 
                     moveDirSaved = new Vector3();
 
-                    attacks = Attacks.AIR;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1591,7 +1613,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
                     if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                    attacks = Attacks.GROUND;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1603,7 +1625,6 @@ public class PlayerControl : MonoBehaviour
             
             if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.baseCooldown)
             {
-                this.gameObject.layer = 12;
                 getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
@@ -1629,7 +1650,7 @@ public class PlayerControl : MonoBehaviour
 
                     moveDirSaved = new Vector3();
 
-                    attacks = Attacks.AIR;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1647,7 +1668,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
                     if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                    attacks = Attacks.GROUND;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1659,7 +1680,6 @@ public class PlayerControl : MonoBehaviour
             
             if (controller.ataqueCircleL2 && (Time.time - _abilityHolder.timeL2Circle) > _abilityHolder.L2Circle.baseCooldown)
             {
-                this.gameObject.layer = 12;
                 getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
@@ -1686,7 +1706,7 @@ public class PlayerControl : MonoBehaviour
 
                     moveDirSaved = new Vector3();
 
-                    attacks = Attacks.AIR;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1704,7 +1724,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
                     if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
                         player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                    attacks = Attacks.GROUND;
+                    attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
                     states = States.ATTACK;
                     PlayAttack();
@@ -1908,10 +1928,10 @@ public class PlayerControl : MonoBehaviour
 
             states = States.MOVE;
 
+            
             if (controller.RightTriggerPressed())
             {
                 Invoke("StartRun", 0.25f);
-
                 moves = Moves.RUN;
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
                 StartCoroutine(RunFeedback(0.3f));
@@ -1929,28 +1949,35 @@ public class PlayerControl : MonoBehaviour
 
 
             }
+            
+           
         }
         else if (states == States.MOVE)
         {
-
-            if (controller.RightTriggerPressed() && moves == Moves.WALK)
+            float a = (Time.time - startRun);
+            if (a > 0.2f)
             {
-                Invoke("StartRun", 0.25f);
-                moves = Moves.RUN;
-                playerAnim.CrossFadeInFixedTime("Run", 0.2f);
-                StartCoroutine(RunFeedback(0.3f));
-                StartCoroutine(RunFeedback(0));
+                startRun = Time.time;
 
-            }
-            else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
-            {
-                Invoke("EndRun", 0.25f);
+                if (controller.RightTriggerPressed() && moves == Moves.WALK)
+                {
+                    Invoke("StartRun", 0.25f);
+                    moves = Moves.RUN;
+                    playerAnim.CrossFadeInFixedTime("Run", 0.2f);
+                    StartCoroutine(RunFeedback(0.3f));
+                    StartCoroutine(RunFeedback(0));
 
-                moves = Moves.WALK;
-                playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
-                StartCoroutine(WalkFeedbak(0.42f));
-                StartCoroutine(WalkFeedbak(0));
+                }
+                else if (!controller.RightTriggerPressed() && moves == Moves.RUN)
+                {
+                    Invoke("EndRun", 0.25f);
 
+                    moves = Moves.WALK;
+                    playerAnim.CrossFadeInFixedTime("Walk", 0.2f);
+                    StartCoroutine(WalkFeedbak(0.42f));
+                    StartCoroutine(WalkFeedbak(0));
+
+                }
             }
         }
 
