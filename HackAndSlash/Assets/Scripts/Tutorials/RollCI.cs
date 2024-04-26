@@ -8,11 +8,11 @@ public class RollCI : ComboInput
     public RollCI(Image sceneImage, Sprite inputSprite) : base(sceneImage, inputSprite) { }
     public override void EndListening()
     {
-        _player.controller.OnDashPerformed -= InputDone;
+        _player.OnDashPerformed -= InputDone;
     }
 
     public override void StartListening(bool firstOfChain)
     {
-        _player.controller.OnDashPerformed += InputDone;
+        _player.OnDashPerformed += InputDone;
     }
 }

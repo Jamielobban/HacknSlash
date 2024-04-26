@@ -90,6 +90,7 @@ public class PlayerControl : MonoBehaviour
     public Action OnDoubleJumpPress;
     public Action OnLand;
     public Action OnComboTimeExpired;
+    public Action OnDashPerformed;
     void AirSquarePress() => OnAirSquarePress?.Invoke();
     void AirTrianglePress() => OnAirTrianglePress?.Invoke();
     void RunPress() => OnRunPress?.Invoke();
@@ -98,6 +99,8 @@ public class PlayerControl : MonoBehaviour
     void ComboTimeExpired() => OnComboTimeExpired?.Invoke();
     public void StartComboTimeCountdown (float time) => Invoke(nameof(ComboTimeExpired), time);
     public void CancelComboTimeCountdown () => CancelInvoke(nameof(ComboTimeExpired));
+    void DashDone() => OnDashPerformed?.Invoke();
+
 
     [System.Serializable]
     public struct Ataques
@@ -1835,6 +1838,8 @@ public class PlayerControl : MonoBehaviour
 
             states = States.DASH;
             dash = Dash.START;
+            DashDone();
+            Debug.Log("Dash");
             return true;
         }
         return false;

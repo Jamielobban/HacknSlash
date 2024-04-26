@@ -45,6 +45,7 @@ public abstract class ComboInput
 
     private void CorrectInput()
     {
+        Debug.Log("Correct");
         DOVirtual.Color(_sceneImage.color, Color.green, 1f, (color) =>
         {
             _sceneImage.color = color;

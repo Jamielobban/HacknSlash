@@ -74,13 +74,12 @@ public class ControllerManager : MonoBehaviour
     public Action OnSquareHold;
     public Action OnTrianglePress;
     public Action OnTriangleHold;
-    public Action OnDashPerformed;
+    
     public Action OnJumpPerformed;
     void SquarePress() => OnSquarePress?.Invoke();
     void SquareHold() => OnSquareHold?.Invoke();
     void TrianglePress() => OnTrianglePress?.Invoke();
     void TriangleHold() => OnTriangleHold?.Invoke();
-    void DashDone()=> OnDashPerformed?.Invoke();
     void JumpDone()=> OnJumpPerformed?.Invoke();
 
     void Start()
@@ -320,9 +319,10 @@ public class ControllerManager : MonoBehaviour
                 {
                     if (!L2.action.IsPressed())
                     {
+                        Debug.Log("Dash");
                         ResetBotonesAtaques();
                         dash = true;
-                        DashDone();
+                        //DashDone();
                     }
                 }
                 delayCircle = Time.time;

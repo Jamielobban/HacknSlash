@@ -105,20 +105,20 @@ public class TutorialManager : MonoBehaviour
 
     public void MoveRobots()
     {
-        animatorRight.transform.DOMoveX(3f, 1.5f);
-        animatorLeft.transform.DOMoveX(-4f, 1.5f);
-        animatorLeft.CrossFadeInFixedTime("WalkLeftCombat", 0.2f);
-        animatorRight.CrossFadeInFixedTime("WalkRightCombat", 0.2f);
+        animatorRight.transform.DOMoveX(8.27f, 0.8f);
+        animatorLeft.transform.DOMoveX(-0.26f, 0.8f);
+        animatorLeft.CrossFadeInFixedTime("WalkLeftCombat", 0.1f);
+        animatorRight.CrossFadeInFixedTime("WalkRightCombat", 0.1f);
         StartCoroutine(StopRobots());
     }
 
     IEnumerator StopRobots()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.7f);
         colliderBlockingPath.enabled = false;
         //colliderBlockingPyramid.transform.position = new Vector3(currentPyramidPos.x, currentPyramidPos.y, currentPyramidPos.z - 3);
-        animatorLeft.CrossFadeInFixedTime("IdleArmed", 0.2f);
-        animatorRight.CrossFadeInFixedTime("IdleArmed", 0.2f);
+        animatorLeft.CrossFadeInFixedTime("IdleArmed", 0.1f);
+        animatorRight.CrossFadeInFixedTime("IdleArmed", 0.1f);
     }
 
 }
