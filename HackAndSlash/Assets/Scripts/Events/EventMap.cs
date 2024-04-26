@@ -37,7 +37,7 @@ public abstract class EventMap : Interactive, IInteractable
 
     public void Interact()
     {
-        if (!canInteract) return;
+        if (!GetCanInteract) return;
         StartEvent();
     }
     
@@ -89,9 +89,9 @@ public abstract class EventMap : Interactive, IInteractable
                 tmp.text = minutos.ToString("00") + " : " + segundos.ToString("00");
         }        
 
-        canInteract = _currentEventState == Enums.EventState.INACTIVE && timer <= 0;
+        SetCanInteract(_currentEventState == Enums.EventState.INACTIVE && timer <= 0);
 
-        if(canInteract && !objectiveMarker.activeSelf)
+        if(GetCanInteract && !objectiveMarker.activeSelf)
         {
             objectiveMarker.SetActive(true);
         }
@@ -114,7 +114,7 @@ public abstract class EventMap : Interactive, IInteractable
         _currentEventState = Enums.EventState.PLAYING;
         
         objectiveMarker.SetActive(false);
-        canInteract = false;
+        SetCanInteract(false);
         FindObjectOfType<PlayerCollision>().canInteract = false;
     }
     protected virtual void RestartEvent()

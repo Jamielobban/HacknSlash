@@ -39,12 +39,16 @@ public class TutorialComboManager : MonoBehaviour
             StartCoroutine(EndCurrentCombosList()); //Acabem phase
             if (currentPhase == tutorialCombos.Count - 1) //Si era ultima phase
             {
+                AudioManager.Instance.PlayDelayFx(Enums.Effects.TutoEnded, 1.3f);
                 TutorialComboComplete(); //Acabem tutorial de combos                
             }
+            else
+                AudioManager.Instance.PlayDelayFx(Enums.Effects.Positivo, 0.4f);
 
             return;
-        }      
+        }
 
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.Positivo, 0.4f);
         StartCoroutine(StartCombo(true));
     }
     IEnumerator StartCombo(bool cameFromOtherCombo)
