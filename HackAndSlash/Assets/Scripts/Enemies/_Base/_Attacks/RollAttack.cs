@@ -20,6 +20,11 @@ public class RollAttack : BaseEnemyAttack
         _enemyBase._currentTime = 0f;
         Use();
     }
+    protected override void SetVisualEffects()
+    {
+        base.SetVisualEffects();
+        //Audio
+    }
 
     private void OnTriggerEnter(Collider other)
     {

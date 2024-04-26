@@ -31,6 +31,7 @@ public class EnemyBase : PoolableObject
     public float score;
     public float timeBetweenAttacks = 1.5f;
     public bool affectedBySpecialMove = false;
+    public float exitTimeAttacks = 1f;
     
     public float _currentTime = 0f;
     protected Animator _animator;
@@ -216,6 +217,9 @@ public class EnemyBase : PoolableObject
         _enemyFSM.Init();
         _enemyFSM.Trigger(Enums.StateEvent.SpawnEnemy);
         ResetEnemy();
+
+        //AUDIO ON SPAWN
+
         gameObject.SetActive(true);
         _spawnEffect.InitializeSpawnEffect();
     }
@@ -235,6 +239,7 @@ public class EnemyBase : PoolableObject
 
     public virtual void OnDie()
     {
+        //Audio On Die
         attackInterrumpted = false;
         if (isPooleable)
         {

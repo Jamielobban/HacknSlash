@@ -13,6 +13,12 @@ public class RangedAttack : BaseEnemyAttack
         Use();
     }
 
+    protected override void SetVisualEffects()
+    {
+        base.SetVisualEffects();
+        //Audio
+    }
+
     public void ShootAction()
     {
         GameObject bullet = Instantiate(bulletPrefab, instantiatePoint.position, Quaternion.identity);

@@ -66,7 +66,7 @@ public class BaseEnemyAttack : MonoBehaviour
 
     private void WaitForAnimation() 
     {
-        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length +.25f, () =>
+        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + _enemyBase.exitTimeAttacks, () =>
         {
             Debug.Log("Ends Attack Animation");
             OnAnimationEnd();

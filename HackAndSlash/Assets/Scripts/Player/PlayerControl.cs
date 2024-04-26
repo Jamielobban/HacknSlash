@@ -16,7 +16,9 @@ public class PlayerControl : MonoBehaviour
     public GameObject hudParent;
     public AbilityHolder _abilityHolder;
     public bool canAttackOnAir = false;
-    [Range(0,1)]public float lifeStealPercent;
+    public bool canBurn = false;
+    public bool canPoison = false;
+    public bool canBleed = false;
     public Action OnHit;
     [Space]
     #endregion
@@ -29,6 +31,7 @@ public class PlayerControl : MonoBehaviour
     public float healthRegen;
     public float timeToHeal;
     public float critDamageMultiplier;
+    public float lifeStealPercent;
 
     public float walkSpeed;
     public float runSpeed;

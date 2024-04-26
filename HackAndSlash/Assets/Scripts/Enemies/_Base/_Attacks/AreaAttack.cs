@@ -7,6 +7,9 @@ public class AreaAttack : BaseEnemyAttack
     public GameObject areaPrefab;
     public Transform pointToInstantiate;
     private Collider _colliderDamage;
+
+    //Audiosource audio
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,6 +22,13 @@ public class AreaAttack : BaseEnemyAttack
         _enemyBase._currentTime = 0f;
         Use();
     }
+
+    protected override void SetVisualEffects()
+    {
+        base.SetVisualEffects();
+        //Audio play
+    }
+
     protected override void AttackAction()
     {
         base.AttackAction();

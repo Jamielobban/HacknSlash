@@ -47,4 +47,16 @@ public class DamageableObject : MonoBehaviour, IDamageable
         int propId = Shader.PropertyToID("_ProgressBar");
         progressBar.material.SetFloat(propId, Mathf.Clamp(currentHealth / maxHealth, 0, 1));
     }
+
+    public void ApplyPoison()
+    {
+    }
+
+    public void ApplyBleed()
+    {
+    }
+
+    public void ApplyBurn()
+    {
+    }
 }

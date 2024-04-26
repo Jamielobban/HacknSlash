@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Debuff : MonoBehaviour
 {
-    public EnemyBase enemy;
     public bool isActive = false;
     public bool isStackeable = false;
 
-    protected float duration;
+    public float duration;
+    protected float _currentDuration;
 
     protected float _currentTimeDuration = 0f;
 
@@ -24,22 +24,22 @@ public class Debuff : MonoBehaviour
     {
         _currentTimeDuration += Time.deltaTime;
 
-        if (_currentTimeDuration >= duration)
+        if (_currentTimeDuration >= _currentDuration)
         {
             _currentTimeDuration = 0;
             isActive = false;
         }
     }
 
-    public virtual void ApplyDebuff(float time)
+    public virtual void ApplyDebuff(float damage)
     {
         if(isActive && isStackeable)
         {
-            duration += time;
+            _currentDuration += duration;
         }
         else
         {
-            duration = time;
+            _currentDuration = duration;
             _currentTimeDuration = 0;
             isActive = true;
         }
