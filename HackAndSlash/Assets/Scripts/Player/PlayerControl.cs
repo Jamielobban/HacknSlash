@@ -136,6 +136,7 @@ public class PlayerControl : MonoBehaviour
         public bool isEmpty;
         public float baseCooldown;
         public bool onAir;
+        public float baseDamage;
     }
 
     [System.Serializable]
