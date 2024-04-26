@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
+    public Debuff[] debuffs;
     private PlayerControl _player;
     public float maxHealth;
     private float _currentHealth;
@@ -115,6 +116,27 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         }
 
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
+    }
+
+    public void ApplyPoison()
+    {
+        float dmg = maxHealth * 0.03f; // 5% of max health
+
+        debuffs[0].ApplyDebuff(dmg);
+    }
+
+    public void ApplyBleed()
+    {
+        float dmg = maxHealth * 0.04f; // 20% of dmg base atk
+
+        debuffs[1].ApplyDebuff(dmg);
+    }
+
+    public void ApplyBurn()
+    {
+        float dmg = maxHealth * 0.05f; // 40 % of damage base
+
+        debuffs[2].ApplyDebuff(dmg);
     }
 
     private void SetBloodEffect()

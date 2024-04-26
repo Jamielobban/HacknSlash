@@ -27,7 +27,7 @@ public class AttackCollider : MonoBehaviour
             slash.SetActive(false);
     }
 
-    (float, DamageNumber) CalculateDamage(Transform enemyPos)
+    (float, DamageNumber) CalculateDamage (Transform enemyPos)
     {
         if(targets.Contains(enemyPos.gameObject))
         {
@@ -100,9 +100,25 @@ public class AttackCollider : MonoBehaviour
     {
         if(other.GetComponent<IDamageable>() != null)
         {
+            IDamageable damageable = other.GetComponent<IDamageable>();
             (float damageValue, DamageNumber damageNumber) = CalculateDamage(other.gameObject.transform);
 
-            other.GetComponent<IDamageable>().TakeDamage(damageValue, damageNumber);
+            damageable.TakeDamage(damageValue, damageNumber);
+
+            if(_player.canBurn)
+            {
+                damageable.ApplyBurn();
+            }
+            if(_player.canBleed)
+            {
+                damageable.ApplyBleed();
+
+            }
+            if (_player.canPoison)
+            {
+                damageable.ApplyPoison();
+            }
+
         }
 
 

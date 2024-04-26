@@ -14,6 +14,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     private Collider _getDamageCollider;
     public Collider GetDamageCollider => _getDamageCollider;
     private bool _isPlayer = false;
+
+    public Debuff[] debuffs;
     
     private void Awake()
     {
@@ -34,6 +36,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         _currentHealth -= damage;
 
         visualEffect.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)damage);
+
+        // AUDIO GET DAMAGE
 
         _enemyBase.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
@@ -69,4 +73,22 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
     }
 
+    public void ApplyPoison()
+    {
+        float dmg = MaxHealth * 0.03f; // 5% of max health
+        debuffs[0].ApplyDebuff(dmg);
+    }
+
+    public void ApplyBleed()
+    {
+        float dmg = MaxHealth * 0.04f; // 20% of dmg base atk
+        debuffs[1].ApplyDebuff(dmg);
+    }
+
+    public void ApplyBurn()
+    {
+        float dmg = MaxHealth * 0.05f; // 40 % of damage base
+
+        debuffs[2].ApplyDebuff(dmg);
+    }
 }
