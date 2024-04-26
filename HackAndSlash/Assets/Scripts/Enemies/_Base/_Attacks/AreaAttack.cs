@@ -31,11 +31,11 @@ public class AreaAttack : BaseEnemyAttack
         {
             if (_enemyBase.target == _enemyBase.Player.transform && damageable.IsPlayer())
             {
-                damageable.TakeDamage(_currentDamage);
+                damageable.TakeDamage(_currentDamage, _enemyBase.playerGetDamageNumber);
             }
             else if (_enemyBase.target != _enemyBase.Player.transform && !damageable.IsPlayer())
             {
-                damageable.TakeDamage(_currentDamage);
+                damageable.TakeDamage(_currentDamage, _enemyBase.playerGetDamageNumber);
             }
         }
         else

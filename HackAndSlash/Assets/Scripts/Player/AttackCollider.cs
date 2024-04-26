@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
-
+using DamageNumbersPro;
 
 public class AttackCollider : MonoBehaviour
 {
@@ -27,12 +27,13 @@ public class AttackCollider : MonoBehaviour
             slash.SetActive(false);
     }
 
-    float CalculateDamage(Transform enemyPos)
+    (float, DamageNumber) CalculateDamage(Transform enemyPos)
     {
         if(targets.Contains(enemyPos.gameObject))
         {
-            return 0;
+            return (0, _player.basicDamageHit);
         }
+        bool isCrit;
         float damage = (int)state * _player.attackDamage + Random.Range(0.5f, 1.5f);
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
@@ -62,7 +63,7 @@ public class AttackCollider : MonoBehaviour
             critHitEffect.transform.GetChild(0).gameObject.SetActive(true);
             critHitEffect.transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
             critHitFeedback.PlayFeedbacks();
-            _player.criticalDamageHit.Spawn(enemyPos.position+ new Vector3(0f, 2f, 0f), (int)damage);
+            isCrit = true;
         }
         else
         {
@@ -82,21 +83,29 @@ public class AttackCollider : MonoBehaviour
                 hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
                 hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
             }
-            _player.basicDamageHit.Spawn(enemyPos.position+ new Vector3(0f, 2f, 0f), (int)damage);
+            isCrit = false;
+
         }
         
         targets.Add(enemyPos.gameObject);
 
         Invoke("ClearList", 0.2f);
-        return damage;
+        return (damage, isCrit ? _player.criticalDamageHit : _player.basicDamageHit);
     }
     void ClearList()
     {
         targets.Clear();
     }
     private void OnTriggerEnter(Collider other)
-    {        
-        other.GetComponent<IDamageable>()?.TakeDamage(CalculateDamage(other.gameObject.transform));
+    {
+        if(other.GetComponent<IDamageable>() != null)
+        {
+            (float damageValue, DamageNumber damageNumber) = CalculateDamage(other.gameObject.transform);
+
+            other.GetComponent<IDamageable>().TakeDamage(damageValue, damageNumber);
+        }
+
+
     }
 
 }

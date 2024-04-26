@@ -13,6 +13,6 @@ public class AutoDestructionAttack : AreaAttack
     protected override void OnAnimationEnd()
     {
         base.OnAnimationEnd();
-        _healthSystem.TakeDamage(_healthSystem.CurrentHealth);
+        _healthSystem.TakeDamage(_healthSystem.CurrentHealth, _enemyBase.playerGetDamageNumber);
     }
 }

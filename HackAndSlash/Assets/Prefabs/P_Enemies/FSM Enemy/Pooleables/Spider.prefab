@@ -530,6 +530,8 @@ MonoBehaviour:
   _followPlayerSensor: {fileID: 1942737458255966505}
   attacks:
   - {fileID: 434670817661210696}
+  playerGetDamageNumber: {fileID: 8412082282181213971, guid: e8e0de9d14bb0db448660c65e17b8885,
+    type: 3}
   target: {fileID: 0}
   targetToSpecialMove: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 8152517612591289888}
@@ -542,6 +544,8 @@ MonoBehaviour:
   IsDead: 0
   attackInterrumpted: 0
   isAttacking: 0
+  nearStructure: {fileID: 0}
+  baseMoveSpeed: 0
   _meleeAttackSensor: {fileID: 8499002988419007534}
   _meleeAttack: {fileID: 434670817661210696}
 --- !u!114 &3431994665453700156

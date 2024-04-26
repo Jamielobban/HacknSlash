@@ -5,7 +5,6 @@ using UnityEngine;
 public class GemRecovery : MonoBehaviour, IInteractable
 {
     public RecoveryFlower _recoveryFlower;
-
     public void Interact()
     {
         PlayerControl player = GameManager.Instance.Player;

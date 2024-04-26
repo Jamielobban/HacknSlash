@@ -1,4 +1,5 @@
 ﻿
+using DamageNumbersPro;
 using UnityEngine;
 
 public class ProjectileMover : DamageDealer
@@ -13,7 +14,7 @@ public class ProjectileMover : DamageDealer
     
     private float _timer;
     private Rigidbody rb;
-
+    public DamageNumber getDamage;
     protected override void Awake()
     {
         GetComponent<Collider>().enabled = false;
@@ -45,7 +46,7 @@ public class ProjectileMover : DamageDealer
         if (target != null)
         {
             DieEffects();
-            target.TakeDamage(damage);
+            target.TakeDamage(damage, getDamage);
             DestroyGameObject(); // Blank unless you override something (ex. for a bullet)
         }
         else if(other.gameObject.layer == LayerMask.GetMask("Ground"))
