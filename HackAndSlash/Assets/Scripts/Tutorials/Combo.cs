@@ -38,8 +38,8 @@ public class Combo
     {
         comboInputs[currentIndex].EndListening();
 
-        if( currentIndex == comboActions.Count - 1)
-            ComboDone();
+        if( currentIndex == comboActions.Count - 1)        
+            ComboDone();        
         else
         {
             currentIndex++;
@@ -54,7 +54,6 @@ public class Combo
     }
     public IEnumerator ResetImages()
     {
-
         _comboImages.ForEach(image => DOVirtual.Color(image.color, Color.white, 0.80f, (col) => { image.color = col; }).SetEase(Ease.InOutSine));        
 
         yield return new WaitForSeconds(0.8f);
@@ -66,12 +65,10 @@ public class Combo
         yield return new WaitForSeconds(1f);        
     }
     public IEnumerator RestartCombo()
-    {
-        //AudioManager.Instance.PlayDelayFx(Effects.ErrorButton, 0);
-
+    {    
         yield return new WaitForSeconds(1.3f);
 
-        //AudioManager.Instance.PlayDelayFx(Enums.Effects.Negativo, 0.5f);
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.Negativo, 0.5f);
         _comboImages.ForEach(image => DOVirtual.Color(image.color, Color.red, 0.80f, (col) => { image.color = col; }).SetEase(Ease.InOutSine));        
 
         yield return new WaitForSeconds(0.8f);

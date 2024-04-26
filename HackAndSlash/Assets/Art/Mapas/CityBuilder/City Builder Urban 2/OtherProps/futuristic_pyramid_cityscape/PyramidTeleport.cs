@@ -19,7 +19,7 @@ public class PyramidTeleport : Interactive, IInteractable
     }
     public void Interact()
     {
-        if (!canInteract) return;
+        if (!GetCanInteract) return;
         InteractPerformed();      
     }
 }

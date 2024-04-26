@@ -30,19 +30,16 @@ public class BlackCyborg : Interactive, IInteractable
         {
             if (currentDialogue == dialogues.Count - 1)
             {
-                Debug.Log("end");
                 ConversationEnded();
             }
             else
             {
-                Debug.Log("+ dialogue");
                 DialogueDone();
                 currentDialogue++;
             }
         }
         else
         {
-            Debug.Log("+ line");
             currentDialogueLine++;
             yield return new WaitForSeconds(0.5f);
             Speak();
@@ -51,9 +48,11 @@ public class BlackCyborg : Interactive, IInteractable
     }
     public void Interact()
     {
-        if (!canInteract) return;
+        if (!GetCanInteract) return;
 
         InteractPerformed();
+
+        SetCanInteract(false);
     }
 
 
