@@ -3,14 +3,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoorTrigger : MonoBehaviour
 {
     [SerializeField] TutorialManager tm;
     [SerializeField] PlayerControl pc;
     [SerializeField] Transform leftDoor, rightDoor;
-    // Start is called before the first frame update    
 
+    // Start is called before the first frame update    
     void Start()
     {
         
@@ -32,5 +33,6 @@ public class DoorTrigger : MonoBehaviour
         leftDoor.DOLocalMoveY(0.598f, 1);
         tm.GetFade.FadeOut(2.5f);
         tm.MuteInSeconds(2.5f);
+        tm.EndTutorial();
     }
 }

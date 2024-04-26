@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class TutorialManager : MonoBehaviour
 
     Enums.NewTutorialState tutorialState;
     public FadeScript GetFade => fade;
+    public void EndTutorial() => Invoke(nameof(ChangeScene), 2.8f);
     public void MuteInSeconds(float inSeconds) => Invoke(nameof(Mute), inSeconds);
     void Mute() => audioListener.enabled = false;
     private void Awake()
@@ -37,7 +39,7 @@ public class TutorialManager : MonoBehaviour
         blackCyborg = FindObjectOfType<BlackCyborg>();
         blackCyborg.OnInteract += RobotInteraction;
         tutorialCM.OnCombosListComplete += PhaseComplete;
-        tutorialCM.OnTutorialComboComplete += ChangeStateToPyramid;
+        tutorialCM.OnTutorialComboComplete += ()=> { tutorialState = Enums.NewTutorialState.FINISHED; };
         blackCyborg.OnConversationEnded += MoveRobots;
     }
     void Start()
@@ -50,15 +52,11 @@ public class TutorialManager : MonoBehaviour
         blackCyborg.SetCanInteract(true);
         loadingMenu.SetActive(false);
     }
-
     private void PhaseComplete()
     {
         blackCyborgObjectiveMarker.SetActive(true);
         blackCyborg.SetCanInteract(true);
     }
-
-    private void ChangeStateToPyramid() => tutorialState = Enums.NewTutorialState.PYRAMIDE;
-
     private void RobotInteraction()
     {
         blackCyborgObjectiveMarker.SetActive(false);
@@ -67,34 +65,26 @@ public class TutorialManager : MonoBehaviour
         {
             case Enums.NewTutorialState.INACTIVE:
                 tutorialState = Enums.NewTutorialState.COMBOS;
-                blackCyborg.SetCanInteract(false);
                 tutorialCM.StartCurrentCombosList();
                 break;
             case Enums.NewTutorialState.COMBOS:
                 tutorialCM.StartCurrentCombosList();
-                blackCyborg.SetCanInteract(false);
                 break;    
             default:
                 break;
         }
     }
-
-    private void PyramidInteraction()
+    void ChangeScene()
     {
-        tutorialState = Enums.NewTutorialState.FINISHED;
         loadingMenu.SetActive(true);
         Invoke(nameof(ActiveScene), 1f);
     }
-
-    private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
-
+    private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_PYRAMID, loadingFillBar);
     private void OnDestroy()
     {
         blackCyborg.OnInteract -= RobotInteraction;       
         tutorialCM.OnCombosListComplete -= PhaseComplete;
-        tutorialCM.OnTutorialComboComplete -= ChangeStateToPyramid;
     }
-
     public void MoveRobots()
     {
         animatorRight.transform.DOMoveX(8.27f, 0.8f);
@@ -103,7 +93,6 @@ public class TutorialManager : MonoBehaviour
         animatorRight.CrossFadeInFixedTime("WalkRightCombat", 0.1f);
         Invoke(nameof(StopRobots), 0.7f);
     }
-
     void StopRobots()
     {
         colliderBlockingPath.enabled = false;        
