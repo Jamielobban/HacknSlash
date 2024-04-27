@@ -31,7 +31,7 @@ public class TreeEnemy : EnemyBaseMelee
     {
         base.InitializeTriggerTransitions();
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.DeadEnemy,new Transition<Enums.EnemyStates>(Enums.EnemyStates.AreaAttack, Enums.EnemyStates.Dead));
-        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.AreaAttack, Enums.EnemyStates.Hit));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.AreaAttack, Enums.EnemyStates.Hit, CanAttackBeInterrupted));
     }
     protected virtual void InitializeAreaTransitions()
     {

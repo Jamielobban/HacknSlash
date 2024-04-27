@@ -143,6 +143,14 @@ public class PlayerControl : MonoBehaviour
         public bool isEmpty;
         public float baseCooldown;
         public bool onAir;
+
+        [Header("Debuffs: ")]
+
+        public bool canBurn;
+        public bool canPoison;
+        public bool canBleed;
+        public bool canStun;
+        public float timeStun;
     }
 
     [System.Serializable]

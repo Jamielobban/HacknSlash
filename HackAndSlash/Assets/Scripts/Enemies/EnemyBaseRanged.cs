@@ -21,7 +21,7 @@ public class EnemyBaseRanged : EnemyBase
     protected override void InitializeTriggerTransitions()
     {
         base.InitializeTriggerTransitions();
-        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Hit));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Hit, CanAttackBeInterrupted));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Spawning));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Spawning));
     }
