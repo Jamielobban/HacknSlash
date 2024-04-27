@@ -35,7 +35,7 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
         }
         _currentHealth -= damage;
 
-        visualEffect.Spawn(transform.position + new Vector3(0f, 2f, 0f), (int)damage);
+        visualEffect.Spawn(transform.position + new Vector3(0f, Random.Range(1.8f, 2.2f), 0f), (int)damage);
 
         // AUDIO GET DAMAGE
 
