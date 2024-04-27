@@ -13,7 +13,7 @@ public abstract class Interactive : MonoBehaviour
     [SerializeField] protected List<Renderer> renderers;
     [SerializeField] protected List<Material> triggerMats;
     [SerializeField] protected List<Material> normalMats;
-    [SerializeField] Image interactCross;
+    [SerializeField] protected Image interactCross;
 
     private bool canInteract = true;
 

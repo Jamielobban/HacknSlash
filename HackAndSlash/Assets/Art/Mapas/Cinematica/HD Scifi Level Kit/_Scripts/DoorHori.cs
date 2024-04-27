@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class DoorHori : MonoBehaviour {
 
@@ -15,10 +16,10 @@ public class DoorHori : MonoBehaviour {
 		StartlocalPos = transform.localPosition;	
 		gameObject.isStatic = false;
 	}
-		
+	public void Close()=> Invoke(nameof(WaitToClose), waitTime); 	
 	public void OpenDoor(){
-		OTween.ValueTo( gameObject,ease,0.0f,-translateValue,easeTime,0.0f,"StartOpen","UpdateOpenDoor","EndOpen");
-		GetComponent<AudioSource>().Play();
+		//OTween.ValueTo( gameObject,ease,0.0f,-translateValue,easeTime,0.0f,"StartOpen","UpdateOpenDoor","EndOpen");
+		//GetComponent<AudioSource>().Play();
 	}
 	
 	private void UpdateOpenDoor(float f){		
@@ -36,13 +37,13 @@ public class DoorHori : MonoBehaviour {
 	
 	private void EndOpen(){
 		endlocalPos = transform.localPosition ;
-		StartCoroutine( WaitToClose());
+		//StartCoroutine( WaitToClose());
 	}
 	
-	private IEnumerator WaitToClose(){
+	private void WaitToClose(){
 		
-		yield return new WaitForSeconds(waitTime);
-		OTween.ValueTo( gameObject,ease,0.0f,translateValue,easeTime,0.0f,"StartClose","UpdateCloseDoor","EndClose");
+		//OTween.ValueTo( gameObject,ease,0.0f,translateValue,easeTime,0.0f,"StartClose","UpdateCloseDoor","EndClose");
+		gameObject.transform.DOLocalMoveZ(gameObject.transform.localPosition.z + translateValue, 1.5f).SetEase(Ease.OutCubic);
 		GetComponent<AudioSource>().Play();
 	}
 }
