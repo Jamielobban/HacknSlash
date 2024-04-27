@@ -615,7 +615,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -683,13 +683,16 @@ MonoBehaviour:
   timeBetweenAttacks: 1.5
   affectedBySpecialMove: 0
   exitTimeAttacks: 0.1
+  getEnemyCollider: {fileID: 0}
   _currentTime: 0
   IsHit: 0
   IsDead: 0
   attackInterrumpted: 0
   isAttacking: 0
+  isStun: 0
   nearStructure: {fileID: 0}
   baseMoveSpeed: 0
+  timeStuned: 0
   _meleeAttackSensor: {fileID: 1301884354103081471}
   _meleeAttack: {fileID: 6440882938012723302}
 --- !u!1 &4579270491741942358
