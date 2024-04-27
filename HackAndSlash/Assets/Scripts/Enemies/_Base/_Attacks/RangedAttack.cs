@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using MoreMountains.Feedbacks;
+using UnityEngine;
 using UnityHFSM;
 
 public class RangedAttack : BaseEnemyAttack
 {
     public GameObject bulletPrefab, channelPrefab;
+    public MMFeedbacks attackSound;
     public Transform instantiatePoint;
     public Transform instantiateChannelPoint;
     private GameObject channellingPrefab;
@@ -25,6 +27,7 @@ public class RangedAttack : BaseEnemyAttack
         bullet.GetComponent<ProjectileMover>().damage = _currentDamage;
         bullet.GetComponent<ProjectileMover>().Shoot();
         bullet.GetComponent<ProjectileMover>().getDamage = _enemyBase.playerGetDamageNumber;
+        attackSound.PlayFeedbacks();    
     }
 
     public void EnableChannelAction()

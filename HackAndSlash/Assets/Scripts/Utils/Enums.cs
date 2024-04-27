@@ -147,7 +147,8 @@ public class Enums
         OpenItemsToPickEpic,
         FailEvent,SuccessEvent,
         PositiveClickTuto,
-        TutoEnded
+        TutoEnded,
+        MoveSelect
     };
 
     public enum MusicEffects

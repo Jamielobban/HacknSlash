@@ -1,11 +1,14 @@
-﻿using System;
+﻿using MoreMountains.Feedbacks;
+using System;
 using UnityEngine;
 using UnityHFSM;
 
 [RequireComponent(typeof(Collider))]
 public class MeleeAttack : BaseEnemyAttack
 {
+    public MMFeedbacks meleeSoundEffect;
     private Collider _colliderDamage;
+
 
     protected override void Awake()
     {
@@ -18,10 +21,12 @@ public class MeleeAttack : BaseEnemyAttack
     {
         _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         Use();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (!_enemyBase.attackInterrumpted)
         {
@@ -38,5 +43,10 @@ public class MeleeAttack : BaseEnemyAttack
         {
             _enemyBase.attackInterrumpted = false;
         }
+    }
+    protected override void SetVisualEffects()
+    {
+        base.SetVisualEffects();
+        meleeSoundEffect.PlayFeedbacks();
     }
 }

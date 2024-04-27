@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using DamageNumbersPro;
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -33,6 +34,8 @@ public class EnemyBase : PoolableObject
     public float timeBetweenAttacks = 1.5f;
     public bool affectedBySpecialMove = false;
     public float exitTimeAttacks = 1f;
+    public MMFeedbacks deadSound;
+    public MMFeedbacks spawnSound;
 
     public Collider getEnemyCollider;
     
@@ -219,13 +222,14 @@ public class EnemyBase : PoolableObject
         {
             target = Player.transform;
         }
+
         getEnemyCollider.enabled = true;
         _enemyFSM.SetStartState(Enums.EnemyStates.Spawning);
         _enemyFSM.Init();
         _enemyFSM.Trigger(Enums.StateEvent.SpawnEnemy);
         ResetEnemy();
 
-        //AUDIO ON SPAWN
+        spawnSound.PlayFeedbacks();
 
         gameObject.SetActive(true);
         _spawnEffect.InitializeSpawnEffect();
@@ -235,6 +239,7 @@ public class EnemyBase : PoolableObject
     {
         getEnemyCollider.enabled = false;
         _enemyFSM.Trigger(Enums.StateEvent.DespawnEnemy);
+        deadSound.PlayFeedbacks();
         _spawnEffect.InitializeDespawnEffect();
     }
     
@@ -247,7 +252,7 @@ public class EnemyBase : PoolableObject
 
     public virtual void OnDie()
     {
-        //Audio On Die
+        
         attackInterrumpted = false;
         if (isPooleable)
         {

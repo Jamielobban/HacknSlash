@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MoreMountains.Feedbacks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityHFSM;
@@ -7,7 +8,9 @@ public class InvokeAttack : BaseEnemyAttack
 {
     public GameObject invokeEffect;
     public GameObject _spawner;
+    public MMFeedbacks invokeSpawnSound;
     private ManagerEnemies _manager;
+
 
     protected override void Awake()
     {
@@ -32,6 +35,12 @@ public class InvokeAttack : BaseEnemyAttack
         Use();
     }
 
+    protected override void SetVisualEffects()
+    {
+        base.SetVisualEffects();
+        invokeSpawnSound.PlayFeedbacks();
+    }
+
     protected override void AttackAction()
     {
         base.AttackAction();
@@ -41,4 +50,6 @@ public class InvokeAttack : BaseEnemyAttack
         go.transform.localScale = Vector3.one;
 
     }
+
+
 }
