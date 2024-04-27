@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3857308315459024008
 MonoBehaviour:
@@ -45,20 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71956e6d095d5047ac6d94badc3ef41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpawnItems: 3
   itemChoice: {fileID: 0}
   slotsGrid: {fileID: 0}
+  itemPrefab: {fileID: 8920482247513173241, guid: 722fc3a6f1168914a8896dfba6eaf645,
+    type: 3}
   levelUpEffects: {fileID: 0}
   itemsToSpawn: []
-  itemPrefab: {fileID: 0}
-  maxSpawnItems: 3
-  menuActive: 0
-  prefabButton: {fileID: 0}
-  option1Button: {fileID: 0}
   itemRarityEffect:
   - {fileID: 7762300970498347063, guid: 589916bd0aee50940973729647ad797b, type: 3}
   - {fileID: 7234017105107250069, guid: ac78b1987b134bc49ab2f4bb7ff0bfb9, type: 3}
   - {fileID: 48272535947396193, guid: d750f0001b8fea948a752f37ca1b06ce, type: 3}
   - {fileID: 396036928416300360, guid: 553ef836a80edd64ab3f8b55bf7e0437, type: 3}
+  - {fileID: 2331649336352303746, guid: 5177d4e434b0761479e4c8dab5e5f854, type: 3}
+  - {fileID: 2331649336352303746, guid: 5177d4e434b0761479e4c8dab5e5f854, type: 3}
+  menuActive: 0
   isOpen: 0
 --- !u!114 &4840882137166972542
 MonoBehaviour:
@@ -72,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce93aa7417bf8c4bb033c48669062e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
+  commonItems:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -80,6 +81,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  uncommonItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rareItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  legendaryItems:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -87,15 +103,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  actionItems:
+  - {fileID: 0}
+  abilityItems:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  commonChance: 65
-  uncommonChance: 20
-  rareChance: 10
-  legendaryChance: 5
+  commonChance: 40
+  uncommonChance: 30
+  rareChance: 15
+  legendaryChance: 7
+  itemActionChance: 4
+  abilityChance: 4

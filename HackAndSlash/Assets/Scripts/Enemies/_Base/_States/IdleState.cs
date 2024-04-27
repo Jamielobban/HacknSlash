@@ -8,7 +8,7 @@ public class IdleState : EnemyStateBase
         base.OnEnter();
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
-        _animator.CrossFade("Idle", 0.2f);
+        _animator.CrossFadeInFixedTime("Idle", 0.2f);
     }
 
     public override void OnLogic()

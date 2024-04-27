@@ -94,4 +94,10 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
         debuffs[2].ApplyDebuff(dmg);
     }
+
+    public void ApplyStun(float timeStun)
+    {
+        _enemyBase.timeStuned = timeStun;
+        _enemyBase.isStun = true;
+    }
 }

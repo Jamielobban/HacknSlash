@@ -9,7 +9,7 @@ public class HitState : EnemyStateBase
         _agent.velocity = Vector3.zero;
         _enemyBase.attackInterrumpted = true;
         base.OnEnter();
-        _animator.CrossFade("Hit State", 0.2f);
+        _animator.CrossFadeInFixedTime("Hit State", 0.2f);
         _enemyBase.IsHit = true;
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
         {

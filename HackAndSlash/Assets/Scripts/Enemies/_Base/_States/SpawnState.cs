@@ -7,7 +7,7 @@ public class SpawnState : EnemyStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-        _animator.CrossFade("Idle", 0.2f);
+        _animator.CrossFadeInFixedTime("Idle", 0.2f);
     }
 
     public override void OnLogic()

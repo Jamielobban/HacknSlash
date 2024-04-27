@@ -9,7 +9,7 @@ public class DeadState : EnemyStateBase
         _agent.velocity = Vector3.zero;
         base.OnEnter();
         
-        _animator.Play("Dead State");
+        _animator.CrossFadeInFixedTime("Dead State", 0.2f);
         
         WaitExtensioNonMonobehavior.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + 1f, () =>
         {

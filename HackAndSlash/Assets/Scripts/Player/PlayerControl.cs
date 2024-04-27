@@ -137,13 +137,12 @@ public class PlayerControl : MonoBehaviour
 
         public float[] delayRepeticionGolpes;
 
-        public HitState []hitState;
+        public float[] baseDamages;
         public GameObject[] slash;
         public Sprite spriteAbility;
         public bool isEmpty;
         public float baseCooldown;
         public bool onAir;
-        public float baseDamage;
     }
 
     [System.Serializable]
@@ -450,7 +449,7 @@ public class PlayerControl : MonoBehaviour
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
-            currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().state = currentComboAttacks.attacks[golpe].hitState[slash];
+            currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().baseDamage = currentComboAttacks.attacks[golpe].baseDamages[slash];
                 currentComboAttacks.attacks[golpe].collider[slash].GetComponent<Collider>().enabled = true;
                 StartCoroutine(DesactivarCollisionGolpe(0.05f, currentComboAttacks.attacks[golpe].collider[slash]));
             

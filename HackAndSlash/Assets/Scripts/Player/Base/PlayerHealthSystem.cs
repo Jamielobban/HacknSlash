@@ -138,7 +138,10 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
         debuffs[2].ApplyDebuff(dmg);
     }
-
+    public void ApplyStun(float timeStun)
+    {
+        //Player Gets Stun
+    }
     private void SetBloodEffect()
     {
         if (_currentHealth <= (maxHealth * 0.85) && _currentHealth > (maxHealth * 0.25f))

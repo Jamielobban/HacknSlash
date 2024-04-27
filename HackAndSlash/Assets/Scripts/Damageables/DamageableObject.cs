@@ -59,4 +59,8 @@ public class DamageableObject : MonoBehaviour, IDamageable
     public void ApplyBurn()
     {
     }
+
+    public void ApplyStun(float stunTime)
+    {
+    }
 }

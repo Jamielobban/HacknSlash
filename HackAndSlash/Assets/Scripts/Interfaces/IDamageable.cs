@@ -7,6 +7,7 @@ public interface IDamageable
     void ApplyPoison();
     void ApplyBleed();
     void ApplyBurn();
+    void ApplyStun(float time);
     void Heal(float amount);
 }
 
