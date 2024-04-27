@@ -508,7 +508,7 @@ public class PlayerControl : MonoBehaviour
             //    dir = attackTeleport.GetEnemiePos(d) + (dir * 7);
             //else
             //dir = attackTeleport.GetEnemiePos(d) + (dir * 5f);
-            dir = attackTeleport.GetEnemiePos(d) + (dir * 2.25f);
+            dir = attackTeleport.GetEnemiePos(d) + (dir * 4.25f);
 
             if (currentComboAttacks.combo == ComboAtaques.air2 || currentComboAttacks.combo == ComboAtaques.air1)
                 dir.y = player.transform.position.y;
@@ -535,7 +535,7 @@ public class PlayerControl : MonoBehaviour
 
                     enem = enemy;
                     enem.y = dir.y;
-                    if (Vector3.Distance(transform.position, enemy) >= 1.75f)
+                    if (Vector3.Distance(transform.position, enemy) >= 3.75f)
                     {
                         enemy += (enem - dir).normalized * 3f;
                         rb.DOMove(dir, 0.3f, false);
@@ -1919,6 +1919,8 @@ public class PlayerControl : MonoBehaviour
 
         if (controller.StartMove() && states != States.MOVE)
         {
+            gameObject.layer = 3;
+
             healthSystem.IsDamageable = true;
 
             states = States.MOVE;

@@ -9,9 +9,11 @@ public class Disparo360 : MonoBehaviour
     Vector3[] startPos;
     float timeStartMove;
     public float speed;
+    public GameObject colliders;
     // Start is called before the first frame update
     void Start()
     {
+        colliders.SetActive(false);
         startPos = new Vector3[misiles.Length];
         for (int i = 0; i < misiles.Length;i++)
         {
@@ -20,15 +22,17 @@ public class Disparo360 : MonoBehaviour
         }
 
         move = false;
-        Invoke("StartMoving", 0.75f);
+
     }
     private void OnEnable()
     {
         // Aquí colocas el código que deseas que se ejecute cuando el objeto se activa
-        Invoke("StartMoving", 0.75f);        // Puedes hacer cualquier otra acción aquí, como cambiar propiedades, iniciar una animación, etc.
+        Invoke("StartMoving", 0.95f);        // Puedes hacer cualquier otra acción aquí, como cambiar propiedades, iniciar una animación, etc.
     }
     void StartMoving()
     {
+        colliders.SetActive(true);
+
         move = true;
         timeStartMove = Time.time;
     }
@@ -37,9 +41,10 @@ public class Disparo360 : MonoBehaviour
     {
         if(move)
         {
-            if((Time.time- timeStartMove) > 4)
+            if((Time.time- timeStartMove) > 1)
             {
                 move = false;
+                colliders.SetActive(false);
 
                 for (int i = 0; i < misiles.Length; i++)
                 {
