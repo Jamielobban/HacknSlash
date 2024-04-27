@@ -7,12 +7,14 @@ using DamageNumbersPro;
 public class AttackCollider : MonoBehaviour
 {
     PlayerControl _player;
-    public PlayerControl.HitState state;
     public GameObject[] hitEffect;
     public GameObject critHitEffect;
     public MMFeedbacks critHitFeedback;
 
     public List<GameObject> targets;
+
+    public float baseDamage;
+
     void Start()
     {
         _player = FindObjectOfType<PlayerControl>();
@@ -34,7 +36,7 @@ public class AttackCollider : MonoBehaviour
             return (0, _player.basicDamageHit);
         }
         bool isCrit;
-        float damage = (int)state * _player.attackDamage + Random.Range(0.5f, 1.5f);
+        float damage = baseDamage * _player.attackDamage + Random.Range(0.5f, 1.5f);
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
 

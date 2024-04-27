@@ -18,7 +18,7 @@ public class TutorialCombat : MonoBehaviour
     public GameObject eventActivable;
     public GameObject campEnemies;
     
-    readonly string name = "Cyborg Sergeant";
+    readonly string _name = "Cyborg Sergeant";
 
     private bool hasReadedItems = false;
     private bool hasReadedChest = false;
@@ -93,7 +93,7 @@ public class TutorialCombat : MonoBehaviour
 
         for (int i = 0; i < _dialogues.Length; i++)
         {
-            voice.Speak(_dialogues[i], name);
+            voice.Speak(_dialogues[i], _name);
             yield return new WaitUntil(() => voice.playing == false);
             yield return new WaitForSecondsRealtime(0.8f);
         }

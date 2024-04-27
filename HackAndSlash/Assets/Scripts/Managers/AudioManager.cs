@@ -133,7 +133,6 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         source.volume = volume;
-        //destroy the fading audiosource
         Destroy(fadeOutSource);
         yield break;
     }

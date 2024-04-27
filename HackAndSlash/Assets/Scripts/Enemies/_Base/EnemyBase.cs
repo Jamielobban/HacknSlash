@@ -1,4 +1,5 @@
-﻿using DamageNumbersPro;
+﻿using Cinemachine;
+using DamageNumbersPro;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -32,6 +33,8 @@ public class EnemyBase : PoolableObject
     public float timeBetweenAttacks = 1.5f;
     public bool affectedBySpecialMove = false;
     public float exitTimeAttacks = 1f;
+
+    public Collider getEnemyCollider;
     
     public float _currentTime = 0f;
     protected Animator _animator;
@@ -47,12 +50,14 @@ public class EnemyBase : PoolableObject
     public bool IsDead = false;
     public bool attackInterrumpted = false;
     public bool isAttacking = false;
+    public bool isStun = false;
 
 
     public StructureEnemiesLife nearStructure = null; // for check if it's near a structure that will stack enemy deaths
 
     // Stadistics //
     public float baseMoveSpeed;
+    public float timeStuned;
 
     // -- Getters -- //
     public PlayerControl Player => _player;
@@ -68,6 +73,7 @@ public class EnemyBase : PoolableObject
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _enemyFSM = new StateMachine<Enums.EnemyStates, Enums.StateEvent>();
+        getEnemyCollider = GetComponent<Collider>();
         baseMoveSpeed = Agent.speed;
         
         InitializeStates();
@@ -93,7 +99,7 @@ public class EnemyBase : PoolableObject
         _enemyFSM.AddState(Enums.EnemyStates.Idle, new IdleState(false, this));
         _enemyFSM.AddState(Enums.EnemyStates.Chase, new ChaseState(false, this, target));
         _enemyFSM.AddState(Enums.EnemyStates.Hit, new HitState(false, this));
-        _enemyFSM.AddState(Enums.EnemyStates.Stun, new StunState(false, this, 2));
+        _enemyFSM.AddState(Enums.EnemyStates.Stun, new StunState(false, this));
         _enemyFSM.AddState(Enums.EnemyStates.Dead, new DeadState(false, this));
         _enemyFSM.AddState(Enums.EnemyStates.Spawning, new SpawnState(false, this));
         //_enemyFSM.AddState(Enums.EnemyStates.Countering, new CounteringState(false, this));
@@ -213,6 +219,7 @@ public class EnemyBase : PoolableObject
         {
             target = Player.transform;
         }
+        getEnemyCollider.enabled = true;
         _enemyFSM.SetStartState(Enums.EnemyStates.Spawning);
         _enemyFSM.Init();
         _enemyFSM.Trigger(Enums.StateEvent.SpawnEnemy);
@@ -226,6 +233,7 @@ public class EnemyBase : PoolableObject
 
     public void OnDespawnEnemy()
     {
+        getEnemyCollider.enabled = false;
         _enemyFSM.Trigger(Enums.StateEvent.DespawnEnemy);
         _spawnEffect.InitializeDespawnEffect();
     }

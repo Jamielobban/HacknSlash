@@ -13,7 +13,7 @@ public class ChaseState : EnemyStateBase
         base.OnEnter();
         _agent.enabled = true;
         _agent.isStopped = false;
-        _animator.CrossFade("Chase State", 0.2f);
+        _animator.CrossFadeInFixedTime("Chase State", 0.2f);
     }
 
     public override void OnLogic()
