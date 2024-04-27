@@ -480,11 +480,10 @@ public class PlayerControl : MonoBehaviour
     {
 
         float damageMultiplier = 1;
-
-        if (attackTeleport.GetEnemie(this.transform.position) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(this.transform.position)) < 6 
+        Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
+        if (attackTeleport.GetEnemie(d) != Vector3.zero && Vector3.Distance(this.transform.position, attackTeleport.GetEnemiePos(d)) < 6 
             && currentComboAttacks.combo != ComboAtaques.Teleport && currentComboAttacks.combo != ComboAtaques.HoldQuadrat && currentComboAttacks.combo != ComboAtaques.HoldTriangle)
         {
-            Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
 
             enemy = attackTeleport.GetEnemie(d);
             Vector3 enem = enemy;
@@ -516,7 +515,7 @@ public class PlayerControl : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7))
+            if (Physics.Raycast(dir + new Vector3(0, 1, 0), transform.TransformDirection(-this.transform.up), out hit, 200, 1 << 7) && attacks != Attacks.RUN)
             {
                 colliders = Physics.OverlapSphere(dir + new Vector3(0, 1, 0), 0.01f, 1 << 7);
 
@@ -801,7 +800,7 @@ public class PlayerControl : MonoBehaviour
         //}
 
 
-        if (!blockCameraRotation)
+        if (!blockCameraRotation|| states != States.ATTACK)
         {
             RotateCamera();
         }
@@ -831,7 +830,7 @@ public class PlayerControl : MonoBehaviour
                 AttackMovement();
                 if(!blockCameraRotation)
                 {
-                    RotatePlayer(1);
+                    //RotatePlayer(1);
                 }
                 movementController.transform.localPosition = new Vector3();
 
@@ -1471,10 +1470,12 @@ public class PlayerControl : MonoBehaviour
             
             if (controller.ataqueCuadrado)
             {
-
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
+                d = enemieTarget.GetEnemie(d);
+                if (d != Vector3.zero)
                 {
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    player.transform.LookAt(d);
+                    
                     moveDirSaved = new Vector3();
                     attacks = Attacks.AIR;
                 }
@@ -1527,8 +1528,7 @@ public class PlayerControl : MonoBehaviour
                         Debug.Log("Attack");
                     }
                     passiveCombo.Add(PassiveCombo.QUADRATFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+
                     attacks = Attacks.GROUND;
                     currentComboAttacks = GetAttacks(ComboAtaques.Quadrat);
                     states = States.ATTACK;
@@ -1542,10 +1542,11 @@ public class PlayerControl : MonoBehaviour
             if ((controller.ataqueTriangulo))
             {
                 this.gameObject.layer = 12;
-
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
+                Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
+                d = enemieTarget.GetEnemie(d);
+                if (d != Vector3.zero)
                 {
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+                    player.transform.LookAt(d);
                 }
 
                 if (states != States.JUMP)
@@ -1562,8 +1563,7 @@ public class PlayerControl : MonoBehaviour
                         currentComboAttack = GetAttacks(ComboAtaques.Triangle).attacks.Length - 1;
                     }
                     passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+
                     attacks = Attacks.GROUND;
                     currentComboAttacks = GetAttacks(ComboAtaques.Triangle);
                     states = States.ATTACK;
@@ -1584,10 +1584,7 @@ public class PlayerControl : MonoBehaviour
                     return false;
                 }
                 //Retarget to enemy helper
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                {
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                }
+
                 
                 if (states == States.JUMP && _abilityHolder.L2Square.onAir)
                 {
@@ -1616,8 +1613,7 @@ public class PlayerControl : MonoBehaviour
                     }
              
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+
                     attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
                     states = States.ATTACK;
@@ -1639,10 +1635,7 @@ public class PlayerControl : MonoBehaviour
                 }
 
                 //Retarget to enemy helper
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                {
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                }
+
                 
                 if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
                 {
@@ -1671,8 +1664,7 @@ public class PlayerControl : MonoBehaviour
                     }
              
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+
                     attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
                     states = States.ATTACK;
@@ -1695,10 +1687,7 @@ public class PlayerControl : MonoBehaviour
 
 
                 //Retarget to enemy helper
-                if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                {
-                    player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
-                }
+
                 
                 if (states == States.JUMP && _abilityHolder.L2Circle.onAir)
                 {
@@ -1727,8 +1716,7 @@ public class PlayerControl : MonoBehaviour
                     }
              
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-                    if (enemieTarget.GetEnemie(this.transform.position) != Vector3.zero)
-                        player.transform.LookAt(enemieTarget.GetEnemie(this.transform.position));
+
                     attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.L2Circle);
                     states = States.ATTACK;
