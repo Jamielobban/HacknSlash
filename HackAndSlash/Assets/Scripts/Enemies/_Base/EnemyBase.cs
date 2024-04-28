@@ -243,6 +243,13 @@ public class EnemyBase : PoolableObject
         getEnemyCollider.enabled = false;
         _enemyFSM.Trigger(Enums.StateEvent.DespawnEnemy);
         deadSound.PlayFeedbacks();
+        if (nearStructure != null && !nearStructure.isActive)
+        {
+            nearStructure.AddKilledEnemy();
+            GameObject go = Instantiate(nearStructure.particleToCharge,
+                new Vector3(transform.position.x, transform.position.y + .75f, transform.position.z), Quaternion.identity);
+            go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
+        }
         _spawnEffect.InitializeDespawnEffect();
     }
     
@@ -281,13 +288,7 @@ public class EnemyBase : PoolableObject
         }
         healthBar.SetActive(false);
 
-        if(nearStructure != null && !nearStructure.isActive)
-        {
-            nearStructure.AddKilledEnemy();
-            GameObject go = Instantiate(nearStructure.particleToCharge,
-                new Vector3(transform.position.x, transform.position.y + .75f ,transform.position.z), Quaternion.identity);
-            go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
-        }
+
     }
     
     public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)
