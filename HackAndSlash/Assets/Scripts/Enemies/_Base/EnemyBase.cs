@@ -54,7 +54,7 @@ public class EnemyBase : PoolableObject
     public bool attackInterrumpted = false;
     public bool isAttacking = false;
     public bool isStun = false;
-
+    public bool attackCanBeInterrupted = false;
 
     public StructureEnemiesLife nearStructure = null; // for check if it's near a structure that will stack enemy deaths
 
@@ -156,6 +156,9 @@ public class EnemyBase : PoolableObject
     
     protected virtual bool IsInIdleRange() => (!_isInFollowRange || Vector3.Distance(target.position, transform.position) <= _agent.stoppingDistance) && !IsHit && !isAttacking;
     protected virtual bool InRangeToChase() => _isInFollowRange && Vector3.Distance(target.position, transform.position) > _agent.stoppingDistance && !IsHit && !isAttacking;
+
+    protected virtual bool CanAttackBeInterrupted(Transition<Enums.EnemyStates> transition) => !attackCanBeInterrupted;
+
     protected virtual void Update()
     {
         _currentTime += Time.deltaTime;
@@ -240,6 +243,13 @@ public class EnemyBase : PoolableObject
         getEnemyCollider.enabled = false;
         _enemyFSM.Trigger(Enums.StateEvent.DespawnEnemy);
         deadSound.PlayFeedbacks();
+        if (nearStructure != null && !nearStructure.isActive)
+        {
+            nearStructure.AddKilledEnemy();
+            GameObject go = Instantiate(nearStructure.particleToCharge,
+                new Vector3(transform.position.x, transform.position.y + .75f, transform.position.z), Quaternion.identity);
+            go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
+        }
         _spawnEffect.InitializeDespawnEffect();
     }
     
@@ -278,13 +288,7 @@ public class EnemyBase : PoolableObject
         }
         healthBar.SetActive(false);
 
-        if(nearStructure != null && !nearStructure.isActive)
-        {
-            nearStructure.AddKilledEnemy();
-            GameObject go = Instantiate(nearStructure.particleToCharge,
-                new Vector3(transform.position.x, transform.position.y + .75f ,transform.position.z), Quaternion.identity);
-            go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
-        }
+
     }
     
     public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)

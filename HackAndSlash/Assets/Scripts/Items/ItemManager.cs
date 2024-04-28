@@ -24,6 +24,23 @@ public class ItemManager : MonoBehaviour
     
     public Item GetRandomItem()
     {
+        if(ManagerEnemies.Instance.IsMaxScore())
+        {
+            ManagerEnemies.Instance.ResetScore();
+            if (GameManager.Instance.Player._abilityHolder.CanAddAbility())
+            {
+                Item _item = GetRandomItemGuard(abilityItems);
+
+                if (_item != null)
+                {
+                    abilityItems.Remove(_item);
+                    return _item;
+                }
+            }
+            // Si no hay abilidades Rare Item
+            return GetRandomItemInArray(rareItems);
+        }
+
         int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance + abilityChance;
         int randomValue = Random.Range(0, totalChance);
 
@@ -70,6 +87,7 @@ public class ItemManager : MonoBehaviour
             return GetRandomItemInArray(rareItems); 
         }
     }
+
 
     private Item GetRandomItemGuard(List<Item> list)
     {

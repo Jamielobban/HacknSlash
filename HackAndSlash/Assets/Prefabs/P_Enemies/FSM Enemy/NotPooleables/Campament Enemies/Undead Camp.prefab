@@ -10173,7 +10173,7 @@ MonoBehaviour:
   maxCooldown: 6
   _castTime: 0
   _animationName: Combo Attack
-  meleeSoundEffect: {fileID: 0}
+  meleeSoundEffect: {fileID: 5871554149887156066}
 --- !u!65 &7740849482398187520
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11095,12 +11095,12 @@ MonoBehaviour:
   targetToSpecialMove: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 1206317600471850005}
   spawner: {fileID: 0}
-  score: 0
+  score: 10
   timeBetweenAttacks: 1.5
   affectedBySpecialMove: 0
   exitTimeAttacks: 0.1
-  deadSound: {fileID: 0}
-  spawnSound: {fileID: 0}
+  deadSound: {fileID: 7371097199823072159}
+  spawnSound: {fileID: 1327567300809955931}
   getEnemyCollider: {fileID: 0}
   _currentTime: 0
   IsHit: 0
@@ -11108,6 +11108,7 @@ MonoBehaviour:
   attackInterrumpted: 0
   isAttacking: 0
   isStun: 0
+  attackCanBeInterrupted: 0
   nearStructure: {fileID: 0}
   baseMoveSpeed: 0
   timeStuned: 0
@@ -11252,7 +11253,7 @@ MonoBehaviour:
   maxCooldown: 1.7
   _castTime: 0.05
   _animationName: MeleeAttack
-  meleeSoundEffect: {fileID: 0}
+  meleeSoundEffect: {fileID: 5871554149887156066}
 --- !u!65 &3931540155823413791
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11820,6 +11821,126 @@ MonoBehaviour:
   RolloffMode: 1
   MinDistance: 1
   MaxDistance: 3
+--- !u!1 &8747072642257292667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624724196227700637}
+  - component: {fileID: 5871554149887156066}
+  m_Layer: 0
+  m_Name: MeleeSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624724196227700637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747072642257292667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1693839842848846097}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5871554149887156066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747072642257292667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks: []
+  InitializationMode: 2
+  AutoInitialization: 1
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  ForceTimescaleMode: 0
+  ForcedTimescaleMode: 1
+  DurationMultiplier: 1
+  RandomizeDuration: 0
+  RandomDurationMultiplier: {x: 0.5, y: 1.5}
+  DisplayFullDurationDetails: 0
+  PlayerTimescaleMode: 1
+  OnlyPlayIfWithinRange: 0
+  RangeCenter: {fileID: 0}
+  RangeDistance: 5
+  UseRangeFalloff: 0
+  RangeFalloff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  RemapRangeFalloff: {x: 0, y: 1}
+  IgnoreRangeEvents: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlay: 1
+  CanPlayWhileAlreadyPlaying: 1
+  ChanceToPlay: 100
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRestoreInitialValues:
+      m_PersistentCalls:
+        m_Calls: []
+    OnSkipToTheEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0
 --- !u!1 &9059730972105754755
 GameObject:
   m_ObjectHideFlags: 0
@@ -11852,6 +11973,7 @@ Transform:
   - {fileID: 5476852265636767732}
   - {fileID: 151660349128373737}
   - {fileID: 5310498024435826079}
+  - {fileID: 624724196227700637}
   m_Father: {fileID: 18539607003878592}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

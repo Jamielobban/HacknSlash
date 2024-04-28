@@ -22,7 +22,7 @@ public class EnemyBaseMelee : EnemyBase
     protected override void InitializeTriggerTransitions()
     {
         base.InitializeTriggerTransitions();
-        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Hit));
+        _enemyFSM.AddTriggerTransition(Enums.StateEvent.HitEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Hit, CanAttackBeInterrupted));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.SpawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Spawning));
         _enemyFSM.AddTriggerTransition(Enums.StateEvent.DespawnEnemy, new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Spawning));
     }
@@ -50,6 +50,7 @@ public class EnemyBaseMelee : EnemyBase
     protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => !IsHit && _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange && _enableMeleeAttack && !isAttacking;
     protected virtual void BasicAttackSensor_OnPlayerEnter(Transform player) => _isInBasicRange = true;
     protected virtual void BasicAttackSensor_OnPlayerExit(Vector3 lastKnownPosition) => _isInBasicRange = false;
+
 
     protected override void OnDestroy()
     {

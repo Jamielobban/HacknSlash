@@ -37,7 +37,7 @@ public class AreaAttack : BaseEnemyAttack
     private void OnTriggerEnter(Collider other)
     {
         IDamageable damageable = other.GetComponent<IDamageable>();
-        if (!_enemyBase.attackInterrumpted)
+        if (!_enemyBase.attackInterrumpted )
         {
             if (_enemyBase.target == _enemyBase.Player.transform && damageable.IsPlayer())
             {

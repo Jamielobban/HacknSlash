@@ -144,6 +144,10 @@ public class ManagerEnemies : MonoBehaviour
 
     public void UpdateEnemiesSpawned() => currentSpawnedEnemies.text = "Spawned Enemies:" + _spawnedEnemies;
 
+
+    public bool IsMaxScore() => _enemiesScore >= GameManager.Instance.Player.hud.maxScore;
+
+
     public void UpdateScore()
     {
         currentScoreText.text = "Score: " + _enemiesScore;
@@ -158,7 +162,7 @@ public class ManagerEnemies : MonoBehaviour
         }
     }
 
-    private void ResetScore()
+    public void ResetScore()
     {
         _enemiesScore = 0;
         GameManager.Instance.Player.hud.ResetProgressScoreBar();

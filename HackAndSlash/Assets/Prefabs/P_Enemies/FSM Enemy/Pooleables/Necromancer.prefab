@@ -955,7 +955,7 @@ MonoBehaviour:
   targetToSpecialMove: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 3037913376353726692}
   spawner: {fileID: 0}
-  score: 0
+  score: 10
   timeBetweenAttacks: 1
   affectedBySpecialMove: 0
   exitTimeAttacks: 1
@@ -968,6 +968,7 @@ MonoBehaviour:
   attackInterrumpted: 0
   isAttacking: 0
   isStun: 0
+  attackCanBeInterrupted: 0
   nearStructure: {fileID: 0}
   baseMoveSpeed: 0
   timeStuned: 0
@@ -2127,7 +2128,7 @@ MonoBehaviour:
   maxCooldown: 2
   _castTime: 0
   _animationName: MeleeAttack
-  meleeSoundEffect: {fileID: 0}
+  meleeSoundEffect: {fileID: 6043381066422446745}
 --- !u!65 &504345564238138485
 BoxCollider:
   m_ObjectHideFlags: 0
