@@ -1549,7 +1549,6 @@ public class PlayerControl : MonoBehaviour
             
             if ((controller.ataqueTriangulo))
             {
-                this.gameObject.layer = 12;
                 Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
                 d = enemieTarget.GetEnemie(d);
                 if (d != Vector3.zero)
@@ -1559,6 +1558,8 @@ public class PlayerControl : MonoBehaviour
 
                 if (states != States.JUMP)
                 {
+                    this.gameObject.layer = 12;
+
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1593,7 +1594,8 @@ public class PlayerControl : MonoBehaviour
                 }
                 //Retarget to enemy helper
 
-                
+                currentComboAttack = -1;
+
                 if (states == States.JUMP && _abilityHolder.L2Square.onAir)
                 {
                     _abilityHolder.timeL2Square = Time.time;
@@ -1644,7 +1646,8 @@ public class PlayerControl : MonoBehaviour
 
                 //Retarget to enemy helper
 
-                
+                currentComboAttack = -1;
+
                 if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
                 {
                     _abilityHolder.timeL2Triangle = Time.time;
@@ -1695,8 +1698,9 @@ public class PlayerControl : MonoBehaviour
 
 
                 //Retarget to enemy helper
+                currentComboAttack = -1;
 
-                
+
                 if (states == States.JUMP && _abilityHolder.L2Circle.onAir)
                 {
                     _abilityHolder.timeL2Circle = Time.time;
