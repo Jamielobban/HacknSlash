@@ -453,7 +453,7 @@ public class PlayerControl : MonoBehaviour
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject.SetActive(true);
 
-            StartCoroutine(Slash(2, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
+            StartCoroutine(Slash(4, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
@@ -838,7 +838,7 @@ public class PlayerControl : MonoBehaviour
                 AttackMovement();
                 if(!blockCameraRotation)
                 {
-                    //RotatePlayer(1);
+                    RotatePlayer(0.5f);
                 }
                 movementController.transform.localPosition = new Vector3();
 
@@ -1960,7 +1960,7 @@ public class PlayerControl : MonoBehaviour
         else if (states == States.MOVE)
         {
             float a = (Time.time - startRun);
-            if (a > 0.2f)
+            if (a > 0.25f)
             {
                 startRun = Time.time;
 
