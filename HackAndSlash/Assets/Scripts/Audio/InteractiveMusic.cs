@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +9,9 @@ public class InteractiveMusic : MonoBehaviour
 {
     public AudioMixerSnapshot snapshotEntrada; // El snapshot que se activará al entrar en el trigger
     public AudioMixerSnapshot snapshotSalida; // El snapshot que se activará al salir del trigger
+
+    public EventReference outdoor;
+    public EventReference indoor;
 
     private bool dentroDelTrigger = false;
 
@@ -22,6 +27,9 @@ public class InteractiveMusic : MonoBehaviour
             {
                 dentroDelTrigger = true;
                 CambiarSnapshot(snapshotEntrada); // Cambia al snapshot de entrada
+
+                var snapshot = RuntimeManager.CreateInstance(indoor);
+                snapshot.start();
             }
         }
     }
@@ -32,6 +40,9 @@ public class InteractiveMusic : MonoBehaviour
         {
             dentroDelTrigger = false;
             CambiarSnapshot(snapshotSalida); // Cambia al snapshot de salida
+            var snapshot = RuntimeManager.CreateInstance(outdoor);
+            snapshot.start();
+
         }
     }
 

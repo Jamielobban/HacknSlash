@@ -1,7 +1,5 @@
+using FMODUnity;
 using MoreMountains.Feedbacks;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class RandomEnemySounds : MonoBehaviour
@@ -9,6 +7,7 @@ public class RandomEnemySounds : MonoBehaviour
     private float _currentTime = 0f;
     public float timeToSound;
     public MMFeedbacks randomSFX;
+    public EventReference randomSound;
     void Update()
     {
 
@@ -17,6 +16,7 @@ public class RandomEnemySounds : MonoBehaviour
         {
             _currentTime = 0f;
             randomSFX.PlayFeedbacks();
+            AudioManager.Instance.PlayFx(randomSound, transform.position);
         }
 
 

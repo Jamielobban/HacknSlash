@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +17,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip[] _arrayFx;
     private AudioClip[] _arrayMusicEffects;
     private AudioClip[] _arrayMusic;
+
+    private EventInstance ambienceEventInstance;
 
     public static AudioManager Instance
     {
@@ -38,6 +42,21 @@ public class AudioManager : MonoBehaviour
         audioMusic.loop = true;
         _instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        InitializeAmbience(FMODEvents.instance.ambience);
+    }
+
+    private void InitializeAmbience(EventReference ambience)
+    {
+        ambienceEventInstance = CreateInstance(ambience);
+        ambienceEventInstance.start();
+    }
+    public void SetAmbienceParameter(string parameterName, float parameterVal)
+    {
+        ambienceEventInstance.setParameterByName(parameterName, parameterVal);
     }
 
     public void LoadAllAudios()
@@ -143,6 +162,10 @@ public class AudioManager : MonoBehaviour
         audioFx.PlayOneShot(_arrayFx[(int)fx]);
     }
 
+    public void PlayFx(EventReference sound, Vector3 position)
+    {
+        RuntimeManager.PlayOneShot(sound, position);
+    }
     public void PlayRandomFx(List<AudioClip> _arrayFx)
     {
         if (_arrayFx.Count <= 0)
@@ -186,5 +209,11 @@ public class AudioManager : MonoBehaviour
         {
             _instance = null;
         }
+    }
+
+    public EventInstance CreateInstance(EventReference eventReference)
+    {
+        EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+        return eventInstance;
     }
 }

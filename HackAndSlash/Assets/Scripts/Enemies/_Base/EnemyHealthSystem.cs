@@ -1,4 +1,5 @@
 ﻿using DamageNumbersPro;
+using FMODUnity;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -18,7 +19,9 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
     private bool _isPlayer = false;
 
     public Debuff[] debuffs;
-    
+
+    [SerializeField] private EventReference onHitSound;
+        
     private void Awake()
     {
         _enemyBase = transform.parent.GetComponent<EnemyBase>();
@@ -41,6 +44,8 @@ public class EnemyHealthSystem : MonoBehaviour, IDamageable
 
 
         onHit.PlayFeedbacks();
+
+        AudioManager.Instance.PlayFx(onHitSound, transform.position);
 
         _enemyBase.EnemyFSM.Trigger(Enums.StateEvent.HitEnemy);
         hud.UpdateHealthBar(_currentHealth, currentMaxHealth);
