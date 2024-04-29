@@ -75,12 +75,11 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
-        //if (pyramidMenuTexts[index].color == Color.white)        
-        //    pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
+        if (pyramidMenuTexts[index].color == Color.white)
+            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
 
         if (index != lastIndex)
         {
-            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
             if (lastIndex != -1)
                 pyramidMenuTexts[lastIndex].DOColor(Color.white, 0.8f).SetEase(Ease.InOutSine);
 
