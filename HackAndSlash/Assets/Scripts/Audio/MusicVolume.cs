@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +10,14 @@ public class MusicVolume : MonoBehaviour
 {
     private Slider _slider;
     public AudioMixer mixer;
+    private Bus music;
+
+
 
     void Awake()
     {
         _slider = GetComponent<Slider>();
-        _slider.value = .5f;        
+        _slider.value = 1f;        
     }
 
     private void Start()
@@ -21,18 +26,17 @@ public class MusicVolume : MonoBehaviour
         {
             return;
         }
-        mixer.SetFloat("MusicVolume", _slider.value);
-        //_slider.value = GameManager.Instance.sfxVolume;
-        AudioManager.Instance.audioMusic.volume = _slider.value;
-        AudioManager.Instance.audioMusicEffects.volume = _slider.value;
+
+        _slider.value = 1;
+
+        music = RuntimeManager.GetBus("bus:/Music");
+
     }
     public void ValueChangeCheck()
     {
         if (_slider != null)
         {
-            mixer.SetFloat("MusicVolume", Mathf.Log10(_slider.value) * 20);
-            AudioManager.Instance.audioMusic.volume = _slider.value;
-            AudioManager.Instance.audioMusicEffects.volume = _slider.value;
+            music.setVolume(_slider.value);
         }
     }
     private void OnDisable()
