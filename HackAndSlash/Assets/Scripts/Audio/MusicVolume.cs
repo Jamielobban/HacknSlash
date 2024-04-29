@@ -10,7 +10,7 @@ public class MusicVolume : MonoBehaviour
 {
     private Slider _slider;
     public AudioMixer mixer;
-    private Bus music;
+    private VCA music;
 
 
 
@@ -29,7 +29,7 @@ public class MusicVolume : MonoBehaviour
 
         _slider.value = 1;
 
-        music = RuntimeManager.GetBus("bus:/Music");
+        music = RuntimeManager.GetVCA("vca:/Music");
 
     }
     public void ValueChangeCheck()

@@ -11,7 +11,7 @@ public class SFXVolume : MonoBehaviour
 {
     private Slider _slider;
     public AudioMixer mixer;
-    private Bus sfx;
+    private VCA sfx;
 
     void Awake()
     {
@@ -27,7 +27,7 @@ public class SFXVolume : MonoBehaviour
         }
         _slider.value = 1;
 
-        sfx = RuntimeManager.GetBus("bus:/Reverb");
+        sfx = RuntimeManager.GetVCA("vca:/SFX");
     }
     public void ValueChangeCheck()
     {

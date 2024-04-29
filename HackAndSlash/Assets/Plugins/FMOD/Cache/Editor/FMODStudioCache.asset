@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8815632814254960791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/IceWind/wind_intensity
+  m_EditorClassIdentifier: 
+  Name: wind_intensity
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1874490925
+    data2: 3738801013
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-8375644985008605623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,33 +51,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5289
---- !u!114 &-6072739816721401375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Effects/GrowlWolf
-  m_EditorClassIdentifier: 
-  Path: event:/Effects/GrowlWolf
-  Guid:
-    Data1: -1243374798
-    Data2: 1246886472
-    Data3: 49573813
-    Data4: -1750531844
-  Banks:
-  - {fileID: 32914494941046412}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 3186
 --- !u!114 &-4478253070088783462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +78,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &-4384716436036744776
+--- !u!114 &-4464779091879148826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,9 +88,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Effects/FireCamp
+  m_Name: event:/SFX/Effects/FireCamp
   m_EditorClassIdentifier: 
-  Path: event:/Effects/FireCamp
+  Path: event:/SFX/Effects/FireCamp
   Guid:
     Data1: -352201845
     Data2: 1283745406
@@ -108,7 +105,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5289
---- !u!114 &-3212405525336904406
+--- !u!114 &-3273533343561626764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,21 +114,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/IceWind/wind_intensity
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Background Sound/Birds
   m_EditorClassIdentifier: 
-  Name: wind_intensity
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1874490925
-    data2: 3738801013
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
+  Path: event:/Music/Background Sound/Birds
+  Guid:
+    Data1: -672399580
+    Data2: 1160407456
+    Data3: 407679642
+    Data4: -1835159150
+  Banks:
+  - {fileID: 1367014623462255127}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 19152
 --- !u!114 &-2964284220916520923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,10 +147,10 @@ MonoBehaviour:
   Path: F:/Descargas/Musica/Musica/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638500174076003429
+  lastModified: 638500298851778591
   FileSizes:
   - Name: Desktop
-    Value: 1276
+    Value: 1512
   Exists: 1
 --- !u!114 &-2817029696011523543
 MonoBehaviour:
@@ -199,7 +199,31 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1276
   Exists: 1
---- !u!114 &-2179894775370734088
+--- !u!114 &-1894934263059908702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/IceWind/wind_pitch_intensity
+  m_EditorClassIdentifier: 
+  Name: wind_pitch_intensity
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1469668606
+    data2: 930354236
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-1323849567094245428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,50 +233,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Background Sound/Birds
+  m_Name: event:/SFX/Effects/OnHitWolf
   m_EditorClassIdentifier: 
-  Path: event:/Background Sound/Birds
+  Path: event:/SFX/Effects/OnHitWolf
   Guid:
-    Data1: -672399580
-    Data2: 1160407456
-    Data3: 407679642
-    Data4: -1835159150
+    Data1: 1162239620
+    Data2: 1283613983
+    Data3: 1913632927
+    Data4: 2031105424
   Banks:
-  - {fileID: 1367014623462255127}
-  IsStream: 1
-  Is3D: 0
+  - {fileID: 32914494941046412}
+  IsStream: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 19152
---- !u!114 &-346108057365381338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Background Sound/BackgroundMusic
-  m_EditorClassIdentifier: 
-  Path: event:/Background Sound/BackgroundMusic
-  Guid:
-    Data1: 785158152
-    Data2: 1246063458
-    Data3: -187902544
-    Data4: 867244730
-  Banks:
-  - {fileID: 1367014623462255127}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 74475
+  Length: 610
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,20 +267,20 @@ MonoBehaviour:
   - {fileID: 1367014623462255127}
   - {fileID: 32914494941046412}
   EditorEvents:
-  - {fileID: -346108057365381338}
-  - {fileID: -2179894775370734088}
-  - {fileID: 6710604622009134744}
-  - {fileID: -6072739816721401375}
   - {fileID: -4478253070088783462}
   - {fileID: 7088668684164387488}
-  - {fileID: 5193832315373642988}
-  - {fileID: -4384716436036744776}
+  - {fileID: 8573857432253956237}
+  - {fileID: -3273533343561626764}
+  - {fileID: 5506412839402354780}
+  - {fileID: 7841855310295261211}
+  - {fileID: -1323849567094245428}
+  - {fileID: -4464779091879148826}
   EditorParameters: []
   MasterBanks:
   - {fileID: 32914494941046412}
   StringsBanks:
   - {fileID: -2964284220916520923}
-  cacheTime: 638500174076003429
+  cacheTime: 638500298851778591
   cacheVersion: 131617
 --- !u!114 &32914494941046412
 MonoBehaviour:
@@ -300,10 +297,10 @@ MonoBehaviour:
   Path: F:/Descargas/Musica/Musica/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638500174075953445
+  lastModified: 638500298851768590
   FileSizes:
   - Name: Desktop
-    Value: 245152
+    Value: 245664
   Exists: 1
 --- !u!114 &596196109069564246
 MonoBehaviour:
@@ -418,10 +415,10 @@ MonoBehaviour:
   Path: F:/Descargas/Musica/Musica/Build/Desktop/BackMusic.bank
   Name: BackMusic
   StudioPath: bank:/BackMusic
-  lastModified: 638500174075876113
+  lastModified: 638500297548670567
   FileSizes:
   - Name: Desktop
-    Value: 1558592
+    Value: 1559168
   Exists: 1
 --- !u!114 &1696670298256167694
 MonoBehaviour:
@@ -505,7 +502,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &5193832315373642988
+--- !u!114 &5506412839402354780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,23 +512,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Effects/OnHitWolf
+  m_Name: event:/Music/Background Sound/IceWind
   m_EditorClassIdentifier: 
-  Path: event:/Effects/OnHitWolf
+  Path: event:/Music/Background Sound/IceWind
   Guid:
-    Data1: 1162239620
-    Data2: 1283613983
-    Data3: 1913632927
-    Data4: 2031105424
+    Data1: 455026332
+    Data2: 1259140892
+    Data3: 285553340
+    Data4: -198446065
   Banks:
-  - {fileID: 32914494941046412}
-  IsStream: 0
-  Is3D: 1
+  - {fileID: 1367014623462255127}
+  IsStream: 1
+  Is3D: 0
   IsOneShot: 1
-  Parameters: []
+  Parameters:
+  - {fileID: -1894934263059908702}
+  - {fileID: -8815632814254960791}
   MinDistance: 1
   MaxDistance: 20
-  Length: 610
+  Length: 34920
 --- !u!114 &5980680199272876143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,34 +558,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 19152
---- !u!114 &6710604622009134744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Background Sound/IceWind
-  m_EditorClassIdentifier: 
-  Path: event:/Background Sound/IceWind
-  Guid:
-    Data1: 455026332
-    Data2: 1259140892
-    Data3: 285553340
-    Data4: -198446065
-  Banks:
-  - {fileID: 1367014623462255127}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: -3212405525336904406}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 34920
 --- !u!114 &7088668684164387488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +585,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &7841855310295261211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Effects/GrowlWolf
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Effects/GrowlWolf
+  Guid:
+    Data1: -1243374798
+    Data2: 1246886472
+    Data3: 49573813
+    Data4: -1750531844
+  Banks:
+  - {fileID: 32914494941046412}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3186
 --- !u!114 &8030642688311562421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,3 +632,30 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1558592
   Exists: 1
+--- !u!114 &8573857432253956237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Background Sound/BackgroundMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Background Sound/BackgroundMusic
+  Guid:
+    Data1: 785158152
+    Data2: 1246063458
+    Data3: -187902544
+    Data4: 867244730
+  Banks:
+  - {fileID: 1367014623462255127}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 74475

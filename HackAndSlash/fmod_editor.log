@@ -7,7 +7,7 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000017BFF4A3E08 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000022F80C5B258 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -18,26 +18,46 @@
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] SystemI::createSound                     : filename = F:/Descargas/Musica/Musica/Build/Desktop/BackMusic.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 114688, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000017971C62D38, queue head = 00000179766C66D8, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000017971C62D38
-[LOG] SystemI::createSoundInternal             :     Create name='F:/Descargas/Musica/Musica/Build/Desktop/BackMusic.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 1554496
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4096
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000001795805F580
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='01 Main theme', format=5, channels=2, frequency=48000, lengthbytes=871776, lengthpcm=3574804, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.052948.
-[LOG] Thread::initThread                       :     Init FMOD file thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000017971C62D38
-[LOG] SoundI::release                          : 01 Main theme (0000017971C62D38)
-[LOG] SoundI::release                          :     01 Main theme (000001797AC79C58)
-[LOG] SoundI::release                          :     01 Main theme (0000017AE734F878)
+[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000022D240698F8, queue head = 0000022F7F4B1B58, queue count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000022D240698F8
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000022D240698F8
+[LOG] SoundI::release                          : 01 Main theme (0000022E42091D18)
+[LOG] SoundI::release                          :     01 Main theme (0000022CDF4BA308)
+[LOG] SoundI::release                          :     01 Main theme (0000022D240698F8)
+[LOG] SoundI::release                          :  (0000022E41AEC078)
+[LOG] SoundI::release                          :     13_SkeletonHit_mp3cut.net_mp3cut.net (0000022CCEA24248)
+[LOG] SoundI::release                          :  (0000022E41AEB7D8)
+[LOG] SoundI::release                          :     13_SkeletonHit_mp3cut.net (0000022CCEA25768)
+[LOG] SoundI::release                          :  (0000022D2C060488)
+[LOG] SoundI::release                          :     growl 01 (0000022CCEA23BC8)
+[LOG] SoundI::release                          :  (0000022D2C05CC78)
+[LOG] SoundI::release                          :     growl 02 (0000022CCEA23F08)
+[LOG] SoundI::release                          :  (0000022CC2AEE778)
+[LOG] SoundI::release                          :     growl 03 (0000022CDF4BDA48)
+[LOG] SoundI::release                          :  (0000022E668291F8)
+[LOG] SoundI::release                          :     growl 04 (0000022CCEA23A28)
+[LOG] SoundI::release                          :  (0000022E6682EDF8)
+[LOG] SoundI::release                          :     growl 05 (0000022CDF4B3968)
+[LOG] SoundI::release                          :  (0000022D2C0605F8)
+[LOG] SoundI::release                          :     growl 06 (0000022CCEA25288)
+[LOG] SoundI::release                          :  (0000022CC2AEDD68)
+[LOG] SoundI::release                          :     growl 07 (0000022CDF4BD708)
+[LOG] SoundI::release                          :  (0000022CE7179648)
+[LOG] SoundI::release                          :     growl 08 (0000022CCEA23068)
+[LOG] SoundI::release                          :  (0000022E66828DA8)
+[LOG] SoundI::release                          :     growl 09 (0000022CCEA26C88)
+[LOG] SoundI::release                          :  (0000022CE717D588)
+[LOG] SoundI::release                          :     growl 10 (0000022CCEA240A8)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
