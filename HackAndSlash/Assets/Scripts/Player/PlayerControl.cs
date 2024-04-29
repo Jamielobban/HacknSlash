@@ -453,7 +453,7 @@ public class PlayerControl : MonoBehaviour
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject.SetActive(true);
 
-            StartCoroutine(Slash(2, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
+            StartCoroutine(Slash(4, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
 
             currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
 
@@ -838,7 +838,7 @@ public class PlayerControl : MonoBehaviour
                 AttackMovement();
                 if(!blockCameraRotation)
                 {
-                    //RotatePlayer(1);
+                    RotatePlayer(0.5f);
                 }
                 movementController.transform.localPosition = new Vector3();
 
@@ -1549,7 +1549,6 @@ public class PlayerControl : MonoBehaviour
             
             if ((controller.ataqueTriangulo))
             {
-                this.gameObject.layer = 12;
                 Vector3 d = this.transform.position + ((cameraGo.transform.forward * controller.LeftStickValue().y * 6) + (cameraGo.transform.right * controller.LeftStickValue().x * 6));
                 d = enemieTarget.GetEnemie(d);
                 if (d != Vector3.zero)
@@ -1559,6 +1558,8 @@ public class PlayerControl : MonoBehaviour
 
                 if (states != States.JUMP)
                 {
+                    this.gameObject.layer = 12;
+
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
                     {
                         damageMult = 1;
@@ -1593,7 +1594,8 @@ public class PlayerControl : MonoBehaviour
                 }
                 //Retarget to enemy helper
 
-                
+                currentComboAttack = -1;
+
                 if (states == States.JUMP && _abilityHolder.L2Square.onAir)
                 {
                     _abilityHolder.timeL2Square = Time.time;
@@ -1644,7 +1646,8 @@ public class PlayerControl : MonoBehaviour
 
                 //Retarget to enemy helper
 
-                
+                currentComboAttack = -1;
+
                 if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
                 {
                     _abilityHolder.timeL2Triangle = Time.time;
@@ -1695,8 +1698,9 @@ public class PlayerControl : MonoBehaviour
 
 
                 //Retarget to enemy helper
+                currentComboAttack = -1;
 
-                
+
                 if (states == States.JUMP && _abilityHolder.L2Circle.onAir)
                 {
                     _abilityHolder.timeL2Circle = Time.time;
@@ -1960,7 +1964,7 @@ public class PlayerControl : MonoBehaviour
         else if (states == States.MOVE)
         {
             float a = (Time.time - startRun);
-            if (a > 0.2f)
+            if (a > 0.25f)
             {
                 startRun = Time.time;
 
