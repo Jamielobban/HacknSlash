@@ -5,23 +5,41 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
+using System;
 
 public class CamMovement : MonoBehaviour
 {
     Sequence sequence;
     [SerializeField] List<TextMeshProUGUI> pyramidMenuTexts;
+    [SerializeField] TextMeshProUGUI textTvUp;
+    [SerializeField] TextMeshProUGUI textTvDown;
+    Button tvUpButton;
+    Button tvDownButton;
+
+    Dictionary<string, Action> menuActions = new Dictionary<string, Action>();
     int lastIndex = -1;
-    // Start is called before the first frame update
     bool started = false;
+
     void StartShowMenu() { started = true;  pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo); }); }
+    void NewGame() => Debug.Log("New Game");
+    void LoadGame() => Debug.Log("Load Game");
+    void Exitgame() => Application.Quit();
+    void ResetTvs() { tvUpButton.onClick.RemoveAllListeners(); tvDownButton.onClick.RemoveAllListeners(); textTvUp.text = ""; textTvDown.text = ""; }
 
     void Start()
     {
+        tvUpButton = textTvUp.GetComponentInParent<Button>();
+        tvDownButton = textTvDown.GetComponentInParent<Button>();
+
+        menuActions.Add("GAME", () => { textTvUp.text = "New Game"; textTvDown.text = "Load Game"; tvUpButton.onClick.AddListener(NewGame); tvDownButton.onClick.AddListener(LoadGame); });
+        menuActions.Add("OPTIONS", () => { });
+        menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvUpButton.onClick.AddListener(Exitgame); });
+        menuActions.Add("CREDITS", () => { });
+
         Tween moveTween = this.transform.DOMoveX(15.46f, 20).SetEase(Ease.InOutSine); //3.79f
         
         sequence = DOTween.Sequence();
-        sequence.Append(moveTween)/*.Append(rotLeftTween).Append(rotRightTween).Append(rotStraightTween).Append(moveTween2)*/;
+        sequence.Append(moveTween);
     }
 
     private void Update()
@@ -47,11 +65,18 @@ public class CamMovement : MonoBehaviour
             }
         }
 
-        if (pyramidMenuTexts[index].color == Color.white)        
-            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
+        //if (pyramidMenuTexts[index].color == Color.white)        
+        //    pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
 
-        if (index != lastIndex && lastIndex != -1)
-            pyramidMenuTexts[lastIndex].DOColor(Color.white, 0.8f).SetEase(Ease.InOutSine);
+        if (index != lastIndex)
+        {
+            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
+            if(lastIndex != -1)
+                pyramidMenuTexts[lastIndex].DOColor(Color.white, 0.8f).SetEase(Ease.InOutSine);
+            
+            ResetTvs();
+            menuActions[pyramidMenuTexts[index].text].Invoke();
+        }
 
         lastIndex = index;
     }
