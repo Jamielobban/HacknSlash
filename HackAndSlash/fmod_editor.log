@@ -7,57 +7,13 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 0000022F80C5B258 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000022F80C62368 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 0000022D240698F8, queue head = 0000022F7F4B1B58, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000022D240698F8
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000022D240698F8
-[LOG] SoundI::release                          : 01 Main theme (0000022E42091D18)
-[LOG] SoundI::release                          :     01 Main theme (0000022CDF4BA308)
-[LOG] SoundI::release                          :     01 Main theme (0000022D240698F8)
-[LOG] SoundI::release                          :  (0000022E41AEC078)
-[LOG] SoundI::release                          :     13_SkeletonHit_mp3cut.net_mp3cut.net (0000022CCEA24248)
-[LOG] SoundI::release                          :  (0000022E41AEB7D8)
-[LOG] SoundI::release                          :     13_SkeletonHit_mp3cut.net (0000022CCEA25768)
-[LOG] SoundI::release                          :  (0000022D2C060488)
-[LOG] SoundI::release                          :     growl 01 (0000022CCEA23BC8)
-[LOG] SoundI::release                          :  (0000022D2C05CC78)
-[LOG] SoundI::release                          :     growl 02 (0000022CCEA23F08)
-[LOG] SoundI::release                          :  (0000022CC2AEE778)
-[LOG] SoundI::release                          :     growl 03 (0000022CDF4BDA48)
-[LOG] SoundI::release                          :  (0000022E668291F8)
-[LOG] SoundI::release                          :     growl 04 (0000022CCEA23A28)
-[LOG] SoundI::release                          :  (0000022E6682EDF8)
-[LOG] SoundI::release                          :     growl 05 (0000022CDF4B3968)
-[LOG] SoundI::release                          :  (0000022D2C0605F8)
-[LOG] SoundI::release                          :     growl 06 (0000022CCEA25288)
-[LOG] SoundI::release                          :  (0000022CC2AEDD68)
-[LOG] SoundI::release                          :     growl 07 (0000022CDF4BD708)
-[LOG] SoundI::release                          :  (0000022CE7179648)
-[LOG] SoundI::release                          :     growl 08 (0000022CCEA23068)
-[LOG] SoundI::release                          :  (0000022E66828DA8)
-[LOG] SoundI::release                          :     growl 09 (0000022CCEA26C88)
-[LOG] SoundI::release                          :  (0000022CE717D588)
-[LOG] SoundI::release                          :     growl 10 (0000022CCEA240A8)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] SystemI::close                           : Closed.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
@@ -65,5 +21,3 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] SystemI::close                           : Closed.
-[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
-[LOG] Thread::callback                         : FMOD file thread finished.
