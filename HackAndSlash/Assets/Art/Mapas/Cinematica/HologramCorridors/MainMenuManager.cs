@@ -32,11 +32,26 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject firstSelectedObejct;
 
+    public GameObject loadingGo;
+    public Image fillLoadingGo;
+
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
     public void RotatitionDone() => EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
     void StartShowMenu() { pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
-    void NewGame() => Debug.Log("New Game");
-    void LoadGame() => Debug.Log("Load Game");
+    void StartGame()  
+    {
+        loadingGo.SetActive(true);
+        GameManager.Instance.UpdateState(Enums.GameState.Playing);
+        GameManager.Instance.isTutorialCompleted = true;
+        GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
+    }
+    void StartTutorial()
+    {
+        loadingGo.SetActive(true);
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
+        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL, fillLoadingGo);
+    }
+
     void Exitgame() => Application.Quit();
     void ShowTeam() { bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
     void ShowEnti() { bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
@@ -48,14 +63,13 @@ public class MainMenuManager : MonoBehaviour
         bigTvCanvas.GetComponentsInChildren<RectTransform>(false).Where(t => t != bigTvCanvas && t.parent == bigTvCanvas).ToList().ForEach(t => t.gameObject.SetActive(false));
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main.transform;
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
 
-        menuActions.Add("GAME", () => { textTvUp.text = "New Game"; textTvDown.text = "Load Game"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(NewGame); tvDownButton.onClick.AddListener(LoadGame); });
+        menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; textTvDown.text = "Start Game"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(StartGame); tvDownButton.onClick.AddListener(StartTutorial); });
         menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
@@ -63,7 +77,6 @@ public class MainMenuManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!started) return;
