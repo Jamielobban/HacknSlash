@@ -53,6 +53,24 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinPyramidLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3479f32-9ef6-4e53-93b2-e34826bb4463"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinPyramidRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee42888f-8f22-4c72-b030-1739c46dbc85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +106,28 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
                     ""action"": ""ButtonInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""138fc5a8-6caf-4e9a-b6c3-00570093f871"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinPyramidLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dadb86d-acfc-434b-b39a-c6745b36b01d"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinPyramidRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +139,8 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
         m_UiInputs_MoveThorughUI = m_UiInputs.FindAction("MoveThorughUI", throwIfNotFound: true);
         m_UiInputs_UiElementMovement = m_UiInputs.FindAction("UiElementMovement", throwIfNotFound: true);
         m_UiInputs_ButtonInteract = m_UiInputs.FindAction("ButtonInteract", throwIfNotFound: true);
+        m_UiInputs_SpinPyramidLeft = m_UiInputs.FindAction("SpinPyramidLeft", throwIfNotFound: true);
+        m_UiInputs_SpinPyramidRight = m_UiInputs.FindAction("SpinPyramidRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +205,8 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_UiInputs_MoveThorughUI;
     private readonly InputAction m_UiInputs_UiElementMovement;
     private readonly InputAction m_UiInputs_ButtonInteract;
+    private readonly InputAction m_UiInputs_SpinPyramidLeft;
+    private readonly InputAction m_UiInputs_SpinPyramidRight;
     public struct UiInputsActions
     {
         private @MenuInputs m_Wrapper;
@@ -170,6 +214,8 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
         public InputAction @MoveThorughUI => m_Wrapper.m_UiInputs_MoveThorughUI;
         public InputAction @UiElementMovement => m_Wrapper.m_UiInputs_UiElementMovement;
         public InputAction @ButtonInteract => m_Wrapper.m_UiInputs_ButtonInteract;
+        public InputAction @SpinPyramidLeft => m_Wrapper.m_UiInputs_SpinPyramidLeft;
+        public InputAction @SpinPyramidRight => m_Wrapper.m_UiInputs_SpinPyramidRight;
         public InputActionMap Get() { return m_Wrapper.m_UiInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +234,12 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
             @ButtonInteract.started += instance.OnButtonInteract;
             @ButtonInteract.performed += instance.OnButtonInteract;
             @ButtonInteract.canceled += instance.OnButtonInteract;
+            @SpinPyramidLeft.started += instance.OnSpinPyramidLeft;
+            @SpinPyramidLeft.performed += instance.OnSpinPyramidLeft;
+            @SpinPyramidLeft.canceled += instance.OnSpinPyramidLeft;
+            @SpinPyramidRight.started += instance.OnSpinPyramidRight;
+            @SpinPyramidRight.performed += instance.OnSpinPyramidRight;
+            @SpinPyramidRight.canceled += instance.OnSpinPyramidRight;
         }
 
         private void UnregisterCallbacks(IUiInputsActions instance)
@@ -201,6 +253,12 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
             @ButtonInteract.started -= instance.OnButtonInteract;
             @ButtonInteract.performed -= instance.OnButtonInteract;
             @ButtonInteract.canceled -= instance.OnButtonInteract;
+            @SpinPyramidLeft.started -= instance.OnSpinPyramidLeft;
+            @SpinPyramidLeft.performed -= instance.OnSpinPyramidLeft;
+            @SpinPyramidLeft.canceled -= instance.OnSpinPyramidLeft;
+            @SpinPyramidRight.started -= instance.OnSpinPyramidRight;
+            @SpinPyramidRight.performed -= instance.OnSpinPyramidRight;
+            @SpinPyramidRight.canceled -= instance.OnSpinPyramidRight;
         }
 
         public void RemoveCallbacks(IUiInputsActions instance)
@@ -223,5 +281,7 @@ public partial class @MenuInputs: IInputActionCollection2, IDisposable
         void OnMoveThorughUI(InputAction.CallbackContext context);
         void OnUiElementMovement(InputAction.CallbackContext context);
         void OnButtonInteract(InputAction.CallbackContext context);
+        void OnSpinPyramidLeft(InputAction.CallbackContext context);
+        void OnSpinPyramidRight(InputAction.CallbackContext context);
     }
 }

@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] SpinPyramid spinPyramid;
     [SerializeField] List<TextMeshProUGUI> pyramidMenuTexts;
     [SerializeField] TextMeshProUGUI textTvUp;
     [SerializeField] TextMeshProUGUI textTvDown;
@@ -32,7 +33,8 @@ public class MainMenuManager : MonoBehaviour
     public GameObject firstSelectedObejct;
 
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
-    void StartShowMenu() { started = true; pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo); }); }
+    public void RotatitionDone() => EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
+    void StartShowMenu() { pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
     void NewGame() => Debug.Log("New Game");
     void LoadGame() => Debug.Log("Load Game");
     void Exitgame() => Application.Quit();
@@ -53,10 +55,10 @@ public class MainMenuManager : MonoBehaviour
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
 
-        menuActions.Add("GAME", () => { textTvUp.text = "New Game"; textTvDown.text = "Load Game"; tvUpButton.onClick.AddListener(NewGame); tvDownButton.onClick.AddListener(LoadGame); });
-        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
-        menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvUpButton.onClick.AddListener(Exitgame); });
-        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
+        menuActions.Add("GAME", () => { textTvUp.text = "New Game"; textTvDown.text = "Load Game"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(NewGame); tvDownButton.onClick.AddListener(LoadGame); });
+        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
+        menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
+        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
                 
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
     }
@@ -99,16 +101,15 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
-        if (pyramidMenuTexts[index].color == Color.white)
-            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
-
         if (index != lastIndex)
         {
+            pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
             if (lastIndex != -1)
                 pyramidMenuTexts[lastIndex].DOColor(Color.white, 0.8f).SetEase(Ease.InOutSine);
 
             ResetTvs();
             menuActions[pyramidMenuTexts[index].text].Invoke();
+            RotatitionDone();
         }
 
         lastIndex = index;
