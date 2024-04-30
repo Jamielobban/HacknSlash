@@ -4908,7 +4908,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1036602987822485949}
   - component: {fileID: 4948343339997337120}
-  - component: {fileID: 8133093980330083622}
   m_Layer: 12
   m_Name: Slash
   m_TagString: Untagged
@@ -4935,7 +4934,7 @@ Transform:
   - {fileID: 1996079782300853492}
   - {fileID: 5478964104845333221}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4948343339997337120
 BoxCollider:
@@ -4958,20 +4957,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8133093980330083622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2671593709356621857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2e7cfc95cf766439e1024c3dbac9f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  canStun: 0
 --- !u!1 &5924449059652475540
 GameObject:
   m_ObjectHideFlags: 0

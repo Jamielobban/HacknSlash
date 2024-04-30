@@ -33,8 +33,8 @@ public class TutoPyramidManager : MonoBehaviour
 
     void ChangeScene()
     {
-        listener.enabled = false;
-        playerControl.enabled = false;
+       /// listener.enabled = false;
+       // playerControl.enabled = false;
         pyramid.OnInteract -= ChangeScene;
         loadingMenu.SetActive(true);
         Invoke(nameof(ActiveScene), 1f);

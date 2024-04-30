@@ -65,13 +65,16 @@ using UnityEngine.UI;
             async.allowSceneActivation = false;
             while (!async.isDone)
             {
-                float progress = Mathf.Clamp01(async.progress / .9f);
-                _progresionBar.fillAmount = progress;
-                if (progress >= 0.9f)
+                if(_progresionBar != null)
                 {
-                    _progresionBar.fillAmount = 1;
-                    async.allowSceneActivation = true;
-                }
+                    float progress = Mathf.Clamp01(async.progress / .9f);
+                    _progresionBar.fillAmount = progress;
+                    if (progress >= 0.9f)
+                    {
+                        _progresionBar.fillAmount = 1;
+                        async.allowSceneActivation = true;
+                    }
+                } 
                 yield return null;
             }
             yield return new WaitForSeconds(0.15f);
