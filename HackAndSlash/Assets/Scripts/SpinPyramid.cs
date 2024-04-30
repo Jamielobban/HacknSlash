@@ -38,13 +38,13 @@ public class SpinPyramid : MonoBehaviour
     public void SpinPyramidLeft(InputAction.CallbackContext context) {
         if (spinning) return; 
         spinning = true;        
-        pyramid.DOLocalRotate(new Vector3(0, 90, 0) + this.transform.rotation.eulerAngles, pyramidFragRotInSec, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => { spinning = false; }); 
+        pyramid.DOLocalRotate(new Vector3(0, -90, 0) + this.transform.rotation.eulerAngles, pyramidFragRotInSec, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => { spinning = false; }); 
     
     }
     public void SpinPyramidRight(InputAction.CallbackContext context) { 
         if (spinning) return; 
         spinning = true;
-        pyramid.DOLocalRotate(new Vector3(0, -90, 0) + this.transform.rotation.eulerAngles, pyramidFragRotInSec, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => { spinning = false; }); 
+        pyramid.DOLocalRotate(new Vector3(0, 90, 0) + this.transform.rotation.eulerAngles, pyramidFragRotInSec, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => { spinning = false; }); 
     
     }
 }
