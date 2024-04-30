@@ -69,7 +69,14 @@ public class MainMenuManager : MonoBehaviour
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
 
-        menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; textTvDown.text = "Start Game"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(StartGame); tvDownButton.onClick.AddListener(StartTutorial); });
+        menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; tvUpButton.onClick.AddListener(StartTutorial); 
+            if(GameManager.Instance.isTutorialCompleted)
+            {
+                textTvDown.text = "Start Game";
+                tvDownButton.enabled = true;
+                tvDownButton.onClick.AddListener(StartGame);
+            }
+        });
         menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
@@ -81,7 +88,6 @@ public class MainMenuManager : MonoBehaviour
     {
         if (!started) return;
 
-        
         if(EventSystem.current.currentSelectedGameObject == null)
         {
             EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
