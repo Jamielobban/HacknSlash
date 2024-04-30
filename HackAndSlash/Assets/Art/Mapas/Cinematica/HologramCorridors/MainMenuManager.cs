@@ -68,9 +68,9 @@ public class MainMenuManager : MonoBehaviour
         cam = Camera.main.transform;
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
-
-        menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; tvUpButton.onClick.AddListener(StartTutorial); 
-            if(GameManager.Instance.isTutorialCompleted)
+        menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; tvUpButton.onClick.AddListener(StartTutorial);
+            tvDownButton.enabled = false;
+            if (GameManager.Instance.isTutorialCompleted)
             {
                 textTvDown.text = "Start Game";
                 tvDownButton.enabled = true;
