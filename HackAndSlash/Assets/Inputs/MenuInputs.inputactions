@@ -1,0 +1,74 @@
+{
+    "name": "MenuInputs",
+    "maps": [
+        {
+            "name": "UiInputs",
+            "id": "37af1a06-614c-4383-b041-2d600f3ddf5a",
+            "actions": [
+                {
+                    "name": "MoveThorughUI",
+                    "type": "Value",
+                    "id": "a5714f5e-34b0-4d33-9055-17c0b8ef84ac",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "UiElementMovement",
+                    "type": "Button",
+                    "id": "02f75908-f748-46ca-9d06-77c49aa86204",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonInteract",
+                    "type": "Button",
+                    "id": "46541f74-7723-47e7-8258-bcffb7ae2533",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0630a65f-33f1-41fc-b5bf-e6d7d903fe19",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveThorughUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e803cfcb-ab42-4f8d-9b70-c75642e123c8",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UiElementMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b35662dd-2728-4e49-8d35-ebdb1505eaaf",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

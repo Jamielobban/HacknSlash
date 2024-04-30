@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -13,14 +15,21 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI textTvUp;
     [SerializeField] TextMeshProUGUI textTvDown;
     [SerializeField] RectTransform bigTvCanvas;
+    [SerializeField] TextMeshProUGUI[] bigTvSliderTexts;
+    [SerializeField] Color32 customGrey;
+    [SerializeField] Color32 customRed;
+
     Button tvUpButton;
     Button tvDownButton;
 
+    MenuInputs menuInputs;
     Dictionary<string, Action> menuActions = new Dictionary<string, Action>();
     int lastIndex = -1;
     bool started = false;
 
     Transform cam;
+
+    public GameObject firstSelectedObejct;
 
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
     void StartShowMenu() { started = true; pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo); }); }
@@ -48,13 +57,28 @@ public class MainMenuManager : MonoBehaviour
         menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvUpButton.onClick.AddListener(Exitgame); });
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
-
+                
+        EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!started) return;
+
+        
+        if(EventSystem.current.currentSelectedGameObject == null)
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
+        }
+
+        Debug.Log(EventSystem.current.currentSelectedGameObject.gameObject.name);
+
+        if (EventSystem.current.currentSelectedGameObject.gameObject == tvUpButton.gameObject || EventSystem.current.currentSelectedGameObject.gameObject == tvDownButton.gameObject)
+            bigTvSliderTexts.ToList().ForEach(tmp => tmp.color = customGrey);
+        else
+            bigTvSliderTexts.ToList().ForEach(tmp => tmp.color = tmp.gameObject.activeInHierarchy ? customRed : customGrey);
+
 
         int index = -1;
         float maxAngle = -1f; // Inicializa el ángulo máximo con un valor mínimo
