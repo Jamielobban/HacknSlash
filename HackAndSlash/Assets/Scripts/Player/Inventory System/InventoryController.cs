@@ -52,7 +52,7 @@ public class InventoryController : MonoBehaviour
     private void ResetInventory()
     {
         inventoryObj.SetActive(true);
-        musicObj.SetActive(true);
+        musicObj.SetActive(false);
     }
 
     private void Update()
