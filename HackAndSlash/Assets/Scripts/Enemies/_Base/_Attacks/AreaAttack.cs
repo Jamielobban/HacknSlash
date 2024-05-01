@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MoreMountains.Feedbacks;
+using UnityEngine;
 using UnityHFSM;
 
 [RequireComponent(typeof(Collider))]
@@ -7,6 +8,7 @@ public class AreaAttack : BaseEnemyAttack
     public GameObject areaPrefab;
     public Transform pointToInstantiate;
     private Collider _colliderDamage;
+    public MMFeedbacks areaAttackSound;
 
     //Audiosource audio
 
@@ -26,7 +28,8 @@ public class AreaAttack : BaseEnemyAttack
     protected override void SetVisualEffects()
     {
         base.SetVisualEffects();
-        //Audio play
+        areaAttackSound.PlayFeedbacks();
+        
     }
 
     protected override void AttackAction()

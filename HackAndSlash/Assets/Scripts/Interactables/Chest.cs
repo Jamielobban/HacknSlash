@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,8 @@ public class Chest : MonoBehaviour, IInteractable
     public GameObject particles;
     public GameObject particle;
     public bool isUnlocked = false;
-    
+    public MMFeedbacks chestOpenedSound;
+
     private void Awake()
     {        
         _anim = GetComponent<Animator>();
@@ -28,7 +30,7 @@ public class Chest : MonoBehaviour, IInteractable
     }
     public void PlayChestSound() 
     {
-        AudioManager.Instance.PlayFx(Enums.Effects.ChestOpen);
+       chestOpenedSound.PlayFeedbacks();
 
     }
     public void Interact()
@@ -48,5 +50,6 @@ public class Chest : MonoBehaviour, IInteractable
         isUnlocked = true;
 
     }
+    
 
 }
