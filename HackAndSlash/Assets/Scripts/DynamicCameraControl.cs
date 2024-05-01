@@ -19,7 +19,6 @@ public class DynamicCameraControl : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             freeLookCamera = GetComponent<CinemachineFreeLook>();
             initialTopRigRadius = freeLookCamera.m_Orbits[0].m_Radius;

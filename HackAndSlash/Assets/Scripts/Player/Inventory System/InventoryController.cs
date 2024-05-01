@@ -18,6 +18,12 @@ public class InventoryController : MonoBehaviour
         _inventoryUI.InitializeInventoryUI(_inventoryData.Size);
         _inventoryData.OnInventoryUpdated += UpdateInventoryUI;
         _inventoryUI.OnDescriptionRequested += HandleDescriptionRequested;
+        _inventoryUI.Show();
+        foreach (var item in _inventoryData.GetCurrentInventoryState())
+        {
+            _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDefaultDescription);
+        }
+        _inventoryUI.Hide();
     }
 
     private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
@@ -58,7 +64,6 @@ public class InventoryController : MonoBehaviour
                     AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
                     EventSystem.current.SetSelectedGameObject(_inventoryUI.ListOfUIItems[0].gameObject); //selectedObject
                     GameManager.Instance.PauseMenuGame();
-                    //RefreshInventory();
                 }
                 else
                 {
