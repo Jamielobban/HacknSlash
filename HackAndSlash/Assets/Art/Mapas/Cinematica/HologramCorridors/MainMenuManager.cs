@@ -49,7 +49,7 @@ public class MainMenuManager : MonoBehaviour
     {
         loadingGo.SetActive(true);
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
-        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL, fillLoadingGo);
+        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, fillLoadingGo);
     }
 
     void Exitgame() => Application.Quit();

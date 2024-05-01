@@ -558,28 +558,32 @@ public class PlayerControl : MonoBehaviour
 
         playerAnim.speed = 1.75f;
         currentComboAttack++;
-        if (currentComboAttacks.attacks[currentComboAttack].collider != null )
+
+        if (currentComboAttacks.attacks.Length > currentComboAttack)
         {
-            for (int i = 0; i < currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes.Length; i++)
+            if (currentComboAttacks.attacks[currentComboAttack].collider != null)
             {
-                stopAttack = false;
-                if(currentComboAttacks.combo != ComboAtaques.air2)
-                    StartCoroutine(DelayGolpe((currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]), currentComboAttack, damageMultiplier, damageMult, i));
-                else
+                for (int i = 0; i < currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes.Length; i++)
                 {
-                    RaycastHit hit;
-                    Physics.Raycast(this.transform.position, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7);
-                    float a = (this.transform.position.y - hit.point.y) / 10;
-                    float time = (currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]) + (a * 0.1f);
-                    slashSuelo = currentComboAttacks.attacks[currentComboAttack].slash[i].transform.GetChild(0).gameObject;
-                    Invoke("GuarradaSlashTrianguloAire", time - 0.15f);
-                    StartCoroutine(DelayGolpe(time, currentComboAttack, damageMultiplier, damageMult, i));
+                    stopAttack = false;
+                    if (currentComboAttacks.combo != ComboAtaques.air2)
+                        StartCoroutine(DelayGolpe((currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]), currentComboAttack, damageMultiplier, damageMult, i));
+                    else
+                    {
+                        RaycastHit hit;
+                        Physics.Raycast(this.transform.position, transform.TransformDirection(-this.transform.up), out hit, 2000, 1 << 7);
+                        float a = (this.transform.position.y - hit.point.y) / 10;
+                        float time = (currentComboAttacks.attacks[currentComboAttack].delayRepeticionGolpes[i]) + (a * 0.1f);
+                        slashSuelo = currentComboAttacks.attacks[currentComboAttack].slash[i].transform.GetChild(0).gameObject;
+                        Invoke("GuarradaSlashTrianguloAire", time - 0.15f);
+                        StartCoroutine(DelayGolpe(time, currentComboAttack, damageMultiplier, damageMult, i));
+                    }
                 }
             }
-        }
         damageMult = 1;
 
         playerAnim.CrossFadeInFixedTime(currentComboAttacks.attacks[currentComboAttack].name, currentComboAttacks.attacks[currentComboAttack].transition);
+        }
 
         attackStartTime = Time.time;
     }
@@ -594,7 +598,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (currentComboAttack == -1)
             currentComboAttack = 0;
-        rb.AddForce(this.transform.up * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimientoY.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimientoY * Time.deltaTime, ForceMode.Force);
+        if(currentComboAttacks.attacks.Length > currentComboAttack)
+        {
+            rb.AddForce(this.transform.up * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimientoY.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimientoY * Time.deltaTime, ForceMode.Force);
+
+        }
 
         player.transform.GetChild(3).transform.localPosition += new Vector3(0, 0, 1).normalized;
 
@@ -612,7 +620,10 @@ public class PlayerControl : MonoBehaviour
         }
         Vector3 dir = this.transform.position - player.transform.GetChild(3).transform.position;
         //player.transform.LookAt(movementController.transform.position);
-        rb.AddForce(-dir.normalized * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimiento.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimiento * Time.deltaTime, ForceMode.Force);
+        if (currentComboAttacks.attacks.Length > currentComboAttack)
+        {
+            rb.AddForce(-dir.normalized * currentComboAttacks.attacks[currentComboAttack].curvaDeVelocidadMovimiento.Evaluate(Time.time - attackStartTime) * currentComboAttacks.attacks[currentComboAttack].velocidadMovimiento * Time.deltaTime, ForceMode.Force);
+        }
         player.transform.GetChild(3).transform.localPosition = new Vector3();
 
     }

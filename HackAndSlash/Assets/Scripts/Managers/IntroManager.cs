@@ -52,7 +52,7 @@ public class IntroManager : MonoBehaviour
         //blackCyborg.NextDialogue();
     }
 
-    void ActivateScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL, imageFillLoading);    
+    void ActivateScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, imageFillLoading);    
 
     private void OnDestroy()
     {
