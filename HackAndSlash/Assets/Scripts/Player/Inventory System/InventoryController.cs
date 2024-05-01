@@ -11,6 +11,8 @@ public class InventoryController : MonoBehaviour
     public int inventorySize = 20;
     private ControllerManager _controller;
 
+    public GameObject musicObj, inventoryObj;
+
     private void Start()
     {
         _controller = FindAnyObjectByType<ControllerManager>();
@@ -47,6 +49,11 @@ public class InventoryController : MonoBehaviour
         _inventoryUI.UpdateDescription(itemIndex, item.itemIcon, item.itemName, item.itemDefaultDescription);
     }
 
+    private void ResetInventory()
+    {
+        inventoryObj.SetActive(true);
+        musicObj.SetActive(true);
+    }
 
     private void Update()
     {
@@ -56,6 +63,7 @@ public class InventoryController : MonoBehaviour
             {
                 if (!_inventoryUI.isActiveAndEnabled)
                 {
+                    ResetInventory();
                     _inventoryUI.Show();
                     foreach (var item in _inventoryData.GetCurrentInventoryState())
                     {

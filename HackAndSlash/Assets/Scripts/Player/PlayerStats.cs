@@ -15,7 +15,6 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI currentLife;
 
     private PlayerControl playerStats;
-    //
 
     void Start()
     {
@@ -37,6 +36,6 @@ public class PlayerStats : MonoBehaviour
         attackDamageText.text = "Attack Dmg:  " + playerStats.attackDamage.ToString();
         healthRegenText.text = "Regeneration:  " + playerStats.healthRegen.ToString() + "  / 5s";
         lifeSteal.text = "Life Steal: " + playerStats.lifeStealPercent.ToString() + "%";
-        //levelText.text = $"{ap.slider1.value:F2}/{ap.slider1.maxValue:F0}";
+        currentLife.text = "" + playerStats.healthSystem.CurrentHealth + " / " + playerStats.healthSystem.maxHealth + " HP ";
     }
 }
