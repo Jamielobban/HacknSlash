@@ -105,6 +105,7 @@ public class InfiniteSpawner : MonoBehaviour
             enemyBase.target = GameManager.Instance.Player.transform;
             enemyBase.spawner = this.gameObject;
             enemyBase.OnSpawnEnemy();
+            enemyBase.UpgradeEnemy(ManagerEnemies.Instance.ScaleLifeMult, ManagerEnemies.Instance.ScaleDamageMult);
             AddEnemy(enemyBase);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
