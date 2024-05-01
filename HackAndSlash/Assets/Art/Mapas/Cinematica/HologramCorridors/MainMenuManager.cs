@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] BlackCyborg bc;
     [SerializeField] SpinPyramid spinPyramid;
     [SerializeField] List<TextMeshProUGUI> pyramidMenuTexts;
     [SerializeField] TextMeshProUGUI textTvUp;
@@ -41,7 +42,9 @@ public class MainMenuManager : MonoBehaviour
     public void RotatitionDone() {
         rotated = true;
         AudioManager.Instance.PlayFx(Enums.Effects.RotatePyramid);
-        EventSystem.current.SetSelectedGameObject(firstSelectedObejct); }
+        EventSystem.current.SetSelectedGameObject(firstSelectedObejct); 
+    }
+    void StartNarration()=> bc.Speak(1);
     void StartShowMenu() {
         AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Glitch);
         pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
@@ -77,6 +80,7 @@ public class MainMenuManager : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaMenuNuevo);
+        Invoke(nameof(StartNarration), 1.85f);
         cam = Camera.main.transform;
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();

@@ -19,11 +19,11 @@ public class BlackCyborg : Interactive, IInteractable
     public Action OnConversationEnded;
     private void DialogueDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
     private void ConversationEnded() => OnConversationEnded?.Invoke(); //Aqui es ficara la funció de color a verd
-    public void Speak() => StartCoroutine(SpeakCoroutine());
+    public void Speak(float volume = 1) => StartCoroutine(SpeakCoroutine(volume));
 
-    IEnumerator SpeakCoroutine()
+    IEnumerator SpeakCoroutine(float volume)
     {
-        voice.Speak(dialogues[currentDialogue].collection[currentDialogueLine], name);
+        voice.Speak(dialogues[currentDialogue].collection[currentDialogueLine], name, volume);
         yield return new WaitUntil(() => voice.playing == false);
 
         if (currentDialogueLine == dialogues[currentDialogue].collection.Count - 1)
@@ -42,7 +42,7 @@ public class BlackCyborg : Interactive, IInteractable
         {
             currentDialogueLine++;
             yield return new WaitForSeconds(0.5f);
-            Speak();
+            Speak(volume);
         }
 
     }

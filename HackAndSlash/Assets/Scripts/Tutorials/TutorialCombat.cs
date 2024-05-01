@@ -93,7 +93,7 @@ public class TutorialCombat : MonoBehaviour
 
         for (int i = 0; i < _dialogues.Length; i++)
         {
-            voice.Speak(_dialogues[i], _name);
+            voice.Speak(_dialogues[i], _name, 1);
             yield return new WaitUntil(() => voice.playing == false);
             yield return new WaitForSecondsRealtime(0.8f);
         }
