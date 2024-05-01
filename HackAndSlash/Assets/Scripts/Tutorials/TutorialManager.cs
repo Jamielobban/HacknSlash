@@ -11,7 +11,7 @@ public class TutorialManager : MonoBehaviour
     FadeScript fade;
     BlackCyborg blackCyborg;
     TutorialComboManager tutorialCM;
-    PyramidTeleport pyramid;
+    [SerializeField] PyramidTeleport pyramid;
 
     [Header("SceneElements")]
     [SerializeField] AudioListener audioListener;
@@ -44,6 +44,7 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
+        pyramid.OnInteract += ChangeScene;
         animatorLeft.SetBool("idle", true);
         animatorRight.SetBool("idle", true);
         fade.FadeIn(1.8f);
@@ -79,7 +80,7 @@ public class TutorialManager : MonoBehaviour
         loadingMenu.SetActive(true);
         Invoke(nameof(ActiveScene), 1f);
     }
-    private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_PYRAMID, loadingFillBar);
+    private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
     private void OnDestroy()
     {
         blackCyborg.OnInteract -= RobotInteraction;       
@@ -98,6 +99,6 @@ public class TutorialManager : MonoBehaviour
         colliderBlockingPath.enabled = false;        
         animatorLeft.CrossFadeInFixedTime("IdleArmed", 0.1f);
         animatorRight.CrossFadeInFixedTime("IdleArmed", 0.1f);
-    }
+    }    
 
 }
