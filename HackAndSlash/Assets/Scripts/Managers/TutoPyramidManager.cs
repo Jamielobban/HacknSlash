@@ -35,9 +35,9 @@ public class TutoPyramidManager : MonoBehaviour
     {
        /// listener.enabled = false;
        // playerControl.enabled = false;
-        pyramid.OnInteract -= ChangeScene;
         loadingMenu.SetActive(true);
-        Invoke(nameof(ActiveScene), 1f);
+        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
+        pyramid.OnInteract -= ChangeScene;
     }
     private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
 }

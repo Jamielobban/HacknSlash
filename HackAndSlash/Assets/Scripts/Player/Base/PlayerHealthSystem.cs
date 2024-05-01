@@ -21,7 +21,10 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public GameObject onDie;
     private bool _isPlayer = true;
-    public bool IsDamageable;  
+    public bool IsDamageable;
+
+    public GameObject hitEffect;
+
     public float CurrentHealth
     {
         get { return _currentHealth; }
@@ -93,6 +96,9 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         visualEffect.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), (int)damage);
 
         _player.HitEffect();
+        GameObject go = Instantiate(hitEffect, transform);
+        go.transform.localScale = Vector3.one;
+        go.transform.localPosition = new Vector3(0, 1, 0);
         SetBloodEffect();
         _currentHealth -= damage;
         if(GameManager.Instance.state != Enums.GameState.Tutorial)
@@ -118,25 +124,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 
-    public void ApplyPoison()
-    {
-        float dmg = maxHealth * 0.03f; // 5% of max health
-
-        debuffs[0].ApplyDebuff(dmg);
-    }
-
-    public void ApplyBleed()
-    {
-        float dmg = maxHealth * 0.04f; // 20% of dmg base atk
-
-        debuffs[1].ApplyDebuff(dmg);
-    }
-
     public void ApplyBurn()
     {
         float dmg = maxHealth * 0.05f; // 40 % of damage base
 
-        debuffs[2].ApplyDebuff(dmg);
+        debuffs[0].ApplyDebuff(dmg);
     }
     public void ApplyStun(float timeStun)
     {

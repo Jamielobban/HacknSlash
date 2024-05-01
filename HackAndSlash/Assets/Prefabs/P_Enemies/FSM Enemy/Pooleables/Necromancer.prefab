@@ -1096,57 +1096,6 @@ MonoBehaviour:
   NestObject: 0
   OffsetDirection: {x: 0, y: 0, z: -1}
   Up: {x: 0, y: 1, z: 0}
---- !u!1 &2758688633018516915
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7644866644744081738}
-  - component: {fileID: 7762422187250613891}
-  m_Layer: 6
-  m_Name: Bleed
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7644866644744081738
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2758688633018516915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3265596012244130751}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7762422187250613891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2758688633018516915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b5189c4daecde4382ea22f745ac4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  isStackeable: 0
-  duration: 4
-  enemy: {fileID: 8326841416910868969}
-  _timeToDamage: 1
-  damageNumber: {fileID: 4788049381315410319, guid: 599f686059ea2294ba83f84ef71ab033,
-    type: 3}
 --- !u!1 &2935463709678631818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,8 +1870,6 @@ MonoBehaviour:
   onHit: {fileID: 2356706272851958431}
   hud: {fileID: 1836046297501134015}
   debuffs:
-  - {fileID: 2201277819536708712}
-  - {fileID: 7762422187250613891}
   - {fileID: 6509844600102572081}
 --- !u!1 &5498352671158743740
 GameObject:
@@ -1992,57 +1939,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSightDistance: 50
   maxSightDistance: 75
---- !u!1 &5964962657068600390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8189874745530423705}
-  - component: {fileID: 2201277819536708712}
-  m_Layer: 6
-  m_Name: Poison
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8189874745530423705
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964962657068600390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3265596012244130751}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2201277819536708712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964962657068600390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b5189c4daecde4382ea22f745ac4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  isStackeable: 0
-  duration: 5
-  enemy: {fileID: 8326841416910868969}
-  _timeToDamage: 1
-  damageNumber: {fileID: 4788049381315410319, guid: 8fe808357b6a00041a88990b30d54e7d,
-    type: 3}
 --- !u!1 &6651784372685792308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,8 +1967,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8189874745530423705}
-  - {fileID: 7644866644744081738}
   - {fileID: 897649216333265631}
   m_Father: {fileID: 2762891991291423474}
   m_RootOrder: -1

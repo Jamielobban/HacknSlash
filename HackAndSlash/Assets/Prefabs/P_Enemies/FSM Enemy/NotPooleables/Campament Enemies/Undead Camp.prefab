@@ -10085,8 +10085,6 @@ MonoBehaviour:
   onHit: {fileID: 3152640076038267557}
   hud: {fileID: 6661636617920493511}
   debuffs:
-  - {fileID: 6964017511501569521}
-  - {fileID: 7428782518892880949}
   - {fileID: 7216909826729251336}
 --- !u!1 &2322279904099846537
 GameObject:
@@ -10116,8 +10114,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 669863033386440983}
-  - {fileID: 7580134906505809227}
   - {fileID: 7345101845874624498}
   m_Father: {fileID: 18539607003878592}
   m_RootOrder: -1
@@ -10571,57 +10567,6 @@ MonoBehaviour:
   NestObject: 0
   OffsetDirection: {x: 0, y: 0, z: -1}
   Up: {x: 0, y: 1, z: 0}
---- !u!1 &4565736692477357367
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 669863033386440983}
-  - component: {fileID: 6964017511501569521}
-  m_Layer: 6
-  m_Name: Poison
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &669863033386440983
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4565736692477357367}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9080736642385288658}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6964017511501569521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4565736692477357367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b5189c4daecde4382ea22f745ac4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  isStackeable: 0
-  duration: 5
-  enemy: {fileID: 2423152260558769088}
-  _timeToDamage: 1
-  damageNumber: {fileID: 4788049381315410319, guid: 8fe808357b6a00041a88990b30d54e7d,
-    type: 3}
 --- !u!1 &5150095706560460349
 GameObject:
   m_ObjectHideFlags: 0
@@ -10859,57 +10804,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToSound: 2
   randomSFX: {fileID: 3849908510167661290}
---- !u!1 &5304604946939180189
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7580134906505809227}
-  - component: {fileID: 7428782518892880949}
-  m_Layer: 6
-  m_Name: Bleed
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7580134906505809227
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5304604946939180189}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9080736642385288658}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7428782518892880949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5304604946939180189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b5189c4daecde4382ea22f745ac4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  isStackeable: 0
-  duration: 4
-  enemy: {fileID: 2423152260558769088}
-  _timeToDamage: 1
-  damageNumber: {fileID: 4788049381315410319, guid: 599f686059ea2294ba83f84ef71ab033,
-    type: 3}
 --- !u!1 &5839721276334823190
 GameObject:
   m_ObjectHideFlags: 0
