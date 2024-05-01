@@ -9,7 +9,7 @@ public class GemRecovery : MonoBehaviour, IInteractable
     {
         PlayerControl player = GameManager.Instance.Player;
         player.healthSystem.Heal(player.healthSystem.maxHealth);
-        gameObject.SetActive(false);
+        _recoveryFlower.ResetStructure();
     }
 
 }

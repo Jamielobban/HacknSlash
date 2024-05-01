@@ -28,7 +28,7 @@ public class RecoveryFlower : StructureEnemiesLife
         }
     }
 
-    protected override bool CanActivate() => base.CanActivate() && reusedLifes >= 0;
+    protected override bool CanActivate() => base.CanActivate() && reusedLifes > 0;
 
     protected override void Activate()
     {
