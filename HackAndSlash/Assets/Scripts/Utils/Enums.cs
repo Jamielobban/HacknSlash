@@ -126,7 +126,8 @@ public class Enums
         UnoVSUno,
         InGameMenu,
         Helicopter,
-        MusicaMenuNuevo
+        MusicaMenuNuevo,
+        MusicaCombbat
     };
 
     public enum Effects
