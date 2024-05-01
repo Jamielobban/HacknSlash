@@ -15,6 +15,8 @@ public class AttackCollider : MonoBehaviour
 
     public float baseDamage;
 
+    public PlayerControl.Ataques attack;
+
     void Start()
     {
         _player = FindObjectOfType<PlayerControl>();
@@ -107,18 +109,13 @@ public class AttackCollider : MonoBehaviour
 
             damageable.TakeDamage(damageValue, damageNumber);
 
-            if(_player.canBurn)
+            if(attack.canBurn)
             {
                 damageable.ApplyBurn();
             }
-            if(_player.canBleed)
+            if(attack.canStun)
             {
-                damageable.ApplyBleed();
-
-            }
-            if (_player.canPoison)
-            {
-                damageable.ApplyPoison();
+                //damageable.ApplyStun(attack.timeStun);
             }
 
         }
