@@ -95,6 +95,14 @@ public class ItemsLootBoxManager : MonoBehaviour
         
         _player.inventory.AddItem(chosedItem);
         chosenItem.OnItemPickup(_player);
+
+        if(chosenItem.data.rarityType == RarityType.Ability)
+        {
+            if(_itemManager.abilityItems.Contains(chosenItem))
+            {
+                _itemManager.abilityItems.Remove(chosenItem);
+            }
+        }
         
         ResetItemChoiceMenu();        
 

@@ -75,11 +75,10 @@ public class ItemManager : MonoBehaviour
         {
             if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
             {
-                Item _item = GetRandomItemGuard(abilityItems);
+                Item _item = GetRandomAbilityGuard(abilityItems);
 
                 if (_item != null)
                 {
-                    abilityItems.Remove(_item);
                     return _item;
                 }
             }
@@ -97,6 +96,22 @@ public class ItemManager : MonoBehaviour
         }
 
         return list[Random.Range(0, list.Count)];
+    }
+
+    private Item GetRandomAbilityGuard(List<Item> list)
+    {
+        if(list.Count <= 0)
+        {
+            return null;
+        }
+
+        Item newItem;
+        do
+        {
+            newItem = list[Random.Range(0, list.Count)];
+        } while(ItemsLootBoxManager.Instance.itemsToSpawn.Contains(newItem));
+
+        return newItem;
     }
 
     private Item GetRandomItemInArray(Item[] itemsArray) => itemsArray[Random.Range(0, itemsArray.Length)]; 
