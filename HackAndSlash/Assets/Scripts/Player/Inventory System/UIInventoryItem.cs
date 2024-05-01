@@ -24,7 +24,9 @@ public class UIInventoryItem : MonoBehaviour
 
     public void ResetData()
     {
+        if(_itemImage != null)
         _itemImage.gameObject.SetActive(false);
+        if(_borderImage != null)
         _borderImage.gameObject.SetActive(false);
     }
     
