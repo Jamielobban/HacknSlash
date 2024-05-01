@@ -154,7 +154,8 @@ public class Enums
         MoveUI,
         SelectOptionMenu,
         DoorOpen,
-        RotatePyramid
+        RotatePyramid,
+        MenuSpeach
     };
 
     public enum MusicEffects

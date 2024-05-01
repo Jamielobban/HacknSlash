@@ -13,6 +13,7 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] BlackCyborg bc;
     [SerializeField] SpinPyramid spinPyramid;
+    [SerializeField] Image blackImage;
     [SerializeField] List<TextMeshProUGUI> pyramidMenuTexts;
     [SerializeField] TextMeshProUGUI textTvUp;
     [SerializeField] TextMeshProUGUI textTvDown;
@@ -21,10 +22,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Color32 customGrey;
     [SerializeField] Color32 customRed;
 
+    FadeScript fadeScript;
     Button tvUpButton;
     Button tvDownButton;
 
-    MenuInputs menuInputs;
     Dictionary<string, Action> menuActions = new Dictionary<string, Action>();
     int lastIndex = -1;
     bool started = false;
@@ -38,13 +39,15 @@ public class MainMenuManager : MonoBehaviour
     public Image fillLoadingGo;
     bool rotated = false;
 
+    
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
     public void RotatitionDone() {
         rotated = true;
         AudioManager.Instance.PlayFx(Enums.Effects.RotatePyramid);
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct); 
     }
-    void StartNarration()=> bc.Speak(1);
+    void StartNarrationAudio() => AudioManager.Instance.PlayFx(Enums.Effects.MenuSpeach);
+    void StartNarrationText() { bc.Speak(0); Invoke(nameof(StartNarrationAudio), 0.5f); }
     void StartShowMenu() {
         AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Glitch);
         pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
@@ -62,14 +65,14 @@ public class MainMenuManager : MonoBehaviour
         GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, fillLoadingGo);
     }
 
-    void Exitgame() => Application.Quit();
+    void Exitgame() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); Application.Quit(); }
     void ShowTeam() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
     void ShowEnti() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
     void ShowSfx() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx"); }
-    void ShowMusic() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); 
+    void ShowMusic() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music"); }
     void ResetTvs()
     {
@@ -79,8 +82,10 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        fadeScript = new FadeScript(blackImage);
+        fadeScript.FadeIn(1);
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaMenuNuevo);
-        Invoke(nameof(StartNarration), 1.85f);
+        Invoke(nameof(StartNarrationText), 1.85f);
         cam = Camera.main.transform;
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
@@ -98,7 +103,7 @@ public class MainMenuManager : MonoBehaviour
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
                 
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
-        lastSelectedObj = firstSelectedObejct;
+        lastSelectedObj = firstSelectedObejct;        
     }
 
     void Update()
@@ -156,5 +161,5 @@ public class MainMenuManager : MonoBehaviour
         }
         lastSelectedObj = EventSystem.current.currentSelectedGameObject;
         rotated = false;
-    }
+    }    
 }

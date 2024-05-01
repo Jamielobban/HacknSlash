@@ -74,7 +74,10 @@ public class AudioManager : MonoBehaviour
         }
         audioMusicEffects.loop = true;
     }
-
+    public void FadeEffect(float volume, float duration)
+    {
+        Fade(audioFx, duration, volume);
+    }
     public void FadeMusicEffect(float volume)
     {
         Fade(audioMusicEffects, 1f, volume);

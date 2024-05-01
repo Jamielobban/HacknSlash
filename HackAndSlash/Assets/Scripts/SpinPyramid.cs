@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UI;
 public class SpinPyramid : MonoBehaviour
 {
     [SerializeField] float period0, period1, verticalMoveTime, verticaDistance, pyramidFragRotInSec;
     [SerializeField] Transform pyramid;
+    
+
+    
+
 
     MenuInputs menuInputs;
     bool spinning = false;
     // Start is called before the first frame update
+    
     void Start()
-    {
+    {       
         Vector3 startPos = this.transform.parent.position;
         this.transform.parent.DOMoveY(startPos.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
 
@@ -46,5 +51,7 @@ public class SpinPyramid : MonoBehaviour
         spinning = true;
         pyramid.DOLocalRotate(new Vector3(0, 90, 0) + this.transform.rotation.eulerAngles, pyramidFragRotInSec, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => { spinning = false; }); 
     
-    }
+    }   
+
+
 }
