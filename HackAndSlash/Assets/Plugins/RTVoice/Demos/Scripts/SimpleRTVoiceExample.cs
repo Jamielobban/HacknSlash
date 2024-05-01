@@ -47,10 +47,10 @@ public class SimpleRTVoiceExample : MonoBehaviour
         }
     }
 
-    public void Speak(string text, string whoSpeaks)
+    public void Speak(string text, string whoSpeaks, float volume)
     {
         playing = true;
-        uid = Speaker.Instance.Speak(text, audioSource, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f); //Speak with the first voice matching the given culture
+        uid = Speaker.Instance.Speak(text, audioSource, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f, volume); //Speak with the first voice matching the given culture
         StartCoroutine(ShowText(text, whoSpeaks));
     }
 

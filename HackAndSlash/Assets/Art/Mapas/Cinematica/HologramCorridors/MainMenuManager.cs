@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] BlackCyborg bc;
     [SerializeField] SpinPyramid spinPyramid;
     [SerializeField] List<TextMeshProUGUI> pyramidMenuTexts;
     [SerializeField] TextMeshProUGUI textTvUp;
@@ -27,6 +28,7 @@ public class MainMenuManager : MonoBehaviour
     Dictionary<string, Action> menuActions = new Dictionary<string, Action>();
     int lastIndex = -1;
     bool started = false;
+    private GameObject lastSelectedObj;
 
     Transform cam;
 
@@ -34,10 +36,18 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject loadingGo;
     public Image fillLoadingGo;
+    bool rotated = false;
 
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
-    public void RotatitionDone() => EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
-    void StartShowMenu() { pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
+    public void RotatitionDone() {
+        rotated = true;
+        AudioManager.Instance.PlayFx(Enums.Effects.RotatePyramid);
+        EventSystem.current.SetSelectedGameObject(firstSelectedObejct); 
+    }
+    void StartNarration()=> bc.Speak(1);
+    void StartShowMenu() {
+        AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Glitch);
+        pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
     void StartGame()  
     {
         loadingGo.SetActive(true);
@@ -53,10 +63,14 @@ public class MainMenuManager : MonoBehaviour
     }
 
     void Exitgame() => Application.Quit();
-    void ShowTeam() { bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
-    void ShowEnti() { bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
-    void ShowSfx() { bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx"); }
-    void ShowMusic() { bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music"); }
+    void ShowTeam() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
+        bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
+    void ShowEnti() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
+        bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
+    void ShowSfx() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
+        bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx"); }
+    void ShowMusic() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); 
+        bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music"); }
     void ResetTvs()
     {
         tvUpButton.onClick.RemoveAllListeners(); tvDownButton.onClick.RemoveAllListeners(); textTvUp.text = ""; textTvDown.text = "";
@@ -65,6 +79,8 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayMusic(Enums.Music.MusicaMenuNuevo);
+        Invoke(nameof(StartNarration), 1.85f);
         cam = Camera.main.transform;
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
@@ -82,6 +98,7 @@ public class MainMenuManager : MonoBehaviour
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
                 
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
+        lastSelectedObj = firstSelectedObejct;
     }
 
     void Update()
@@ -132,5 +149,12 @@ public class MainMenuManager : MonoBehaviour
         }
 
         lastIndex = index;
+
+        if(EventSystem.current.currentSelectedGameObject != lastSelectedObj && !rotated && EventSystem.current.currentSelectedGameObject.GetComponent<Slider>()==null)
+        {
+            AudioManager.Instance.PlayFx(Enums.Effects.MoveUI);
+        }
+        lastSelectedObj = EventSystem.current.currentSelectedGameObject;
+        rotated = false;
     }
 }

@@ -125,7 +125,8 @@ public class Enums
         EpicTheme,
         UnoVSUno,
         InGameMenu,
-        Helicopter
+        Helicopter,
+        MusicaMenuNuevo
     };
 
     public enum Effects
@@ -148,14 +149,20 @@ public class Enums
         FailEvent,SuccessEvent,
         PositiveClickTuto,
         TutoEnded,
-        MoveSelect
+        MoveSelect,
+        MoveUI,
+        SelectOptionMenu,
+        DoorOpen,
+        RotatePyramid
     };
 
     public enum MusicEffects
     {
         Atmosfera,
         Wind,
-        IceWind
+        IceWind,
+        Glitch,
+        LoadingFX
        
         
     };
