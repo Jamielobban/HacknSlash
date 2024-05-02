@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class BlackCyborg : Interactive, IInteractable
 {
@@ -20,11 +21,13 @@ public class BlackCyborg : Interactive, IInteractable
     private void DialogueDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
     private void ConversationEnded() => OnConversationEnded?.Invoke(); //Aqui es ficara la funció de color a verd
     public void Speak(float volume = 0) => StartCoroutine(SpeakCoroutine(volume));
-
     
     IEnumerator SpeakCoroutine(float volume)
     {
-        voice.Speak(dialogues[currentDialogue].collection[currentDialogueLine], name, volume);
+        KeyValuePair<int, string> currentDialogueData = dialogues[currentDialogue].collection.ElementAt(currentDialogueLine);
+        voice.Speak(currentDialogueData.Value, name, volume);
+        if (currentDialogueData.Key != -1)
+            AudioManager.Instance.PlayFx((Enums.Effects)currentDialogueData.Key);
         yield return new WaitUntil(() => voice.playing == false);
 
         if (currentDialogueLine == dialogues[currentDialogue].collection.Count - 1)
@@ -55,6 +58,4 @@ public class BlackCyborg : Interactive, IInteractable
 
         SetCanInteract(false);
     }
-
-
 }
