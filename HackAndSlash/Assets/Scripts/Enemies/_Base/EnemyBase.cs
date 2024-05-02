@@ -293,13 +293,9 @@ public class EnemyBase : PoolableObject
     
     public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)
     {
+        float lastHealth = _healthSystem.currentMaxHealth;
         float newHealth = _healthSystem.MaxHealth * scaleFactorHp;
         _healthSystem.currentMaxHealth = newHealth;
-
-        if (_healthSystem.CurrentHealth >= _healthSystem.currentMaxHealth)
-        {
-            ResetEnemy();
-        }
         
         if (attacks.Count > 0)
         {
@@ -310,10 +306,17 @@ public class EnemyBase : PoolableObject
             }
         }
 
-        // if (gameObject.activeSelf)
-        // {
-        //
-        // }
+        if (gameObject.activeSelf)
+        {
+            if (_healthSystem.CurrentHealth >= lastHealth)
+            {
+                ResetEnemy();
+            }
+        }
+        else
+        {
+            ResetEnemy();
+        }
     }
     
     protected virtual void OnDestroy()

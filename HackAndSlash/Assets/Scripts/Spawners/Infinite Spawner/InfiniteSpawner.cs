@@ -106,6 +106,10 @@ public class InfiniteSpawner : MonoBehaviour
             enemyBase.spawner = this.gameObject;
             enemyBase.OnSpawnEnemy();
             AddEnemy(enemyBase);
+            if(ManagerEnemies.Instance.CurrentGlobalTime > 60)
+            {
+                enemyBase.UpgradeEnemy(ManagerEnemies.Instance.ScaleLifeMult, ManagerEnemies.Instance.ScaleDamageMult);
+            }
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
             {

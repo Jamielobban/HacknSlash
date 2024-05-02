@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
-using Unity.PlasticSCM.Editor.WebApi;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -44,6 +43,7 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
+        AudioManager.Instance.PlayMusic(Enums.Music.MusicaTutoNou);
         pyramid.OnInteract += ChangeScene;
         animatorLeft.SetBool("idle", true);
         animatorRight.SetBool("idle", true);
@@ -88,6 +88,8 @@ public class TutorialManager : MonoBehaviour
     }
     public void MoveRobots()
     {
+        AudioManager.Instance.PlayFx(Enums.Effects.FootstepsRobot);
+        AudioManager.Instance.PlayFx(Enums.Effects.FootstepsRobot);
         animatorRight.transform.DOMoveX(8.27f, 0.8f);
         animatorLeft.transform.DOMoveX(-0.26f, 0.8f);
         animatorLeft.CrossFadeInFixedTime("WalkLeftCombat", 0.1f);

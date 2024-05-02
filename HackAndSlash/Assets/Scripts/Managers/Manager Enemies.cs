@@ -58,6 +58,9 @@ public class ManagerEnemies : MonoBehaviour
     
     private float _scaleLifeMultiplier = 0f;
     private float _scaleDamageMultiplier = 0f;
+
+    public float ScaleLifeMult => _scaleLifeMultiplier;
+    public float ScaleDamageMult => _scaleDamageMultiplier;
     #endregion
     
     public int SpawnedEnemies => _spawnedEnemies;

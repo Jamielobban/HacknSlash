@@ -17,6 +17,8 @@ public class TutorialCombat : MonoBehaviour
     public Image fillLoadingGo;
     public GameObject eventActivable;
     public GameObject campEnemies;
+
+    
     
     readonly string _name = "Cyborg Sergeant";
 
@@ -33,6 +35,7 @@ public class TutorialCombat : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
         eventActivable.SetActive(false);
         StartCoroutine(Speak(dialoguesIntro));
     }

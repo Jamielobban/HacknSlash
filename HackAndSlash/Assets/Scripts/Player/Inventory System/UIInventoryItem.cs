@@ -32,10 +32,14 @@ public class UIInventoryItem : MonoBehaviour
     
     public void SetData(Sprite sprite, int quantity, string desc)
     {
-        _itemImage.gameObject.SetActive(true);
-        _itemImage.sprite = sprite;
-        _stackText.text = "" + quantity;
-        description = desc;
+        if (_itemImage != null)
+        {
+            _itemImage.gameObject.SetActive(true);
+            _itemImage.sprite = sprite;
+            _stackText.text = "" + quantity;
+            description = desc;
+        }
+
     }
 
     public void Select()
