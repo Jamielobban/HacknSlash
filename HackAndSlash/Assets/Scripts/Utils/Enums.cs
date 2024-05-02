@@ -127,7 +127,10 @@ public class Enums
         InGameMenu,
         Helicopter,
         MusicaMenuNuevo,
-        MusicaCombbat
+        MusicaCombbat, 
+        Glitch,
+        LoadingFX,
+        MusicaTutoNou
     };
 
     public enum Effects
@@ -155,7 +158,8 @@ public class Enums
         SelectOptionMenu,
         DoorOpen,
         RotatePyramid,
-        MenuSpeach
+        MenuSpeach,
+        FootstepsRobot
     };
 
     public enum MusicEffects
@@ -163,8 +167,7 @@ public class Enums
         Atmosfera,
         Wind,
         IceWind,
-        Glitch,
-        LoadingFX
+       Glitch
        
         
     };
