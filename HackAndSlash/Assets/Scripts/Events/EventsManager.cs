@@ -48,6 +48,7 @@ public class EventsManager : MonoBehaviour
             //Si todos eventos completos unlock final boss / win
             if(onWin != null && text != null)
             {
+                
                 onWin.SetActive(true);
                 text.SetActive(true);
             }

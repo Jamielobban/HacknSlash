@@ -171,6 +171,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         if(GameManager.Instance.state == Enums.GameState.Playing)
         {
             onDie.SetActive(true);
+            AudioManager.Instance.PlayMusic(Enums.Music.Defeat);
             onDie.GetComponent<GDTFadeEffect>()?.StartEffect();
             Invoke(nameof(StartLoadingBar), 4f);
         }

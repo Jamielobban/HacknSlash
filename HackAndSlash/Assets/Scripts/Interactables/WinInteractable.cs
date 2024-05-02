@@ -12,6 +12,7 @@ public class WinInteractable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        AudioManager.Instance.PlayMusic(Enums.Music.Victory);
         onWinInteracted.SetActive(true);
         onWinInteracted.GetComponent<GDTFadeEffect>()?.StartEffect();
         Invoke(nameof(ActiveLoadBarGameObject), 3.5f);

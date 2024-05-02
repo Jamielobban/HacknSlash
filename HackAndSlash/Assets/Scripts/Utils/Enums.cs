@@ -130,7 +130,9 @@ public class Enums
         MusicaCombbat, 
         Glitch,
         LoadingFX,
-        MusicaTutoNou
+        MusicaTutoNou,
+        Defeat,
+        Victory
     };
 
     public enum Effects
