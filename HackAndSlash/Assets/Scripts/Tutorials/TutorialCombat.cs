@@ -68,7 +68,7 @@ public class TutorialCombat : MonoBehaviour
     {
         //GameManager.Instance.PauseGame();
         Invoke(nameof(SpeakInTime), 1);
-        Invoke(nameof(TutorialFinished), 7f);
+        Invoke(nameof(TutorialFinished), 9f);
     }
     private void TutorialFinished()
     {

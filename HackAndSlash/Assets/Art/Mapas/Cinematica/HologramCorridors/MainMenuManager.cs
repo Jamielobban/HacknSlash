@@ -110,6 +110,13 @@ public class MainMenuManager : MonoBehaviour
     {
         if (!started) return;
 
+        if(Input.GetKeyDown(KeyCode.L) && !tvDownButton.enabled)
+        {
+            textTvDown.text = "Start Game";
+            tvDownButton.enabled = true;
+            tvDownButton.onClick.AddListener(StartGame);
+        }
+
         if(EventSystem.current.currentSelectedGameObject == null)
         {
             EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
