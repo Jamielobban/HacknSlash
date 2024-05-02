@@ -19,8 +19,9 @@ public class BlackCyborg : Interactive, IInteractable
     public Action OnConversationEnded;
     private void DialogueDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
     private void ConversationEnded() => OnConversationEnded?.Invoke(); //Aqui es ficara la funció de color a verd
-    public void Speak(float volume = 1) => StartCoroutine(SpeakCoroutine(volume));
+    public void Speak(float volume = 0) => StartCoroutine(SpeakCoroutine(volume));
 
+    
     IEnumerator SpeakCoroutine(float volume)
     {
         voice.Speak(dialogues[currentDialogue].collection[currentDialogueLine], name, volume);
