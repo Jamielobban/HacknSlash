@@ -160,12 +160,14 @@ public class ControllerManager : MonoBehaviour
             {
                 Interact.InteractPerformed();
             }
-
-            if(!Interact.canInteract && !ItemsLootBoxManager.Instance.menuActive)
+            else
             {
-                jump = true;
-                canJump = false;
-                JumpDone();
+                if(!ItemsLootBoxManager.Instance.menuActive)
+                {
+                    jump = true;
+                    canJump = false;
+                    JumpDone();
+                }
             }
         }
 
