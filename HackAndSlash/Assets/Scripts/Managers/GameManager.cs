@@ -62,7 +62,7 @@ using UnityEngine.UI;
 
         private IEnumerator LoadSceneAsync(string levelName, Image _progresionBar)
         {
-            AudioManager.Instance.audioMusicEffects.Stop();
+            AudioManager.Instance.audioMusicEffects.Stop();            
             AudioManager.Instance.PlayMusic(Enums.Music.LoadingFX);
             AsyncOperation async = SceneManager.LoadSceneAsync(levelName);
             async.allowSceneActivation = false;
@@ -72,6 +72,7 @@ using UnityEngine.UI;
                 _progresionBar.fillAmount = progress;
                 if (progress >= 0.9f)
                 {
+                    AudioManager.Instance.audioMusic.Stop();
                     _progresionBar.fillAmount = 1;
                     async.allowSceneActivation = true;
                 }

@@ -10,7 +10,7 @@ public static class Constants
     public const string ANIMATION_DIE = "die";
 
     public const string SCENE_MAINMENU = "Menu";
-    public const string SCENE_CINEMATIC = "Cinematica";
+    public const string SCENE_TUTORIAL_CINEMATIC = "TutorialCinematic";
     public const string SCENE_TUTORIAL_COMBOS = "Tutorial Combos";
     public const string SCENE_PYRAMID = "Tutorial Pyramid";
     public const string SCENE_TUTORIALCOMBAT = "Tutorial Combat";

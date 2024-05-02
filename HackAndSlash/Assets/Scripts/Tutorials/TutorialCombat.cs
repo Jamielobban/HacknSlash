@@ -4,23 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TutorialCombat : MonoBehaviour
-{
-    [SerializeField] string[] dialoguesIntro;
-    [SerializeField] string[] dialoguesItems;
-    [SerializeField] string[] dialoguesChest;
-    [SerializeField] string[] dialoguesEvent;
-    [SerializeField] string[] endTutorial;
+{    
     [SerializeField] BlackCyborg bc;
 
     [SerializeField] SimpleRTVoiceExample voice;
     public GameObject loadingGo;
     public Image fillLoadingGo;
     public GameObject eventActivable;
-    public GameObject campEnemies;
-
-    
-    
-    readonly string _name = "Cyborg Sergeant";
+    public GameObject campEnemies;        
 
     private bool hasReadedItems = false;
     private bool hasReadedChest = false;
@@ -40,24 +31,26 @@ public class TutorialCombat : MonoBehaviour
         bc.Speak();
     }
 
+    void SpeakInTime() => bc.Speak();
+
     void Update()
     {
         if(ManagerEnemies.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
-            StartCoroutine(Speak(dialoguesItems));
+            bc.Speak();
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 82 && !hasReadedChest)
+        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);
-            StartCoroutine(Speak(dialoguesChest));
+            bc.Speak();
         }
         else if(ManagerEnemies.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
             eventActivable.SetActive(true);
-            StartCoroutine(Speak(dialoguesEvent));
+            Invoke(nameof(SpeakInTime), 1);
             campEnemies.SetActive(false);
         }
         else if(eventActivable.activeSelf && !hasReadEndTutorial)
@@ -73,9 +66,9 @@ public class TutorialCombat : MonoBehaviour
 
     private void StartEnd()
     {
-        GameManager.Instance.PauseGame();
-        StartCoroutine(Speak(endTutorial));
-        Invoke(nameof(TutorialFinished), 4f);
+        //GameManager.Instance.PauseGame();
+        Invoke(nameof(SpeakInTime), 1);
+        Invoke(nameof(TutorialFinished), 7f);
     }
     private void TutorialFinished()
     {
@@ -88,22 +81,6 @@ public class TutorialCombat : MonoBehaviour
     {
         GameManager.Instance.UpdateState(Enums.GameState.Playing);
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
-    }
-
-    IEnumerator Speak(string[] _dialogues)
-    {
-        yield return new WaitForSecondsRealtime(.15f);
-
-        for (int i = 0; i < _dialogues.Length; i++)
-        {
-            voice.Speak(_dialogues[i], _name, 1);
-            yield return new WaitUntil(() => voice.playing == false);
-            yield return new WaitForSecondsRealtime(0.8f);
-        }
-        if(GameManager.Instance.IsPaused)
-        {
-            GameManager.Instance.PauseGame();
-        }
-    }
+    }   
 
 }
