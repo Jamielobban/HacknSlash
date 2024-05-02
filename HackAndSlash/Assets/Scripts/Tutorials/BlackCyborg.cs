@@ -20,14 +20,14 @@ public class BlackCyborg : Interactive, IInteractable
     public Action OnConversationEnded;
     private void DialogueDone() => OnDialogueLineDone?.Invoke(); //Aqui es ficara la funció de color a verd
     private void ConversationEnded() => OnConversationEnded?.Invoke(); //Aqui es ficara la funció de color a verd
-    public void Speak(float volume = 0) => StartCoroutine(SpeakCoroutine(volume));
+    public void Speak(float volume = 1) => StartCoroutine(SpeakCoroutine(volume));
     
     IEnumerator SpeakCoroutine(float volume)
     {
-        KeyValuePair<int, string> currentDialogueData = dialogues[currentDialogue].collection.ElementAt(currentDialogueLine);
-        voice.Speak(currentDialogueData.Value, name, volume);
-        if (currentDialogueData.Key != -1)
-            AudioManager.Instance.PlayFx((Enums.Effects)currentDialogueData.Key);
+        ListWrapperDialogueElement textData = dialogues[currentDialogue].collection[currentDialogueLine];
+        voice.Speak(textData.elementText, name, volume);
+        if (textData.elementKey != -1)
+            AudioManager.Instance.PlayFx((Enums.Effects)(textData.elementKey));
         yield return new WaitUntil(() => voice.playing == false);
 
         if (currentDialogueLine == dialogues[currentDialogue].collection.Count - 1)

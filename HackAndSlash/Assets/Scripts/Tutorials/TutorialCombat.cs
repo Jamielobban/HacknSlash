@@ -10,7 +10,7 @@ public class TutorialCombat : MonoBehaviour
     [SerializeField] string[] dialoguesChest;
     [SerializeField] string[] dialoguesEvent;
     [SerializeField] string[] endTutorial;
-
+    [SerializeField] BlackCyborg bc;
 
     [SerializeField] SimpleRTVoiceExample voice;
     public GameObject loadingGo;
@@ -37,7 +37,7 @@ public class TutorialCombat : MonoBehaviour
     {
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
         eventActivable.SetActive(false);
-        StartCoroutine(Speak(dialoguesIntro));
+        bc.Speak();
     }
 
     void Update()

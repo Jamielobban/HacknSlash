@@ -19939,6 +19939,7 @@ MonoBehaviour:
   verticalMoveTime: 5
   verticaDistance: 0.3
   marker: {fileID: 1585532476}
+  bc: {fileID: 0}
 --- !u!1001 &566996238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76500,10 +76501,12 @@ MonoBehaviour:
   interactCross: {fileID: 1541237215}
   dialogues:
   - collection:
-    - Year 3000, technology has evolved immensely, and along with it, the secrets
-      harbored by each nation.
-    - 'To safeguard them, they are concealed within advanced pyramidal hardware,
-      governed by the software: '
+    - elementText: Year 3000, technology has evolved immensely, and along with it,
+        the secrets harbored by each nation.
+      elementKey: -1
+    - elementText: 'To safeguard them, they are concealed within advanced pyramidal
+        hardware, governed by the software:'
+      elementKey: -1
   voice: {fileID: 417608574}
 --- !u!4 &1622248112
 Transform:
