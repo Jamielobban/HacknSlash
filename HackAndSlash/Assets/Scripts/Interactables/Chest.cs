@@ -27,7 +27,9 @@ public class Chest : MonoBehaviour, IInteractable
         if(canBeUnlocked)
         {
             _anim.SetBool("openChest", true);
-            DOVirtual.Float(0, 1, 0.5f, (alpha) => { interactCross.color = new Color(interactCross.color.r, interactCross.color.g, interactCross.color.b, alpha); });
+            Color c = interactCross.color;
+            c.a = 1;
+            interactCross.DOColor(c, 2);
             
             canBeUnlocked = false;
         }
