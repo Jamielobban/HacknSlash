@@ -342,43 +342,41 @@ public class PlayerControl : MonoBehaviour
 
     bool CheckIfNextAttack()
     {
-
-        if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque)
+        if(currentComboAttack < currentComboAttacks.attacks.Length)
         {
-
-            playerAnim.speed = 1;
-
-            if (currentComboAttack + 1 == currentComboAttacks.attacks.Length)
+            if ((Time.time - attackStartTime) >= currentComboAttacks.attacks[currentComboAttack].ataque)
             {
-                comboFinishedTime = Time.time;
-                attackFinished = true;
-                delayCombos = currentComboAttacks.attacks[currentComboAttack].delayFinal;
+                playerAnim.speed = 1;
 
-                currentComboAttack = -1;
-            }
-            if (currentComboAttacks.combo != ComboAtaques.air1 && currentComboAttacks.combo != ComboAtaques.air2 && currentComboAttacks.combo != ComboAtaques.HoldQuadrat && currentComboAttacks.combo != ComboAtaques.HoldTriangle)
-            {
-                CheckIfReturnIdle();
-                CheckMove();
-            }
-            else
-            {
-                fallStartTime = Time.time;
-                if (CheckIfLand())
+                if (currentComboAttack + 1 == currentComboAttacks.attacks.Length)
                 {
+                    comboFinishedTime = Time.time;
+                    attackFinished = true;
+                    delayCombos = currentComboAttacks.attacks[currentComboAttack].delayFinal;
 
-                    return true;
+                    currentComboAttack = -1;
+                }
+                if (currentComboAttacks.combo != ComboAtaques.air1 && currentComboAttacks.combo != ComboAtaques.air2 && currentComboAttacks.combo != ComboAtaques.HoldQuadrat && currentComboAttacks.combo != ComboAtaques.HoldTriangle)
+                {
+                    CheckIfReturnIdle();
+                    CheckMove();
+                }
+                else
+                {
+                    fallStartTime = Time.time;
+                    if (CheckIfLand())
+                    {
+
+                        return true;
+                    }
+
+                    CheckIfIsFalling();
                 }
 
-                CheckIfIsFalling();
+                return true;
             }
-
-            return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     void ApplyGravity()
     {
