@@ -79,10 +79,9 @@ public class CinematicController : MonoBehaviour
     void ChangeScene()
     {
         loadingMenu.SetActive(true);
-        Invoke(nameof(ActiveScene), 1f);
+        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, loadingFillBar);
     }
 
-    private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, loadingFillBar);
 
     void SkipIntro(InputAction.CallbackContext context)
     {
