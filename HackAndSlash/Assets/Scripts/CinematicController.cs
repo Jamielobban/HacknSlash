@@ -20,7 +20,7 @@ public class CinematicController : MonoBehaviour
     [SerializeField] GameObject loadingMenu;
     [SerializeField] Image loadingFillBar;
 
-    [SerializeField] GameObject screen;
+    [SerializeField] RawImage rImage;
 
     bool firstTime  = true;
     void CanSkip()
@@ -50,7 +50,7 @@ public class CinematicController : MonoBehaviour
     FadeScript fadeScript;
     bool canSkipIntro = true;
     // Start is called before the first frame update
-    void OffScreen() => screen.SetActive(false);  
+    void OffScreen() { Destroy(vp.gameObject);rImage.color = Color.black; }
     void ChangeSceneFade() { fadeScript.FadeOut(1); Invoke(nameof(OffScreen), 1.2f); Invoke(nameof(ChangeScene),2.5f); }
     void StartSpeach() { bc.Speak(); }
     void StartVideo() { vp.Play(); }
@@ -71,10 +71,10 @@ public class CinematicController : MonoBehaviour
         Invoke(nameof(StartVideo), 0.5f);
         Invoke(nameof(CanSkip), 1);
         Invoke(nameof(CanNotSkip), 17.5f);
-        Invoke(nameof(ChangeSceneFade), 20);
+        Invoke(nameof(ChangeSceneFade), 19);
     }
 
-    private void OnDestroy() { menuInputs.Disable(); }
+    private void OnDestroy() { menuInputs.UiInputs.SkipIntro.performed -= SkipIntro; menuInputs.Disable(); }
 
     void ChangeScene()
     {

@@ -638,7 +638,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162809589}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00004645722}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1250,12 +1250,15 @@ MonoBehaviour:
   interactCross: {fileID: 1127004718}
   dialogues:
   - collection:
-    - 'The advancement of technology enabled the exploration of cloning and artificial
-      life for the creation of perfect soldiers. '
-    - Faced with the danger this poses, the militia to which you belong has the mission
-      to infiltrate Blade Bounty
-    - and thus gain access to the research reports to destroy them, thereby preventing
-      the existence of this future army
+    - elementText: The advancement of technology enabled the exploration of cloning
+        and artificial life for the creation of perfect soldiers.
+      elementKey: -1
+    - elementText: Faced with the danger this poses, the militia to which you belong
+        has the mission to infiltrate Blade Bounty
+      elementKey: -1
+    - elementText: and thus gain access to the research reports to destroy them,
+        thereby preventing the existence of this future army
+      elementKey: -1
   voice: {fileID: 1736902394}
 --- !u!4 &686177414
 Transform:
@@ -1744,7 +1747,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -709, y: -381}
+  m_AnchoredPosition: {x: -709, y: -357}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1127004717
@@ -1861,7 +1864,7 @@ MonoBehaviour:
   skipUiText: {fileID: 162809590}
   loadingMenu: {fileID: 662761243}
   loadingFillBar: {fileID: 186652444}
-  screen: {fileID: 652999121}
+  rImage: {fileID: 0}
 --- !u!4 &1171618761
 Transform:
   m_ObjectHideFlags: 0
@@ -1915,7 +1918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 148}
+  m_AnchoredPosition: {x: 0, y: 94}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1419880706
@@ -2407,7 +2410,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1805484929}
   - component: {fileID: 1805484928}
-  - component: {fileID: 1805484930}
   m_Layer: 0
   m_Name: VideoPlayer
   m_TagString: Untagged
@@ -2423,7 +2425,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805484927}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 836322e84801a9f4c9b248ace8043f16, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 8f279032aa515f64c88abcb22a98a845, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2446,7 +2448,7 @@ VideoPlayer:
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
-  m_SkipOnDrop: 1
+  m_SkipOnDrop: 0
   m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
@@ -2466,20 +2468,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1805484930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805484927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350dd11b03bfd7c49a54b75f47c8c0b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vPlayer: {fileID: 1805484928}
-  menuLoopClip: {fileID: 32900000, guid: 836322e84801a9f4c9b248ace8043f16, type: 3}
 --- !u!1 &1827662905
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,18 +2494,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827662905}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00004645722}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1064311759}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 307, y: 202.2}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 347, y: 172.20001}
   m_SizeDelta: {x: 180, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!222 &1827662907
 CanvasRenderer:
   m_ObjectHideFlags: 0

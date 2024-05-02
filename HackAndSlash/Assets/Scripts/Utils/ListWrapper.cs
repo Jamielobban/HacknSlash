@@ -12,12 +12,18 @@ public class ListWrapper<T>
 
 [System.Serializable]
 public class ListWrapperDialogue
-{
-    [TextArea]
+{    
     [SerializeField]
-    public List<string> collection;
+    public List<ListWrapperDialogueElement> collection;
 }
 
+[System.Serializable]
+public class ListWrapperDialogueElement
+{
+    [TextArea]
+    [SerializeField] public string elementText;
+    [SerializeField] public int elementKey;
+}
 
 [System.Serializable]
 public class MultipleListElement<T, T1>
