@@ -19,11 +19,6 @@ public class InventoryButtons : MonoBehaviour
     private void ActiveLoadBarGameObject()
     {
         loadBarGameObject.SetActive(true);
-        Invoke(nameof(GoToScene), 1f);
-    }
-
-    private void GoToScene()
-    {
         GameManager.Instance.LoadLevel(Constants.SCENE_MAINMENU, loadBarFill);
     }
 }
