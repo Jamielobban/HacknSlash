@@ -24,8 +24,15 @@ public class BlackCyborg : Interactive, IInteractable
     
     IEnumerator SpeakCoroutine(float volume)
     {
-        ListWrapperDialogueElement textData = dialogues[currentDialogue].collection[currentDialogueLine];
+        int copyCD = currentDialogue;
+        int copyCDL = currentDialogueLine;
+
+        ListWrapperDialogueElement textData = dialogues[copyCD].collection[copyCDL];
+
+        Debug.Log(textData.elementKey);
+
         voice.Speak(textData.elementText, name, volume);
+
         if (textData.elementKey != -1)
             AudioManager.Instance.PlayDelayFx((Enums.Effects)(textData.elementKey), 0.3f);
         yield return new WaitUntil(() => voice.playing == false);
@@ -40,6 +47,7 @@ public class BlackCyborg : Interactive, IInteractable
             {
                 DialogueDone();
                 currentDialogue++;
+                currentDialogueLine = 0;
             }
         }
         else

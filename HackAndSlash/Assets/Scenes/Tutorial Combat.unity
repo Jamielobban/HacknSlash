@@ -11193,6 +11193,33 @@ MonoBehaviour:
     - elementText: Try to survive for one minute and you will receive a reward for
         it.
       elementKey: -1
+  - collection:
+    - elementText: You can acquire items in multiple ways. Like every minute, in
+        chests, events...
+      elementKey: 33
+    - elementText: There are three types of items. Abilities, Upgrades and Action
+        Items.
+      elementKey: -1
+    - elementText: You will discover them while you play.
+      elementKey: -1
+  - collection:
+    - elementText: It seems that some enemies are guarding the chest.
+      elementKey: 34
+    - elementText: The chest will open when you kill the marked enemies.
+      elementKey: -1
+  - collection:
+    - elementText: 'In the field you will find this structures. '
+      elementKey: 35
+    - elementText: If the structure is unlocked interacting with them will allow
+        you to start an event.
+      elementKey: -1
+    - elementText: You can get a reward for completing each event
+      elementKey: -1
+  - collection:
+    - elementText: You have completed the tutorial. You will be deployed to the field!
+      elementKey: 36
+    - elementText: Good Luck and don't die or you will need to start over...
+      elementKey: -1
   voice: {fileID: 1569391621}
 --- !u!4 &802112688
 Transform:
@@ -11210,7 +11237,7 @@ Transform:
   - {fileID: 313715673}
   - {fileID: 1670408662}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &855707893
 GameObject:
@@ -16542,79 +16569,6 @@ Transform:
   m_Father: {fileID: 313715673}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1100639807
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 307.0337
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 61.014355
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 290.20172
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1306026652269405931, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205072993846064848, guid: 32868826f9fa03645acd945f9aa2939b,
-        type: 3}
-      propertyPath: m_Name
-      value: Audio Manager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 32868826f9fa03645acd945f9aa2939b, type: 3}
 --- !u!1 &1185329051
 GameObject:
   m_ObjectHideFlags: 0
@@ -21936,24 +21890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654505a1ae2c5f94694d2b4f03186382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoguesIntro:
-  - Welcome to the combat room! Here, you will learn how to apply your combat skills.
-  - Try to survive for one minute and you will receive a reward for it.
-  dialoguesItems:
-  - You can acquire items in multiple ways. Like every minute, in chests, events...
-  - There are three types of items. Abilities, Upgrades and Action Items.
-  - You will discover them while you play.
-  dialoguesChest:
-  - It seems that some enemies are guarding the chest.
-  - The chest will open when you kill the marked enemies.
-  dialoguesEvent:
-  - 'In the field you will find this structures. '
-  - If the structure is unlocked interacting with them will allow you to start an
-    event.
-  - You can get a reward for completing each event
-  endTutorial:
-  - You have completed the tutorial. You will be deployed to the field!
-  - Good Luck and don't die or you will need to start over...
   bc: {fileID: 802112687}
   voice: {fileID: 106717310}
   loadingGo: {fileID: 2091328835}
@@ -22769,7 +22705,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1607192510
 GameObject:
