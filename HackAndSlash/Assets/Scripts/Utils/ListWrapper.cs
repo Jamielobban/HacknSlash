@@ -15,7 +15,7 @@ public class ListWrapperDialogue
 {
     [TextArea]
     [SerializeField]
-    public List<string> collection;
+    public Dictionary<int, string> collection;
 }
 
 

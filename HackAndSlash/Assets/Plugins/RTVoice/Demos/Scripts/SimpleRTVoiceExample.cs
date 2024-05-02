@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Crosstales.RTVoice;
 using Crosstales.RTVoice.Model;
 using TMPro;
 using System.Collections;
-using UnityEngine.UIElements;
-using System.Linq;
-using UnityEditor.Rendering;
-using MoreMountains.Tools;
+
+
 
 /// <summary>
 /// Simple example to demonstrate the basic usage of RT-Voice.
@@ -21,7 +18,7 @@ public class SimpleRTVoiceExample : MonoBehaviour
     private string uid; //Unique id of the speech
     public bool playing = false;
     private AudioSource audioSource;
-
+    
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -48,11 +45,19 @@ public class SimpleRTVoiceExample : MonoBehaviour
     }
 
     public void Speak(string text, string whoSpeaks, float volume)
-    {
+    {        
         playing = true;
         uid = Speaker.Instance.Speak(text, audioSource, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f, volume); //Speak with the first voice matching the given culture
         StartCoroutine(ShowText(text, whoSpeaks));
     }
+
+    //public void Speak(string text, string whoSpeaks, float volume)
+    //{
+        
+    //    playing = true;
+    //    uid = Speaker.Instance.Speak(text, audioSource, Speaker.Instance.VoiceForCulture(Culture), true, 1.1f, 0.1f, volume); //Speak with the first voice matching the given culture
+    //    StartCoroutine(ShowText(text, whoSpeaks));
+    //}
 
     public void Silence()
     {

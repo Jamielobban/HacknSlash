@@ -74,11 +74,6 @@ public class CinematicController : MonoBehaviour
         Invoke(nameof(ChangeSceneFade), 19);
     }
 
-    private void Update()
-    {
-        Debug.Log(Time.time);
-    }
-
     private void OnDestroy() { menuInputs.UiInputs.SkipIntro.performed -= SkipIntro; menuInputs.Disable(); }
 
     void ChangeScene()
