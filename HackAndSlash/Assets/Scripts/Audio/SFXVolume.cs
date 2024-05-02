@@ -10,7 +10,7 @@ public class SFXVolume : MonoBehaviour
     void Awake()
     {
         _slider = GetComponent<Slider>();
-        _slider.value = .25f;
+        _slider.value = GameManager.Instance.volumeSFX;
     }
 
     private void Start()
@@ -30,6 +30,7 @@ public class SFXVolume : MonoBehaviour
             mixer.SetFloat("SfxVolume", Mathf.Log10(_slider.value) * 20);
             AudioManager.Instance.audioFx.volume = _slider.value;
             AudioManager.Instance.audioFxStopeable.volume = _slider.value;
+            GameManager.Instance.volumeSFX = _slider.value;
         }
     }
     private void OnDisable()

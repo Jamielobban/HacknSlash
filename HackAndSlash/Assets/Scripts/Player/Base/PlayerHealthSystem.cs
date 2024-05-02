@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
+    public GameObject[] canvasToDeactivate;
     public Debuff[] debuffs;
     private PlayerControl _player;
     public float maxHealth;
@@ -170,6 +171,10 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.DeadEffect();
         if(GameManager.Instance.state == Enums.GameState.Playing)
         {
+            foreach (var canvas in canvasToDeactivate)
+            {
+                canvas.SetActive(false);
+            }
             onDie.SetActive(true);
             AudioManager.Instance.PlayMusic(Enums.Music.Defeat);
             onDie.GetComponent<GDTFadeEffect>()?.StartEffect();
