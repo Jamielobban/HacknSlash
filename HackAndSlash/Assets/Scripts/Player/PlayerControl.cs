@@ -545,7 +545,10 @@ public class PlayerControl : MonoBehaviour
                     if (Vector3.Distance(transform.position, enemy) >= 3.75f)
                     {
                         enemy += (enem - dir).normalized * 3f;
-                        rb.DOMove(dir, 0.3f, false);
+                        if(dir != Vector3.zero)
+                        {
+                            rb.DOMove(dir, 0.3f, false);
+                        }
                     }
 
                 }
