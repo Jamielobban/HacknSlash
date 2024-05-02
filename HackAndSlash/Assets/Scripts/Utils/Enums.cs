@@ -132,7 +132,8 @@ public class Enums
         LoadingFX,
         MusicaTutoNou,
         Defeat,
-        Victory
+        Victory,
+        CinematicaLab
     };
 
     public enum Effects

@@ -63,7 +63,7 @@ public class CinematicController : MonoBehaviour
         menuInputs = new MenuInputs();
         menuInputs.UiInputs.SkipIntro.performed += SkipIntro;
         loadingMenu.SetActive(false);
-
+        AudioManager.Instance.PlayMusic(Enums.Music.CinematicaLab);
         vp.Pause();
         fadeScript = new FadeScript(blackImage);
         fadeScript.FadeIn(1);
@@ -96,7 +96,8 @@ public class CinematicController : MonoBehaviour
         c2.a = 0;
         speachTextBackground.DOColor(c, 1);
         speachText.DOColor(c2, 1);        
-        //AudioManager.Instance.FadeEffect(0, 1); 
+        AudioManager.Instance.FadeMusic(1, 0); 
+        AudioManager.Instance.FadeEffect(1, 0); 
         DOVirtual.Float(1, 0, 0.9f, (v) => { vp.SetDirectAudioVolume(0, v); });
         ChangeSceneFade();
     }
