@@ -17,6 +17,14 @@ public class WinInteractable : MonoBehaviour, IInteractable
         {
             canvas.SetActive(false);
         }
+        if(ManagerEnemies.Instance != null)
+        {
+            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            {
+                enemyPool.SetActive(false);
+            }
+        }
+
         AudioManager.Instance.PlayMusic(Enums.Music.Victory);
         onWinInteracted.SetActive(true);
         onWinInteracted.GetComponent<GDTFadeEffect>()?.StartEffect();

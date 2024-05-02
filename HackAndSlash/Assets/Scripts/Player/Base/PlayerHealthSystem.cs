@@ -175,6 +175,12 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
             {
                 canvas.SetActive(false);
             }
+
+            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            {
+                enemyPool.SetActive(false);
+            }
+
             onDie.SetActive(true);
             AudioManager.Instance.PlayMusic(Enums.Music.Defeat);
             onDie.GetComponent<GDTFadeEffect>()?.StartEffect();
