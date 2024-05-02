@@ -310,7 +310,7 @@ public class EnemyBase : PoolableObject
         {
             if (_healthSystem.CurrentHealth >= lastHealth)
             {
-                ResetEnemy();
+                _healthSystem.ResetEnemyHealth();
             }
         }
         else

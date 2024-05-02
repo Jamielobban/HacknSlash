@@ -43,7 +43,7 @@ public class TutorialManager : MonoBehaviour
     }
     void Start()
     {
-        //AudioManager.Instance.PlayMusic(Enums.Music.MusicaTutoNou);
+        AudioManager.Instance.PlayMusic(Enums.Music.MusicaTutoNou);
         pyramid.OnInteract += ChangeScene;
         animatorLeft.SetBool("idle", true);
         animatorRight.SetBool("idle", true);
