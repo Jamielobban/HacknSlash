@@ -35,7 +35,7 @@ public class TutorialCombat : MonoBehaviour
 
     void Start()
     {
-        AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
+        //AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
         eventActivable.SetActive(false);
         bc.Speak();
     }

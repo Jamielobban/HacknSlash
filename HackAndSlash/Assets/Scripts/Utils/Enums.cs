@@ -159,7 +159,11 @@ public class Enums
         DoorOpen,
         RotatePyramid,
         MenuSpeach,
-        FootstepsRobot
+        FootstepsRobot,
+        TextTutoCombo1,
+        TextTutoCombo2,
+        TextTutoCombo3,
+        TextTutoCombat
     };
 
     public enum MusicEffects

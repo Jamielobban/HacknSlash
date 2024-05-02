@@ -62,7 +62,7 @@ public class MainMenuManager : MonoBehaviour
     {
         loadingGo.SetActive(true);
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
-        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_COMBOS, fillLoadingGo);
+        GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_CINEMATIC, fillLoadingGo);
     }
 
     void Exitgame() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); Application.Quit(); }
