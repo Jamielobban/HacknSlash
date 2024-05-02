@@ -144,6 +144,8 @@ public class PlayerControl : MonoBehaviour
         public float baseCooldown;
         public bool onAir;
 
+        public bool canMove;
+
         [Header("Debuffs: ")]
 
         public bool canBurn;
@@ -453,7 +455,10 @@ public class PlayerControl : MonoBehaviour
 
             StartCoroutine(Slash(4, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
 
-            currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+            if (!currentComboAttacks.attacks[golpe].canMove)
+            {
+                currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+            }
 
             currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().baseDamage = currentComboAttacks.attacks[golpe].baseDamages[slash];
             currentComboAttacks.attacks[golpe].collider[slash].GetComponent<AttackCollider>().attack = currentComboAttacks.attacks[golpe];
@@ -851,7 +856,7 @@ public class PlayerControl : MonoBehaviour
                 AttackMovement();
                 if(!blockCameraRotation)
                 {
-                    RotatePlayer(0.5f);
+                    RotatePlayer(2f);
                 }
                 movementController.transform.localPosition = new Vector3();
 
@@ -861,7 +866,6 @@ public class PlayerControl : MonoBehaviour
                 //    Vector3 enem = enemy;
                 //    enem.y = player.transform.position.y;
                 //    player.transform.LookAt(enem);
-
                 //}
                 if((Time.time-attackStartTime) > 0.75f && (currentComboAttacks.combo == ComboAtaques.HoldQuadrat|| currentComboAttacks.combo == ComboAtaques.HoldTriangle))
                 {
