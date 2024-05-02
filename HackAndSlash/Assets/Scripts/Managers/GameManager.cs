@@ -34,6 +34,8 @@ using UnityEngine.UI;
 
         public bool isInMenu = false;
 
+        public float volumeSFX = 1f;
+        public float volumeMusic = 1f;
 
         private void Awake()
         {
