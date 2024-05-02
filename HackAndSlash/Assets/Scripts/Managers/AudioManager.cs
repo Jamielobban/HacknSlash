@@ -24,7 +24,6 @@ public class AudioManager : MonoBehaviour
             {
                 GameObject go = new GameObject("Audio Manager");
                 go.AddComponent<AudioManager>();
-                _instance = go.GetComponent<AudioManager>();
                 DontDestroyOnLoad(go);                
             }
             return _instance;
@@ -33,11 +32,18 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        audioFx = gameObject.AddComponent<AudioSource>();
+        audioMusic = gameObject.AddComponent<AudioSource>();
+        audioFxStopeable = gameObject.AddComponent<AudioSource>();
+        audioMusicEffects = gameObject.AddComponent<AudioSource>();
         LoadAllAudios();
         audioMusicEffects.loop = true;
         audioMusic.loop = true;
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void LoadAllAudios()
