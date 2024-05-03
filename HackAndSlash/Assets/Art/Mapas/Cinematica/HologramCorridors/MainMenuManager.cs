@@ -141,7 +141,7 @@ public class MainMenuManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
         }
 
-        Debug.Log(EventSystem.current.currentSelectedGameObject.gameObject.name);
+        //Debug.Log(EventSystem.current.currentSelectedGameObject.gameObject.name);
 
         if (EventSystem.current.currentSelectedGameObject.gameObject == tvUpButton.gameObject || EventSystem.current.currentSelectedGameObject.gameObject == tvDownButton.gameObject)
             bigTvSliderTexts.ToList().ForEach(tmp => tmp.color = customGrey);

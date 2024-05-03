@@ -33,8 +33,6 @@ public class TutorialManager : MonoBehaviour
     Sequence sequenceLeft;
     Sequence sequenceRight;
 
-    PlayerControl pCtrl;
-    ControllerManager cMgr;
 
     bool playerMoved = false, camRotated = false;
     Vector3 playerInitPos, camInitRot;
@@ -70,8 +68,7 @@ public class TutorialManager : MonoBehaviour
         camInitRot = Camera.main.transform.eulerAngles;
         sequenceLeft = DOTween.Sequence();
         sequenceRight = DOTween.Sequence();
-        pCtrl = player.GetComponent<PlayerControl>();
-        cMgr = pCtrl.controller;
+        
 
         sequenceLeft.Append(DOVirtual.Float(0, 1, 0.5f, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); }))
             .Append(DOVirtual.Float(1, 0, 1, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); })).SetLoops(-1).Play();
@@ -88,17 +85,24 @@ public class TutorialManager : MonoBehaviour
         {
             playerMoved = true;
             sequenceLeft.Kill();
-            DOVirtual.Float(joytstickLeft.color.a, 1, 0.35f, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); }).OnComplete(() =>
-            { DOVirtual.Float(1, 0, 0.7f, (scale) => { joytstickLeft.transform.localScale = Vector3.one * scale; }); });
+            DOVirtual.Float(joytstickLeft.color.a, 1, 0.25f, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); }).OnComplete(() =>
+            { DOVirtual.Float(1, 0, 0.4f, (scale) => { joytstickLeft.transform.localScale = Vector3.one * scale; }); });
         }
+        PlayerControl pc = player.GetComponent<PlayerControl>();
 
-        if (!camRotated && cMgr.RightStickValue().magnitude != 0)
+        if (pc != null)
         {
-            camRotated = true;
-            sequenceRight.Kill();
-            DOVirtual.Float(joytsticRight.color.a, 1, 0.35f, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); }).OnComplete(() =>
-            { DOVirtual.Float(1, 0, 0.7f, (scale) => { joytsticRight.transform.localScale = Vector3.one * scale; }); });
+            ControllerManager controllerManager = player.GetComponent<PlayerControl>().controller;
+            if(controllerManager != null)
+                if (!camRotated && pc.controller.RightStickValue().magnitude != 0)
+                {
+                    camRotated = true;
+                    sequenceRight.Kill();
+                    DOVirtual.Float(joytsticRight.color.a, 1, 0.25f, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); }).OnComplete(() =>
+                    { DOVirtual.Float(1, 0, 0.4f, (scale) => { joytsticRight.transform.localScale = Vector3.one * scale; }); });
+                }
         }
+            
     }
 
     private void PhaseComplete()

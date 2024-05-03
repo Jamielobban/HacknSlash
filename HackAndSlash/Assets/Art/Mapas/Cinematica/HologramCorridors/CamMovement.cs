@@ -60,7 +60,7 @@ public class CamMovement : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(doorsOpened);
+        //Debug.Log(doorsOpened);
     }
     private void OnTriggerEnter(Collider other)
     {
