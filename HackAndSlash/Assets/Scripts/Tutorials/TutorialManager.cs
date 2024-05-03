@@ -84,18 +84,20 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        if(!playerMoved && Vector3.Distance(playerInitPos, player.position) > 1)
+        if (!playerMoved && Vector3.Distance(playerInitPos, player.position) > 0.5f)
         {
             playerMoved = true;
             sequenceLeft.Kill();
-            DOVirtual.Float(joytstickLeft.color.a, 0, 1, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); });
+            DOVirtual.Float(joytstickLeft.color.a, 1, 0.35f, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); }).OnComplete(() =>
+            { DOVirtual.Float(1, 0, 0.7f, (scale) => { joytstickLeft.transform.localScale = Vector3.one * scale; }); });
         }
 
-        if (!camRotated && cMgr.RightStickValue() != Vector2.zero)
+        if (!camRotated && cMgr.RightStickValue().magnitude != 0)
         {
             camRotated = true;
             sequenceRight.Kill();
-            DOVirtual.Float(joytsticRight.color.a, 0, 1, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); });
+            DOVirtual.Float(joytsticRight.color.a, 1, 0.35f, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); }).OnComplete(() =>
+            { DOVirtual.Float(1, 0, 0.7f, (scale) => { joytsticRight.transform.localScale = Vector3.one * scale; }); });
         }
     }
 
