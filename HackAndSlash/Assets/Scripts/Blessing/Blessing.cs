@@ -10,7 +10,6 @@ public class Blessing : ScriptableObject
     public string giveName;
     public List<PlayerControl.PassiveCombo> passiveCombo = new List<PlayerControl.PassiveCombo>();
     public GameObject visualEffect;
-    public PlayerControl.HealthState healthState;
     public MMFeedbacks enemyFeedback;
 
     public float damage;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Enums;
 
 public abstract class ComboInput
 {
@@ -45,6 +46,7 @@ public abstract class ComboInput
 
     private void CorrectInput()
     {
+        AudioManager.Instance.PlayDelayFx(Enums.Effects.PositiveClickTuto, 0);
         DOVirtual.Color(_sceneImage.color, Color.green, 1f, (color) =>
         {
             _sceneImage.color = color;
@@ -53,6 +55,7 @@ public abstract class ComboInput
 
     private void IncorrectInput()
     {
+        AudioManager.Instance.PlayDelayFx(Effects.ErrorButton, 0);
         DOVirtual.Color(_sceneImage.color, Color.red, 1f, (color) =>
         {
             _sceneImage.color = color;

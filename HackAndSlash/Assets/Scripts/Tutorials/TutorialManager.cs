@@ -2,60 +2,108 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using System;
 
 public class TutorialManager : MonoBehaviour
 {
     FadeScript fade;
     BlackCyborg blackCyborg;
     TutorialComboManager tutorialCM;
-    PyramidTeleport pyramid;
+    [SerializeField] PyramidTeleport pyramid;
+
+    [SerializeField] Transform player;
 
     [Header("SceneElements")]
+    [SerializeField] AudioListener audioListener;
     [SerializeField] GameObject blackCyborgObjectiveMarker;
-    [SerializeField] GameObject enemyHealthUI;
-    [SerializeField] BoxCollider enemyDamageableCol;
     [SerializeField] GameObject pyramidObjectiveMarker;
     [SerializeField] GameObject loadingMenu;
     [SerializeField] Image loadingFillBar;
     [SerializeField] Image fadeImage;
 
-    Enums.NewTutorialState tutorialState;
+    [SerializeField] Animator animatorLeft;
+    [SerializeField] Animator animatorRight;
 
+    [SerializeField] BoxCollider colliderBlockingPath;
+
+    [SerializeField] Image joytstickLeft;
+    [SerializeField] Image joytsticRight;
+
+    Sequence sequenceLeft;
+    Sequence sequenceRight;
+
+    PlayerControl pCtrl;
+    ControllerManager cMgr;
+
+    bool playerMoved = false, camRotated = false;
+    Vector3 playerInitPos, camInitRot;
+
+    Enums.NewTutorialState tutorialState;
+    public FadeScript GetFade => fade;
+    public void EndTutorial() => Invoke(nameof(ChangeScene), 2.8f);
+    public void MuteInSeconds(float inSeconds) => Invoke(nameof(Mute), inSeconds);
+    void Mute() => audioListener.enabled = false;
     private void Awake()
     {
         GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         fade = new FadeScript(fadeImage);
         tutorialCM = GetComponent<TutorialComboManager>();
         blackCyborg = FindObjectOfType<BlackCyborg>();
-        pyramid = FindObjectOfType<PyramidTeleport>();
         blackCyborg.OnInteract += RobotInteraction;
-        pyramid.OnInteract += PyramidInteraction;
         tutorialCM.OnCombosListComplete += PhaseComplete;
-        tutorialCM.OnTutorialComboComplete += ChangeStateToPyramid;
+        tutorialCM.OnTutorialComboComplete += ()=> { tutorialState = Enums.NewTutorialState.FINISHED; };
+        blackCyborg.OnConversationEnded += MoveRobots;
     }
     void Start()
     {
-        //AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
+        AudioManager.Instance.PlayMusic(Enums.Music.MusicaTutoNou);
+        pyramid.OnInteract += ChangeScene;
+        animatorLeft.SetBool("idle", true);
+        animatorRight.SetBool("idle", true);
         fade.FadeIn(1.8f);
         tutorialState = Enums.NewTutorialState.INACTIVE;
         blackCyborgObjectiveMarker.SetActive(true);
-        enemyHealthUI.SetActive(false);
-        enemyDamageableCol.enabled = false;
-        pyramidObjectiveMarker.SetActive(false);
         blackCyborg.SetCanInteract(true);
-        pyramid.SetCanInteract(false);
         loadingMenu.SetActive(false);
+        playerInitPos = player.position;
+        camInitRot = Camera.main.transform.eulerAngles;
+        sequenceLeft = DOTween.Sequence();
+        sequenceRight = DOTween.Sequence();
+        pCtrl = player.GetComponent<PlayerControl>();
+        cMgr = pCtrl.controller;
+
+        sequenceLeft.Append(DOVirtual.Float(0, 1, 0.5f, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); }))
+            .Append(DOVirtual.Float(1, 0, 1, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); })).SetLoops(-1).Play();
+        
+
+        sequenceRight.Append(DOVirtual.Float(0, 1, 0.5f, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); }))
+            .Append(DOVirtual.Float(1, 0, 1, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); })).SetLoops(-1).Play(); 
+        
+    }
+
+    private void Update()
+    {
+        if(!playerMoved && Vector3.Distance(playerInitPos, player.position) > 1)
+        {
+            playerMoved = true;
+            sequenceLeft.Kill();
+            DOVirtual.Float(joytstickLeft.color.a, 0, 1, (alpha) => { joytstickLeft.color = new Color(joytstickLeft.color.r, joytstickLeft.color.g, joytstickLeft.color.b, alpha); });
+        }
+
+        if (!camRotated && cMgr.RightStickValue() != Vector2.zero)
+        {
+            camRotated = true;
+            sequenceRight.Kill();
+            DOVirtual.Float(joytsticRight.color.a, 0, 1, (alpha) => { joytsticRight.color = new Color(joytsticRight.color.r, joytsticRight.color.g, joytsticRight.color.b, alpha); });
+        }
     }
 
     private void PhaseComplete()
     {
         blackCyborgObjectiveMarker.SetActive(true);
-        blackCyborg.NextDialogue();
         blackCyborg.SetCanInteract(true);
     }
-
-    private void ChangeStateToPyramid() => tutorialState = Enums.NewTutorialState.PYRAMIDE;   
-
     private void RobotInteraction()
     {
         blackCyborgObjectiveMarker.SetActive(false);
@@ -64,39 +112,41 @@ public class TutorialManager : MonoBehaviour
         {
             case Enums.NewTutorialState.INACTIVE:
                 tutorialState = Enums.NewTutorialState.COMBOS;
-                blackCyborg.SetCanInteract(false);
                 tutorialCM.StartCurrentCombosList();
                 break;
             case Enums.NewTutorialState.COMBOS:
                 tutorialCM.StartCurrentCombosList();
-                blackCyborg.SetCanInteract(false);
-                break;
-            case Enums.NewTutorialState.PYRAMIDE:
-                pyramid.SetCanInteract(true);
-                pyramidObjectiveMarker.SetActive(true);
-                enemyHealthUI.SetActive(true);
-                enemyDamageableCol.enabled = true;
-                break;
+                break;    
             default:
                 break;
         }
     }
-
-    private void PyramidInteraction()
+    void ChangeScene()
     {
-        pyramid.SetCanInteract(false);
-        tutorialState = Enums.NewTutorialState.FINISHED;
         loadingMenu.SetActive(true);
-        Invoke(nameof(ActiveScene), 1f);    
+        Invoke(nameof(ActiveScene), 1f);
     }
-
     private void ActiveScene() => GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIALCOMBAT, loadingFillBar);
-
     private void OnDestroy()
     {
-        blackCyborg.OnInteract -= RobotInteraction;
-        pyramid.OnInteract -= PyramidInteraction;
+        blackCyborg.OnInteract -= RobotInteraction;       
         tutorialCM.OnCombosListComplete -= PhaseComplete;
-        tutorialCM.OnTutorialComboComplete -= ChangeStateToPyramid;
     }
+    public void MoveRobots()
+    {
+        AudioManager.Instance.PlayFx(Enums.Effects.FootstepsRobot);
+        AudioManager.Instance.PlayFx(Enums.Effects.FootstepsRobot);
+        animatorRight.transform.DOMoveX(8.27f, 0.8f);
+        animatorLeft.transform.DOMoveX(-0.26f, 0.8f);
+        animatorLeft.CrossFadeInFixedTime("WalkLeftCombat", 0.1f);
+        animatorRight.CrossFadeInFixedTime("WalkRightCombat", 0.1f);
+        Invoke(nameof(StopRobots), 0.7f);
+    }
+    void StopRobots()
+    {
+        colliderBlockingPath.enabled = false;        
+        animatorLeft.CrossFadeInFixedTime("IdleArmed", 0.1f);
+        animatorRight.CrossFadeInFixedTime("IdleArmed", 0.1f);
+    }    
+
 }

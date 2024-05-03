@@ -6,7 +6,7 @@ public static class WaitExtensioNonMonobehavior
 {
     public static void Wait(float delay, Action action)
     {
-        CoroutineHandler.Instance.StartCoroutine(ExecuteAction(delay, action));
+        CoroutineHandler.Instance.StartCoroutineMine(ExecuteAction(delay, action));
     }
 
     private static IEnumerator ExecuteAction(float delay, Action action)

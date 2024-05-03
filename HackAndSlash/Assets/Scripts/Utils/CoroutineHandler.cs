@@ -16,11 +16,11 @@ public class CoroutineHandler : MonoBehaviour
             return _instance;
         }
     }
-    public Coroutine StartCoroutine(IEnumerator coroutine)
+    public Coroutine StartCoroutineMine(IEnumerator coroutine)
     {
         return base.StartCoroutine(coroutine);
     }
-    public void StopCoroutine(Coroutine coroutine)
+    public void StopCoroutineMine(Coroutine coroutine)
     {
         base.StopCoroutine(coroutine);
     }

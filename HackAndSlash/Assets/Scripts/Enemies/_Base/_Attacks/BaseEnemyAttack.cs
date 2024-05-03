@@ -1,26 +1,32 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.XR;
+
 
 public class BaseEnemyAttack : MonoBehaviour
 {
-    protected PlayerControl _player;
-    [Range(0, 15f)] [SerializeField] protected float _cooldown;
+    protected EnemyBase _enemyBase;
     [SerializeField] protected Enums.AttackState _currentAttackState = Enums.AttackState.ReadyToUse;
-    [SerializeField] protected float _baseDamage;
-    [SerializeField] protected float _currentDamage;
-    [SerializeField] protected float _castTime;
-    [SerializeField] protected string _animationName;
-    protected float _currentTime;
     public Enums.AttackState CurrentAttackState => _currentAttackState;
+    protected float _currentTime;
     protected Animator _animator;
+    protected float _currentDamage;
+ 
+    [Header("Enemy Stats:")] 
+    public float baseDamage;
+    public float minCooldown, maxCooldown;
+    [SerializeField] protected float _castTime;
+    [SerializeField] protected string _animationName; 
+    
+    protected float _cooldown;
+    
     protected virtual void Awake()
     {
         _animator = transform.parent.parent.GetComponent<Animator>();
-        _currentDamage = _baseDamage;
-        _player = GameManager.Instance.Player;
-        _currentTime = _cooldown;
+        _currentDamage = baseDamage;
+        _enemyBase = transform.parent.parent.GetComponent<EnemyBase>();
+        _cooldown = Random.Range(minCooldown, maxCooldown);
+        _currentTime = 0f;
+        _enemyBase.attackInterrumpted = false;
     }
 
     protected virtual void Update()
@@ -41,12 +47,13 @@ public class BaseEnemyAttack : MonoBehaviour
     }
     protected IEnumerator HandleAttack()
     {
+        _enemyBase.isAttacking = true;
         _currentAttackState = Enums.AttackState.Casting;
         PlayAttackAnimation();
-        yield return new WaitForSeconds(_castTime);
         SetVisualEffects();
+        yield return new WaitForSeconds(_castTime);
         AttackAction();
-        //enemy.attackInterrupted = false;
+        
         _currentTime = _cooldown;
         _currentAttackState = Enums.AttackState.Cooldown;
     }
@@ -54,12 +61,25 @@ public class BaseEnemyAttack : MonoBehaviour
     protected virtual void PlayAttackAnimation()
     {
         _animator.CrossFade(_animationName, 0.2f);
-        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length, () =>
+        Invoke(nameof(WaitForAnimation), 0.22f);
+    }
+
+    private void WaitForAnimation() 
+    {
+        this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + _enemyBase.exitTimeAttacks, () =>
         {
-            //Animation Over
+            Debug.Log("Ends Attack Animation");
+            OnAnimationEnd();
         });
+    }
+    protected virtual void OnAnimationEnd()
+    {
+        _enemyBase.isAttacking = false;
+        _enemyBase.attackInterrumpted = false;
     }
     protected virtual void SetVisualEffects() { }
     protected virtual void AttackAction() { }
     protected virtual bool IsInCd() => _currentTime < _cooldown && _currentTime >= 0;
+
+    public void SetCurrentDamage(float value) => _currentDamage = value;
 }

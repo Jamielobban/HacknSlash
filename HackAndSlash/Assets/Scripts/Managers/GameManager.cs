@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,13 +27,15 @@ using UnityEngine.UI;
 
         private bool _isPaused;
         private PlayerControl _player;
-        public PlayerControl Player => _player;
+        public PlayerControl Player => GetPlayer();
         public bool IsPaused => _isPaused;
 
         public bool isTutorialCompleted = false;
 
         public bool isInMenu = false;
 
+        public float volumeSFX = 27f;
+        public float volumeMusic = 27f;
 
         private void Awake()
         {
@@ -61,6 +64,8 @@ using UnityEngine.UI;
 
         private IEnumerator LoadSceneAsync(string levelName, Image _progresionBar)
         {
+            AudioManager.Instance.audioMusicEffects.Stop();            
+            AudioManager.Instance.PlayMusic(Enums.Music.LoadingFX);
             AsyncOperation async = SceneManager.LoadSceneAsync(levelName);
             async.allowSceneActivation = false;
             while (!async.isDone)
@@ -69,11 +74,11 @@ using UnityEngine.UI;
                 _progresionBar.fillAmount = progress;
                 if (progress >= 0.9f)
                 {
+                    AudioManager.Instance.audioMusic.Stop();
                     _progresionBar.fillAmount = 1;
                     async.allowSceneActivation = true;
-                
                 }
-                yield return null;
+            yield return null;
             }
             yield return new WaitForSeconds(0.15f);
 
@@ -152,5 +157,14 @@ using UnityEngine.UI;
             _isPaused = pause;
         }
 
-    }
+        public PlayerControl GetPlayer()
+        {
+            if(_player == null)
+            {
+                _player = FindObjectOfType<PlayerControl>();
+            }
+
+            return _player;
+        }
+}
 

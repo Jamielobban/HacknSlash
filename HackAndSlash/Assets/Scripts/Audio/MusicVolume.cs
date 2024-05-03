@@ -12,7 +12,7 @@ public class MusicVolume : MonoBehaviour
     void Awake()
     {
         _slider = GetComponent<Slider>();
-        _slider.value = .5f;        
+        _slider.value = GameManager.Instance.volumeMusic;        
     }
 
     private void Start()
@@ -21,18 +21,19 @@ public class MusicVolume : MonoBehaviour
         {
             return;
         }
-        mixer.SetFloat("MusicVolume", _slider.value);
+        mixer.SetFloat("MusicVolume", _slider.value / 27);
         //_slider.value = GameManager.Instance.sfxVolume;
-        AudioManager.Instance.audioMusic.volume = _slider.value;
-        AudioManager.Instance.audioMusicEffects.volume = _slider.value;
+        AudioManager.Instance.audioMusic.volume = _slider.value / 27;
+        AudioManager.Instance.audioMusicEffects.volume = _slider.value / 27;
     }
     public void ValueChangeCheck()
     {
         if (_slider != null)
         {
-            mixer.SetFloat("MusicVolume", Mathf.Log10(_slider.value) * 20);
-            AudioManager.Instance.audioMusic.volume = _slider.value;
-            AudioManager.Instance.audioMusicEffects.volume = _slider.value;
+            mixer.SetFloat("MusicVolume", Mathf.Log10(_slider.value / 27) * 20);
+            AudioManager.Instance.audioMusic.volume = _slider.value / 27;
+            AudioManager.Instance.audioMusicEffects.volume = _slider.value / 27;
+            GameManager.Instance.volumeMusic = _slider.value / 27;
         }
     }
     private void OnDisable()

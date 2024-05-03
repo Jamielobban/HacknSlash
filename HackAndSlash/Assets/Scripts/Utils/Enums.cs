@@ -5,15 +5,22 @@ public class Enums
     public enum EnemyStates
     {
         Idle,
+        Spawning,
         Wander,
         Chase,
         Attack,
+        Ranged,
+        Invoking,
+        AreaAttack,
         Roll,
         Stun,
         Countering,
+        Returning,
         Hit,
+        AutoDestruction,
         Dead
-    }
+    }   
+
 
     public enum StateEvent
     {
@@ -21,46 +28,25 @@ public class Enums
         LostPlayer,
         HitEnemy,
         DeadEnemy,
+        SpawnEnemy,
+        DespawnEnemy,
         RollImpact
     }
     
-    public enum CameraType
-    {
-        FreeLook,
-        Locked
-    };
-
     public enum AttackState
     {
         ReadyToUse = 0,
         Casting,
         Cooldown
     };
-
+    
     public enum SpawnMethod 
     { 
         RoundRobin, 
         Random, 
         Probability
     };
-
-    public enum CharacterState
-    {
-        Idle,
-        Moving,
-        Dashing,
-        Air,
-        Attacking
-    };
-    public enum PlayerMovementState
-    {
-        Stop,
-        Walking,
-        Sprinting,
-        Dashing,
-        Attacking,
-        Air
-    }
+    
     public enum TutorialActions
     {
         JUMP,
@@ -139,7 +125,15 @@ public class Enums
         EpicTheme,
         UnoVSUno,
         InGameMenu,
-        Helicopter
+        Helicopter,
+        MusicaMenuNuevo,
+        MusicaCombbat, 
+        Glitch,
+        LoadingFX,
+        MusicaTutoNou,
+        Defeat,
+        Victory,
+        CinematicaLab
     };
 
     public enum Effects
@@ -151,13 +145,7 @@ public class Enums
         WolfAttack,
         ChestOpen,
         MoveByUI,
-        MonsterSpeak1,MonsterSpeak2,
-        AlienSound1,AlienSound2,AlienSound3,
-        SpiderSound1, SpiderSound2, SpiderSound3, SpiderSound4, SpiderSound5, SpiderSound6, SpiderSound7, SpiderSound8, SpiderSound9, SpiderSound10, SpiderSound11, SpiderSound12,
-        MonsterSpeak3,MonsterSpeak4, MonsterSpeak5, MonsterSpeak6, MonsterSpeak7, MonsterSpeak8, MonsterSpeak9,MonsterSpeak10,MonsterSpeak11,MonsterSpeak12,
         MonsterFootstep, MonsterFootstep1, MonsterFootstep2,
-        DeadWolf1,DeadWolf2,
-        RisaMonster,monsterSpeak,monsterSpeak2,
         OpenInventory,
         MonsterAttack1,MonsterAttack2,
         ErrorButton,
@@ -167,14 +155,30 @@ public class Enums
         OpenItemsToPickEpic,
         FailEvent,SuccessEvent,
         PositiveClickTuto,
-        TutoEnded
+        TutoEnded,
+        MoveSelect,
+        MoveUI,
+        SelectOptionMenu,
+        DoorOpen,
+        RotatePyramid,
+        MenuSpeach,
+        FootstepsRobot,
+        TextTutoCombo1,
+        TextTutoCombo2,
+        TextTutoCombo3,
+        TextTutoCombat1,
+        TextTutoCombat2,
+        TextTutoCombat3,
+        TextTutoCombat4,
+        TextTutoCombo5,
     };
 
     public enum MusicEffects
     {
         Atmosfera,
         Wind,
-        IceWind
+        IceWind,
+       Glitch
        
         
     };
@@ -184,7 +188,8 @@ public class Enums
         Common,
         Uncommon,
         Rare,
-        Legendary
+        Legendary,
+        Ability
     }
 }
 

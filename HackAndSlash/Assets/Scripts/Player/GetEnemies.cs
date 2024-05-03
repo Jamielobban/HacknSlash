@@ -39,6 +39,7 @@ public class GetEnemies : MonoBehaviour
         UtilsNagu.RemoveAllNulls(ref enemies);
         UtilsNagu.RemoveAllInactive(ref enemies);
         RemoveByDistance();
+        RemoveEnemiesDead();
 
         Vector3 position =  Vector3.zero;
         float distance = 100;
@@ -89,6 +90,17 @@ public class GetEnemies : MonoBehaviour
 
 
         return position;
+    }
+
+    public void RemoveEnemiesDead()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].GetComponent<EnemyBase>().IsDead)
+            {
+                enemies.RemoveAt(i);
+            }
+        }
     }
 
     public GameObject GetEnemieGameObject(Vector3 pos)
@@ -189,7 +201,6 @@ public class GetEnemies : MonoBehaviour
             }
         }
         GameObject position = null;
-        float distance = 100;
         for (int i = 0; i < enemies.Count; i++)
         {
             //if (enemies[i].GetComponent<EnemySkeletonSword>().debil == true)

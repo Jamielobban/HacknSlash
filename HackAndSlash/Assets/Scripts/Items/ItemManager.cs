@@ -5,145 +5,120 @@ using static Enums;
 
 public class ItemManager : MonoBehaviour
 {
-    //private static ItemManager _instance;
-    //public static ItemManager instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            _instance = FindObjectOfType<ItemManager>();
-    //            if (_instance == null)
-    //            {
-    //                GameObject go = new GameObject("Item Manager");
-    //                go.AddComponent<ItemManager>();
-    //                DontDestroyOnLoad(go);
-    //            }
-    //        }
-    //        return _instance;
-    //    }
-    //}
 
-    public List<Item> itemList = new List<Item>();
+    public Item[] commonItems;
+    public Item[] uncommonItems;
+    public Item[] rareItems;
+    public Item[] legendaryItems;
+
+    public List<Item> actionItems = new List<Item>();
+
+    public List<Item> abilityItems = new List<Item>();
 
     public int commonChance = 40;
     public int uncommonChance = 30;
     public int rareChance = 20;
-    public int legendaryChance = 10;
-
-    private void Awake()
-    {
-        //if (_instance == null)
-        //{
-        //    _instance = this;
-        //}
-        //AddItemsToList();
-        
-    }
-
-
+    public int legendaryChance = 3;
+    public int itemActionChance = 2;
+    public int abilityChance = 5;
+    
     public Item GetRandomItem()
     {
-        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance;
+        if(ManagerEnemies.Instance.IsMaxScore())
+        {
+            ManagerEnemies.Instance.ResetScore();
+            if (GameManager.Instance.Player._abilityHolder.CanAddAbility())
+            {
+                Item _item = GetRandomItemGuard(abilityItems);
+
+                if (_item != null)
+                {
+                    abilityItems.Remove(_item);
+                    return _item;
+                }
+            }
+            // Si no hay abilidades Rare Item
+            return GetRandomItemInArray(rareItems);
+        }
+
+        int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance + abilityChance;
         int randomValue = Random.Range(0, totalChance);
-        Debug.Log(randomValue);
 
         if (randomValue < commonChance)
         {
-            return GetRandomItemOfRarity(RarityType.Common);
+            return GetRandomItemInArray(commonItems);
         }
         else if (randomValue < commonChance + uncommonChance)
         {
-            return GetRandomItemOfRarity(RarityType.Uncommon);
+            return GetRandomItemInArray(uncommonItems);
         }
         else if (randomValue < commonChance + uncommonChance + rareChance)
         {
-            return GetRandomItemOfRarity(RarityType.Rare);
+            return GetRandomItemInArray(rareItems);
+        }
+        else if(randomValue < commonChance + uncommonChance + rareChance + legendaryChance)
+        {
+            return GetRandomItemInArray(legendaryItems);
+        }
+        else if(randomValue < commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance)
+        {
+            Item _item = GetRandomItemGuard(actionItems);
+            if(_item != null)
+            {
+                actionItems.Remove(_item);
+                return _item;
+            }
+            // Si no hay abilidades Legendary Item
+            return GetRandomItemInArray(legendaryItems);
         }
         else
         {
-            return GetRandomItemOfRarity(RarityType.Legendary);
+            if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
+            {
+                Item _item = GetRandomAbilityGuard(abilityItems);
+
+                if (_item != null)
+                {
+                    return _item;
+                }
+            }
+            // Si no hay abilidades Rare Item
+            return GetRandomItemInArray(rareItems); 
         }
     }
 
 
-
-    //public Item GetRandomItem()
-    //{
-    //    Item itemToReturn;
-
-    //    int valueRandom = Random.Range(0, 100);
-
-    //    itemToReturn = itemList[Random.Range(0, itemList.Count)];
-    //    //Debug.Log(itemToReturn.GiveName());
-    //    return itemToReturn;
-    //}
-
-    private Item GetRandomItemOfRarity(RarityType rarity)
+    private Item GetRandomItemGuard(List<Item> list)
     {
-        List<Item> itemsOfRarity = itemList.FindAll(item => item.data.rarityType == rarity);
-
-        if (itemsOfRarity.Count == 0)
+        if(list.Count <= 0)
         {
-            Debug.LogWarning("No items of rarity " + rarity + " found.");
             return null;
         }
 
-        return itemsOfRarity[Random.Range(0, itemsOfRarity.Count)];
+        return list[Random.Range(0, list.Count)];
     }
+
+    private Item GetRandomAbilityGuard(List<Item> list)
+    {
+        if(list.Count <= 0)
+        {
+            return null;
+        }
+
+        Item newItem;
+        do
+        {
+            newItem = list[Random.Range(0, list.Count)];
+        } while(ItemsLootBoxManager.Instance.itemsToSpawn.Contains(newItem));
+
+        return newItem;
+    }
+
+    private Item GetRandomItemInArray(Item[] itemsArray) => itemsArray[Random.Range(0, itemsArray.Length)]; 
 
     public void SpawnItem(Vector3 initialPosition, GameObject itemSpawn)
     {
         Instantiate(itemSpawn, initialPosition, Quaternion.identity);
-    }
-    // Call this method when you want to spawn a random item
-    public void SpawnRandomItem(Vector3 initialPosition)
-    {
-        //bool spawnOnce = false;
-        //if (itemPool.Count == 0)
-        //{
-        //    Debug.LogWarning("Item pool is empty. Add items to the pool.");
-        //    return;
-        //}
-        ////if (!spawnOnce)
-        ////{
-
-        //// Instantiate the item at the initial position
-        //GameObject randomItem = Instantiate(itemPool[Random.Range(0, itemPool.Count)], initialPosition, Quaternion.identity);
-        //Vector3 playerForward = GameObject.FindObjectOfType<PlayerControl>().transform.GetChild(0).transform.forward;
-        //Vector3 randomDirection = Quaternion.Euler(0, Random.Range(-45, 45), 0) * playerForward;
-        //Vector3 targetPosition = initialPosition + randomDirection * Random.Range(5f, 10f);
-        //RaycastHit hit;
-
-        //if (Physics.Raycast(targetPosition, new Vector3(0, -1, 0), out hit, 200, 1 << 7))
-        //{
-        //    targetPosition = new Vector3(targetPosition.x, hit.point.y + 2, targetPosition.z);
-        //}
-        //spawnOnce = true;
-        // Use DoTween to animate the item from the initial to the target position
-        //randomItem.transform.DOJump(targetPosition, 2.0f, 1, 2.0f)
-        // .SetEase(Ease.OutQuart)
-        // .OnComplete(() =>
-        // {
-        //     // Animation complete, item can be picked up or further processed
-        //     randomItem.GetComponent<SphereCollider>().enabled = true;
-        //     randomItem.GetComponent<BounceEffect>().enabled = true;
-        // });
-        //}
-    }
-
-    public void AddItemsToList()
-    {
-        //itemList.Add(new CritItem());
-        //itemList.Add(new CritDamageItem());
-        //itemList.Add(new AttackDamge());
-        //itemList.Add(new MaxHealthItem());
-        //itemList.Add(new RecoveryFlower());
-        //itemList.Add(new RegenerationItem());
-        //itemList.Add(new MonsterTooth());
-        //itemList.Add(new Slashes());
-        //itemList.Add(new DoubleHit());
-        //
     }
 
 }

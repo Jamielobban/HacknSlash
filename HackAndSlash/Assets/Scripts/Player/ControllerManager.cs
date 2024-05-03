@@ -9,6 +9,7 @@ public class ControllerManager : MonoBehaviour
 
     float delayCuadrado;
     float delayTriangulo;
+    float delayCircle;
     bool cuadradoHold;
     bool trianguloHold;
 
@@ -20,8 +21,6 @@ public class ControllerManager : MonoBehaviour
 
     public bool ataqueCuadradoCargadoL2;
     public bool ataqueTrianguloCargadoL2;
-    public bool ataqueCuadradoL2;
-    public bool ataqueTrianguloL2;
 
 
     public bool ataqueCuadradoPress;
@@ -34,9 +33,12 @@ public class ControllerManager : MonoBehaviour
     public bool ataqueTrianguloCargadoL2Press;
     public bool ataqueCuadradoL2Press;
     public bool ataqueTrianguloL2Press;
-
-    bool dejarMantenerCuadrado;
-    bool dejarMantenerTriangulo;
+    
+    // -- Abilities -- //
+    public bool ataqueCuadradoL2;
+    public bool ataqueCircleL2;
+    public bool ataqueTriangleL2;
+    public bool L2Pressed;
 
     bool dejarMantenerCuadradoL2;
     bool dejarMantenerTrianguloL2;
@@ -72,21 +74,18 @@ public class ControllerManager : MonoBehaviour
     public Action OnSquareHold;
     public Action OnTrianglePress;
     public Action OnTriangleHold;
-    public Action OnDashPerformed;
+    
     public Action OnJumpPerformed;
     void SquarePress() => OnSquarePress?.Invoke();
     void SquareHold() => OnSquareHold?.Invoke();
     void TrianglePress() => OnTrianglePress?.Invoke();
     void TriangleHold() => OnTriangleHold?.Invoke();
-    void DashDone()=> OnDashPerformed?.Invoke();
     void JumpDone()=> OnJumpPerformed?.Invoke();
 
     void Start()
     {
-        
         leftStick = new Vector2();
         rightStick = new Vector2();
-
         dash = false;
         ataqueCuadrado = false;
         ataqueTriangulo = false;
@@ -94,94 +93,32 @@ public class ControllerManager : MonoBehaviour
         ataqueTrianguloCargado = false;
         ataqueTrianguloCargadoL2 = false;
         ataqueCuadradoCargadoL2 = false;
+        L2Pressed = false;
         jump = false;
         canJump = true;
-        dejarMantenerCuadrado = false;
-        dejarMantenerTriangulo = false;
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
             controller = Gamepad.all[i];
         }
     }
 
-    public bool GetController()
-    {
-        return true;
-    }
-    public InputAction.CallbackContext GetTabButton()
-    {
-        return Tab;
-    }
-    public InputAction.CallbackContext GetInteractButton()
-    {
-        return interact;
-    }
-    public void GetLeftJoystick(InputAction.CallbackContext context)
-    {
-        leftStick = context.ReadValue<Vector2>();
-    }
-    public void GetTeleport(InputAction.CallbackContext context)
-    {
-        Teleport = context;
-    }
-    public void GetRightJoystick(InputAction.CallbackContext context)
-    {
-        rightStick = context.ReadValue<Vector2>();
-    }
-    public void GetR2(InputAction.CallbackContext context)
-    {
-        R2 = context;
-    }
-    public void GetInteract(InputAction.CallbackContext context)
-    {
-        interact = context;
-    }
-
-    public void GetTab(InputAction.CallbackContext context)
-    {
-        Tab = context;
-    }
-    public void GetL2(InputAction.CallbackContext context)
-    {
-        L2 = context;
-    }
-    public void GetX(InputAction.CallbackContext context)
-    {
-        X = context;
-    }
-    public void GetO(InputAction.CallbackContext context)
-    {
-        O = context;
-    }
-    public void GetBox(InputAction.CallbackContext context)
-    {
-        Box = context;
-    }
-    public void GetTriangle(InputAction.CallbackContext context)
-    {
-        Triangle = context;
-    }
-    public bool StartMove()
-    {
-
-        return leftStick.magnitude > 0.3f;
-
-
-
-    }
-    public Vector2 LeftStickValue()
-    {
-
-        return leftStick;
-
-
-
-    }
-    public Vector2 RightStickValue()
-    {
-
-        return rightStick;
-    }
+    public bool GetController() => true;
+    public InputAction.CallbackContext GetTabButton() => Tab;
+    public InputAction.CallbackContext GetInteractButton() => interact;
+    public void GetLeftJoystick(InputAction.CallbackContext context) => leftStick = context.ReadValue<Vector2>();
+    public void GetTeleport(InputAction.CallbackContext context) => Teleport = context;
+    public void GetRightJoystick(InputAction.CallbackContext context)  => rightStick = context.ReadValue<Vector2>();
+    public void GetR2(InputAction.CallbackContext context) => R2 = context;
+    public void GetInteract(InputAction.CallbackContext context) => interact = context;
+    public void GetTab(InputAction.CallbackContext context) => Tab = context;
+    public void GetL2(InputAction.CallbackContext context) => L2 = context;
+    public void GetX(InputAction.CallbackContext context) => X = context;
+    public void GetO(InputAction.CallbackContext context) => O = context;
+    public void GetBox(InputAction.CallbackContext context) => Box = context;
+    public void GetTriangle(InputAction.CallbackContext context) => Triangle = context;
+    public bool StartMove() => leftStick.magnitude > 0.3f;
+    public Vector2 LeftStickValue() => leftStick;
+    public Vector2 RightStickValue() => rightStick;
     public bool CheckIfPressed()
     {
         if (X.action == null)
@@ -204,7 +141,8 @@ public class ControllerManager : MonoBehaviour
         ataqueTrianguloCargado = false;
         ataqueTrianguloCargadoL2 = false;
         ataqueCuadradoCargadoL2 = false;
-        ataqueTrianguloL2 = false;
+        ataqueTriangleL2 = false;
+        ataqueCircleL2 = false;
         ataqueCuadradoL2 = false;
         Teleport1 = false;
         Teleport2 = false;
@@ -214,27 +152,27 @@ public class ControllerManager : MonoBehaviour
 
     public bool CheckIfJump()
     {
-        
         if (X.action == null)
             return false;
         if (X.action.WasPressedThisFrame() && canJump)
         {
-     
-            Interact.InteractPerformed();
-
-            if(!Interact.canInteract && !AbilityPowerManager.instance.menuActive)
+            if (Interact.canInteract)
             {
-                jump = true;
-                canJump = false;
-                JumpDone();
+                Interact.InteractPerformed();
             }
-
+            else
+            {
+                if(!ItemsLootBoxManager.Instance.menuActive)
+                {
+                    jump = true;
+                    canJump = false;
+                    JumpDone();
+                }
+            }
         }
-
 
         if (jump)
         {
-
             jump = false;
             canJump = true;
 
@@ -256,11 +194,9 @@ public class ControllerManager : MonoBehaviour
             {
                 delayCuadrado = Time.time;
                 cuadradoHold = true;
-
-
             }
 
-            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.25f)
+            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.5f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
@@ -269,7 +205,6 @@ public class ControllerManager : MonoBehaviour
                     {
                         ataqueCuadradoL2 = true;
                         ataqueCuadradoL2Press = true;
-
                     }
                     else
                     {
@@ -286,7 +221,7 @@ public class ControllerManager : MonoBehaviour
 
                 }
             }
-            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.25f && cuadradoHold)
+            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.5f && cuadradoHold)
             {
                 ResetBotonesAtaques();
 
@@ -323,16 +258,15 @@ public class ControllerManager : MonoBehaviour
                 trianguloHold = true;
 
             }
-            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.25f)
+            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.5f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
                 {
                     if (L2.action.IsPressed())
                     {
-                        ataqueTrianguloL2 = true;
+                        ataqueTriangleL2 = true;
                         ataqueTrianguloL2Press = true;
-
                     }
                     else
                     {
@@ -347,11 +281,9 @@ public class ControllerManager : MonoBehaviour
                     ataqueTrianguloPress = true;
                     TrianglePress();
                 }
-
-
             }
 
-            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.25f && trianguloHold)
+            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.5f && trianguloHold)
             {
                 ResetBotonesAtaques();
 
@@ -385,18 +317,31 @@ public class ControllerManager : MonoBehaviour
         {
             if (O.action.WasPressedThisFrame())
             {
+                if (L2.action != null)
+                {
+                    if (!L2.action.IsPressed())
+                    {
+                        Debug.Log("Dash");
+                        ResetBotonesAtaques();
+                        dash = true;
+                        //DashDone();
+                    }
+                }
+                delayCircle = Time.time;
+            }
+            if (O.action.WasReleasedThisFrame() && (Time.time - delayCircle) <= 0.5f)
+            {
                 ResetBotonesAtaques();
-
-                dash = true;
-
-                DashDone();
+                if (L2.action != null)
+                {
+                    if (L2.action.IsPressed())
+                    {
+                        ataqueCircleL2 = true;
+                    }
+                }
             }
         }
-
-
-
     }
-
     bool holdTeleport = false;
     void Update()
     {
@@ -434,24 +379,21 @@ public class ControllerManager : MonoBehaviour
                 if ((Time.time - time) >= 0.25f && L2.action.IsPressed() && O.action.IsPressed())
                 {
                     holdTeleport = false;
-
                     Teleport2 = true;
                 }
                 if ((Time.time - time) < 0.25f && (L2.action.IsPressed() && O.action.WasReleasedThisFrame()))
                 {
                     holdTeleport = false;
-
                     Teleport1 = true;
                 }
             }
-
         }
-
-
+        if(L2.action != null)
+        {
+            L2Pressed = L2.action.IsPressed();
+        }
         ControlesAtaques();
     }
-
-
 
     public bool GetDash()
     {
@@ -464,12 +406,6 @@ public class ControllerManager : MonoBehaviour
         else
         {
             return O.action.WasPressedThisFrame() && !L2.action.IsPressed();
-
         }
-
     }
-
-
-
-
 }

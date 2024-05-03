@@ -34,7 +34,7 @@ public class MainMenu : BaseMenu<MainMenu>
         else
         {
             GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
-            GameManager.Instance.LoadLevel(Constants.SCENE_CINEMATIC, loadingFillAmountInspector);
+            GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_CINEMATIC, loadingFillAmountInspector);
         }
     }
 

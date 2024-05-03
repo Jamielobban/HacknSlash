@@ -20,107 +20,123 @@ public class ManagerEnemies : MonoBehaviour
             return _instance;
         }
     }
-
-    //-//-//-//-//-//
-    // Timer -> every X time object with chance by enemiesKilled and enemiesPoints acumulated in the time period
-    // Spawning enemies all the time each X seg, with enemies cap
-    // If enemies are to far from player deactive and respawn
-    //-//-//-//-//-//
-
-
-    private float _enemiesKilled = 0;
-    private float _enemiesScore = 0;
-
-    public int timeToGetItem = 60;
-
+    
     #region Settings
     [Header("Texts Settings:")]
     public TextMeshProUGUI textTime;
     public TextMeshProUGUI currentSpawnedEnemies;
     public TextMeshProUGUI currentScoreText;
 
-    // -- Spawner Settings -- //
     [Header("Spawn Settings:")]
     public List<GameObject> spawners = new List<GameObject>();
+    public bool lastSpawnerLastOne = false;
 
-
-    // -- Enemies Settings --//
     [Header("Enemies Settings: ")]
-    //public List<Enemy> enemies = new List<Enemy>();
-    //public Dictionary<Enemy, ObjectPool> enemyObjectsPools = new Dictionary<Enemy, ObjectPool>();
+    public List<EnemyBase> enemies = new List<EnemyBase>();
+    public Dictionary<EnemyBase, ObjectPool> enemyObjectsPools = new Dictionary<EnemyBase, ObjectPool>();
     public List<GameObject> parentObjectPools = new List<GameObject>(); 
 
-    private int _spawnedEnemies = 0;
-    public int SpawnedEnemies => _spawnedEnemies;
-
-    // -- Timer Settings -- //
-    private float _timerGlobal = 0f;
-    public float CurrentGlobalTime => _timerGlobal;
-
-    private float _timerItems = 0f;
-    private int minutes = 0;
-    private int seconds = 0;
-    public bool isInEvent = false;
-    private GameObject _currentSpawner = null;
-
-    private int _currentSpawnerIndex = 0;
-
-    // -- Scaling Propierties -- //
-    public float scaleLifeMultiplier = 0f;
-    public float scaleDamageMultiplier = 0f;
-
-    #endregion
-
+    [Header("Scaling Settings: ")]
     public float maxMultiplierLife = 30f;
     public float maxMultiplierAttack = 1.8f;
     public float timeToReachMax = 1800f;
+    public int timeToGetItem = 60;
+    
+    public bool isInEvent = false;
+
+    private GameObject _currentSpawner = null;
+    private InfiniteSpawner _currentSpawnerScript = null;
+    private int _currentSpawnerIndex = 0;
+    private int _spawnedEnemies = 0;
+    private float _enemiesScore = 0;
+    
+    private float _timerGlobal = 0f;
+    private float _timerItems = 0f;
+    private float _timerSpawners = 0f;
+    private int minutes = 0;
+    private int seconds = 0;
+    
+    private float _scaleLifeMultiplier = 0f;
+    private float _scaleDamageMultiplier = 0f;
+
+    public float ScaleLifeMult => _scaleLifeMultiplier;
+    public float ScaleDamageMult => _scaleDamageMultiplier;
+    #endregion
+    
+    public int SpawnedEnemies => _spawnedEnemies;
+    public float CurrentGlobalTime => _timerGlobal;
 
     private void Awake()
     {
         _instance = this;
         InitializePools();
-        _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
+        InitializeNewSpawner();
     }
 
     void Update()
     {
         _timerGlobal += Time.deltaTime;
         _timerItems += Time.deltaTime;
+        _timerSpawners += Time.deltaTime;
+        
         UpdateTimeText();
 
         if (_timerItems >= timeToGetItem)
         {
             _timerItems = 0f;
+            UpgradeEnemies();
+            ItemsLootBoxManager.Instance.ShowNewOptions();
+            ResetScore();
+        }
 
-            float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
-            scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
-            scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
-            //Take All enemies and Upgrade them (?)
-            foreach (var pool in parentObjectPools)
+        if (_timerSpawners >= _currentSpawnerScript.lifeTime)
+        {
+            if (spawners.Count - 1 > _currentSpawnerIndex)
             {
-                for (int i = 0; i < pool.transform.childCount; i++)
+                NextSpawner();
+            }
+            else if(spawners.Count - 1 <= _currentSpawnerIndex && lastSpawnerLastOne)
+            {
+                if(_currentSpawner != null)
                 {
-                  //  pool.transform.GetChild(i).GetComponent<Enemy>()?.UpgradeEnemy(scaleLifeMultiplier, scaleDamageMultiplier);
+                    ResetSpawnedEnemies();
+                    UpdateEnemiesSpawned();
+                    Destroy(_currentSpawner);
                 }
             }
-
-            AbilityPowerManager.instance.ShowNewOptions();
-            ResetScore();
+            _timerSpawners = 0f;
         }
     }
 
+    private void UpgradeEnemies()
+    {
+        float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
+        _scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
+        _scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
+        foreach (var pool in parentObjectPools)
+        {
+            for (int i = 0; i < pool.transform.childCount; i++)
+            {
+                GameObject enemy = pool.transform.GetChild(i).gameObject;
+                if (enemy.activeSelf)
+                {
+                    enemy.GetComponent<EnemyBase>().UpgradeEnemy(_scaleLifeMultiplier, _scaleDamageMultiplier);
+                }
+            }
+        }
+    }
+    
     public void StartEvent()
     {
-        
         isInEvent = true;
         if(_currentSpawner != null)
         {
-           // _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+            _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
+            ResetSpawnedEnemies();
         }
     }
 
     public void EndEvent() => isInEvent = false;
-    
 
     private void UpdateTimeText()
     {
@@ -131,21 +147,25 @@ public class ManagerEnemies : MonoBehaviour
 
     public void UpdateEnemiesSpawned() => currentSpawnedEnemies.text = "Spawned Enemies:" + _spawnedEnemies;
 
+
+    public bool IsMaxScore() => _enemiesScore >= GameManager.Instance.Player.hud.maxScore;
+
+
     public void UpdateScore()
     {
         currentScoreText.text = "Score: " + _enemiesScore;
-        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore, 1500);
+        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore);
     }
 
     private void InitializePools()
     {
-        // for (int i = 0; i < enemies.Count; i++)
-        // {
-        //     enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 1));
-        // }
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 0));
+        }
     }
 
-    private void ResetScore()
+    public void ResetScore()
     {
         _enemiesScore = 0;
         GameManager.Instance.Player.hud.ResetProgressScoreBar();
@@ -157,19 +177,37 @@ public class ManagerEnemies : MonoBehaviour
         _enemiesScore += val;
         UpdateScore();
     }
-    public void AddEnemyKilled() => _enemiesKilled++;
 
-    public void SetSpawnedEnemies(int val)
+    public void AddSpawnedEnemies(int val)
     {
         _spawnedEnemies += val;
+        if (_spawnedEnemies <= 0)
+        {
+            _spawnedEnemies = 0;
+        }
         UpdateEnemiesSpawned();
     }
 
+    private void ResetSpawnedEnemies() => _spawnedEnemies = 0;
+
     public void NextSpawner()
     {
+        ResetSpawnedEnemies();
+        UpdateEnemiesSpawned();
+        
         Destroy(_currentSpawner);
         _currentSpawnerIndex++;
+        InitializeNewSpawner();
+    }
+
+    private void InitializeNewSpawner()
+    {
         _currentSpawner = Instantiate(spawners[_currentSpawnerIndex]);
+        _currentSpawnerScript = spawners[_currentSpawnerIndex].GetComponent<InfiniteSpawner>();
+        _currentSpawner.transform.parent = GameManager.Instance.Player.transform;
+        _currentSpawner.transform.localRotation = Quaternion.identity;
+        _currentSpawner.transform.localPosition = Vector3.zero;
+        _currentSpawner.transform.localScale = Vector3.one;
     }
 
 }

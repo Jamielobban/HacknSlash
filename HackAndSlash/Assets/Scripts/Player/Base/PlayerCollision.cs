@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,10 @@ public class PlayerCollision : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Interactable")
-        {
+        { 
+            canInteract = true;
             if (other.GetComponent<Interactive>())
             {
-                canInteract = true;
                 other.GetComponent<Interactive>().ShowObjectInRange();
             }
             if (!_touchingInteractables.Contains(other.gameObject))
@@ -43,14 +44,22 @@ public class PlayerCollision : MonoBehaviour
 
     public void InteractPerformed()
     {
-        foreach (var interactable in _touchingInteractables)
+        for (int i = 0; i < _touchingInteractables.Count; i++)
         {
-            if(interactable != null)
+            if (_touchingInteractables[i] != null)
             {
-                var interaction = interactable.GetComponent<IInteractable>();
-                if(interaction == null) { return; }
+                var interaction = _touchingInteractables[i].GetComponent<IInteractable>();
+                if (interaction == null) { return; }
                 interaction.Interact();
+                canInteract = false;
+                _touchingInteractables.RemoveAt(i);
             }
+            else
+            {
+                _touchingInteractables.RemoveAt(i);
+            }
+
+
         }
     }
 }

@@ -11,6 +11,7 @@ public class MaxHealthItem : Item
     public override void OnItemPickup(PlayerControl player)
     {
         player.healthSystem.maxHealth += data.value;
+        player.healthSystem.Heal(data.value);
         player.hud.UpdateHealthBar(player.healthSystem.CurrentHealth, player.healthSystem.maxHealth);
     }
 }

@@ -12,6 +12,5 @@ public class CriticalChanceItem : Item
     public override void OnItemPickup(PlayerControl player)
     {
         player.critChance += data.value;
-
     }
 }

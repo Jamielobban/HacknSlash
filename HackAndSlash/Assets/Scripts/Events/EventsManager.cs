@@ -46,8 +46,12 @@ public class EventsManager : MonoBehaviour
         if(CheckAllEventsCompleted())
         {
             //Si todos eventos completos unlock final boss / win
-            onWin?.SetActive(true);
-            text?.SetActive(true);
+            if(onWin != null && text != null)
+            {
+                
+                onWin.SetActive(true);
+                text.SetActive(true);
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.P) && Input.GetKeyDown(KeyCode.O))

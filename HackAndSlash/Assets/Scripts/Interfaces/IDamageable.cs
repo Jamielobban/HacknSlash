@@ -1,6 +1,11 @@
+using DamageNumbersPro;
+
 public interface IDamageable
 {
-    void TakeDamage(float damage);
+    bool IsPlayer();
+    void TakeDamage(float damage, DamageNumber visualEffect);
+    void ApplyBurn();
+    void ApplyStun(float time);
     void Heal(float amount);
 }
 

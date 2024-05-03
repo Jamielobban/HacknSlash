@@ -24,7 +24,6 @@ public class AudioManager : MonoBehaviour
             {
                 GameObject go = new GameObject("Audio Manager");
                 go.AddComponent<AudioManager>();
-                _instance = go.GetComponent<AudioManager>();
                 DontDestroyOnLoad(go);                
             }
             return _instance;
@@ -33,11 +32,18 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        audioFx = gameObject.AddComponent<AudioSource>();
+        audioMusic = gameObject.AddComponent<AudioSource>();
+        audioFxStopeable = gameObject.AddComponent<AudioSource>();
+        audioMusicEffects = gameObject.AddComponent<AudioSource>();
         LoadAllAudios();
         audioMusicEffects.loop = true;
         audioMusic.loop = true;
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void LoadAllAudios()
@@ -74,7 +80,10 @@ public class AudioManager : MonoBehaviour
         }
         audioMusicEffects.loop = true;
     }
-
+    public void FadeEffect(float volume, float duration)
+    {
+        Fade(audioFx, duration, volume);
+    }
     public void FadeMusicEffect(float volume)
     {
         Fade(audioMusicEffects, 1f, volume);
@@ -133,7 +142,6 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         source.volume = volume;
-        //destroy the fading audiosource
         Destroy(fadeOutSource);
         yield break;
     }

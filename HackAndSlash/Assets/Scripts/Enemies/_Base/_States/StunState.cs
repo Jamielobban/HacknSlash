@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 public class StunState : EnemyStateBase
 {
-    private float _stunTime;
     private float _currentTime;
-    public StunState(bool needsExitTime, Enemy enemy, float stunTime) : base(needsExitTime, enemy, stunTime)
+    public StunState(bool needsExitTime, EnemyBase enemyBase) : base(needsExitTime, enemyBase)
     {
-        _stunTime = stunTime;
     }
 
     public override void OnEnter()
@@ -13,14 +11,14 @@ public class StunState : EnemyStateBase
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
         base.OnEnter();
-        _animator.CrossFade("Stun", 0.2f);
+        _animator.CrossFadeInFixedTime("Stun", 0.2f);
     }
 
     public override void OnLogic()
     {
         base.OnLogic();
         _currentTime += Time.deltaTime;
-        if (_currentTime >= _stunTime)
+        if (_currentTime >= _enemyBase.timeStuned)
         {
             fsm.StateCanExit();
         }

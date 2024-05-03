@@ -1,3 +1,4 @@
+using DamageNumbersPro;
 using MoreMountains.Tools;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour, IDamageable
 {
+    public GameObject[] canvasToDeactivate;
+    public Debuff[] debuffs;
     private PlayerControl _player;
     public float maxHealth;
     private float _currentHealth;
@@ -18,8 +21,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
     public AudioSource lowHpAudio;
 
     public GameObject onDie;
+    private bool _isPlayer = true;
+    public bool IsDamageable;
 
-    public bool IsDamageable;  
+    public GameObject hitEffect;
+
     public float CurrentHealth
     {
         get { return _currentHealth; }
@@ -57,10 +63,11 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
             }
         }
     }
+    public bool IsPlayer() => _isPlayer;
 
     public void Heal(float amount)
     {
-        if (_currentHealth != maxHealth)
+        if (_currentHealth != maxHealth && amount >= 0.1)
         {
             _player.healPixel.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), amount);
         }
@@ -79,7 +86,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageNumber visualEffect)
     {
         if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.75f || !IsDamageable)
         {
@@ -87,7 +94,12 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         }
         _player.states = PlayerControl.States.HIT;
 
+        visualEffect.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), (int)damage);
+
         _player.HitEffect();
+        GameObject go = Instantiate(hitEffect, transform);
+        go.transform.localScale = Vector3.one;
+        go.transform.localPosition = new Vector3(0, 1, 0);
         SetBloodEffect();
         _currentHealth -= damage;
         if(GameManager.Instance.state != Enums.GameState.Tutorial)
@@ -113,13 +125,23 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.hud.UpdateHealthBar(_currentHealth, maxHealth);
     }
 
+    public void ApplyBurn()
+    {
+        float dmg = maxHealth * 0.05f; // 40 % of damage base
+
+        debuffs[0].ApplyDebuff(dmg);
+    }
+    public void ApplyStun(float timeStun)
+    {
+        //Player Gets Stun
+    }
     private void SetBloodEffect()
     {
-        if (_currentHealth <= (maxHealth * 0.7) && _currentHealth > (maxHealth * 0.25f))
+        if (_currentHealth <= (maxHealth * 0.85) && _currentHealth > (maxHealth * 0.25f))
         {
             bloodImages[1].SetActive(true);
         }
-        else if (_currentHealth <= (maxHealth * 0.25) && _currentHealth > 0)
+        else if (_currentHealth <= (maxHealth * 0.35) && _currentHealth > 0)
         {
             lowHpAudio.Play();
             bloodImages[2].SetActive(true);
@@ -149,7 +171,18 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
         _player.DeadEffect();
         if(GameManager.Instance.state == Enums.GameState.Playing)
         {
+            foreach (var canvas in canvasToDeactivate)
+            {
+                canvas.SetActive(false);
+            }
+
+            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            {
+                enemyPool.SetActive(false);
+            }
+
             onDie.SetActive(true);
+            AudioManager.Instance.PlayMusic(Enums.Music.Defeat);
             onDie.GetComponent<GDTFadeEffect>()?.StartEffect();
             Invoke(nameof(StartLoadingBar), 4f);
         }
