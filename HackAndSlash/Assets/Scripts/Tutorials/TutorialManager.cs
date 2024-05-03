@@ -103,8 +103,9 @@ public class TutorialManager : MonoBehaviour
 
     private void PhaseComplete()
     {
-        blackCyborgObjectiveMarker.SetActive(true);
-        blackCyborg.SetCanInteract(true);
+        RobotInteraction();
+        //blackCyborgObjectiveMarker.SetActive(true);
+        //blackCyborg.SetCanInteract(true);
     }
     private void RobotInteraction()
     {
