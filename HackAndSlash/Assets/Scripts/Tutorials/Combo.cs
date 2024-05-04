@@ -6,6 +6,9 @@ using System;
 using DG.Tweening;
 using static Enums;
 using System.Collections;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class Combo 
@@ -23,7 +26,7 @@ public class Combo
     protected void ComboFailed() => OnComboFailed?.Invoke();//Aqui es ficara la funció de color a vermell
     public void StartCombo() => comboInputs[0].StartListening(true); 
     public void LoadImages() => comboInputs.ForEach(ci => ci.LoadImage());
-    public void Initialize(List<Image> comboImages, List<MultipleListElement<Enums.TutorialActions, Sprite>> mapActionWithSprite)
+    public void Initialize(List<Image> comboImages, List<MultipleListElement<Enums.TutorialActions, SpriteInputAllController>> mapActionWithSprite)
     {
         _comboImages = comboImages;
         
@@ -82,30 +85,32 @@ public class Combo
         _comboImages.ForEach(image => DOVirtual.Color(image.color, Color.white, 0.8f, (col) => { image.color = col; }).SetEase(Ease.InOutSine));        
         StartCombo();
     }    
-    ComboInput ParseComboActionToComboInput(Enums.TutorialActions cAction, Image uiIMage, List<MultipleListElement<Enums.TutorialActions, Sprite>> mapActionWithSprite)
+    ComboInput ParseComboActionToComboInput(Enums.TutorialActions cAction, Image uiIMage, List<MultipleListElement<Enums.TutorialActions, SpriteInputAllController>> mapActionWithSprite)
     {
+        var gamepad = Gamepad.current;
+        
         switch (cAction)
-        {
+        { 
             case Enums.TutorialActions.JUMP:
-                return new JumpCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.JUMP).Select(e => e.value).FirstOrDefault());
+                return new JumpCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.JUMP).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.DOBLEJUMP:
-                return new DoubleJumpCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.DOBLEJUMP).Select(e => e.value).FirstOrDefault());
+                return new DoubleJumpCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.DOBLEJUMP).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.RUN:
-                return new RunCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.RUN).Select(e => e.value).FirstOrDefault());
+                return new RunCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.RUN).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.ROLL:
-                return new RollCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.ROLL).Select(e => e.value).FirstOrDefault());
+                return new RollCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.ROLL).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.SQUARE:
-                return new SquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.SQUARE).Select(e => e.value).FirstOrDefault());
+                return new SquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.SQUARE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.TRIANGLE:
-                return new TriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.TRIANGLE).Select(e => e.value).FirstOrDefault());
+                return new TriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.TRIANGLE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.HOLDSQUARE:
-                return new HoldSquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.HOLDSQUARE).Select(e => e.value).FirstOrDefault());
+                return new HoldSquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.HOLDSQUARE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.HOLDTRIANGLE:
-                return new HoldTriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.HOLDTRIANGLE).Select(e => e.value).FirstOrDefault());
+                return new HoldTriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.HOLDTRIANGLE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.AIRSQUARE:
-                return new AirSquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.AIRSQUARE).Select(e => e.value).FirstOrDefault());
+                return new AirSquareCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.AIRSQUARE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             case Enums.TutorialActions.AIRTRIANGLE:
-                return new AirTriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.AIRTRIANGLE).Select(e => e.value).FirstOrDefault());
+                return new AirTriangleCI(uiIMage, mapActionWithSprite.Where(e => e.key == TutorialActions.AIRTRIANGLE).Select(e => gamepad is DualShockGamepad ? e.value.playStation : e.value.xbox).FirstOrDefault());
             default:
                 return null;
         }

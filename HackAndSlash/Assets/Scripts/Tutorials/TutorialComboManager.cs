@@ -6,9 +6,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class TutorialComboManager : MonoBehaviour
+[Serializable]
+public struct SpriteInputAllController
 {
-    [SerializeField] List<MultipleListElement<Enums.TutorialActions, Sprite>> mapActionWithSprite;
+    [SerializeField]
+    public Sprite playStation, xbox;
+}
+
+public class TutorialComboManager : MonoBehaviour
+{ 
+    [SerializeField] List<MultipleListElement<Enums.TutorialActions, SpriteInputAllController>> mapActionWithSprite;
     [SerializeField] List<ListWrapper<Combo>> tutorialCombos;
     [SerializeField] List<Image> uiImages;
     [SerializeField] Sprite emptySprite;

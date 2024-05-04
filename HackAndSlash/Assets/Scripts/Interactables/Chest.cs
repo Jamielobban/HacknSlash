@@ -3,6 +3,10 @@ using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
+
 
 public class Chest : MonoBehaviour, IInteractable
 {
@@ -14,12 +18,17 @@ public class Chest : MonoBehaviour, IInteractable
     public bool isUnlocked = false;
     public MMFeedbacks chestOpenedSound;
     [SerializeField] Image interactCross;
+    [SerializeField] Sprite psInteractSprite;
+    [SerializeField] Sprite xboxInteractSprite;
 
     private void Awake()
     {        
         _anim = GetComponent<Animator>();
         _collider = GetComponent<Collider>();
         _collider.enabled = false;
+
+        var gamepad = Gamepad.current;
+        interactCross.sprite = gamepad is DualShockGamepad ? psInteractSprite : xboxInteractSprite;
     }
 
     private void Update()

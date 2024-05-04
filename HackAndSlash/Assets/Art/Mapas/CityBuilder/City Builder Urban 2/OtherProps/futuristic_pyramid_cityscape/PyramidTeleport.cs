@@ -15,10 +15,10 @@ public class PyramidTeleport : Interactive, IInteractable
     {
         SetCanInteract(false);
         Vector3 startPosition = this.transform.position;
-        Vector3 startCrossPosition = interactCross.transform.position;
+        Vector3 startCrossPosition = interactButtonImage.transform.position;
         Vector3 startMarkerPosition = marker.position;
         transform.DORotate(new Vector3(0, 360, 0) + this.transform.rotation.eulerAngles, period, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-        interactCross.transform.DOMoveY(startCrossPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        interactButtonImage.transform.DOMoveY(startCrossPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         marker.DOMoveY(startMarkerPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         transform.DOMoveY(startPosition.y + verticaDistance, verticalMoveTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         marker.parent.gameObject.SetActive(false);
