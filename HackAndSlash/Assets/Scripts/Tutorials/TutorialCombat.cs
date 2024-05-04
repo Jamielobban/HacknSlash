@@ -55,7 +55,7 @@ public class TutorialCombat : MonoBehaviour
         }
         else if(eventActivable.activeSelf && !hasReadEndTutorial)
         {
-            if(FindObjectOfType<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
+            if(FindObjectOfType<EventBase>()?.CurrentEventState == Enums.EventState.FINISHED)
             {
                 hasReadEndTutorial = true;
                 Invoke(nameof(StartEnd), 1.5f);
