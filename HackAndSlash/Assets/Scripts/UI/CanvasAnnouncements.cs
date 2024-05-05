@@ -24,6 +24,8 @@ public class CanvasAnnouncements : MonoBehaviour
     public void ShowNotification(string titleToShow, string textToShow)
     {
         notification.SetActive(true);
+        titleNotification.text = titleToShow;
+        descriptionNotification.text = textToShow;
         FadeAlpha(imagesNotification, 1, 1);
         FadeAlpha(textsNotification, 1, 1);
         Invoke(nameof(HideNotification), 1.5f);

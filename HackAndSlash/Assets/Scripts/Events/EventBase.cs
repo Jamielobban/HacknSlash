@@ -28,10 +28,14 @@ public abstract class EventBase : MonoBehaviour
     // -- Getters -- //
     public Enums.EventState CurrentEventState => _currentEventState;
 
+    protected virtual void Awake()
+    {
+        _announcements = FindObjectOfType<CanvasAnnouncements>();
+    }
 
     protected virtual void Start()
     {
-        _announcements = FindObjectOfType<CanvasAnnouncements>();
+        SpawnEvent();
     }
 
     protected virtual void Update() { }
