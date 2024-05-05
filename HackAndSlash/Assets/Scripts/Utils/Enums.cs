@@ -21,6 +21,14 @@ public class Enums
         Dead
     }   
 
+    public enum AbilityInput
+    {
+        HoldSquare,
+        HoldTriangle,
+        L2Square,
+        L2Triangle
+    }
+
 
     public enum StateEvent
     {

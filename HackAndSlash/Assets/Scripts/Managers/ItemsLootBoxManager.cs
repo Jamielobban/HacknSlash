@@ -104,7 +104,7 @@ public class ItemsLootBoxManager : MonoBehaviour
             }
         }
         
-        ResetItemChoiceMenu();        
+        ResetItemChoiceMenu();   
 
     }
 
@@ -175,12 +175,20 @@ public class ItemsLootBoxManager : MonoBehaviour
             itemUIChoice.image.sprite = itemsToSpawn[i].GetSprite();
             itemUIChoice.itemName.text = itemsToSpawn[i].GetName();
             itemUIChoice.description.text = itemsToSpawn[i].GetDescription();
+            itemUIChoice.type.text = itemsToSpawn[i].data.itemType;
+            itemUIChoice.type.color = itemsToSpawn[i].data.typeColor;
 
             GameObject rarityEffect = Instantiate(itemRarityEffect[(int)itemsToSpawn[i].GetRarity()]);
             rarityEffect.transform.SetParent(go.transform.GetChild(0).transform);
             rarityEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             rarityEffect.transform.localRotation = Quaternion.identity;
             rarityEffect.transform.localPosition = Vector3.zero;
+
+            if (itemsToSpawn[i].GetRarity() == RarityType.Ability)
+            {
+                itemUIChoice.inputAbility.sprite = itemsToSpawn[i].data.inputIcon;
+                itemUIChoice.inputAbility.gameObject.SetActive(true);
+            }
             spawnedUIItems.Add(go);
         }
     }

@@ -41,7 +41,7 @@ public class ManagerEnemies : MonoBehaviour
     public float maxMultiplierAttack = 1.8f;
     public float timeToReachMax = 1800f;
     public int timeToGetItem = 60;
-    
+    public int timeToEndGame;
     public bool isInEvent = false;
 
     private GameObject _currentSpawner = null;
@@ -106,6 +106,12 @@ public class ManagerEnemies : MonoBehaviour
             }
             _timerSpawners = 0f;
         }
+
+        if(_timerGlobal >= timeToEndGame)
+        {
+            //Open Boss Mode
+        }
+
     }
 
     private void UpgradeEnemies()
