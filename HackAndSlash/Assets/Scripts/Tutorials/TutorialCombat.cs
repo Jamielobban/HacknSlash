@@ -10,7 +10,6 @@ public class TutorialCombat : MonoBehaviour
     [SerializeField] SimpleRTVoiceExample voice;
     public GameObject loadingGo;
     public Image fillLoadingGo;
-    public GameObject eventActivable;
     public GameObject campEnemies;        
 
     private bool hasReadedItems = false;
@@ -27,7 +26,6 @@ public class TutorialCombat : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
-        eventActivable.SetActive(false);
         bc.Speak();
     }
 
@@ -49,18 +47,14 @@ public class TutorialCombat : MonoBehaviour
         else if(LevelManager.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
-            eventActivable.SetActive(true);
             Invoke(nameof(SpeakInTime), 1);
             campEnemies.SetActive(false);
         }
-        else if(eventActivable.activeSelf && !hasReadEndTutorial)
+        else if(!hasReadEndTutorial && LevelManager.Instance.CurrentGlobalTime >= 130)
         {
-            if(FindObjectOfType<EventBase>()?.CurrentEventState == Enums.EventState.FINISHED)
-            {
-                hasReadEndTutorial = true;
-                Invoke(nameof(StartEnd), 1.5f);
-                LevelManager.Instance.isInEvent = true;
-            }
+            hasReadEndTutorial = true;
+            Invoke(nameof(StartEnd), 1.5f);
+            LevelManager.Instance.isInEvent = true;
         }
     }
 

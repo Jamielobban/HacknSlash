@@ -11,17 +11,22 @@ public class DamageDealer : MonoBehaviour
     public float timeToEnableCollider;
 
     private float _currentTime;
+    public bool canUseCollider = false;
 
     protected virtual void Awake()
     {
-        colliderToEnable = GetComponent<Collider>();
+        if(canUseCollider)
+            colliderToEnable = GetComponent<Collider>();
     }
     protected virtual void Update()
     {
         _currentTime += Time.deltaTime;
-        if(_currentTime >= timeToEnableCollider && !colliderToEnable.enabled)
+        if(canUseCollider)
         {
-            colliderToEnable.enabled = true;
+            if (_currentTime >= timeToEnableCollider && !colliderToEnable.enabled)
+            {
+                colliderToEnable.enabled = true;
+            }
         }
     }
 
