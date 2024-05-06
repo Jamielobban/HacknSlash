@@ -12,6 +12,7 @@ public class InventoryController : MonoBehaviour
     private ControllerManager _controller;
 
     public GameObject musicObj, inventoryObj;
+    public GameObject[] canvasToHide;
 
     private void Start()
     {
@@ -69,12 +70,20 @@ public class InventoryController : MonoBehaviour
                     {
                         _inventoryUI.UpdateData(item.Key, item.Value.item.itemIcon, item.Value.quantity, item.Value.item.itemDefaultDescription);
                     }
+                    foreach (var canvas in canvasToHide)
+                    {
+                        canvas.SetActive(false);
+                    }
                     AudioManager.Instance.PlayFx(Enums.Effects.OpenInventory);
                     EventSystem.current.SetSelectedGameObject(_inventoryUI.ListOfUIItems[0].gameObject); //selectedObject
                     GameManager.Instance.PauseMenuGame();
                 }
                 else
                 {
+                    foreach (var canvas in canvasToHide)
+                    {
+                        canvas.SetActive(true);
+                    }
                     _inventoryUI.Hide();
                     GameManager.Instance.UnPauseMenuGame();
                     EventSystem.current.SetSelectedGameObject(null);

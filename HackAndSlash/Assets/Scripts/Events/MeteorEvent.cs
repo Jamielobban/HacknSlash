@@ -12,6 +12,7 @@ public class MeteorEvent : EventBase
     private float _currentTime;
 
     private Transform player;
+    private bool eventStarted = false;
 
     protected override void Awake()
     {
@@ -19,19 +20,30 @@ public class MeteorEvent : EventBase
         player = GameManager.Instance.Player.transform;
     }
 
+    protected override void StartEvent()
+    {
+        base.StartEvent();
+        eventStarted = true;
+    }
+
     protected override void Update()
     {
-        _currentTime += Time.deltaTime;
-        _currentTimeMeteor  += Time.deltaTime;
-
-        if(_currentTimeMeteor >= timeToSpawnMeteor)
+        if(eventStarted)
         {
-            _currentTimeMeteor = 0;
-        }
+            _currentTime += Time.deltaTime;
+            _currentTimeMeteor += Time.deltaTime;
 
-        if(_currentTime >= eventDuration)
-        {
-            CompleteEvent();
+            if (_currentTimeMeteor >= timeToSpawnMeteor)
+            {
+                GameObject go = Instantiate(meteorToSpawn, player.position, Quaternion.identity);
+                go.transform.localRotation = Quaternion.Euler(-90, 0, 0);
+                _currentTimeMeteor = 0;
+            }
+
+            if (_currentTime >= eventDuration)
+            {
+                CompleteEvent();
+            }
         }
     }
 }

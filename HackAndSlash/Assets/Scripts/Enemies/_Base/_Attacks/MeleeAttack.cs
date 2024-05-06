@@ -25,8 +25,7 @@ public class MeleeAttack : BaseEnemyAttack
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        
+    {        
         IDamageable damageable = other.GetComponent<IDamageable>();
         if (!_enemyBase.attackInterrumpted)
         {
