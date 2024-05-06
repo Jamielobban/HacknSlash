@@ -1,9 +1,11 @@
-﻿using System;
+﻿using DamageNumbersPro;
+using System;
 using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
     public float damage;
+    public DamageNumber visualEffect;
 
     protected virtual void Awake()
     {
@@ -15,7 +17,7 @@ public class DamageDealer : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-       // other.GetComponent<IDamageable>().TakeDamage(damage);
+        other.GetComponent<IDamageable>().TakeDamage(damage, visualEffect);
     }
     protected virtual void DestroyGameObject()
     {
