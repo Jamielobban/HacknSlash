@@ -37,6 +37,8 @@ public class PlayerControl : MonoBehaviour
     public float runSpeed;
     public float walkSpeedAir;
     public float runSpeedAir;
+
+    public float multiplierCombos = 1;
     [Space]
     #endregion
 

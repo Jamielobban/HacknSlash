@@ -61,7 +61,6 @@ public class LevelManager : MonoBehaviour
             _timerItems = 0f;
             _enemiesManager.UpgradeEnemies(_timerGlobal);
             ItemsLootBoxManager.Instance.ShowNewOptions();
-            _scoreManager.ResetScore();
         }
 
         _enemiesManager.HandleEnemiesUpdate();

@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
     public float timeToStartResetScore;
     public float timeToRemoveScore;
     public float removeScore = 10;
+    public int maxScore;
 
     private float _enemiesScore = 0;
     private float lastTimeScored;
@@ -25,11 +26,11 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public bool IsMaxScore() => _enemiesScore >= GameManager.Instance.Player.hud.maxScore;
+    public bool IsMaxScore() => _enemiesScore >= maxScore;
     public void UpdateScore()
     {
         currentScoreText.text = "Score: " + _enemiesScore;
-        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore);
+        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore, maxScore);
     }
     public void ResetScore()
     {
@@ -42,6 +43,8 @@ public class ScoreManager : MonoBehaviour
     {
         lastTimeScored = Time.time;
         _enemiesScore += val;
+        if (_enemiesScore <= 0)
+            _enemiesScore = 0;
         UpdateScore();
     }
 

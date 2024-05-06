@@ -38,7 +38,7 @@ public class AttackCollider : MonoBehaviour
             return (0, _player.basicDamageHit);
         }
         bool isCrit;
-        float damage = baseDamage * _player.attackDamage + Random.Range(0.5f, 1.5f);
+        float damage = _player.multiplierCombos * baseDamage * _player.attackDamage + Random.Range(0.5f, 1.5f);
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
 
