@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static Enums;
 
@@ -13,7 +14,7 @@ public abstract class ComboInput
     public Sprite _inputSprite { get; private set; }
     protected PlayerControl _player;
     public Action OnInputDone; 
-    public Action OnInputFailed; 
+    public Action OnInputFailed;
     protected void InputDone() => OnInputDone?.Invoke(); 
     protected void InputFailed() => OnInputFailed?.Invoke();
 

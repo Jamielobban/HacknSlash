@@ -3,8 +3,12 @@ using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
 
-public class Chest : MonoBehaviour, IInteractable
+
+public class Chest : Interactive, IInteractable
 {
     private Animator _anim;
     private Collider _collider;
@@ -13,39 +17,39 @@ public class Chest : MonoBehaviour, IInteractable
     public GameObject particle;
     public bool isUnlocked = false;
     public MMFeedbacks chestOpenedSound;
-    [SerializeField] Image interactCross;
 
     private void Awake()
-    {        
+    {
         _anim = GetComponent<Animator>();
         _collider = GetComponent<Collider>();
         _collider.enabled = false;
+        SetCanInteract(false);
+
+        var gamepad = Gamepad.current;
+        interactButtonImage.sprite = gamepad is DualShockGamepad ? psInteractSprite : xboxInteractSprite;
     }
 
     private void Update()
     {
-        if(canBeUnlocked)
+        if (canBeUnlocked)
         {
-            _anim.SetBool("openChest", true);
-            Color c = interactCross.color;
-            c.a = 1;
-            interactCross.DOColor(c, 2);
-            
+            _anim.SetBool("openChest", true);            
             canBeUnlocked = false;
         }
     }
-    public void PlayChestSound() 
+    public void PlayChestSound()
     {
-       chestOpenedSound.PlayFeedbacks();
+        chestOpenedSound.PlayFeedbacks();
 
     }
     public void Interact()
     {
+        SetCanInteract(false);
         GetItem();
         _collider.enabled = false;
     }
 
-    public void EnableCollider() => _collider.enabled = true;
+    public void EnableCollider() {_collider.enabled = true; SetCanInteract(true); }
     public void EnableParticle() => particles.SetActive(true);
 
     public void GetItem()
@@ -54,7 +58,6 @@ public class Chest : MonoBehaviour, IInteractable
         particles.SetActive(false);
         ItemsLootBoxManager.Instance.ShowNewOptions();
         isUnlocked = true;
-
     }
     
 

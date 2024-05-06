@@ -6,6 +6,9 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
 
 public abstract class Interactive : MonoBehaviour
 {
@@ -13,7 +16,9 @@ public abstract class Interactive : MonoBehaviour
     [SerializeField] protected List<Renderer> renderers;
     [SerializeField] protected List<Material> triggerMats;
     [SerializeField] protected List<Material> normalMats;
-    [SerializeField] protected Image interactCross;
+    [SerializeField] protected Image interactButtonImage;
+    [SerializeField] protected Sprite psInteractSprite;
+    [SerializeField] protected Sprite xboxInteractSprite;
 
     private bool canInteract = true;
 
@@ -21,7 +26,7 @@ public abstract class Interactive : MonoBehaviour
     public void SetCanInteract(bool _canInteract) { canInteract = _canInteract; UpdateSpriteAlpha(canInteract ? 1 : 0); } 
     public bool GetCanInteract => canInteract;
     protected void InteractPerformed() => OnInteract?.Invoke();
-    void UpdateSpriteAlpha(float aValue) => interactCross.DOColor(new Color(interactCross.color.r, interactCross.color.g, interactCross.color.b, aValue), 0.5f);
+    void UpdateSpriteAlpha(float aValue) => interactButtonImage.DOColor(new Color(interactButtonImage.color.r, interactButtonImage.color.g, interactButtonImage.color.b, aValue), 0.5f);
     private void Awake()
     {
         for (int i = 0; i < triggerMats.Count(); i++)
@@ -29,6 +34,9 @@ public abstract class Interactive : MonoBehaviour
 
         for (int i = 0; i < triggerMats.Count(); i++)
             normalMats[i] = new Material(normalMats[i]);
+
+        var gamepad = Gamepad.current;
+        interactButtonImage.sprite = gamepad is DualShockGamepad ? psInteractSprite : xboxInteractSprite;
     }
 
     private void OnEnable() => UpdateSpriteAlpha(canInteract ? 1 : 0);    

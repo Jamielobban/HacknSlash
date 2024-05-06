@@ -50,7 +50,7 @@ public class CamMovement : MonoBehaviour
         menuInputs = new MenuInputs();
         menuInputs.UiInputs.SkipIntro.performed += SkipIntro;
         
-        Invoke(nameof(CanSkip), 1);
+        Invoke(nameof(CanSkip), 1.9f);
         Invoke(nameof(CanNotSkip), 10);
         Tween moveTween = this.transform.DOMoveX(15.46f, 20).SetEase(Ease.InOutSine); //3.79f //1.878
         Tween rotTween = this.transform.DORotate(new Vector3(2.878f, 90, 0), 15.46f).SetEase(Ease.InOutSine);
@@ -60,7 +60,7 @@ public class CamMovement : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(doorsOpened);
+        //Debug.Log(doorsOpened);
     }
     private void OnTriggerEnter(Collider other)
     {
