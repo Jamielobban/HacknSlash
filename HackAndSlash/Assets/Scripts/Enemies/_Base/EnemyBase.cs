@@ -287,8 +287,6 @@ public class EnemyBase : PoolableObject
             Destroy(gameObject);
         }
         healthBar.SetActive(false);
-
-
     }
     
     public void UpgradeEnemy(float scaleFactorHp, float scaleFactorDmg)
