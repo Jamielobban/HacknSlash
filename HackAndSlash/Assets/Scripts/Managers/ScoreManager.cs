@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,10 +6,7 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI currentScoreText;
     private float _enemiesScore = 0;
 
-    void Start()
-    {
-        
-    }
+    public float timeToStartResetScore;
 
     void Update()
     {

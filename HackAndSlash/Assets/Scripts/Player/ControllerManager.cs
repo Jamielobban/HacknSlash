@@ -196,7 +196,7 @@ public class ControllerManager : MonoBehaviour
                 cuadradoHold = true;
             }
 
-            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.5f)
+            if (Box.action.WasReleasedThisFrame() && (Time.time - delayCuadrado) <= 0.3f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
@@ -221,7 +221,7 @@ public class ControllerManager : MonoBehaviour
 
                 }
             }
-            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.5f && cuadradoHold)
+            if (Box.action.IsPressed() && (Time.time - delayCuadrado) > 0.3f && cuadradoHold)
             {
                 ResetBotonesAtaques();
 
@@ -258,7 +258,7 @@ public class ControllerManager : MonoBehaviour
                 trianguloHold = true;
 
             }
-            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.5f)
+            if (Triangle.action.WasReleasedThisFrame() && (Time.time - delayTriangulo) <= 0.3f)
             {
                 ResetBotonesAtaques();
                 if (L2.action != null)
@@ -283,7 +283,7 @@ public class ControllerManager : MonoBehaviour
                 }
             }
 
-            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.5f && trianguloHold)
+            if (Triangle.action.IsPressed() && (Time.time - delayTriangulo) > 0.3f && trianguloHold)
             {
                 ResetBotonesAtaques();
 

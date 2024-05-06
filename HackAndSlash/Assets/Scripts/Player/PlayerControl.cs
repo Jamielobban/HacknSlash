@@ -1637,8 +1637,6 @@ public class PlayerControl : MonoBehaviour
                         currentComboAttack = -1;
                     }
 
-                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-
                     attacks = Attacks.RUN;
                     currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare);
                     states = States.ATTACK;
