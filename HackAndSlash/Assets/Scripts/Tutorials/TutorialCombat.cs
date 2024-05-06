@@ -35,18 +35,18 @@ public class TutorialCombat : MonoBehaviour
 
     void Update()
     {
-        if(ManagerEnemies.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
+        if(LevelManager.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
             bc.Speak();
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
+        else if(LevelManager.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);
             bc.Speak();
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
+        else if(LevelManager.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
         {
             hasReadedEvents = true;
             eventActivable.SetActive(true);
@@ -59,7 +59,7 @@ public class TutorialCombat : MonoBehaviour
             {
                 hasReadEndTutorial = true;
                 Invoke(nameof(StartEnd), 1.5f);
-                ManagerEnemies.Instance.isInEvent = true;
+                LevelManager.Instance.isInEvent = true;
             }
         }
     }

@@ -39,7 +39,7 @@ public class WareWolf : EnemyBaseMelee
 
     protected virtual void InitializeRollTransitions()
     {
-        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Roll, ShouldRoll, null, null,true));
+        _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Chase, Enums.EnemyStates.Roll, ShouldRoll, null, null, true));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Idle, Enums.EnemyStates.Roll, ShouldRoll,null, null, true));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Hit, Enums.EnemyStates.Roll, ShouldRoll,null, null, true));
 
@@ -51,8 +51,10 @@ public class WareWolf : EnemyBaseMelee
     protected override bool IsInIdleRange() => base.IsInIdleRange() && !isAttacking;
 
     protected virtual bool ShouldRoll(Transition<Enums.EnemyStates> transition) => !IsHit && _roll.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInFollowRange &&
-                                                                                   Vector3.Distance(_player.transform.position, transform.position) >= 4 && !isAttacking;
-    
+                                                                                    InRangeToRoll() && !isAttacking;
+
+    protected bool InRangeToRoll() => Vector3.Distance(target.transform.position, transform.position) >= 8.5 && Vector3.Distance(target.transform.position, transform.position) <= 10;
+
     protected virtual void RollImpactSensor_OnCollision(Collision collision)
     {
         _enemyFSM.Trigger(Enums.StateEvent.RollImpact);

@@ -28,7 +28,7 @@ public class EventsManager : MonoBehaviour
     {
         if(_indexEvent <= eventsInfos.Count - 1)
         {
-            if (ManagerEnemies.Instance.CurrentGlobalTime >= eventsInfos[_indexEvent].timeToSpawn)
+            if (LevelManager.Instance.CurrentGlobalTime >= eventsInfos[_indexEvent].timeToSpawn)
             {
                 GameObject eventGo = Instantiate(eventsInfos[_indexEvent].eventPrefab, player.position, Quaternion.identity);
 

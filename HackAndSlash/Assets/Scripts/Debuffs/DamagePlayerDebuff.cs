@@ -25,6 +25,10 @@ public class DamagePlayerDebuff : Debuff
 
         if (currentTickTime >= timeToDamage)
         {
+            if (_damage <= 1)
+            {
+                _damage = 1;
+            }
             player.healthSystem.TakeDamage(_damage, damageNumber);
             currentTickTime = 0f;
         }

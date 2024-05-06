@@ -83,7 +83,7 @@ public class EnemySpawnEffect : MonoBehaviour
             _skinnedMaterials[i].SetFloat("_EdgeThickness", 0f);
         }
 
-        ManagerEnemies.Instance.AddEnemyScore(_enemyBase.score);
+        LevelManager.Instance.ScoreManager.AddEnemyScore(_enemyBase.score);
         _enemyBase.OnDie();
         _isSpawning = false;
     }

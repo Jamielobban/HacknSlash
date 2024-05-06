@@ -100,7 +100,7 @@ public class SpawnerBase : MonoBehaviour
             {
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
-                ManagerEnemies.Instance.AddSpawnedEnemies(+1);
+                LevelManager.Instance.EnemiesManager.AddSpawnedEnemies(+1);
             }
             else
             {

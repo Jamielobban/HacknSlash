@@ -276,7 +276,7 @@ public class EnemyBase : PoolableObject
                 {
                     spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
                 }
-                ManagerEnemies.Instance.AddSpawnedEnemies(-1);
+                LevelManager.Instance.EnemiesManager.AddSpawnedEnemies(-1);
             }
             spawner = null;
             ResetEnemy();

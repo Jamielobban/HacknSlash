@@ -32,6 +32,7 @@ public class ItemsLootBoxManager : MonoBehaviour
     public GameObject slotsGrid;
     public GameObject itemPrefab;
     public GameObject levelUpEffects;
+    public GameObject[] playerCanvas;
 
     public List<Item> itemsToSpawn = new List<Item>();
     private List<GameObject> spawnedUIItems = new List<GameObject>();
@@ -119,7 +120,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         spawnedUIItems.Clear();
         
         itemChoice.SetActive(false);
-        
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(true);
+        }
+
         GameManager.Instance.UnPauseMenuGame();
         Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
@@ -132,6 +138,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         {
             return;
         }
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(false);
+        }
+
         AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         levelUpEffects.SetActive(true);
         itemChoice.SetActive(true);

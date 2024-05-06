@@ -17,9 +17,9 @@ public class WinInteractable : MonoBehaviour, IInteractable
         {
             canvas.SetActive(false);
         }
-        if(ManagerEnemies.Instance != null)
+        if(LevelManager.Instance.EnemiesManager != null)
         {
-            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            foreach (var enemyPool in LevelManager.Instance.EnemiesManager.parentObjectPools)
             {
                 enemyPool.SetActive(false);
             }

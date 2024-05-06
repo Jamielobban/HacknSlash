@@ -1,7 +1,5 @@
 ﻿using MoreMountains.Feedbacks;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityHFSM;
 
 public class InvokeAttack : BaseEnemyAttack
@@ -9,13 +7,11 @@ public class InvokeAttack : BaseEnemyAttack
     public GameObject invokeEffect;
     public GameObject _spawner;
     public MMFeedbacks invokeSpawnSound;
-    private ManagerEnemies _manager;
 
 
     protected override void Awake()
     {
         base.Awake();
-        _manager = ManagerEnemies.Instance;
     }
     public void OnInvoke(State<Enums.EnemyStates, Enums.StateEvent> state)
     {

@@ -1,31 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ManagerEnemies : MonoBehaviour
 {
-    private static ManagerEnemies _instance;
-
-    public static ManagerEnemies Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                GameObject go = new GameObject("Enemies Manager");
-                go.AddComponent<ManagerEnemies>();
-            }
-            return _instance;
-        }
-    }
-    
     #region Settings
-    [Header("Texts Settings:")]
-    public TextMeshProUGUI textTime;
     public TextMeshProUGUI currentSpawnedEnemies;
-    public TextMeshProUGUI currentScoreText;
 
     [Header("Spawn Settings:")]
     public List<GameObject> spawners = new List<GameObject>();
@@ -40,54 +20,34 @@ public class ManagerEnemies : MonoBehaviour
     public float maxMultiplierLife = 30f;
     public float maxMultiplierAttack = 1.8f;
     public float timeToReachMax = 1800f;
-    public int timeToGetItem = 60;
-    public int timeToEndGame;
-    public bool isInEvent = false;
 
     private GameObject _currentSpawner = null;
     private InfiniteSpawner _currentSpawnerScript = null;
     private int _currentSpawnerIndex = 0;
     private int _spawnedEnemies = 0;
-    private float _enemiesScore = 0;
     
-    private float _timerGlobal = 0f;
-    private float _timerItems = 0f;
-    private float _timerSpawners = 0f;
-    private int minutes = 0;
-    private int seconds = 0;
-    
+
+    private float _timerSpawners = 0f;    
     private float _scaleLifeMultiplier = 0f;
     private float _scaleDamageMultiplier = 0f;
 
+    #endregion
+
     public float ScaleLifeMult => _scaleLifeMultiplier;
     public float ScaleDamageMult => _scaleDamageMultiplier;
-    #endregion
-    
     public int SpawnedEnemies => _spawnedEnemies;
-    public float CurrentGlobalTime => _timerGlobal;
+    public GameObject CurrentSpawner => _currentSpawner;
+    public InfiniteSpawner CurrentSpawnerScript => _currentSpawnerScript;
 
-    private void Awake()
+    public void Initialize()
     {
-        _instance = this;
         InitializePools();
         InitializeNewSpawner();
     }
 
-    void Update()
+    public void HandleEnemiesUpdate()
     {
-        _timerGlobal += Time.deltaTime;
-        _timerItems += Time.deltaTime;
-        _timerSpawners += Time.deltaTime;
-        
-        UpdateTimeText();
-
-        if (_timerItems >= timeToGetItem)
-        {
-            _timerItems = 0f;
-            UpgradeEnemies();
-            ItemsLootBoxManager.Instance.ShowNewOptions();
-            ResetScore();
-        }
+        _timerSpawners += Time.deltaTime;      
 
         if (_timerSpawners >= _currentSpawnerScript.lifeTime)
         {
@@ -106,17 +66,11 @@ public class ManagerEnemies : MonoBehaviour
             }
             _timerSpawners = 0f;
         }
-
-        if(_timerGlobal >= timeToEndGame)
-        {
-            //Open Boss Mode
-        }
-
     }
 
-    private void UpgradeEnemies()
+    public void UpgradeEnemies(float time)
     {
-        float lerpFactor = Mathf.Clamp01(_timerGlobal / timeToReachMax);
+        float lerpFactor = Mathf.Clamp01(time / timeToReachMax);
         _scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
         _scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
         foreach (var pool in parentObjectPools)
@@ -131,37 +85,8 @@ public class ManagerEnemies : MonoBehaviour
             }
         }
     }
-    
-    public void StartEvent()
-    {
-        isInEvent = true;
-        if(_currentSpawner != null)
-        {
-            _currentSpawner.GetComponent<InfiniteSpawner>().ClearAllEnemiesSpawned();
-            ResetSpawnedEnemies();
-        }
-    }
-
-    public void EndEvent() => isInEvent = false;
-
-    private void UpdateTimeText()
-    {
-        minutes = (int)(_timerGlobal / 60f);
-        seconds = (int)(_timerGlobal % 60f);
-        textTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
-    }
 
     public void UpdateEnemiesSpawned() => currentSpawnedEnemies.text = "Spawned Enemies:" + _spawnedEnemies;
-
-
-    public bool IsMaxScore() => _enemiesScore >= GameManager.Instance.Player.hud.maxScore;
-
-
-    public void UpdateScore()
-    {
-        currentScoreText.text = "Score: " + _enemiesScore;
-        GameManager.Instance.Player.hud.UpdateProgressScoreBar(_enemiesScore);
-    }
 
     private void InitializePools()
     {
@@ -169,19 +94,6 @@ public class ManagerEnemies : MonoBehaviour
         {
             enemyObjectsPools.Add(enemies[i], ObjectPool.CreateInstance(enemies[i], 0));
         }
-    }
-
-    public void ResetScore()
-    {
-        _enemiesScore = 0;
-        GameManager.Instance.Player.hud.ResetProgressScoreBar();
-        UpdateScore();
-    }
-
-    public void AddEnemyScore(float val)
-    {
-        _enemiesScore += val;
-        UpdateScore();
     }
 
     public void AddSpawnedEnemies(int val)
@@ -194,9 +106,18 @@ public class ManagerEnemies : MonoBehaviour
         UpdateEnemiesSpawned();
     }
 
+    public void ClearEnemies()
+    {
+        if (_currentSpawner != null)
+        {
+            _currentSpawnerScript.ClearAllEnemiesSpawned();
+            ResetSpawnedEnemies();
+        }
+    }
+
     private void ResetSpawnedEnemies() => _spawnedEnemies = 0;
 
-    public void NextSpawner()
+    private void NextSpawner()
     {
         ResetSpawnedEnemies();
         UpdateEnemiesSpawned();

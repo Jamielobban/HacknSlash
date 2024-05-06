@@ -69,7 +69,7 @@ public abstract class EventBase : MonoBehaviour
         AudioManager.Instance.PlayFx(Enums.Effects.Evento);
         AudioManager.Instance.PlayMusic(Enums.Music.EpicTheme);
         
-        ManagerEnemies.Instance.StartEvent(); //Clears all the current enemies and sets isInEvent
+        LevelManager.Instance.StartEvent(); //Clears all the current enemies and sets isInEvent
         
         _currentEventState = Enums.EventState.PLAYING;        
     }
@@ -84,7 +84,7 @@ public abstract class EventBase : MonoBehaviour
             }
         }
         _currentEventState = Enums.EventState.FINISHED;
-        ManagerEnemies.Instance.EndEvent();
+        LevelManager.Instance.EndEvent();
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
         AudioManager.Instance.PlayFx(Enums.Effects.SuccessEvent);
 
@@ -95,7 +95,7 @@ public abstract class EventBase : MonoBehaviour
     protected virtual void DefeatEvent()
     {
         _currentEventState = Enums.EventState.FINISHED;
-        ManagerEnemies.Instance.EndEvent();
+        LevelManager.Instance.EndEvent();
         AudioManager.Instance.PlayMusic(Enums.Music.MainTheme);
         AudioManager.Instance.PlayFx(Enums.Effects.FailEvent);
 
