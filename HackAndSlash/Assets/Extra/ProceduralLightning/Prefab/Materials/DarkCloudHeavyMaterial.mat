@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DarkCloudHeavyMaterial
-  m_Shader: {fileID: 4800000, guid: 0b828cb759e39534cab22fd7fa5d2982, type: 3}
+  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -100,6 +100,7 @@ Material:
     - _DstBlend: 10
     - _EmissionScaleUI: 0
     - _Glossiness: 0.5
+    - _Intensity: 1
     - _InvFade: 0.25
     - _LightMultiplier: 2
     - _Metallic: 0
@@ -118,6 +119,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - WaveSpeed: {r: 19, g: 9, b: -16, a: -7}
+    - _BaseScale: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmisColor: {r: 0.33088237, g: 0.33088237, b: 0.33088237, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
