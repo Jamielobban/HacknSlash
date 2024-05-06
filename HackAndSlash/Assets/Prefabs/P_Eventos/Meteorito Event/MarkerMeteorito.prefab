@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6756721342144879484}
   - component: {fileID: 6728861236813707910}
   - component: {fileID: 7446344118589539261}
+  - component: {fileID: 6602469847391343804}
   m_Layer: 0
   m_Name: MarkerMeteorito
   m_TagString: Untagged
@@ -27,13 +28,13 @@ Transform:
   m_GameObject: {fileID: 77118264279310435}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6723816112331977475}
   - {fileID: 2985252952595922997}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &6728861236813707910
 ParticleSystemRenderer:
@@ -4900,6 +4901,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &6602469847391343804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77118264279310435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73f6cf64b97b0846bd3f9cfca7f812a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 1815464585528820448, guid: 759cff7e89c39ef4a825e45e1846bd6b,
+    type: 3}
+  timeToSpawnObject: 0.5
 --- !u!1 &509302059830969685
 GameObject:
   m_ObjectHideFlags: 0

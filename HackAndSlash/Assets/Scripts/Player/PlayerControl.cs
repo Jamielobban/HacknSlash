@@ -453,7 +453,10 @@ public class PlayerControl : MonoBehaviour
                 currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).localPosition += new Vector3(0, 0, 2);
             }
 
-            currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject.SetActive(true);
+            if(currentComboAttacks.attacks[golpe].slash[slash].transform.childCount >= 0)
+            {
+                currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject.SetActive(true);
+            }
 
             StartCoroutine(Slash(4, currentComboAttacks.attacks[golpe].slash[slash], currentComboAttacks.attacks[golpe].slash[slash].transform.GetChild(0).gameObject));
 
