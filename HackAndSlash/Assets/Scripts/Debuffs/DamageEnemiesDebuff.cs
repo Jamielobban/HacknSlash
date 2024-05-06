@@ -23,6 +23,10 @@ public class DamageEnemiesDebuff : Debuff
 
         if(currentTickTime >= _timeToDamage)
         {
+            if(_damage <= 1)
+            {
+                _damage = 1;
+            }
             enemy.HealthSystem.TakeDamage(_damage, damageNumber);
             currentTickTime = 0f;
         }

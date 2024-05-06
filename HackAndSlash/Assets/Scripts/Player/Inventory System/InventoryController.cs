@@ -59,7 +59,7 @@ public class InventoryController : MonoBehaviour
     {
         if (_controller.GetTabButton().action != null)
         {
-            if (_controller.GetTabButton().action.WasPressedThisFrame())
+            if (_controller.GetTabButton().action.WasPressedThisFrame() && !ItemsLootBoxManager.Instance.isOpen)
             {
                 if (!_inventoryUI.isActiveAndEnabled)
                 {

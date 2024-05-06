@@ -29,7 +29,7 @@ public class InfiniteSpawner : MonoBehaviour
     {
         _timeToSpawn = Random.Range(timeMinToSpawn, timeMaxToSpawn);
         _triangulation = NavMesh.CalculateTriangulation();
-        _managerEnemies = ManagerEnemies.Instance;
+        _managerEnemies = LevelManager.Instance.EnemiesManager;
     }
 
     void Update()
@@ -46,7 +46,7 @@ public class InfiniteSpawner : MonoBehaviour
         }
         else
         {
-            if (_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies < enemiesCap && !_managerEnemies.isInEvent)
+            if (_timer > _timeToSpawn && _managerEnemies.SpawnedEnemies < enemiesCap && !LevelManager.Instance.isInEvent)
             {
                 //Spawn Enemy
                 switch (enemySpawnMethod)
@@ -106,9 +106,9 @@ public class InfiniteSpawner : MonoBehaviour
             enemyBase.spawner = this.gameObject;
             enemyBase.OnSpawnEnemy();
             AddEnemy(enemyBase);
-            if(ManagerEnemies.Instance.CurrentGlobalTime > 60)
+            if(LevelManager.Instance.CurrentGlobalTime > 60)
             {
-                enemyBase.UpgradeEnemy(ManagerEnemies.Instance.ScaleLifeMult, ManagerEnemies.Instance.ScaleDamageMult);
+                enemyBase.UpgradeEnemy(LevelManager.Instance.EnemiesManager.ScaleLifeMult, LevelManager.Instance.EnemiesManager.ScaleDamageMult);
             }
             NavMeshHit hit;
             if (NavMesh.SamplePosition(spawnPos, out hit, 100f, -1))
@@ -116,7 +116,7 @@ public class InfiniteSpawner : MonoBehaviour
                 enemyBase.Agent.Warp(hit.position);
                 enemyBase.Agent.enabled = true;
                 poolable.gameObject.SetActive(true);
-                ManagerEnemies.Instance.AddSpawnedEnemies(+1);
+                LevelManager.Instance.EnemiesManager.AddSpawnedEnemies(+1);
             }
             else
             {

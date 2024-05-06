@@ -4,33 +4,23 @@ using System.Linq;
 using UnityEngine;
 
 
-public class ProtectEvent : EventMap
+public class ProtectEvent : EventBaseRounds
 {
     [SerializeField] List<Transform> targetsToProtect;
     public GameObject[] activables;
     protected override void Start()
     {
         base.Start();
+
         foreach (var activable in activables)
         {
             activable.SetActive(false);
         }
     }
-    protected override void Update()
-    {
-        base.Update();
-
-        if(CurrentEventState == Enums.EventState.PLAYING)
-        {
-            //RetargetSpawnedEnemies();
-            CheckEventState();
-        }
-    }
+ 
     protected override void StartEvent()
     {
         base.StartEvent();
-        
-        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
         
         foreach (var activable in activables)
         {
@@ -41,21 +31,11 @@ public class ProtectEvent : EventMap
         {
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(true));
         }
-        StartSpawningEnemies();
-        canCheckEnemiesDead = true;
+        
     }
-    protected override void NextRound()
+    protected override void CompleteEvent()
     {
-        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
-        base.NextRound();
-        roundsOfEnemies[currentRound].parent.gameObject.SetActive(true);
-        StartSpawningEnemies();
-
-    }
-    protected override void FinishEvent()
-    {
-        roundsOfEnemies[currentRound].parent.gameObject.SetActive(false);
-        base.FinishEvent();
+        base.CompleteEvent();
 
         foreach (EnemiesToKill enemy in roundsOfEnemies)
         {
@@ -75,45 +55,11 @@ public class ProtectEvent : EventMap
             t.GetComponentsInChildren<DamageableObject>().ToList().ForEach(dam => dam.gameObject.SetActive(false));
         }
     }
-    protected override void RestartEvent()
+  
+    protected override void CheckEventState()
     {
-        base.RestartEvent();
-
-        currentRound = 0;
-        foreach (EnemiesToKill enemy in roundsOfEnemies)
-        {
-            enemy.parent.gameObject.SetActive(false);
-            foreach (var e in enemy.enemiesToKill)
-            {
-                e.GetComponent<EnemyBase>().OnDespawnEnemy();
-            }
-            enemy.enemiesToKill.Clear();
-        }
-        foreach (var activable in activables)
-        {
-            activable.SetActive(false);
-        }
-       // RetargetSpawnedEnemies(false);
-        foreach (Transform t in targetsToProtect)
-        {
-            List<DamageableObject> damageables = GetComponentsInChildren<DamageableObject>().ToList();
-            foreach (DamageableObject dam in damageables)
-            {
-                dam.gameObject.SetActive(false);
-                dam.RestartHeal();
-            }
-        }
-    }
-    void CheckEventState()
-    {
-        if (AllEnemiesDefeated())
-        {
-            if (currentRound >= roundsOfEnemies.Count - 1)
-                FinishEvent();
-            else
-                NextRound();
-        }
-        else
+        base.CheckEventState();
+        if(!AllEnemiesDefeated())
         {
             foreach (Transform t in targetsToProtect)
             {
@@ -122,22 +68,10 @@ public class ProtectEvent : EventMap
                 {
                     if (dam.IsDead)
                     {
-                        RestartEvent();
                         break;
                     }
                 }
             }
         }
-    }
-
-    /*void RetargetSpawnedEnemies(bool toPillar = true)
-    {
-        Transform target = targetsToProtect[Random.Range(0, targetsToProtect.Count)];
-
-        foreach (GameObject e in roundsOfEnemies[currentRound].enemiesToKill)
-        {
-            e.GetComponent<EnemyBase>().target = target;
-        }
-    }   */ 
-    
+    }    
 }

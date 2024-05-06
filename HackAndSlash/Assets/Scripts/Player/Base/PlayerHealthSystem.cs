@@ -176,7 +176,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
                 canvas.SetActive(false);
             }
 
-            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            foreach (var enemyPool in LevelManager.Instance.EnemiesManager.parentObjectPools)
             {
                 enemyPool.SetActive(false);
             }

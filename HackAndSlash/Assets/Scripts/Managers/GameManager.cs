@@ -25,7 +25,7 @@ using UnityEngine.UI;
 
         public Enums.GameState state;
 
-        private bool _isPaused;
+    public bool _isPaused;
         private PlayerControl _player;
         public PlayerControl Player => GetPlayer();
         public bool IsPaused => _isPaused;
@@ -94,31 +94,7 @@ using UnityEngine.UI;
             }
 
             state = newState;
-
-        switch (state)
-        {
-            case Enums.GameState.Menu:
-                // MainMenu.Show();
-                break;
-            case Enums.GameState.Tutorial:
-                break;
-            case Enums.GameState.StartPlaying:
-                break;
-            case Enums.GameState.Playing:
-                break;
-            case Enums.GameState.Pause:
-                // PauseMenu.Show();
-                break;
-            case Enums.GameState.ReturningMenu:
-                // MainMenu.Show();
-                break;
-            case Enums.GameState.Exit:
-                Application.Quit();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
-    }
         private bool GuardPlayer() => _player != null ? true : false;
 
         public void PauseGame()

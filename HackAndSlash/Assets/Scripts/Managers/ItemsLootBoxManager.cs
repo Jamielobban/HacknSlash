@@ -32,6 +32,7 @@ public class ItemsLootBoxManager : MonoBehaviour
     public GameObject slotsGrid;
     public GameObject itemPrefab;
     public GameObject levelUpEffects;
+    public GameObject[] playerCanvas;
 
     public List<Item> itemsToSpawn = new List<Item>();
     private List<GameObject> spawnedUIItems = new List<GameObject>();
@@ -104,7 +105,7 @@ public class ItemsLootBoxManager : MonoBehaviour
             }
         }
         
-        ResetItemChoiceMenu();        
+        ResetItemChoiceMenu();   
 
     }
 
@@ -119,7 +120,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         spawnedUIItems.Clear();
         
         itemChoice.SetActive(false);
-        
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(true);
+        }
+
         GameManager.Instance.UnPauseMenuGame();
         Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
@@ -132,6 +138,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         {
             return;
         }
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(false);
+        }
+
         AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         levelUpEffects.SetActive(true);
         itemChoice.SetActive(true);
@@ -175,12 +187,20 @@ public class ItemsLootBoxManager : MonoBehaviour
             itemUIChoice.image.sprite = itemsToSpawn[i].GetSprite();
             itemUIChoice.itemName.text = itemsToSpawn[i].GetName();
             itemUIChoice.description.text = itemsToSpawn[i].GetDescription();
+            itemUIChoice.type.text = itemsToSpawn[i].data.itemType;
+            itemUIChoice.type.color = itemsToSpawn[i].data.typeColor;
 
             GameObject rarityEffect = Instantiate(itemRarityEffect[(int)itemsToSpawn[i].GetRarity()]);
             rarityEffect.transform.SetParent(go.transform.GetChild(0).transform);
             rarityEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             rarityEffect.transform.localRotation = Quaternion.identity;
             rarityEffect.transform.localPosition = Vector3.zero;
+
+            if (itemsToSpawn[i].GetRarity() == RarityType.Ability)
+            {
+                itemUIChoice.inputAbility.sprite = itemsToSpawn[i].data.inputIcon;
+                itemUIChoice.inputAbility.gameObject.SetActive(true);
+            }
             spawnedUIItems.Add(go);
         }
     }
