@@ -45,7 +45,7 @@ public class BaseEnemyAttack : MonoBehaviour
     {
         StartCoroutine(HandleAttack());
     }
-    protected IEnumerator HandleAttack()
+    protected virtual IEnumerator HandleAttack()
     {
         _enemyBase.isAttacking = true;
         _currentAttackState = Enums.AttackState.Casting;
@@ -64,7 +64,7 @@ public class BaseEnemyAttack : MonoBehaviour
         Invoke(nameof(WaitForAnimation), 0.22f);
     }
 
-    private void WaitForAnimation() 
+    protected void WaitForAnimation() 
     {
         this.Wait(_animator.GetCurrentAnimatorClipInfo(0).Length + _enemyBase.exitTimeAttacks, () =>
         {

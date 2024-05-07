@@ -17,11 +17,10 @@ public class MeleeAttack : BaseEnemyAttack
         _colliderDamage.enabled = false;
     }
 
-    public void OnAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
+    public virtual void OnAttack(State<Enums.EnemyStates, Enums.StateEvent> state)
     {
         _enemyBase.transform.LookAt(_enemyBase.target.transform.position);
         Use();
-
     }
 
     private void OnTriggerEnter(Collider other)
