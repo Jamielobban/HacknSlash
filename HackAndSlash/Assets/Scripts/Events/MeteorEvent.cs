@@ -24,7 +24,7 @@ public class MeteorEvent : EventBase
     {
         base.StartEvent();
         eventStarted = true;
-        LevelManager.Instance.EndEvent();
+        LevelManager.Instance.isInEvent = false;
     }
 
     protected override void Update()
