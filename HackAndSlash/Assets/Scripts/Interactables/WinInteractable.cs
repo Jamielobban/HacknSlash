@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WinInteractable : MonoBehaviour, IInteractable
+public class WinInteractable : MonoBehaviour
 {
     public string sceneName;
     public GameObject onWinInteracted;
@@ -11,7 +9,7 @@ public class WinInteractable : MonoBehaviour, IInteractable
     public Image loadBarFill;
     public GameObject[] canvasToDeactivate;
 
-    public void Interact()
+    public void OnWin()
     {
         foreach (var canvas in canvasToDeactivate)
         {

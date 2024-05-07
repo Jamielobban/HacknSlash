@@ -76,7 +76,11 @@ public class LevelManager : MonoBehaviour
         _enemiesManager.ClearEnemies();
     }
 
-    public void EndEvent() => isInEvent = false;
+    public void EndEvent()
+    {
+        isInEvent = false;
+        _enemiesManager.ResetSpawnedEnemies();
+    }
 
     private void UpdateTimeText()
     {

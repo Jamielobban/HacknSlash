@@ -115,7 +115,7 @@ public class ManagerEnemies : MonoBehaviour
         }
     }
 
-    private void ResetSpawnedEnemies() => _spawnedEnemies = 0;
+    public void ResetSpawnedEnemies() => _spawnedEnemies = 0;
 
     private void NextSpawner()
     {
