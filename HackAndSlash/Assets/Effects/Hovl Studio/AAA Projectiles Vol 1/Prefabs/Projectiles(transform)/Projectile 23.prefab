@@ -4907,7 +4907,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9707,6 +9707,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  visualEffect: {fileID: 0}
+  colliderToEnable: {fileID: 0}
+  timeToEnableCollider: 0
+  canUseCollider: 0
   speed: 20
   timeToDestroy: 5
   hit: {fileID: 1148406988041044, guid: 1ae2b1c728484264bbdc53ecaee73c6a, type: 3}
@@ -9714,6 +9718,7 @@ MonoBehaviour:
   - {fileID: 1245241391895108}
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
+  getDamage: {fileID: 0}
 --- !u!199 &199276083344950028
 ParticleSystemRenderer:
   serializedVersion: 6

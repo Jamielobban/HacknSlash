@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RecoveryFlower : StructureEnemiesLife
 {
     public GameObject gemsOfPower;
     public GameObject[] treeLeafs;
     public int reusedLifes = 3;
-
+    public UnityEvent enabledTrigger;
     protected override void Awake()
     {
         gemsOfPower.SetActive(false);
@@ -37,6 +38,7 @@ public class RecoveryFlower : StructureEnemiesLife
         {
             gemsOfPower.SetActive(true);
             reusedLifes--;
+            enabledTrigger.Invoke();
         }
     }
 
