@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 [Serializable]
 public struct EventInfo
@@ -41,11 +40,12 @@ public class EventsManager : MonoBehaviour
     {
         for (int i = 0; i < eventsInfos.Count; i++)
         {
-            EventInfo info = eventsInfos[i];
-            info.eventPrefab = eventsPrefabs[UnityEngine.Random.Range(0, eventsPrefabs.Count)];
-            eventsInfos[i] = info;
+            if(eventsInfos[i].eventPrefab == null)
+            {
+                EventInfo info = eventsInfos[i];
+                info.eventPrefab = eventsPrefabs[UnityEngine.Random.Range(0, eventsPrefabs.Count)];
+                eventsInfos[i] = info;
+            }
         }
-
     }
-
 }
