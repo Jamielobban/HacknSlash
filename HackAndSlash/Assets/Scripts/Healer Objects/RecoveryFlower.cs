@@ -6,9 +6,18 @@ public class RecoveryFlower : StructureEnemiesLife
     public GameObject[] treeLeafs;
     public int reusedLifes = 3;
 
+    GemRecovery gems;
+
     protected override void Awake()
     {
-        gemsOfPower.SetActive(false);
+
+        //gemsOfPower.SetActive(false);
+        gems = gemsOfPower.GetComponent<GemRecovery>();
+        gems.SetCanInteract(false);
+    }
+    private void Start()
+    {
+
     }
     protected override void Update()
     {
@@ -33,9 +42,10 @@ public class RecoveryFlower : StructureEnemiesLife
     protected override void Activate()
     {
         base.Activate();
-        if(!gemsOfPower.activeSelf)
+        if(!gems.GetCanInteract)
         {
-            gemsOfPower.SetActive(true);
+            //gemsOfPower.SetActive(true);
+            gems.SetCanInteract(true);
             reusedLifes--;
         }
     }
@@ -43,6 +53,7 @@ public class RecoveryFlower : StructureEnemiesLife
     public override void ResetStructure()
     {
         base.ResetStructure();
-        gemsOfPower.SetActive(false);
+        //gemsOfPower.SetActive(false);
+        gems.SetCanInteract(false);
     }
 }
