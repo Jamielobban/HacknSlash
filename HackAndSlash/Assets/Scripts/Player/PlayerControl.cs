@@ -48,6 +48,9 @@ public class PlayerControl : MonoBehaviour
     public DamageNumber basicDamageHit, criticalDamageHit;
     public InventorySO inventory;
 
+    [HideInInspector]
+    public float attackBoost;
+
     public bool blockCameraRotation;
 
     [SerializeField]
@@ -276,6 +279,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        attackBoost = 1;
         startRun = Time.time;
         OnHit += StealHeal;
         rb = GetComponent<Rigidbody>();
