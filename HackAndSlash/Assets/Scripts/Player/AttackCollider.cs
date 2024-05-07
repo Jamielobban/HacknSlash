@@ -10,6 +10,7 @@ public class AttackCollider : MonoBehaviour
     public GameObject[] hitEffect;
     public GameObject critHitEffect;
     public MMFeedbacks critHitFeedback;
+    public MMFeedbacks hitFeedback;
 
     public List<GameObject> targets;
 
@@ -86,6 +87,8 @@ public class AttackCollider : MonoBehaviour
                 StartCoroutine(ReturnEffect(0.5f, hitEffect[i].transform.GetChild(0).gameObject, hitEffect[i]));
                 hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
                 hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+                hitFeedback.PlayFeedbacks();
+
             }
             isCrit = false;
 

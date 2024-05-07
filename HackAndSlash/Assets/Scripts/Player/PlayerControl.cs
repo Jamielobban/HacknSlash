@@ -1186,6 +1186,9 @@ public class PlayerControl : MonoBehaviour
             case States.HIT:
                 CheckIfReturnIdle();
                 CheckIfStartMove();
+
+                if (CheckAtaques())
+                    break;
                 /*if ((Time.time - hitTime) > 0.15f) if
                 if ((Time.time - hitTime) > 0.5f) idle and startmove                
                 */
