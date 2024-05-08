@@ -67,12 +67,28 @@ public class MainMenuManager : MonoBehaviour
     void Exitgame() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); Application.Quit(); }
     void ShowTeam() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
+    void ShowTeamMuted()
+    {
+        bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam");
+    }
     void ShowEnti() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
+    void ShowEntiMuted()
+    {
+        bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti");
+    }
     void ShowSfx() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx"); }
+    void ShowSfxMuted()
+    {
+        bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx");
+    }
     void ShowMusic() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music"); }
+    void ShowMusicMuted()
+    {
+        bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music");
+    }
     void ResetTvs()
     {
         tvUpButton.onClick.RemoveAllListeners(); tvDownButton.onClick.RemoveAllListeners(); textTvUp.text = ""; textTvDown.text = "";
@@ -115,9 +131,9 @@ public class MainMenuManager : MonoBehaviour
                 tvDownButton.onClick.AddListener(StartGame);
             }
         });
-        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); ShowSfx(); });
+        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfxMuted); tvDownButton.onClick.AddListener(ShowMusicMuted); ShowSfx(); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
-        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); ShowTeam(); });
+        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeamMuted); tvDownButton.onClick.AddListener(ShowEntiMuted); ShowTeam(); });
                 
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
         lastSelectedObj = firstSelectedObejct;      

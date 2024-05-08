@@ -181,7 +181,8 @@ public class Enums
         TextTutoCombat4,
         TextTutoCombo5,
         TextTutoCombo6,
-        TextTutoCombo7
+        TextTutoCombo7,
+        TextTutoCombo8
     };
 
     public enum MusicEffects
