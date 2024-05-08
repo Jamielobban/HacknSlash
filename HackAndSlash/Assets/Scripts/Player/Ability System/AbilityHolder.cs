@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class AbilityHolder : MonoBehaviour
 {
-    private PlayerControl.Ataques _l2Square;
-    private PlayerControl.Ataques _l2Triangle;
-    private PlayerControl.Ataques _holdSquare;
-    private PlayerControl.Ataques _holdTriangle;
+    private AbilityItem _l2Square;
+    private AbilityItem _l2Triangle;
+    private AbilityItem _holdSquare;
+    private AbilityItem _holdTriangle;
 
     public float timeL2Square, timeL2Triangle;
     public float timeHoldSquare, timeHoldTriangle;
@@ -20,51 +20,55 @@ public class AbilityHolder : MonoBehaviour
 
     public GameObject[] abilitiesParent;
 
-    public PlayerControl.Ataques L2Square => _l2Square;
-    public PlayerControl.Ataques L2Triangle => _l2Triangle;
-    public PlayerControl.Ataques HoldSquare => _holdSquare;
-    public PlayerControl.Ataques HoldTriangle => _holdTriangle;
+    public AbilityItem L2Square => _l2Square;
+    public AbilityItem L2Triangle => _l2Triangle;
+    public AbilityItem HoldSquare => _holdSquare;
+    public AbilityItem HoldTriangle => _holdTriangle;
 
     private void Awake()
     {
-        _l2Square.isEmpty = true;
-        _l2Triangle.isEmpty = true;
-        _holdSquare.isEmpty = true;
-        _holdTriangle.isEmpty = true;
+        if(_l2Square != null)
+            _l2Square.ability.isEmpty = true;
+        if(_l2Triangle != null)
+            _l2Triangle.ability.isEmpty = true;
+        if(_holdSquare != null)
+            _holdSquare.ability.isEmpty = true;
+        if(_holdTriangle != null)
+            _holdTriangle.ability.isEmpty = true;
     }
 
-    public void AddAbility(Enums.AbilityInput input, PlayerControl.Ataques ability)
+    public void AddAbility(Enums.AbilityInput input, AbilityItem ability)
     {
-        if (_l2Square.isEmpty && input == Enums.AbilityInput.L2Square)
+        if (_l2Square == null && input == Enums.AbilityInput.L2Square)
         {
             _l2Square = ability;
-            hudCooldownL2SquareParent.sprite = ability.spriteAbility;
-            hudCooldownL2Square.sprite = ability.spriteAbility;
-            _l2Square.isEmpty = false;
+            hudCooldownL2SquareParent.sprite = ability.ability.spriteAbility;
+            hudCooldownL2Square.sprite = ability.ability.spriteAbility;
+            _l2Square.ability.isEmpty = false;
             abilitiesParent[0].SetActive(true);
         }
-        else if (_l2Triangle.isEmpty && input == Enums.AbilityInput.L2Triangle)
+        else if (_l2Triangle == null && input == Enums.AbilityInput.L2Triangle)
         {
             _l2Triangle = ability;
-            hudCooldownL2TriangleParent.sprite = ability.spriteAbility;
-            hudCooldownL2Triangle.sprite = ability.spriteAbility;
-            _l2Triangle.isEmpty = false;
+            hudCooldownL2TriangleParent.sprite = ability.ability.spriteAbility;
+            hudCooldownL2Triangle.sprite = ability.ability.spriteAbility;
+            _l2Triangle.ability.isEmpty = false;
             abilitiesParent[1].SetActive(true);
         }
-        else if (_holdSquare.isEmpty && input == Enums.AbilityInput.HoldSquare)
+        else if (_holdSquare == null && input == Enums.AbilityInput.HoldSquare)
         {
             _holdSquare = ability;
-            hudCooldownHoldSquareParent.sprite = ability.spriteAbility;
-            hudCooldownHoldSquare.sprite = ability.spriteAbility;
-            _holdSquare.isEmpty = false;
+            hudCooldownHoldSquareParent.sprite = ability.ability.spriteAbility;
+            hudCooldownHoldSquare.sprite = ability.ability.spriteAbility;
+            _holdSquare.ability.isEmpty = false;
             abilitiesParent[2].SetActive(true);
         }
-        else if (_holdTriangle.isEmpty && input == Enums.AbilityInput.HoldTriangle)
+        else if (_holdTriangle == null && input == Enums.AbilityInput.HoldTriangle)
         {
             _holdTriangle = ability;
-            hudCooldownHoldTriangleParent.sprite = ability.spriteAbility;
-            hudCooldownHoldTriangle.sprite = ability.spriteAbility;
-            _holdTriangle.isEmpty = false;
+            hudCooldownHoldTriangleParent.sprite = ability.ability.spriteAbility;
+            hudCooldownHoldTriangle.sprite = ability.ability.spriteAbility;
+            _holdTriangle.ability.isEmpty = false;
             abilitiesParent[3].SetActive(true);
         }
 
@@ -76,20 +80,20 @@ public class AbilityHolder : MonoBehaviour
     }
 
     public void UpdateHudL2SquareCooldown(float time) =>
-        hudCooldownL2Square.fillAmount = Mathf.Clamp01(1 - (time / _l2Square.baseCooldown));       
+        hudCooldownL2Square.fillAmount = Mathf.Clamp01(1 - (time / _l2Square.ability.baseCooldown));       
 
     public void UpdateHudL2TriangleCooldown(float time) =>
-        hudCooldownL2Triangle.fillAmount = Mathf.Clamp01(1 - (time / _l2Triangle.baseCooldown));
+        hudCooldownL2Triangle.fillAmount = Mathf.Clamp01(1 - (time / _l2Triangle.ability.baseCooldown));
     public void UpdateHudHoldSquareCooldown(float time) =>
-        hudCooldownHoldSquare.fillAmount = Mathf.Clamp01(1 - (time / _holdSquare.baseCooldown));
+        hudCooldownHoldSquare.fillAmount = Mathf.Clamp01(1 - (time / _holdSquare.ability.baseCooldown));
     public void UpdateHudHoldTriangleCooldown(float time) =>
-        hudCooldownHoldTriangle.fillAmount = Mathf.Clamp01(1 - (time / _holdTriangle.baseCooldown));
+        hudCooldownHoldTriangle.fillAmount = Mathf.Clamp01(1 - (time / _holdTriangle.ability.baseCooldown));
     public bool CanAddAbility(Enums.AbilityInput input)
     {
         switch (input)
         {
             case Enums.AbilityInput.HoldSquare:
-                if(_holdSquare.isEmpty)
+                if(_holdSquare == null)
                 {
                     return true;
                 }
@@ -98,7 +102,7 @@ public class AbilityHolder : MonoBehaviour
                     return false;
                 }
             case Enums.AbilityInput.HoldTriangle:
-                if (_holdTriangle.isEmpty)
+                if (_holdTriangle == null)
                 {
                     return true;
                 }
@@ -107,7 +111,7 @@ public class AbilityHolder : MonoBehaviour
                     return false;
                 }
             case Enums.AbilityInput.L2Square:
-                if (_l2Square.isEmpty)
+                if (_l2Square == null)
                 {
                     return true;
                 }
@@ -116,7 +120,7 @@ public class AbilityHolder : MonoBehaviour
                     return false;
                 }
             case Enums.AbilityInput.L2Triangle:
-                if (_l2Triangle.isEmpty)
+                if (_l2Triangle == null)
                 {
                     return true;
                 }
@@ -131,60 +135,82 @@ public class AbilityHolder : MonoBehaviour
 
     public bool AnyAbilityEmpty()
     {
-        if (_holdSquare.isEmpty) return true;
-        if (_holdTriangle.isEmpty) return true;
-        if (_l2Square.isEmpty) return true;
-        if (_l2Triangle.isEmpty) return true;
+        if(_holdSquare == null)
+        {
+             return true;
+
+        }
+        if(_holdTriangle == null)
+        {
+             return true;
+        }
+        if(_l2Square == null)
+             return true;
+        if(_l2Triangle == null)
+             return true;
         return false;
     }
 
     private void CheckCooldowns()
     {
-        if (!_l2Square.isEmpty)
+        if(_l2Square != null)
         {
-            if ((Time.time - timeL2Square) > _l2Square.baseCooldown)
+            if (!_l2Square.ability.isEmpty)
             {
-                hudCooldownL2Square.fillAmount = 0;
-            }
-            else
-            {
-                UpdateHudL2SquareCooldown(Time.time - timeL2Square);
+                if ((Time.time - timeL2Square) > _l2Square.ability.baseCooldown)
+                {
+                    hudCooldownL2Square.fillAmount = 0;
+                }
+                else
+                {
+                    UpdateHudL2SquareCooldown(Time.time - timeL2Square);
+                }
             }
         }
-        if (!_l2Triangle.isEmpty)
+        if (_l2Triangle != null)
         {
-            if ((Time.time - timeL2Triangle) > _l2Triangle.baseCooldown)
+            if (!_l2Triangle.ability.isEmpty)
             {
-                hudCooldownL2Triangle.fillAmount = 0;
+                if ((Time.time - timeL2Triangle) > _l2Triangle.ability.baseCooldown)
+                {
+                    hudCooldownL2Triangle.fillAmount = 0;
+                }
+                else
+                {
+                    UpdateHudL2TriangleCooldown(Time.time - timeL2Triangle);
+                }
             }
-            else
+        }
+        if(_holdSquare != null)
+        {
+            if (!_holdSquare.ability.isEmpty)
             {
-                UpdateHudL2TriangleCooldown(Time.time - timeL2Triangle);
+                if ((Time.time - timeHoldSquare) > _holdSquare.ability.baseCooldown)
+                {
+                    hudCooldownHoldSquare.fillAmount = 0;
+                }
+                else
+                {
+                    UpdateHudHoldSquareCooldown(Time.time - timeHoldSquare);
+                }
             }
         }
 
-        if (!_holdSquare.isEmpty)
+        if(_holdTriangle != null)
         {
-            if ((Time.time - timeHoldSquare) > _holdSquare.baseCooldown)
+            if (!_holdTriangle.ability.isEmpty)
             {
-                hudCooldownHoldSquare.fillAmount = 0;
-            }
-            else
-            {
-                UpdateHudHoldSquareCooldown(Time.time - timeHoldSquare);
+                if ((Time.time - timeHoldTriangle) > _holdTriangle.ability.baseCooldown)
+                {
+                    hudCooldownHoldTriangle.fillAmount = 0;
+                }
+                else
+                {
+                    UpdateHudHoldTriangleCooldown(Time.time - timeHoldTriangle);
+                }
             }
         }
-        if (!_holdTriangle.isEmpty)
-        {
-            if ((Time.time - timeHoldTriangle) > _holdTriangle.baseCooldown)
-            {
-                hudCooldownHoldTriangle.fillAmount = 0;
-            }
-            else
-            {
-                UpdateHudHoldTriangleCooldown(Time.time - timeHoldTriangle);
-            }
-        }
+      
     }
 
 }

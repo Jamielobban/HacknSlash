@@ -22,7 +22,7 @@ public class WinInteractable : MonoBehaviour
                 enemyPool.SetActive(false);
             }
         }
-
+        GameManager.Instance.Player.SaveData();
         AudioManager.Instance.PlayMusic(Enums.Music.Victory);
         onWinInteracted.SetActive(true);
         onWinInteracted.GetComponent<GDTFadeEffect>()?.StartEffect();
@@ -37,6 +37,7 @@ public class WinInteractable : MonoBehaviour
 
     private void GoToScene()
     {
+        GameManager.Instance.UpdateState(Enums.GameState.StartPlaying);
         GameManager.Instance.LoadLevel(sceneName, loadBarFill);
     }
 }

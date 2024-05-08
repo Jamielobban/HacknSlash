@@ -16,15 +16,16 @@ public class TutorialCombat : MonoBehaviour
     private bool hasReadedChest = false;
     private bool hasReadedEvents = false;
     private bool hasReadEndTutorial = false;
+    private bool hasReadCombos = false;
 
     private void Awake()
     {
-        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         campEnemies.SetActive(false);
     }
 
     void Start()
     {
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
         bc.Speak();
     }
@@ -33,7 +34,12 @@ public class TutorialCombat : MonoBehaviour
 
     void Update()
     {
-        if(LevelManager.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
+        if(LevelManager.Instance.CurrentGlobalTime >= 20 && !hasReadCombos)
+        {
+            hasReadCombos = true;
+            bc.Speak();
+        }
+        else if(LevelManager.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
             bc.Speak();
@@ -73,7 +79,8 @@ public class TutorialCombat : MonoBehaviour
 
     private void NextScene()
     {
-        GameManager.Instance.UpdateState(Enums.GameState.Playing);
+        GameManager.Instance.UpdateState(Enums.GameState.StartPlaying);
+
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }   
 

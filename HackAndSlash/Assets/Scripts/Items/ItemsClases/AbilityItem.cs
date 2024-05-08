@@ -11,6 +11,6 @@
     public override void OnItemPickup(PlayerControl player)
     {
         ability.spriteAbility = data.itemIcon;
-        GameManager.Instance.Player._abilityHolder.AddAbility(data.ìnput, ability);
+        GameManager.Instance.Player._abilityHolder.AddAbility(data.ìnput, this);
     }
 }

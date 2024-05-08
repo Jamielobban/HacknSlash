@@ -6,6 +6,12 @@ public class DeadOptions : MonoBehaviour, IInteractable
     public string sceneName;
     public GameObject loadBarGameObject;
     public Image loadBarFill;
+
+    private void Start()
+    {
+        GameManager.Instance.UpdateState(Enums.GameState.Menu);
+    }
+
     public void Interact()
     {
         loadBarGameObject.SetActive(true);

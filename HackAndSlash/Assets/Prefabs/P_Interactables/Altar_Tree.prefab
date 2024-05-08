@@ -1497,7 +1497,6 @@ GameObject:
   - component: {fileID: 5381655806036981190}
   - component: {fileID: 1776275350983439134}
   - component: {fileID: 8639025897673234935}
-  - component: {fileID: 6986296631998017094}
   m_Layer: 0
   m_Name: InteractCross
   m_TagString: Untagged
@@ -1589,22 +1588,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6986296631998017094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791619235964693694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90e9b0613a9f9544580c1644719392dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrabMainCameraOnStart: 0
-  NestObject: 1
-  OffsetDirection: {x: 0, y: 0, z: 2}
-  Up: {x: 0, y: 1, z: 0}
 --- !u!1 &5793739593221601847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2799,7 +2782,7 @@ Transform:
   - {fileID: 197674443863036349}
   - {fileID: 1518100694906909096}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 110.854, z: 1.795}
 --- !u!135 &1440600468067104998
 SphereCollider:
