@@ -180,6 +180,8 @@ public class Enums
         TextTutoCombat3,
         TextTutoCombat4,
         TextTutoCombo5,
+        TextTutoCombo6,
+        TextTutoCombo7
     };
 
     public enum MusicEffects
@@ -188,9 +190,7 @@ public class Enums
         Wind,
         IceWind,
        Glitch,
-       DesertWind
-       
-        
+       DesertWind       
     };
 
     public enum RarityType
