@@ -141,7 +141,8 @@ public class Enums
         MusicaTutoNou,
         Defeat,
         Victory,
-        CinematicaLab
+        CinematicaLab,
+        EpicMusicBBoss
     };
 
     public enum Effects
@@ -186,7 +187,8 @@ public class Enums
         Atmosfera,
         Wind,
         IceWind,
-       Glitch
+       Glitch,
+       DesertWind
        
         
     };
