@@ -58,6 +58,10 @@ public class LevelManager : MonoBehaviour
 
         UpdateTimeText();
 
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            _timerGlobal += 60;
+        }
 
         if (_timerItems >= timeToGetItem)
         {

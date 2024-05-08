@@ -329,6 +329,10 @@ public class PlayerControl : MonoBehaviour
 
             inventory.ClearByType(Enums.RarityType.ActionItem);
         }
+        else
+        {
+            inventory.ClearInventory();
+        }
     }
 
     public void SaveData()
@@ -1656,202 +1660,210 @@ public class PlayerControl : MonoBehaviour
                 return true;
             }
 
-            if(controller.ataqueCuadradoCargado && (Time.time - _abilityHolder.timeHoldSquare) > _abilityHolder.HoldSquare.ability.baseCooldown)
+            if (controller.ataqueCuadradoCargado && _abilityHolder.HoldSquare != null)
             {
-                Debug.Log("hOld square");
-                if(_abilityHolder.HoldSquare.ability.isEmpty)
+                if ((Time.time - _abilityHolder.timeHoldSquare) > _abilityHolder.HoldSquare.ability.baseCooldown)
                 {
-                    return false;
-                }
-
-                currentComboAttack = -1;
-
-                if (states == States.JUMP && _abilityHolder.HoldSquare.ability.onAir)
-                {
-                    _abilityHolder.timeHoldSquare = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    Debug.Log("hOld square");
+                    if (_abilityHolder.HoldSquare.ability.isEmpty)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        return false;
                     }
 
-                    moveDirSaved = new Vector3();
+                    currentComboAttack = -1;
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
-                }
-                // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.HoldSquare.ability.onAir)
-                {
-                    _abilityHolder.timeHoldSquare = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    if (states == States.JUMP && _abilityHolder.HoldSquare.ability.onAir)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        _abilityHolder.timeHoldSquare = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        moveDirSaved = new Vector3();
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
+                    }
+                    // si no esta saltando haz el ataque
+                    else if (states != States.JUMP && !_abilityHolder.HoldSquare.ability.onAir)
+                    {
+                        _abilityHolder.timeHoldSquare = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
                     }
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
+                    controller.ResetBotonesAtaques();
+                    return true;
+
                 }
-
-                controller.ResetBotonesAtaques();
-                return true;
-
             }
-
-            if (controller.ataqueTrianguloCargado && (Time.time - _abilityHolder.timeHoldTriangle) > _abilityHolder.HoldTriangle.ability.baseCooldown)
+            if (controller.ataqueTrianguloCargado && _abilityHolder.HoldTriangle != null)
             {
-                Debug.Log("hOld Triangle");
-                if (_abilityHolder.HoldTriangle.ability.isEmpty)
+                if ( (Time.time - _abilityHolder.timeHoldTriangle) > _abilityHolder.HoldTriangle.ability.baseCooldown)
                 {
-                    return false;
-                }
-
-                currentComboAttack = -1;
-
-                if (states == States.JUMP && _abilityHolder.HoldTriangle.ability.onAir)
-                {
-                    _abilityHolder.timeHoldTriangle = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    Debug.Log("hOld Triangle");
+                    if (_abilityHolder.HoldTriangle.ability.isEmpty)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        return false;
                     }
 
-                    moveDirSaved = new Vector3();
+                    currentComboAttack = -1;
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
-                }
-                // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.HoldTriangle.ability.onAir)
-                {
-                    _abilityHolder.timeHoldTriangle = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    if (states == States.JUMP && _abilityHolder.HoldTriangle.ability.onAir)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        _abilityHolder.timeHoldTriangle = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        moveDirSaved = new Vector3();
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
+                    }
+                    // si no esta saltando haz el ataque
+                    else if (states != States.JUMP && !_abilityHolder.HoldTriangle.ability.onAir)
+                    {
+                        _abilityHolder.timeHoldTriangle = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
                     }
 
-                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+                    controller.ResetBotonesAtaques();
+                    return true;
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
                 }
-
-                controller.ResetBotonesAtaques();
-                return true;
-
             }
-
-            if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.ability.baseCooldown)
+            if (controller.ataqueCuadradoL2 && _abilityHolder.L2Square != null)
             {
-
-                //Si abilidad es == null return;
-                if (_abilityHolder.L2Square.ability.isEmpty)
+                if ( (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.ability.baseCooldown)
                 {
-                    return false;
-                }
-                //Retarget to enemy helper
 
-                currentComboAttack = -1;
-
-                if (states == States.JUMP && _abilityHolder.L2Square.ability.onAir)
-                {
-                    _abilityHolder.timeL2Square = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    //Si abilidad es == null return;
+                    if (_abilityHolder.L2Square.ability.isEmpty)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        return false;
+                    }
+                    //Retarget to enemy helper
+
+                    currentComboAttack = -1;
+
+                    if (states == States.JUMP && _abilityHolder.L2Square.ability.onAir)
+                    {
+                        _abilityHolder.timeL2Square = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        moveDirSaved = new Vector3();
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
+                    }
+                    // si no esta saltando haz el ataque
+                    else if (states != States.JUMP && !_abilityHolder.L2Square.ability.onAir)
+                    {
+                        _abilityHolder.timeL2Square = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
                     }
 
-                    moveDirSaved = new Vector3();
-
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
+                    controller.ResetBotonesAtaques();
+                    return true;
                 }
-                 // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.L2Square.ability.onAir)
-                {
-                    _abilityHolder.timeL2Square = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
-                    {
-                        damageMult = 1;
-                        currentComboAttack = -1;
-                    }
-             
-                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
-
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
-                }
-
-                controller.ResetBotonesAtaques();
-                return true;
             }
-            
-            if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.ability.baseCooldown)
+            if (controller.ataqueTriangleL2 && _abilityHolder.L2Triangle != null)
             {
-                //Si abilidad es == null return;
-                if (_abilityHolder.L2Triangle.ability.isEmpty)
+                if ((Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.ability.baseCooldown)
                 {
-                    return false;
-                }
-
-                //Retarget to enemy helper
-
-                currentComboAttack = -1;
-
-                if (states == States.JUMP && _abilityHolder.L2Triangle.ability.onAir)
-                {
-                    _abilityHolder.timeL2Triangle = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    //Si abilidad es == null return;
+                    if (_abilityHolder.L2Triangle.ability.isEmpty)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
+                        return false;
                     }
 
-                    moveDirSaved = new Vector3();
+                    //Retarget to enemy helper
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
-                }
-                // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.L2Triangle.ability.onAir)
-                {
-                    _abilityHolder.timeL2Triangle = Time.time;
-                    if ((Time.time - attackStartTime) >= delay + delayDamage)
+                    currentComboAttack = -1;
+
+                    if (states == States.JUMP && _abilityHolder.L2Triangle.ability.onAir)
                     {
-                        damageMult = 1;
-                        currentComboAttack = -1;
-                    }
-             
-                    //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+                        _abilityHolder.timeL2Triangle = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
 
-                    attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
-                    states = States.ATTACK;
-                    PlayAttack();
+                        moveDirSaved = new Vector3();
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
+                    }
+                    // si no esta saltando haz el ataque
+                    else if (states != States.JUMP && !_abilityHolder.L2Triangle.ability.onAir)
+                    {
+                        _abilityHolder.timeL2Triangle = Time.time;
+                        if ((Time.time - attackStartTime) >= delay + delayDamage)
+                        {
+                            damageMult = 1;
+                            currentComboAttack = -1;
+                        }
+
+                        //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
+
+                        attacks = Attacks.RUN;
+                        currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
+                        states = States.ATTACK;
+                        PlayAttack();
+                    }
+
+                    controller.ResetBotonesAtaques();
+                    return true;
                 }
-          
-                controller.ResetBotonesAtaques();
-                return true;
             }
-
    
         }
 

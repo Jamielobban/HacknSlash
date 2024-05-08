@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3857308315459024008
 MonoBehaviour:
@@ -51,7 +51,11 @@ MonoBehaviour:
   itemPrefab: {fileID: 8920482247513173241, guid: 722fc3a6f1168914a8896dfba6eaf645,
     type: 3}
   levelUpEffects: {fileID: 0}
-  playerCanvas: []
+  playerCanvas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   itemsToSpawn: []
   itemRarityEffect:
   - {fileID: 7762300970498347063, guid: 589916bd0aee50940973729647ad797b, type: 3}
@@ -81,9 +85,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   uncommonItems:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -106,6 +108,7 @@ MonoBehaviour:
   - {fileID: 0}
   actionItems:
   - {fileID: 0}
+  - {fileID: 0}
   abilityItems:
   - {fileID: 0}
   - {fileID: 0}
@@ -121,4 +124,4 @@ MonoBehaviour:
   legendaryChance: 7
   itemActionChance: 4
   abilityChance: 4
-  itemsToGetAbility: 15
+  itemsToGetAbility: 30
