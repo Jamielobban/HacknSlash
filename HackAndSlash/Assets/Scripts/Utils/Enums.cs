@@ -199,6 +199,7 @@ public class Enums
         Uncommon,
         Rare,
         Legendary,
+        ActionItem,
         Ability
     }
 }

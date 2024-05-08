@@ -30,6 +30,14 @@ public class ProjectileMover : DamageDealer
         rb.AddForce(dirToPlayer * speed);
     }
 
+    public void ShootToEnemy(Vector3 dir)
+    {
+        GetComponent<Collider>().enabled = true;
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(dir * speed);
+
+    }
+
     protected override void Update()
     {
         base.Update();

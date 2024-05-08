@@ -147,11 +147,23 @@ public class InventorySO : ScriptableObject
             }
         }
         return false;
-
-
     }
     public InventoryItem GetItemAt(int itemIndex) => items[itemIndex];
     public void AddItem(InventoryItem item) => AddItem(item.item, item.quantity);
+    public void ClearByType(Enums.RarityType type)
+    {
+        if(items.Count > 0)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item.rarityType == type)
+                {
+                    items[i] = InventoryItem.GetEmptyItem();
+                }
+            }
+        }
+
+    }
 }
 
 [Serializable]

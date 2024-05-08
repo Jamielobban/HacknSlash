@@ -25,7 +25,7 @@ using UnityEngine.UI;
 
         public Enums.GameState state;
 
-    public bool _isPaused;
+        public bool _isPaused;
         private PlayerControl _player;
         public PlayerControl Player => GetPlayer();
         public bool IsPaused => _isPaused;

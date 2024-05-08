@@ -326,6 +326,8 @@ public class PlayerControl : MonoBehaviour
                 stats.item3.OnItemPickup(this);
             if (stats.item4 != null)
                 stats.item4.OnItemPickup(this);
+
+            inventory.ClearByType(Enums.RarityType.ActionItem);
         }
     }
 
