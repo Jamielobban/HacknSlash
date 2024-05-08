@@ -55,14 +55,12 @@ public class MainMenuManager : MonoBehaviour
         pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
     void StartGame()  
     {        
-        GameManager.Instance.UpdateState(Enums.GameState.Playing);
         GameManager.Instance.isTutorialCompleted = true;
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }
     void StartTutorial()
     {
         loadingGo.SetActive(true);
-        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_CINEMATIC, fillLoadingGo);
     }
 
@@ -99,7 +97,8 @@ public class MainMenuManager : MonoBehaviour
     }
 
     void Start()
-    {        
+    {
+        GameManager.Instance.UpdateState(Enums.GameState.Menu);
         fadeScript = new FadeScript(blackImage);
         fadeScript.FadeIn(1);
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaMenuNuevo);

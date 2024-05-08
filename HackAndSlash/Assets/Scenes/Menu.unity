@@ -19860,7 +19860,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 1.3
   m_Center: {x: 0, y: 0.5, z: 0}
@@ -19882,7 +19882,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7e4f08a8d11e2c742ab764951b3cdf03, type: 2}
   normalMats:
   - {fileID: 2100000, guid: 5e8fdc6e32d44c349affd9e0829d2dae, type: 2}
-  interactCross: {fileID: 745019304}
+  interactButtonImage: {fileID: 0}
+  psInteractSprite: {fileID: 0}
+  xboxInteractSprite: {fileID: 0}
   period: 30
   verticalMoveTime: 5
   verticaDistance: 0.3
@@ -76403,7 +76405,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2b216799369ecc14395b169c1cd33c6a, type: 2}
   normalMats:
   - {fileID: 2100000, guid: 5f248f8f29c06a046998f9eb70bfb983, type: 2}
-  interactCross: {fileID: 1541237215}
+  interactButtonImage: {fileID: 0}
+  psInteractSprite: {fileID: 0}
+  xboxInteractSprite: {fileID: 0}
   dialogues:
   - collection:
     - elementText: Year 3000, technology has evolved immensely, and along with it,

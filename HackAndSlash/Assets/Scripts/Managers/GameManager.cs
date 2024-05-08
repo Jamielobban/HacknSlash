@@ -37,6 +37,10 @@ using UnityEngine.UI;
         public float volumeSFX = 27f;
         public float volumeMusic = 27f;
 
+        public PlayerData _data;
+        public InventorySO _inventory;
+        public bool canLoadItem = false;
+
         private void Awake()
         {
             if(_instance == null)
@@ -45,6 +49,9 @@ using UnityEngine.UI;
                 DontDestroyOnLoad(gameObject);
             }
             _player = FindObjectOfType<PlayerControl>();
+            _data = Resources.Load("Data/Player Data") as PlayerData;
+            _inventory = Resources.Load("Data/Player Inventory") as InventorySO;
+            Init();
         }
 
         void Update()
@@ -55,7 +62,10 @@ using UnityEngine.UI;
         public void Init()
         {
             UpdateState(Enums.GameState.Menu);
-        }
+            canLoadItem = false;
+            _data.ResetData();
+            _inventory.ClearInventory();
+    }
 
         public void LoadLevel(string _name, Image _progress)
         {
@@ -93,9 +103,35 @@ using UnityEngine.UI;
                 return;
             }
 
+            switch (newState)
+            {
+                case Enums.GameState.Menu:
+                    canLoadItem = false;
+                    _data.ResetData();
+                    _inventory.ClearInventory();
+                    break;
+                case Enums.GameState.Tutorial:
+                    canLoadItem = false;
+                    break;
+                case Enums.GameState.StartPlaying:
+                    break;
+                case Enums.GameState.Playing:
+                    canLoadItem = true;
+                    break;
+                case Enums.GameState.Pause:
+
+                    break;
+                case Enums.GameState.ReturningMenu:
+                    break;
+                case Enums.GameState.Exit:
+                    break;
+                default:
+                    break;
+            }
             state = newState;
-        }
-        private bool GuardPlayer() => _player != null ? true : false;
+
+     }
+    private bool GuardPlayer() => _player != null ? true : false;
 
         public void PauseGame()
         {

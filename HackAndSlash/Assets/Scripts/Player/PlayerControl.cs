@@ -288,11 +288,7 @@ public class PlayerControl : MonoBehaviour
         startRun = Time.time;
         OnHit += StealHeal;
         rb = GetComponent<Rigidbody>();
-        critChance = stats.critChance;
-        attackDamage = stats.attackDamage;
-        healthRegen = stats.healthRegen;
-        timeToHeal = stats.timeToHeal;
-        critDamageMultiplier = stats.critDamageMultiplier;
+        LoadData();
         OnAir = false;
         hud = GetComponent<PlayerHUDSystem>();
         repeticionGolpe = 0;
@@ -307,6 +303,42 @@ public class PlayerControl : MonoBehaviour
         states = States.IDLE;
         moves = Moves.IDLE;
     }
+
+    public void LoadData()
+    {
+        critChance = stats.critChance;
+        attackDamage = stats.attackDamage;
+        healthRegen = stats.healthRegen;
+        timeToHeal = stats.timeToHeal;
+        critDamageMultiplier = stats.critDamageMultiplier;
+        lifeStealPercent = stats.stealLifePercentage;
+        if(GameManager.Instance.canLoadItem)
+        {
+            if(stats.item != null)
+                stats.item.OnItemPickup(this);
+            if (stats.item2 != null)
+                stats.item2.OnItemPickup(this);
+            if (stats.item3 != null)
+                stats.item3.OnItemPickup(this);
+            if (stats.item4 != null)
+                stats.item4.OnItemPickup(this);
+        }
+    }
+
+    public void SaveData()
+    {
+        stats.critChance = critChance;
+        stats.attackDamage = attackDamage;
+        stats.healthRegen = healthRegen;
+        stats.timeToHeal = timeToHeal;
+        stats.critDamageMultiplier = critDamageMultiplier;
+        stats.stealLifePercentage = lifeStealPercent;
+        stats.item = _abilityHolder.L2Square;
+        stats.item2 = _abilityHolder.L2Triangle;
+        stats.item3 = _abilityHolder.HoldSquare;
+        stats.item4 = _abilityHolder.HoldTriangle;
+    }
+
     private void StealHeal()
     {
         float lifeToHeal = attackDamage * lifeStealPercent;
@@ -1617,18 +1649,18 @@ public class PlayerControl : MonoBehaviour
                 return true;
             }
 
-            if(controller.ataqueCuadradoCargado && (Time.time - _abilityHolder.timeHoldSquare) > _abilityHolder.HoldSquare.baseCooldown)
+            if(controller.ataqueCuadradoCargado && (Time.time - _abilityHolder.timeHoldSquare) > _abilityHolder.HoldSquare.ability.baseCooldown)
             {
                 getDamagePlayer.enabled = false;
                 Debug.Log("hOld square");
-                if(_abilityHolder.HoldSquare.isEmpty)
+                if(_abilityHolder.HoldSquare.ability.isEmpty)
                 {
                     return false;
                 }
 
                 currentComboAttack = -1;
 
-                if (states == States.JUMP && _abilityHolder.HoldSquare.onAir)
+                if (states == States.JUMP && _abilityHolder.HoldSquare.ability.onAir)
                 {
                     _abilityHolder.timeHoldSquare = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1640,12 +1672,12 @@ public class PlayerControl : MonoBehaviour
                     moveDirSaved = new Vector3();
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
                 // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.HoldSquare.onAir)
+                else if (states != States.JUMP && !_abilityHolder.HoldSquare.ability.onAir)
                 {
                     _abilityHolder.timeHoldSquare = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1655,7 +1687,7 @@ public class PlayerControl : MonoBehaviour
                     }
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldSquare.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
@@ -1665,18 +1697,18 @@ public class PlayerControl : MonoBehaviour
 
             }
 
-            if (controller.ataqueTrianguloCargado && (Time.time - _abilityHolder.timeHoldTriangle) > _abilityHolder.HoldTriangle.baseCooldown)
+            if (controller.ataqueTrianguloCargado && (Time.time - _abilityHolder.timeHoldTriangle) > _abilityHolder.HoldTriangle.ability.baseCooldown)
             {
                 getDamagePlayer.enabled = false;
                 Debug.Log("hOld Triangle");
-                if (_abilityHolder.HoldTriangle.isEmpty)
+                if (_abilityHolder.HoldTriangle.ability.isEmpty)
                 {
                     return false;
                 }
 
                 currentComboAttack = -1;
 
-                if (states == States.JUMP && _abilityHolder.HoldTriangle.onAir)
+                if (states == States.JUMP && _abilityHolder.HoldTriangle.ability.onAir)
                 {
                     _abilityHolder.timeHoldTriangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1688,12 +1720,12 @@ public class PlayerControl : MonoBehaviour
                     moveDirSaved = new Vector3();
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
                 // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.HoldTriangle.onAir)
+                else if (states != States.JUMP && !_abilityHolder.HoldTriangle.ability.onAir)
                 {
                     _abilityHolder.timeHoldTriangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1705,7 +1737,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.HoldTriangle.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
@@ -1715,12 +1747,12 @@ public class PlayerControl : MonoBehaviour
 
             }
 
-            if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.baseCooldown)
+            if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.ability.baseCooldown)
             {
                 getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
-                if (_abilityHolder.L2Square.isEmpty)
+                if (_abilityHolder.L2Square.ability.isEmpty)
                 {
                     return false;
                 }
@@ -1728,7 +1760,7 @@ public class PlayerControl : MonoBehaviour
 
                 currentComboAttack = -1;
 
-                if (states == States.JUMP && _abilityHolder.L2Square.onAir)
+                if (states == States.JUMP && _abilityHolder.L2Square.ability.onAir)
                 {
                     _abilityHolder.timeL2Square = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1740,12 +1772,12 @@ public class PlayerControl : MonoBehaviour
                     moveDirSaved = new Vector3();
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
                  // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.L2Square.onAir)
+                else if (states != States.JUMP && !_abilityHolder.L2Square.ability.onAir)
                 {
                     _abilityHolder.timeL2Square = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1757,7 +1789,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Square.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
@@ -1766,12 +1798,12 @@ public class PlayerControl : MonoBehaviour
                 return true;
             }
             
-            if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.baseCooldown)
+            if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.ability.baseCooldown)
             {
                 getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
-                if (_abilityHolder.L2Triangle.isEmpty)
+                if (_abilityHolder.L2Triangle.ability.isEmpty)
                 {
                     return false;
                 }
@@ -1780,7 +1812,7 @@ public class PlayerControl : MonoBehaviour
 
                 currentComboAttack = -1;
 
-                if (states == States.JUMP && _abilityHolder.L2Triangle.onAir)
+                if (states == States.JUMP && _abilityHolder.L2Triangle.ability.onAir)
                 {
                     _abilityHolder.timeL2Triangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1792,12 +1824,12 @@ public class PlayerControl : MonoBehaviour
                     moveDirSaved = new Vector3();
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }
                 // si no esta saltando haz el ataque
-                else if (states != States.JUMP && !_abilityHolder.L2Triangle.onAir)
+                else if (states != States.JUMP && !_abilityHolder.L2Triangle.ability.onAir)
                 {
                     _abilityHolder.timeL2Triangle = Time.time;
                     if ((Time.time - attackStartTime) >= delay + delayDamage)
@@ -1809,7 +1841,7 @@ public class PlayerControl : MonoBehaviour
                     //passiveCombo.Add(PassiveCombo.TRIANGLEFLOOR);
 
                     attacks = Attacks.RUN;
-                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle);
+                    currentComboAttacks = new ListaAtaques(_abilityHolder.L2Triangle.ability);
                     states = States.ATTACK;
                     PlayAttack();
                 }

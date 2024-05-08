@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
 
     private ManagerEnemies _enemiesManager;
     private ScoreManager _scoreManager;
+    public bool isTutorial;
 
     // -- GETTERS -- //
     public ManagerEnemies EnemiesManager => _enemiesManager;
@@ -41,11 +42,12 @@ public class LevelManager : MonoBehaviour
         _enemiesManager = GetComponent<ManagerEnemies>();
         _scoreManager = GetComponent<ScoreManager>();
         _enemiesManager.Initialize();
+        if(!isTutorial)
+            GameManager.Instance.UpdateState(Enums.GameState.Playing); // Starts Play
     }
 
     void Start()
     {
-        
     }
 
     void Update()
