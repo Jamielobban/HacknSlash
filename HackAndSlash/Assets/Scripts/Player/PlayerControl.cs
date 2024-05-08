@@ -20,6 +20,10 @@ public class PlayerControl : MonoBehaviour
     public bool canPoison = false;
     public bool canBleed = false;
     public Action OnHit;
+    public Action OnJump;
+    public Action OnMove;
+    public Action OnDash;
+    
     [Space]
     #endregion
     #region Stadistics
@@ -747,6 +751,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.CheckIfJump())
         {
+            OnJump?.Invoke();
             gameObject.layer = 3;
             playerAnim.speed = 1f;
 
@@ -1911,6 +1916,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
+            OnDash?.Invoke();
             healthSystem.IsDamageable = false;
             this.gameObject.layer = 12;
             getDamagePlayer.enabled = false;
@@ -2052,6 +2058,7 @@ public class PlayerControl : MonoBehaviour
                 playerAnim.CrossFadeInFixedTime("Run", 0.2f);
                 StartCoroutine(RunFeedback(0.3f));
                 StartCoroutine(RunFeedback(0));
+                OnMove?.Invoke();
 
             }
             else
