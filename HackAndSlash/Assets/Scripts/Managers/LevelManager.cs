@@ -60,14 +60,13 @@ public class LevelManager : MonoBehaviour
         {
             _timerItems = 0f;
             _enemiesManager.UpgradeEnemies(_timerGlobal);
-            //ItemsLootBoxManager.Instance.ShowNewOptions();
         }
 
         _enemiesManager.HandleEnemiesUpdate();
 
         if (_timerGlobal >= timeToEndGame)
         {
-            //Open Boss Mode
+            //
         }
     }
     public void StartEvent()
