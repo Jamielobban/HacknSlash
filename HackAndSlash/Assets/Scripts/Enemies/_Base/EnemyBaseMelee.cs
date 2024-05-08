@@ -47,7 +47,7 @@ public class EnemyBaseMelee : EnemyBase
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Attack, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
-    protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => !IsHit && _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange && _enableMeleeAttack && !isAttacking;
+    protected virtual bool ShouldMeleeAttack(Transition<Enums.EnemyStates> transition) => _meleeAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && _isInBasicRange && _enableMeleeAttack && !isAttacking;
     protected virtual void BasicAttackSensor_OnPlayerEnter(Transform player) => _isInBasicRange = true;
     protected virtual void BasicAttackSensor_OnPlayerExit(Vector3 lastKnownPosition) => _isInBasicRange = false;
 

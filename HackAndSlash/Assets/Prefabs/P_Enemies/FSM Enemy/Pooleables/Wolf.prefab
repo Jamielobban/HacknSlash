@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentAttackState: 2
-  baseDamage: 5
+  baseDamage: 8
   minCooldown: 1
   maxCooldown: 1.7
   _castTime: 0.05
@@ -414,8 +414,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3512405, y: 1.087265, z: 1.4652524}
-  m_Center: {x: -0.019672692, y: 0.754364, z: 1.1627105}
+  m_Size: {x: 1.3512405, y: 1.087265, z: 1.3648005}
+  m_Center: {x: -0.019672692, y: 0.754364, z: 1.1124848}
 --- !u!1 &2790209153944466094
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +837,7 @@ MonoBehaviour:
   _currentTime: 0
   IsHit: 0
   IsDead: 0
-  attackInterrumpted: 1
+  attackInterrumpted: 0
   isAttacking: 0
   isStun: 0
   attackCanBeInterrupted: 0
