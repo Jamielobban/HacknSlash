@@ -46,7 +46,7 @@ public class EnemyBaseRanged : EnemyBase
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Chase, (transition) => InRangeToChase()));
         _enemyFSM.AddTransition(new Transition<Enums.EnemyStates>(Enums.EnemyStates.Ranged, Enums.EnemyStates.Idle, (transition) => IsInIdleRange()));
     }
-    protected virtual bool ShouldRangeAttack(Transition<Enums.EnemyStates> transition) => !IsHit && _rangedAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && 
+    protected virtual bool ShouldRangeAttack(Transition<Enums.EnemyStates> transition) => _rangedAttack.CurrentAttackState == Enums.AttackState.ReadyToUse && 
       Vector3.Distance(transform.position, _player.transform.position) >= 4.5f && _isInBasicRange && _enableMeleeAttack && !isAttacking;
     protected virtual void BasicAttackSensor_OnPlayerEnter(Transform player) => _isInBasicRange = true;
     protected virtual void BasicAttackSensor_OnPlayerExit(Vector3 lastKnownPosition) => _isInBasicRange = false;
