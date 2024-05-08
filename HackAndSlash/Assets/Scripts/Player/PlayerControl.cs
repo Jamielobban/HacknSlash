@@ -42,6 +42,9 @@ public class PlayerControl : MonoBehaviour
     [Space]
     #endregion
 
+
+    public ExperienceManager experienceManager;
+
     float startRun;
     public Collider getDamagePlayer;
     public CamZoom camZoom;
@@ -279,6 +282,8 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        experienceManager = GetComponent<ExperienceManager>();
+
         attackBoost = 1;
         startRun = Time.time;
         OnHit += StealHeal;
