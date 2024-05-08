@@ -31,6 +31,9 @@ public class ManagerEnemies : MonoBehaviour
     private float _scaleLifeMultiplier = 0f;
     private float _scaleDamageMultiplier = 0f;
 
+    public float startScaleLifeMultiplier;
+    public float startScaleDamageMultiplier;
+
     #endregion
 
     public float ScaleLifeMult => _scaleLifeMultiplier;
@@ -71,8 +74,10 @@ public class ManagerEnemies : MonoBehaviour
     public void UpgradeEnemies(float time)
     {
         float lerpFactor = Mathf.Clamp01(time / timeToReachMax);
-        _scaleLifeMultiplier = Mathf.Lerp(1f, maxMultiplierLife, lerpFactor);
-        _scaleDamageMultiplier = Mathf.Lerp(1, maxMultiplierAttack, lerpFactor);
+        _scaleLifeMultiplier = Mathf.Lerp(startScaleDamageMultiplier, maxMultiplierLife + startScaleDamageMultiplier, lerpFactor);
+        _scaleDamageMultiplier = Mathf.Lerp(startScaleDamageMultiplier, maxMultiplierAttack + maxMultiplierAttack, lerpFactor);
+        Debug.Log(_scaleLifeMultiplier);
+        Debug.Log(_scaleDamageMultiplier);
         foreach (var pool in parentObjectPools)
         {
             for (int i = 0; i < pool.transform.childCount; i++)

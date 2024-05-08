@@ -156,10 +156,14 @@ public class InventorySO : ScriptableObject
         {
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].item.rarityType == type)
+                if (!items[i].IsEmpty)
                 {
-                    items[i] = InventoryItem.GetEmptyItem();
+                    if (items[i].item.rarityType == type)
+                    {
+                        items[i] = InventoryItem.GetEmptyItem();
+                    }
                 }
+ 
             }
         }
 

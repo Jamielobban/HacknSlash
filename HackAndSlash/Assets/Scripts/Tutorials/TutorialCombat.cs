@@ -44,7 +44,7 @@ public class TutorialCombat : MonoBehaviour
             hasReadedItems = true;
             bc.Speak();
         }
-        else if(LevelManager.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
+        else if(LevelManager.Instance.CurrentGlobalTime >= 75 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);

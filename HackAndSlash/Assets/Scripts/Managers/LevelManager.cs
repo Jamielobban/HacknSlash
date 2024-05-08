@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     private ManagerEnemies _enemiesManager;
     private ScoreManager _scoreManager;
     public bool isTutorial;
+    public bool isWin = false;
 
     // -- GETTERS -- //
     public ManagerEnemies EnemiesManager => _enemiesManager;
@@ -66,9 +67,10 @@ public class LevelManager : MonoBehaviour
 
         _enemiesManager.HandleEnemiesUpdate();
 
-        if (_timerGlobal >= timeToEndGame)
+        if (_timerGlobal >= timeToEndGame && !isWin)
         {
-            //
+            isWin = true;
+            FindObjectOfType<WinInteractable>().OnWin();
         }
     }
     public void StartEvent()
