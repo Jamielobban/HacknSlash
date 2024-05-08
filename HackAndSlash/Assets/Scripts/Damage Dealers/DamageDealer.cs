@@ -16,7 +16,10 @@ public class DamageDealer : MonoBehaviour
     protected virtual void Awake()
     {
         if(canUseCollider)
+        {
             colliderToEnable = GetComponent<Collider>();
+            colliderToEnable.enabled = false;
+        }
     }
     protected virtual void Update()
     {

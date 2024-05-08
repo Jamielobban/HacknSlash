@@ -1651,7 +1651,6 @@ public class PlayerControl : MonoBehaviour
 
             if(controller.ataqueCuadradoCargado && (Time.time - _abilityHolder.timeHoldSquare) > _abilityHolder.HoldSquare.ability.baseCooldown)
             {
-                getDamagePlayer.enabled = false;
                 Debug.Log("hOld square");
                 if(_abilityHolder.HoldSquare.ability.isEmpty)
                 {
@@ -1699,7 +1698,6 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.ataqueTrianguloCargado && (Time.time - _abilityHolder.timeHoldTriangle) > _abilityHolder.HoldTriangle.ability.baseCooldown)
             {
-                getDamagePlayer.enabled = false;
                 Debug.Log("hOld Triangle");
                 if (_abilityHolder.HoldTriangle.ability.isEmpty)
                 {
@@ -1749,7 +1747,6 @@ public class PlayerControl : MonoBehaviour
 
             if (controller.ataqueCuadradoL2 && (Time.time - _abilityHolder.timeL2Square) > _abilityHolder.L2Square.ability.baseCooldown)
             {
-                getDamagePlayer.enabled = false;
 
                 //Si abilidad es == null return;
                 if (_abilityHolder.L2Square.ability.isEmpty)
@@ -1800,8 +1797,6 @@ public class PlayerControl : MonoBehaviour
             
             if (controller.ataqueTriangleL2 && (Time.time - _abilityHolder.timeL2Triangle) > _abilityHolder.L2Triangle.ability.baseCooldown)
             {
-                getDamagePlayer.enabled = false;
-
                 //Si abilidad es == null return;
                 if (_abilityHolder.L2Triangle.ability.isEmpty)
                 {
