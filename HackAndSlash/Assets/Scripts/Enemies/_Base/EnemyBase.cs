@@ -252,6 +252,7 @@ public class EnemyBase : PoolableObject
                 new Vector3(transform.position.x, transform.position.y + .75f, transform.position.z), Quaternion.identity);
             go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
         }
+        _player.experienceManager.GainXp(experience);
         _spawnEffect.InitializeDespawnEffect();
     }
     
@@ -288,7 +289,6 @@ public class EnemyBase : PoolableObject
             Destroy(gameObject);
         }
         healthBar.SetActive(false);
-        _player.experienceManager.GainXp(experience);
 
     }
     

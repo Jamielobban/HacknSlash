@@ -33,6 +33,7 @@ public class ExperienceManager : MonoBehaviour
             NextLevel();
         }
         xpText.text = "" + level;
+        fillXpBar.fillAmount = 0;
     }
 
     public float GetNextLevelXp()
