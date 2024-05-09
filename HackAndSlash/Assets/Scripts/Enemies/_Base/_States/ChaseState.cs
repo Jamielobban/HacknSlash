@@ -26,7 +26,7 @@ public class ChaseState : EnemyStateBase
             if (_useMovementPrediction)
             {
                 Vector3 destination = GameManager.Instance.Player.predictPoint.position;
-                if (Vector3.Distance(_enemyBase.transform.position, GameManager.Instance.Player.transform.position) > 3f)
+                if (Vector3.Distance(_enemyBase.transform.position, GameManager.Instance.Player.transform.position) > 4f)
                 {
                     _agent.SetDestination(destination);
                 }
