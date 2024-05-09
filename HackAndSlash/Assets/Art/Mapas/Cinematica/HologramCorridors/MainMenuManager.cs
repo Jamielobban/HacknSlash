@@ -115,6 +115,7 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         GameManager.Instance.UpdateState(Enums.GameState.Menu);
         fadeScript = new FadeScript(blackImage);
         fadeScript.FadeIn(1);
@@ -128,7 +129,7 @@ public class MainMenuManager : MonoBehaviour
                 tvDownButton.enabled = true;
                 tvDownButton.onClick.AddListener(StartGame);
         });
-        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfxMuted); tvDownButton.onClick.AddListener(ShowMusicMuted); ShowSfx(); });
+        menuActions.Add("OPTIONS", () => { textTvDown.text = "SFX Volume"; textTvUp.text = "Music Volume"; tvDownButton.enabled = true; tvDownButton.onClick.AddListener(ShowSfxMuted); tvUpButton.onClick.AddListener(ShowMusicMuted); ShowMusic(); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
         menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeamMuted); tvDownButton.onClick.AddListener(ShowEntiMuted); ShowTeam(); });
                 

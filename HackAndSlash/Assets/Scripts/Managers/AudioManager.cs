@@ -37,10 +37,13 @@ public class AudioManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        audioFx = gameObject.AddComponent<AudioSource>();
-        audioMusic = gameObject.AddComponent<AudioSource>();
-        audioFxStopeable = gameObject.AddComponent<AudioSource>();
-        audioMusicEffects = gameObject.AddComponent<AudioSource>();
+        if (audioFx == null)
+        {
+            audioFx = gameObject.AddComponent<AudioSource>();
+            audioMusic = gameObject.AddComponent<AudioSource>();
+            audioFxStopeable = gameObject.AddComponent<AudioSource>();
+            audioMusicEffects = gameObject.AddComponent<AudioSource>();
+        }
         LoadAllAudios();
         audioMusicEffects.loop = true;
         audioMusic.loop = true;
