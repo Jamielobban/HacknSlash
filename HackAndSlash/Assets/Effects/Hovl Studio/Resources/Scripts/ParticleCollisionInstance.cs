@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DamageNumbersPro;
 
 public class ParticleCollisionInstance : MonoBehaviour
 {
@@ -16,13 +17,22 @@ public class ParticleCollisionInstance : MonoBehaviour
     private ParticleSystem part;
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
     private ParticleSystem ps;
+    public DamageNumber getDamage;
 
     void Start()
     {
         part = GetComponent<ParticleSystem>();
     }
     void OnParticleCollision(GameObject other)
-    {      
+    {
+
+        IDamageable target = other.GetComponent<IDamageable>();
+        if (target != null)
+        {
+            target.TakeDamage(10, getDamage);
+
+        }
+
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);     
         for (int i = 0; i < numCollisionEvents; i++)
         {
@@ -45,4 +55,6 @@ public class ParticleCollisionInstance : MonoBehaviour
             Destroy(gameObject, DestroyTimeDelay + 0.5f);
         }
     }
+
+
 }

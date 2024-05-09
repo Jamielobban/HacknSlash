@@ -41,6 +41,7 @@ public class AbilityHolder : MonoBehaviour
     {
         if (_l2Square == null && input == Enums.AbilityInput.L2Square)
         {
+            timeL2Square = -60;
             _l2Square = ability;
             hudCooldownL2SquareParent.sprite = ability.ability.spriteAbility;
             hudCooldownL2Square.sprite = ability.ability.spriteAbility;
@@ -49,6 +50,8 @@ public class AbilityHolder : MonoBehaviour
         }
         else if (_l2Triangle == null && input == Enums.AbilityInput.L2Triangle)
         {
+            timeL2Triangle = -60;
+
             _l2Triangle = ability;
             hudCooldownL2TriangleParent.sprite = ability.ability.spriteAbility;
             hudCooldownL2Triangle.sprite = ability.ability.spriteAbility;
@@ -57,6 +60,8 @@ public class AbilityHolder : MonoBehaviour
         }
         else if (_holdSquare == null && input == Enums.AbilityInput.HoldSquare)
         {
+            timeHoldSquare = -60;
+
             _holdSquare = ability;
             hudCooldownHoldSquareParent.sprite = ability.ability.spriteAbility;
             hudCooldownHoldSquare.sprite = ability.ability.spriteAbility;
@@ -65,6 +70,8 @@ public class AbilityHolder : MonoBehaviour
         }
         else if (_holdTriangle == null && input == Enums.AbilityInput.HoldTriangle)
         {
+            timeHoldTriangle = -60;
+
             _holdTriangle = ability;
             hudCooldownHoldTriangleParent.sprite = ability.ability.spriteAbility;
             hudCooldownHoldTriangle.sprite = ability.ability.spriteAbility;
