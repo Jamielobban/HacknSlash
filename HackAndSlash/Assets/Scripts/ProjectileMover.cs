@@ -15,6 +15,8 @@ public class ProjectileMover : DamageDealer
     private float _timer;
     private Rigidbody rb;
     public DamageNumber getDamage;
+    Vector3 direction;
+
     protected override void Awake()
     {
         GetComponent<Collider>().enabled = false;
@@ -25,9 +27,9 @@ public class ProjectileMover : DamageDealer
     {
         GetComponent<Collider>().enabled = true;
         rb = GetComponent<Rigidbody>();
-        Vector3 dirToPlayer = GameManager.Instance.Player.transform.position - transform.position;
-        dirToPlayer.y += 0.5f;
-        rb.AddForce(dirToPlayer * speed);
+        direction = GameManager.Instance.Player.transform.position - transform.position;
+        direction.y += 0.5f;
+        rb.AddForce(direction * speed);
     }
 
     public void ShootToEnemy(Vector3 dir)
@@ -35,7 +37,7 @@ public class ProjectileMover : DamageDealer
         GetComponent<Collider>().enabled = true;
         rb = GetComponent<Rigidbody>();
         rb.AddForce(dir * speed);
-
+        direction = dir;
     }
 
     protected override void Update()
@@ -46,6 +48,8 @@ public class ProjectileMover : DamageDealer
         {
             Destroy(gameObject);
         }
+
+
     }
     
     protected override void OnTriggerEnter(Collider other)
@@ -63,6 +67,11 @@ public class ProjectileMover : DamageDealer
             DestroyGameObject();
         }
         else if (other.gameObject.layer == LayerMask.GetMask("Default"))
+        {
+            DieEffects();
+            DestroyGameObject();
+        }
+        else if (other.GetComponent<TerrainCollider>() != null)
         {
             DieEffects();
             DestroyGameObject();

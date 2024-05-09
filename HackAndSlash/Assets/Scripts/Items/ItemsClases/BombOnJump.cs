@@ -4,7 +4,7 @@ using UnityEngine;
 public class BombOnJump : Item
 {
     public GameObject prefabToInstantiate;
-    public float timeToInvoke = 0.5f;
+    public float timeToInvoke = 0;
     public override void OnItemPickup(PlayerControl player)
     {
         player.OnJump += ActionToDo;

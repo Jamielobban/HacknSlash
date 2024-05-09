@@ -760,7 +760,6 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.CheckIfJump())
         {
-            OnJump?.Invoke();
             gameObject.layer = 3;
             playerAnim.speed = 1f;
 
@@ -787,6 +786,8 @@ public class PlayerControl : MonoBehaviour
             }
             else if (!doubleJump && HasDoubleJump)
             {
+                OnJump?.Invoke();
+
                 DoubleJumpPress();
                 Move(1);
                 doubleJumpVFX.PlayDoubleJumpVFX(this.transform.position + new Vector3(0f, 4f, 0f));
