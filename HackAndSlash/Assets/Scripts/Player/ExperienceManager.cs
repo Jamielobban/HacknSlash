@@ -15,7 +15,7 @@ public class ExperienceManager : MonoBehaviour
 
     public void GainXp(float val)
     {
-        _currentXp += val;
+        _currentXp += val * GameManager.Instance.Player.xpPercentageExtra;
         UpdateHud();
         if (_currentXp >= GetNextLevelXp())
         {            

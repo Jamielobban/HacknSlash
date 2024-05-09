@@ -18,6 +18,7 @@ public class PlayerData : ScriptableObject
     public float critDamageMultiplier;
     public int slowForce;
     public float stealLifePercentage;
+    public float xpExtra;
 
     public AbilityItem item, item2, item3, item4;
 
@@ -32,6 +33,7 @@ public class PlayerData : ScriptableObject
         critDamageMultiplier = 2;
         slowForce = 0;
         stealLifePercentage = 0;
+        xpExtra = 1;
         item = null;
         item2 = null;
         item3 = null;
