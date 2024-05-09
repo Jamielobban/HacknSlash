@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1965631360304402592
 MonoBehaviour:
@@ -48,8 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textTime: {fileID: 0}
   isInEvent: 0
-  timeToGetItem: 60
+  timeToUpgradeEnemy: 15
   timeToEndGame: 900
+  isTutorial: 0
+  isWin: 0
 --- !u!114 &2795772253240574954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +65,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScoreText: {fileID: 0}
+  multiplierText: {fileID: 0}
+  timeToStartResetScore: 1.5
+  removeScore: 15
+  efectX15:
+  - {fileID: 0}
+  - {fileID: 0}
+  efectX2:
+  - {fileID: 0}
+  - {fileID: 0}
+  shake: {fileID: 0}
 --- !u!114 &6985847673257368573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +90,7 @@ MonoBehaviour:
   currentSpawnedEnemies: {fileID: 0}
   spawners:
   - {fileID: 9058649433420978236, guid: a518461008fbadc49b0cbe467945eb9f, type: 3}
+  - {fileID: 9058649433420978236, guid: d0f1ab4a06c16fe46b843d96b435f1ad, type: 3}
   - {fileID: 9058649433420978236, guid: 02f0ee1fce284f848be73f37b4305204, type: 3}
   - {fileID: 9058649433420978236, guid: 3f9880b4c153b3946a5c071f33cff711, type: 3}
   - {fileID: 9058649433420978236, guid: 46e8b37c0dec5e24a848c6b8e9da8600, type: 3}
@@ -106,6 +119,8 @@ MonoBehaviour:
   - {fileID: 6764644743061008012, guid: 0f4b759348cc553438a560efb874240d, type: 3}
   - {fileID: 763602234357592438, guid: e270534b6b55a5f4fb93e37d8282a839, type: 3}
   parentObjectPools: []
-  maxMultiplierLife: 10
-  maxMultiplierAttack: 2
+  maxMultiplierLife: 8
+  maxMultiplierAttack: 2.5
   timeToReachMax: 900
+  startScaleLifeMultiplier: 1
+  startScaleDamageMultiplier: 1

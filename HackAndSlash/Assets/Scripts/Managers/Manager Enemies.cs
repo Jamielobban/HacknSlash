@@ -78,6 +78,14 @@ public class ManagerEnemies : MonoBehaviour
         float lerpFactor = Mathf.Clamp01(time / timeToReachMax);
         _scaleLifeMultiplier = Mathf.Lerp(startScaleLifeMultiplier, maxMultiplierLife + startScaleLifeMultiplier, lerpFactor);
         _scaleDamageMultiplier = Mathf.Lerp(startScaleDamageMultiplier, maxMultiplierAttack + maxMultiplierAttack, lerpFactor);
+        if(_scaleDamageMultiplier <= 1)
+        {
+            _scaleDamageMultiplier = 1;
+        }
+        if(_scaleLifeMultiplier <= 1)
+        {
+            _scaleLifeMultiplier = 1;
+        }
         foreach (var pool in parentObjectPools)
         {
             for (int i = 0; i < pool.transform.childCount; i++)
@@ -140,6 +148,15 @@ public class ManagerEnemies : MonoBehaviour
         _currentSpawner.transform.localRotation = Quaternion.identity;
         _currentSpawner.transform.localPosition = Vector3.zero;
         _currentSpawner.transform.localScale = Vector3.one;
+    }
+    public void DeleteSpawner() => Destroy(_currentSpawner);
+    public void ResetManagerEnemies()
+    {
+        Destroy(_currentSpawner);
+        _currentSpawnerIndex = 0;
+        _timerSpawners = 0;
+        InitializePools();
+        InitializeNewSpawner();
     }
 
 }

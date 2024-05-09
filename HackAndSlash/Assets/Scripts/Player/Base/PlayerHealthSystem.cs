@@ -88,7 +88,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage, DamageNumber visualEffect)
     {
-        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.35f || !IsDamageable)
+        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.50f || !IsDamageable)
         {
             return;
         }

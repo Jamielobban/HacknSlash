@@ -21,6 +21,7 @@ public class PlayerData : ScriptableObject
     public float xpExtra;
 
     public AbilityItem item, item2, item3, item4;
+    public int abilityID1, abilityID2, abilityID3, abilityID4;
 
     public void ResetData()
     {
@@ -34,10 +35,10 @@ public class PlayerData : ScriptableObject
         slowForce = 0;
         stealLifePercentage = 0;
         xpExtra = 1;
-        item = null;
-        item2 = null;
-        item3 = null;
-        item4 = null;
+        abilityID1 = -1;
+        abilityID2 = -1;
+        abilityID3 = -1;
+        abilityID4 = -1;
     }
     
 }
