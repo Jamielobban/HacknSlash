@@ -149,5 +149,14 @@ public class ManagerEnemies : MonoBehaviour
         _currentSpawner.transform.localPosition = Vector3.zero;
         _currentSpawner.transform.localScale = Vector3.one;
     }
+    public void DeleteSpawner() => Destroy(_currentSpawner);
+    public void ResetManagerEnemies()
+    {
+        Destroy(_currentSpawner);
+        _currentSpawnerIndex = 0;
+        _timerSpawners = 0;
+        InitializePools();
+        InitializeNewSpawner();
+    }
 
 }

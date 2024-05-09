@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,25 +20,24 @@ public class WinInteractable : MonoBehaviour
         {
             foreach (var enemyPool in LevelManager.Instance.EnemiesManager.parentObjectPools)
             {
-                enemyPool.SetActive(false);
+                Destroy(enemyPool.gameObject);
             }
         }
+        LevelManager.Instance.EnemiesManager.DeleteSpawner();
         GameManager.Instance.Player.SaveData();
         AudioManager.Instance.PlayMusic(Enums.Music.Victory);
         onWinInteracted.SetActive(true);
         onWinInteracted.GetComponent<GDTFadeEffect>()?.StartEffect();
-        Invoke(nameof(ActiveLoadBarGameObject), 3.5f);
-    }
+        Invoke(nameof(ActiveLoarBar), 3.5f);
 
-    private void ActiveLoadBarGameObject()
+    }
+    private void ActiveLoarBar()
     {
         loadBarGameObject.SetActive(true);
-        Invoke(nameof(GoToScene), 1f);
+        Invoke(nameof(SceneDead), 1);
     }
-
-    private void GoToScene()
+    private void SceneDead()
     {
-        GameManager.Instance.UpdateState(Enums.GameState.StartPlaying);
         GameManager.Instance.LoadLevel(sceneName, loadBarFill);
     }
 }

@@ -322,14 +322,54 @@ public class PlayerControl : MonoBehaviour
         lifeStealPercent = stats.stealLifePercentage;
         xpPercentageExtra = stats.xpExtra;
 
-        if (stats.item != null)
-            stats.item.OnItemPickup(this);
-        if (stats.item2 != null)
-            stats.item2.OnItemPickup(this);
-        if (stats.item3 != null)
-            stats.item3.OnItemPickup(this);
-        if (stats.item4 != null)
-            stats.item4.OnItemPickup(this);
+        ItemManager itemManager = FindObjectOfType<ItemManager>(); 
+
+
+        if (stats.abilityID1 != -1)
+        {
+            for (int i = 0; i < itemManager.abilityItems.Count; i++)
+            {
+                if(itemManager.abilityItems[i].data.id == stats.abilityID1)
+                {
+                    itemManager.abilityItems[i].OnItemPickup(this);
+                    itemManager.abilityItems.RemoveAt(i);
+                }
+            }
+        }
+        if (stats.abilityID2 != -1)
+        {
+            for (int i = 0; i < itemManager.abilityItems.Count; i++)
+            {
+                if (itemManager.abilityItems[i].data.id == stats.abilityID2)
+                {
+                    itemManager.abilityItems[i].OnItemPickup(this);
+                    itemManager.abilityItems.RemoveAt(i);
+                }
+            }
+        }
+        if (stats.abilityID3 != -1)
+        {
+            for (int i = 0; i < itemManager.abilityItems.Count; i++)
+            {
+                if (itemManager.abilityItems[i].data.id == stats.abilityID3)
+                {
+                    itemManager.abilityItems[i].OnItemPickup(this);
+                    itemManager.abilityItems.RemoveAt(i);
+                }
+            }
+        }
+        if (stats.abilityID4 != -1)
+        {
+            for (int i = 0; i < itemManager.abilityItems.Count; i++)
+            {
+                if (itemManager.abilityItems[i].data.id == stats.abilityID4)
+                {
+                    itemManager.abilityItems[i].OnItemPickup(this);
+                    itemManager.abilityItems.RemoveAt(i);
+                }
+            }
+        }
+
         inventory.ClearByType(Enums.RarityType.ActionItem);
 
         if (!GameManager.Instance.canLoadItem)
@@ -347,10 +387,14 @@ public class PlayerControl : MonoBehaviour
         stats.timeToHeal = timeToHeal;
         stats.critDamageMultiplier = critDamageMultiplier;
         stats.stealLifePercentage = lifeStealPercent;
-        stats.item = _abilityHolder.L2Square;
-        stats.item2 = _abilityHolder.L2Triangle;
-        stats.item3 = _abilityHolder.HoldSquare;
-        stats.item4 = _abilityHolder.HoldTriangle;
+        if(_abilityHolder.L2Square != null)
+            stats.abilityID1 = _abilityHolder.L2Square.data.id;
+        if (_abilityHolder.L2Triangle != null)
+            stats.abilityID2 = _abilityHolder.L2Triangle.data.id;
+        if(_abilityHolder.HoldSquare != null)
+            stats.abilityID3 = _abilityHolder.HoldSquare.data.id;
+        if (_abilityHolder.HoldTriangle != null)
+            stats.abilityID4 = _abilityHolder.HoldTriangle.data.id;
     }
 
     private void StealHeal()

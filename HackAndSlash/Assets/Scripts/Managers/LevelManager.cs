@@ -95,4 +95,13 @@ public class LevelManager : MonoBehaviour
         int seconds = (int)(_timerGlobal % 60f);
         textTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
+
+    public void ResetLevel()
+    {
+        _enemiesManager.ResetManagerEnemies();
+        _scoreManager.ResetScore();
+        EndEvent();
+        _timerGlobal = 0f;
+        _currentTime = 0f;
+    }
 }
