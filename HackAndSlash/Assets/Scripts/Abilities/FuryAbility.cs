@@ -15,6 +15,9 @@ public class FuryAbility : MonoBehaviour
 
     private void OnEnable()
     {
+        if(player == null) 
+            player = GameManager.Instance.Player;
+
         effect[0].SetActive(true);
         effect[1].SetActive(true);
 
