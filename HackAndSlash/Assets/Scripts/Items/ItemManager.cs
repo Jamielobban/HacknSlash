@@ -56,7 +56,6 @@ public class ItemManager : MonoBehaviour
             Item _item = GetRandomItemGuard(actionItems);
             if(_item != null)
             {
-                actionItems.Remove(_item);
                 return _item;
             }
             // Si no hay abilidades Legendary Item

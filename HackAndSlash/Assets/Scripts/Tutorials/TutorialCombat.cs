@@ -56,7 +56,7 @@ public class TutorialCombat : MonoBehaviour
             Invoke(nameof(SpeakInTime), 1);
             campEnemies.SetActive(false);
         }
-        else if(!hasReadEndTutorial && LevelManager.Instance.CurrentGlobalTime >= 130)
+        else if(!hasReadEndTutorial && LevelManager.Instance.CurrentGlobalTime >= 123)
         {
             hasReadEndTutorial = true;
             Invoke(nameof(StartEnd), 1.5f);

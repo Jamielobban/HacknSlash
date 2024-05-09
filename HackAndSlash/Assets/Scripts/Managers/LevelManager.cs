@@ -21,11 +21,11 @@ public class LevelManager : MonoBehaviour
 
     public TextMeshProUGUI textTime;
     public bool isInEvent = false;
-    public int timeToGetItem = 60;
+    public int timeToUpgradeEnemy = 15;
     public int timeToEndGame;
 
     private float _timerGlobal = 0f;
-    private float _timerItems = 0f;
+    private float _currentTime = 0f;
 
     private ManagerEnemies _enemiesManager;
     private ScoreManager _scoreManager;
@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         _timerGlobal += Time.deltaTime;
-        _timerItems += Time.deltaTime;
+        _currentTime += Time.deltaTime;
 
         UpdateTimeText();
 
@@ -63,9 +63,9 @@ public class LevelManager : MonoBehaviour
             _timerGlobal += 60;
         }
 
-        if (_timerItems >= timeToGetItem)
+        if (_currentTime >= timeToUpgradeEnemy)
         {
-            _timerItems = 0f;
+            _currentTime = 0f;
             _enemiesManager.UpgradeEnemies(_timerGlobal);
         }
 

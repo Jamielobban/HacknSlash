@@ -56,6 +56,7 @@ public class MainMenuManager : MonoBehaviour
     void StartGame()  
     {        
         GameManager.Instance.isTutorialCompleted = true;
+        loadingGo.SetActive(true);
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }
     void StartTutorial()
@@ -123,13 +124,9 @@ public class MainMenuManager : MonoBehaviour
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
         menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; tvUpButton.onClick.AddListener(StartTutorial);
-            tvDownButton.enabled = false;
-            if (GameManager.Instance.isTutorialCompleted)
-            {
                 textTvDown.text = "Start Game";
                 tvDownButton.enabled = true;
                 tvDownButton.onClick.AddListener(StartGame);
-            }
         });
         menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfxMuted); tvDownButton.onClick.AddListener(ShowMusicMuted); ShowSfx(); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });

@@ -1537,7 +1537,7 @@ MonoBehaviour:
   _currentTime: 0
   IsHit: 0
   IsDead: 0
-  attackInterrumpted: 1
+  attackInterrumpted: 0
   isAttacking: 0
   isStun: 0
   attackCanBeInterrupted: 0
@@ -1770,8 +1770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSightDistance: 50
-  maxSightDistance: 75
+  minSightDistance: 75
+  maxSightDistance: 100
 --- !u!1 &9188602800977854743
 GameObject:
   m_ObjectHideFlags: 0

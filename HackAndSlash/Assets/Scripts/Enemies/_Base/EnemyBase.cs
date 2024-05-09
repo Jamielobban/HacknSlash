@@ -36,7 +36,7 @@ public class EnemyBase : PoolableObject
     public float exitTimeAttacks = 1f;
     public MMFeedbacks deadSound;
     public MMFeedbacks spawnSound;
-
+    public float predictionTime = .1f;
 
     public Collider getEnemyCollider;
     

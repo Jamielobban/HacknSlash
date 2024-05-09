@@ -34,6 +34,7 @@ public class ManagerEnemies : MonoBehaviour
     public float startScaleLifeMultiplier;
     public float startScaleDamageMultiplier;
 
+
     #endregion
 
     public float ScaleLifeMult => _scaleLifeMultiplier;
@@ -50,7 +51,7 @@ public class ManagerEnemies : MonoBehaviour
 
     public void HandleEnemiesUpdate()
     {
-        _timerSpawners += Time.deltaTime;      
+        _timerSpawners += Time.deltaTime;
 
         if (_timerSpawners >= _currentSpawnerScript.lifeTime)
         {
@@ -69,15 +70,14 @@ public class ManagerEnemies : MonoBehaviour
             }
             _timerSpawners = 0f;
         }
+
     }
 
     public void UpgradeEnemies(float time)
     {
         float lerpFactor = Mathf.Clamp01(time / timeToReachMax);
-        _scaleLifeMultiplier = Mathf.Lerp(startScaleDamageMultiplier, maxMultiplierLife + startScaleDamageMultiplier, lerpFactor);
+        _scaleLifeMultiplier = Mathf.Lerp(startScaleLifeMultiplier, maxMultiplierLife + startScaleLifeMultiplier, lerpFactor);
         _scaleDamageMultiplier = Mathf.Lerp(startScaleDamageMultiplier, maxMultiplierAttack + maxMultiplierAttack, lerpFactor);
-        Debug.Log(_scaleLifeMultiplier);
-        Debug.Log(_scaleDamageMultiplier);
         foreach (var pool in parentObjectPools)
         {
             for (int i = 0; i < pool.transform.childCount; i++)

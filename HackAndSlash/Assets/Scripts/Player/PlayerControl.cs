@@ -46,6 +46,7 @@ public class PlayerControl : MonoBehaviour
     public float runSpeedAir;
 
     public float multiplierCombos = 1;
+    public Transform predictPoint;
     [Space]
     #endregion
 
@@ -320,20 +321,18 @@ public class PlayerControl : MonoBehaviour
         critDamageMultiplier = stats.critDamageMultiplier;
         lifeStealPercent = stats.stealLifePercentage;
         xpPercentageExtra = stats.xpExtra;
-        if(GameManager.Instance.canLoadItem)
-        {
-            if(stats.item != null)
-                stats.item.OnItemPickup(this);
-            if (stats.item2 != null)
-                stats.item2.OnItemPickup(this);
-            if (stats.item3 != null)
-                stats.item3.OnItemPickup(this);
-            if (stats.item4 != null)
-                stats.item4.OnItemPickup(this);
 
-            inventory.ClearByType(Enums.RarityType.ActionItem);
-        }
-        else
+        if (stats.item != null)
+            stats.item.OnItemPickup(this);
+        if (stats.item2 != null)
+            stats.item2.OnItemPickup(this);
+        if (stats.item3 != null)
+            stats.item3.OnItemPickup(this);
+        if (stats.item4 != null)
+            stats.item4.OnItemPickup(this);
+        inventory.ClearByType(Enums.RarityType.ActionItem);
+
+        if (!GameManager.Instance.canLoadItem)
         {
             inventory.ClearInventory();
         }

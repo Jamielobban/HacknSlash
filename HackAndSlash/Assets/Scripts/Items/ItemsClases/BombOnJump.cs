@@ -7,6 +7,12 @@ public class BombOnJump : Item
     public float timeToInvoke = 0;
     public override void OnItemPickup(PlayerControl player)
     {
+        ItemManager manager = FindObjectOfType<ItemManager>();
+
+        if (manager.actionItems.Contains(this))
+        {
+            manager.actionItems.Remove(this);
+        }
         player.OnJump += ActionToDo;
     }
     private void ActionToDo()
