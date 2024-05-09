@@ -36,6 +36,7 @@ public class PlayerControl : MonoBehaviour
     public float timeToHeal;
     public float critDamageMultiplier;
     public float lifeStealPercent;
+    public float xpPercentageExtra;
 
     public float walkSpeed;
     public float runSpeed;
@@ -316,6 +317,7 @@ public class PlayerControl : MonoBehaviour
         timeToHeal = stats.timeToHeal;
         critDamageMultiplier = stats.critDamageMultiplier;
         lifeStealPercent = stats.stealLifePercentage;
+        xpPercentageExtra = stats.xpExtra;
         if(GameManager.Instance.canLoadItem)
         {
             if(stats.item != null)
@@ -337,6 +339,7 @@ public class PlayerControl : MonoBehaviour
 
     public void SaveData()
     {
+        stats.xpExtra = xpPercentageExtra;
         stats.critChance = critChance;
         stats.attackDamage = attackDamage;
         stats.healthRegen = healthRegen;

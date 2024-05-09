@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI healthRegenText;
     public TextMeshProUGUI lifeSteal;
     public TextMeshProUGUI currentLife;
+    public TextMeshProUGUI currentExtraXp;
 
     private PlayerControl playerStats;
 
@@ -37,5 +38,6 @@ public class PlayerStats : MonoBehaviour
         healthRegenText.text = "Regeneration:  " + playerStats.healthRegen.ToString("F2") + "  / 5s";
         lifeSteal.text = "Life Steal: " + playerStats.lifeStealPercent.ToString("F2") + "%";
         currentLife.text = "" + playerStats.healthSystem.CurrentHealth.ToString("F2") + " / " + playerStats.healthSystem.maxHealth.ToString("F0") + " HP ";
+        currentExtraXp.text = "XP Multiplier: " + playerStats.xpPercentageExtra.ToString("F2");
     }
 }
