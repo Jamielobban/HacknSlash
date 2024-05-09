@@ -20,6 +20,7 @@ public class FuryAbility : MonoBehaviour
 
         effect[0].SetActive(true);
         effect[1].SetActive(true);
+        effect[2].SetActive(true);
 
         player.attackBoost = 2;
     }

@@ -16,6 +16,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject hudParent;
     public AbilityHolder _abilityHolder;
     public bool canAttackOnAir = false;
+    public GameObject meteoritos;
+
     public bool canBurn = false;
     public bool canPoison = false;
     public bool canBleed = false;
