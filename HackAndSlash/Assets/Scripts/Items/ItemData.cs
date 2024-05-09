@@ -19,4 +19,6 @@ public class ItemData : ScriptableObject
 
     public Enums.AbilityInput ìnput; // Only For Abilities
     public Sprite inputIcon;
+    public Sprite inputXbox;
+    public string extraInput; 
 }
