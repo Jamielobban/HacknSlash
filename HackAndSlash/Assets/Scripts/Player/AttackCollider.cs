@@ -32,7 +32,7 @@ public class AttackCollider : MonoBehaviour
             slash.SetActive(false);
     }
 
-    (float, DamageNumber) CalculateDamage (Transform enemyPos)
+    public (float, DamageNumber) CalculateDamage (Transform enemyPos)
     {
         if(targets.Contains(enemyPos.gameObject))
         {

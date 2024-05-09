@@ -1,5 +1,6 @@
 ﻿
 using DamageNumbersPro;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class ProjectileMover : DamageDealer
@@ -16,9 +17,10 @@ public class ProjectileMover : DamageDealer
     private Rigidbody rb;
     public DamageNumber getDamage;
     Vector3 direction;
-
+    PlayerControl _player;
     protected override void Awake()
     {
+        _player = GameManager.Instance.Player;  
         GetComponent<Collider>().enabled = false;
         rb = GetComponent<Rigidbody>();
         //rb.AddForce(transform.forward * speed);
@@ -58,7 +60,10 @@ public class ProjectileMover : DamageDealer
         if (target != null)
         {
             DieEffects();
-            target.TakeDamage(damage, getDamage);
+            float _damage = _player.attackBoost * _player.multiplierCombos * damage * _player.attackDamage + Random.Range(0.5f, 1.5f);
+
+
+            target.TakeDamage(_damage, getDamage);
             DestroyGameObject(); // Blank unless you override something (ex. for a bullet)
         }
         else if(other.gameObject.layer == LayerMask.GetMask("Ground"))

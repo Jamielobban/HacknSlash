@@ -1935,7 +1935,6 @@ public class PlayerControl : MonoBehaviour
     {
         if (controller.GetDash() && Time.timeScale != 0 && !OnAir)
         {
-            OnDash?.Invoke();
             healthSystem.IsDamageable = false;
             this.gameObject.layer = 12;
             getDamagePlayer.enabled = false;
@@ -2011,6 +2010,7 @@ public class PlayerControl : MonoBehaviour
             playerAnim.CrossFadeInFixedTime("Dash", 0.1f);
             dashDuration = 0.325f;
 
+            OnDash?.Invoke();
 
             states = States.DASH;
             dash = Dash.START;
