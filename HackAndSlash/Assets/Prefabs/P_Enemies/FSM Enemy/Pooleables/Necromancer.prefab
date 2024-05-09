@@ -969,6 +969,7 @@ MonoBehaviour:
   exitTimeAttacks: 1
   deadSound: {fileID: 1383879949502260891}
   spawnSound: {fileID: 614564283011762212}
+  predictionTime: 0.1
   getEnemyCollider: {fileID: 0}
   _currentTime: 0
   IsHit: 0
@@ -2633,8 +2634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72c884c7ad4b788a7bf1de44a5756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSightDistance: 7.5
-  maxSightDistance: 9.5
+  minSightDistance: 10
+  maxSightDistance: 12
 --- !u!1 &8595533778683962188
 GameObject:
   m_ObjectHideFlags: 0

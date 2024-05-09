@@ -112,7 +112,7 @@ public class AttackCollider : MonoBehaviour
 
             damageable.TakeDamage(damageValue, damageNumber);
 
-            LevelManager.Instance.ScoreManager.AddEnemyScore(1.8f);
+            LevelManager.Instance.ScoreManager.AddEnemyScore(1.4f);
 
             if (attack.canBurn)
             {

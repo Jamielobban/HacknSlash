@@ -302,7 +302,7 @@ public class EnemyBase : PoolableObject
         {
             foreach (BaseEnemyAttack attack in attacks)
             {
-                float newDamage= attack.baseDamage * scaleFactorDmg;
+                float newDamage = attack.baseDamage * scaleFactorDmg;
                 attack.SetCurrentDamage(newDamage);
             }
         }
