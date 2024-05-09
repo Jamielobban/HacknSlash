@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Enums;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
 
 
 public class ItemsLootBoxManager : MonoBehaviour
@@ -40,10 +43,12 @@ public class ItemsLootBoxManager : MonoBehaviour
 
     public bool menuActive = false;
     public bool isOpen;
+    bool isPs;
     #endregion    
     
     private ItemManager _itemManager;
     private PlayerControl _player;
+    
     private void Awake()
     {
         levelUpEffects.SetActive(false);
@@ -62,6 +67,8 @@ public class ItemsLootBoxManager : MonoBehaviour
     private void Start()
     {
         isOpen = false;
+        var gamepad = Gamepad.current;
+        isPs = gamepad is DualShockGamepad;
     }
     private void Update()
     {
@@ -198,8 +205,14 @@ public class ItemsLootBoxManager : MonoBehaviour
 
             if (itemsToSpawn[i].GetRarity() == RarityType.Ability)
             {
-                itemUIChoice.inputAbility.sprite = itemsToSpawn[i].data.inputIcon;
+                itemUIChoice.inputAbility.sprite = isPs ? itemsToSpawn[i].data.inputIcon : itemsToSpawn[i].data.inputXbox; /////////////////////////
+                if(itemsToSpawn[i].data.extraInput == "L2 +")                
+                    itemUIChoice.extraInputInfo.text = isPs ? "L2 +" : "LT +";                
+                else
+                    itemUIChoice.extraInputInfo.text = itemsToSpawn[i].data.extraInput;
+
                 itemUIChoice.inputAbility.gameObject.SetActive(true);
+                itemUIChoice.extraInputInfo.gameObject.SetActive(true);
             }
             spawnedUIItems.Add(go);
         }

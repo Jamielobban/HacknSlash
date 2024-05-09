@@ -11,6 +11,7 @@ public class UIItemChoice : MonoBehaviour
     public TextMeshProUGUI description;
     public GameObject rarityEffect;
     public TextMeshProUGUI type;
+    public TextMeshProUGUI extraInputInfo;
     public Image inputAbility;
     public float scaleOnSelect = 2f;
 
