@@ -11,6 +11,7 @@ public class RollState : EnemyStateBase
     {
         _agent.isStopped = true;
         base.OnEnter();
+        direction = (_enemyBase.target.transform.position - _enemyBase.transform.position).normalized;
     }
 
     public override void OnLogic()
@@ -18,19 +19,15 @@ public class RollState : EnemyStateBase
         _timer += Time.deltaTime;
         base.OnLogic();
 
-        Vector3 playerPosition = _enemyBase.target.transform.position;
 
         if (_timer <= 0.75f)
         {
-            Vector3 dashDirection = (playerPosition - _enemyBase.transform.position).normalized;
-            Vector3 dashMove = dashDirection * 1.5f * (_agent.speed * Time.deltaTime);
+            Vector3 dashMove = direction * 1.5f * (_agent.speed * Time.deltaTime);
             _agent.Move(dashMove);
         }
         else
         {
-            // Move towards the player's position
-            Vector3 moveDirection = (playerPosition - _enemyBase.transform.position).normalized;
-            Vector3 moveAmount = moveDirection *  _agent.speed * Time.deltaTime;
+            Vector3 moveAmount = direction *  _agent.speed * Time.deltaTime;
             _agent.Move(moveAmount);
         }
 

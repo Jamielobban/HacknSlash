@@ -948,7 +948,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &102770545590802493
 MonoBehaviour:
@@ -963,10 +963,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentAttackState: 0
-  baseDamage: 20
+  baseDamage: 8
   minCooldown: 0
   maxCooldown: 0
-  _castTime: 0.65
+  _castTime: 0.7
   _animationName: Explosion
   areaPrefab: {fileID: 5724113216187629376, guid: e8849e89a4c96db45a12ce661834ecb7,
     type: 3}
@@ -1533,6 +1533,7 @@ MonoBehaviour:
   exitTimeAttacks: 0.1
   deadSound: {fileID: 8651373163278943585}
   spawnSound: {fileID: 6065107303912598008}
+  predictionTime: 0.1
   getEnemyCollider: {fileID: 0}
   _currentTime: 0
   IsHit: 0
