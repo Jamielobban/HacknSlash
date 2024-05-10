@@ -33,7 +33,7 @@ public class MusicVolume : MonoBehaviour
             mixer.SetFloat("MusicVolume", Mathf.Log10(_slider.value / 27) * 20);
             AudioManager.Instance.audioMusic.volume = _slider.value / 27;
             AudioManager.Instance.audioMusicEffects.volume = _slider.value / 27;
-            GameManager.Instance.volumeMusic = _slider.value / 27;
+            GameManager.Instance.volumeMusic = _slider.value;
         }
     }
     private void OnDisable()
