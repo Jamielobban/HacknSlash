@@ -66,8 +66,8 @@ public abstract class EventBase : MonoBehaviour
             }
         }
 
-        AudioManager.Instance.PlayFx(Enums.Effects.Evento);
-        AudioManager.Instance.PlayMusic(Enums.Music.EpicTheme);
+       // AudioManager.Instance.PlayFx(Enums.Effects.Evento);
+       // AudioManager.Instance.PlayMusic(Enums.Music.EpicTheme);
         
         LevelManager.Instance.StartEvent(); //Clears all the current enemies and sets isInEvent
         
