@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyInEvent : MonoBehaviour
 {
-    public EventMap _event;
+    public EventBaseRounds _event;
     private EnemyBase _enemy;
 
     private void Awake()

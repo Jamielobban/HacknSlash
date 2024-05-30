@@ -1,5 +1,6 @@
 ﻿
 using DamageNumbersPro;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class ProjectileMover : DamageDealer
@@ -15,8 +16,11 @@ public class ProjectileMover : DamageDealer
     private float _timer;
     private Rigidbody rb;
     public DamageNumber getDamage;
+    Vector3 direction;
+    PlayerControl _player;
     protected override void Awake()
     {
+        _player = GameManager.Instance.Player;  
         GetComponent<Collider>().enabled = false;
         rb = GetComponent<Rigidbody>();
         //rb.AddForce(transform.forward * speed);
@@ -25,9 +29,17 @@ public class ProjectileMover : DamageDealer
     {
         GetComponent<Collider>().enabled = true;
         rb = GetComponent<Rigidbody>();
-        Vector3 dirToPlayer = GameManager.Instance.Player.transform.position - transform.position;
-        dirToPlayer.y += 0.5f;
-        rb.AddForce(dirToPlayer * speed);
+        direction = GameManager.Instance.Player.transform.position - transform.position;
+        direction.y += 0.5f;
+        rb.AddForce(direction * speed);
+    }
+
+    public void ShootToEnemy(Vector3 dir)
+    {
+        GetComponent<Collider>().enabled = true;
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(dir * speed);
+        direction = dir;
     }
 
     protected override void Update()
@@ -38,6 +50,8 @@ public class ProjectileMover : DamageDealer
         {
             Destroy(gameObject);
         }
+
+
     }
     
     protected override void OnTriggerEnter(Collider other)
@@ -46,7 +60,10 @@ public class ProjectileMover : DamageDealer
         if (target != null)
         {
             DieEffects();
-            target.TakeDamage(damage, getDamage);
+            float _damage = _player.attackBoost * _player.multiplierCombos * damage * _player.attackDamage + Random.Range(0.5f, 1.5f);
+
+
+            target.TakeDamage(_damage, getDamage);
             DestroyGameObject(); // Blank unless you override something (ex. for a bullet)
         }
         else if(other.gameObject.layer == LayerMask.GetMask("Ground"))
@@ -55,6 +72,11 @@ public class ProjectileMover : DamageDealer
             DestroyGameObject();
         }
         else if (other.gameObject.layer == LayerMask.GetMask("Default"))
+        {
+            DieEffects();
+            DestroyGameObject();
+        }
+        else if (other.GetComponent<TerrainCollider>() != null)
         {
             DieEffects();
             DestroyGameObject();

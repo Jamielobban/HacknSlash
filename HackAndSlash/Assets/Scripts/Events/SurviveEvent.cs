@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurviveEvent : EventMap
+public class SurviveEvent : EventBase
 {
     protected override void StartEvent()
     {
 
     }
-    protected override void FinishEvent()
+    protected override void CompleteEvent()
     {
 
     }

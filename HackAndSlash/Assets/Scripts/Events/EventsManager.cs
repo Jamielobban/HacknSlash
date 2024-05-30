@@ -1,76 +1,51 @@
 using UnityEngine;
-using System.Linq;
-using TMPro;
+using System;
+using System.Collections.Generic;
+
+[Serializable]
+public struct EventInfo
+{
+    public GameObject eventPrefab;
+    public float timeToSpawn;
+}
 
 public class EventsManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] eventsPrefabs;
-    Transform[] eventsHolders;
-    public int secondsToUnlockBase = 150;
+    [SerializeField] private List<EventInfo> eventsInfos = new List<EventInfo>();
+    [SerializeField] private List<GameObject> eventsPrefabs = new List<GameObject>();
+    private int _indexEvent = 0;
 
-    int numEventsToComplete = 0;
-    int currentCompletedEvents = 0;
-    public TextMeshProUGUI eventsText;
-
-    public GameObject onWin;
-    public GameObject text;
+    private Transform player;
 
     private void Awake()
-    {        
-        eventsHolders = GameObject.FindGameObjectsWithTag("Event").Select(go => go.transform).ToArray();
-
-        int secondsIncrementToUnlock = 0;
-        for (int i = 0; i < eventsHolders.Length; i++)
-        {
-            GameObject go = Instantiate(eventsPrefabs[Random.Range(0, eventsPrefabs.Count())], eventsHolders[i]);
-            EventMap eventScrit = go.GetComponent<EventMap>();
-
-            eventScrit.manager = this;
-
-            if(GameManager.Instance.state == Enums.GameState.Tutorial)
-            {
-                eventScrit.timeToActivate = 15;
-            }
-            else
-            {
-                eventScrit.timeToActivate = secondsIncrementToUnlock;
-            }
-            secondsIncrementToUnlock += secondsToUnlockBase;
-        }
-
-        numEventsToComplete = eventsHolders.Length;
+    {
+        player = GameManager.Instance.Player.transform;
+        SetEvents();
     }
 
     private void Update()
     {
-        if(CheckAllEventsCompleted())
+        if(_indexEvent <= eventsInfos.Count - 1)
         {
-            //Si todos eventos completos unlock final boss / win
-            if(onWin != null && text != null)
+            if (LevelManager.Instance.CurrentGlobalTime >= eventsInfos[_indexEvent].timeToSpawn)
             {
-                
-                onWin.SetActive(true);
-                text.SetActive(true);
+                GameObject eventGo = Instantiate(eventsInfos[_indexEvent].eventPrefab, player.position, Quaternion.identity);
+
+                _indexEvent++;
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.P) && Input.GetKeyDown(KeyCode.O))
-        {
-            currentCompletedEvents = numEventsToComplete;
-        }
     }
 
-    public void SetCurrentCompletedEvents()
+    private void SetEvents()
     {
-        currentCompletedEvents++;
-
-        if(eventsText != null)
+        for (int i = 0; i < eventsInfos.Count; i++)
         {
-            eventsText.text = "Events: " + currentCompletedEvents + " / " + numEventsToComplete;
+            if(eventsInfos[i].eventPrefab == null)
+            {
+                EventInfo info = eventsInfos[i];
+                info.eventPrefab = eventsPrefabs[UnityEngine.Random.Range(0, eventsPrefabs.Count)];
+                eventsInfos[i] = info;
+            }
         }
     }
-
-
-    public bool CheckAllEventsCompleted() => currentCompletedEvents >= numEventsToComplete;
-
 }

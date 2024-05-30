@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &265180101963089744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3479344481374941358}
+  - component: {fileID: 1965631360304402592}
+  - component: {fileID: 2795772253240574954}
+  - component: {fileID: 6985847673257368573}
+  m_Layer: 0
+  m_Name: Level Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3479344481374941358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265180101963089744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 335.15045, y: 62.1533, z: 267.76956}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1965631360304402592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265180101963089744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c7fe6b9801cf24688a51a52155f57b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textTime: {fileID: 0}
+  isInEvent: 0
+  timeToUpgradeEnemy: 15
+  timeToEndGame: 900
+  isTutorial: 0
+  isWin: 0
+--- !u!114 &2795772253240574954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265180101963089744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b70dfa3cb8c01428efa9b24987c57e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScoreText: {fileID: 0}
+  multiplierText: {fileID: 0}
+  timeToStartResetScore: 1.5
+  removeScore: 15
+  efectX15:
+  - {fileID: 0}
+  - {fileID: 0}
+  efectX2:
+  - {fileID: 0}
+  - {fileID: 0}
+  shake: {fileID: 0}
+--- !u!114 &6985847673257368573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265180101963089744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e34754a2ea7d4498fdb4a4ab2ffb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSpawnedEnemies: {fileID: 0}
+  spawners:
+  - {fileID: 9058649433420978236, guid: a518461008fbadc49b0cbe467945eb9f, type: 3}
+  - {fileID: 9058649433420978236, guid: d0f1ab4a06c16fe46b843d96b435f1ad, type: 3}
+  - {fileID: 9058649433420978236, guid: 02f0ee1fce284f848be73f37b4305204, type: 3}
+  - {fileID: 9058649433420978236, guid: 3f9880b4c153b3946a5c071f33cff711, type: 3}
+  - {fileID: 9058649433420978236, guid: 46e8b37c0dec5e24a848c6b8e9da8600, type: 3}
+  - {fileID: 9058649433420978236, guid: 9791db928352e474e861644bafa89fd0, type: 3}
+  - {fileID: 9058649433420978236, guid: 70c6b5a989049b9469fa9296a48ffd26, type: 3}
+  - {fileID: 9058649433420978236, guid: 2e5335845f6661a44967d26a8d9faf14, type: 3}
+  - {fileID: 9058649433420978236, guid: d02b4e5ba0379744da22b167073fed0c, type: 3}
+  - {fileID: 9058649433420978236, guid: c9d86c2e06a35cb439cef40f6c80a2a9, type: 3}
+  - {fileID: 9058649433420978236, guid: f39412e4a71c1cb4782b265e20723fb6, type: 3}
+  - {fileID: 9058649433420978236, guid: 885fcb380cbc34249875c19a4140c117, type: 3}
+  - {fileID: 9058649433420978236, guid: ddc5187cef0439e46b25333fa62b2d1b, type: 3}
+  - {fileID: 9058649433420978236, guid: 6fcb301219cdefd4e8195857a0e3ac61, type: 3}
+  - {fileID: 9058649433420978236, guid: 5a20a9404af3c154dbe480395056d33f, type: 3}
+  - {fileID: 9058649433420978236, guid: 14ef63cd575c09045bb94b257ca0604e, type: 3}
+  - {fileID: 9058649433420978236, guid: ba4219eaea0693449b4643fa5e41e6b7, type: 3}
+  - {fileID: 9058649433420978236, guid: 267548b7d2265a643b90dc5c1857dbf5, type: 3}
+  - {fileID: 9058649433420978236, guid: 94f98400fde1ba746b77a0dbf383d634, type: 3}
+  lastSpawnerLastOne: 0
+  enemies:
+  - {fileID: 9041268222350785868, guid: 1fbaef3c3e8fde94fa65acd5a5833363, type: 3}
+  - {fileID: 2820150917280834003, guid: 80693bab60b4e2e44b4a82f1ba586fa4, type: 3}
+  - {fileID: 2892188975883952240, guid: 0e42be49c4388094b8f0553a073fa483, type: 3}
+  - {fileID: 2162306917833488104, guid: daa4c232bf970694b85a560c7c6d9d56, type: 3}
+  - {fileID: 8326841416910868969, guid: 729b0d4864457d3429ea9d0004efc5e2, type: 3}
+  - {fileID: 7031328145753526208, guid: 5961b3ea9f783e642b535bc83b2f890f, type: 3}
+  - {fileID: 6764644743061008012, guid: 0f4b759348cc553438a560efb874240d, type: 3}
+  - {fileID: 763602234357592438, guid: e270534b6b55a5f4fb93e37d8282a839, type: 3}
+  parentObjectPools: []
+  maxMultiplierLife: 8
+  maxMultiplierAttack: 2.5
+  timeToReachMax: 900
+  startScaleLifeMultiplier: 1
+  startScaleDamageMultiplier: 1

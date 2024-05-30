@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StructureEnemiesLife : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class StructureEnemiesLife : MonoBehaviour
     protected int _currentEnemeisKilled;
     public bool isActive = false;
     public GameObject particleToCharge;
+
+    public UnityEvent<float> killedEnemyTrigger;
 
     protected virtual void Awake() { }
 
@@ -35,7 +38,11 @@ public class StructureEnemiesLife : MonoBehaviour
             other.GetComponent<EnemyBase>().nearStructure = null;
         }
     }
-    public virtual void AddKilledEnemy() => _currentEnemeisKilled++;
+    public virtual void AddKilledEnemy() { 
+        _currentEnemeisKilled++;
+        float perOne = (float)((float)_currentEnemeisKilled / (float)enemiesToActivate);
+        killedEnemyTrigger.Invoke((float)(perOne)); 
+    }
     protected virtual void Activate() => isActive = true;
     protected virtual bool CanActivate() => _currentEnemeisKilled >= enemiesToActivate && !isActive;
 

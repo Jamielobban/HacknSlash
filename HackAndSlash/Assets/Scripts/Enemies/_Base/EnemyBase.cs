@@ -30,12 +30,13 @@ public class EnemyBase : PoolableObject
     public Vector3 targetToSpecialMove;
     public GameObject healthBar;
     public GameObject spawner;
-    public float score;
+    public float experience;
     public float timeBetweenAttacks = 1.5f;
     public bool affectedBySpecialMove = false;
     public float exitTimeAttacks = 1f;
     public MMFeedbacks deadSound;
     public MMFeedbacks spawnSound;
+    public float predictionTime = .1f;
 
     public Collider getEnemyCollider;
     
@@ -69,7 +70,8 @@ public class EnemyBase : PoolableObject
     public EnemyHealthSystem HealthSystem => _healthSystem;
 
     protected virtual void Awake()
-    {        
+    {
+
         _player = GameManager.Instance.Player;
         _healthSystem = transform.GetChild(0).GetComponent<EnemyHealthSystem>();
         _spawnEffect = GetComponent<EnemySpawnEffect>();
@@ -250,6 +252,7 @@ public class EnemyBase : PoolableObject
                 new Vector3(transform.position.x, transform.position.y + .75f, transform.position.z), Quaternion.identity);
             go.GetComponent<SimpleProjectileSphere>().direction = nearStructure.transform;
         }
+        _player.experienceManager.GainXp(experience);
         _spawnEffect.InitializeDespawnEffect();
     }
     
@@ -261,8 +264,7 @@ public class EnemyBase : PoolableObject
     }
 
     public virtual void OnDie()
-    {
-        
+    {        
         attackInterrumpted = false;
         if (isPooleable)
         {
@@ -276,7 +278,7 @@ public class EnemyBase : PoolableObject
                 {
                     spawner.GetComponent<InfiniteSpawner>().RemoveEnemy(this);
                 }
-                ManagerEnemies.Instance.AddSpawnedEnemies(-1);
+                LevelManager.Instance.EnemiesManager.AddSpawnedEnemies(-1);
             }
             spawner = null;
             ResetEnemy();
@@ -287,7 +289,6 @@ public class EnemyBase : PoolableObject
             Destroy(gameObject);
         }
         healthBar.SetActive(false);
-
 
     }
     
@@ -301,7 +302,7 @@ public class EnemyBase : PoolableObject
         {
             foreach (BaseEnemyAttack attack in attacks)
             {
-                float newDamage= attack.baseDamage * scaleFactorDmg;
+                float newDamage = attack.baseDamage * scaleFactorDmg;
                 attack.SetCurrentDamage(newDamage);
             }
         }

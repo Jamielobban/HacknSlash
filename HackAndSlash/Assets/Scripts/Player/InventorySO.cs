@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -9,6 +8,7 @@ public class InventorySO : ScriptableObject
 {
     [SerializeField] private List<InventoryItem> items = new List<InventoryItem>();
     [field: SerializeField] public int Size { get; private set; } = 20;
+
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
     public void Initialize()
     {
@@ -19,12 +19,13 @@ public class InventorySO : ScriptableObject
                 items.Add(InventoryItem.GetEmptyItem());
             }
         }
-        else // Clear All Items Picked (?)
+    }
+
+    public void ClearInventory()
+    {
+        for (int i = 0; i < items.Count; i++)
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                items[i] = InventoryItem.GetEmptyItem();
-            }
+            items[i] = InventoryItem.GetEmptyItem();
         }
     }
 
@@ -146,11 +147,27 @@ public class InventorySO : ScriptableObject
             }
         }
         return false;
-
-
     }
     public InventoryItem GetItemAt(int itemIndex) => items[itemIndex];
     public void AddItem(InventoryItem item) => AddItem(item.item, item.quantity);
+    public void ClearByType(Enums.RarityType type)
+    {
+        if(items.Count > 0)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (!items[i].IsEmpty)
+                {
+                    if (items[i].item.rarityType == type)
+                    {
+                        items[i] = InventoryItem.GetEmptyItem();
+                    }
+                }
+ 
+            }
+        }
+
+    }
 }
 
 [Serializable]

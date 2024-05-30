@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4945545242034876464
 BoxCollider:
@@ -67,18 +67,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemiesToSpawn: 3
-  _timeToSpawn: 0.1
+  _timeToSpawn: 0
   _isBurstSpawner: 1
   enemySpawnMethod: 1
   _enemies:
-  - {fileID: 6764644743061008012, guid: 0f4b759348cc553438a560efb874240d, type: 3}
-  - {fileID: 763602234357592438, guid: e270534b6b55a5f4fb93e37d8282a839, type: 3}
+  - {fileID: 3115950151256001536, guid: 0f4b759348cc553438a560efb874240d, type: 3}
+  - {fileID: 5699760409627138695, guid: e270534b6b55a5f4fb93e37d8282a839, type: 3}
   enemiesFromThisSpawner: []
   allEnemiesSpawned: 0
   _enemyProbabilities:
-  - enemyBase: {fileID: 6764644743061008012, guid: 0f4b759348cc553438a560efb874240d,
+  - enemyBase: {fileID: 3115950151256001536, guid: 0f4b759348cc553438a560efb874240d,
       type: 3}
     probability: 75
-  - enemyBase: {fileID: 763602234357592438, guid: e270534b6b55a5f4fb93e37d8282a839,
+  - enemyBase: {fileID: 5699760409627138695, guid: e270534b6b55a5f4fb93e37d8282a839,
       type: 3}
     probability: 25

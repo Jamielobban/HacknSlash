@@ -4999,7 +4999,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697025908856273482}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -10063,7 +10063,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -10997,12 +10997,13 @@ MonoBehaviour:
   targetToSpecialMove: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 1206317600471850005}
   spawner: {fileID: 0}
-  score: 10
+  experience: 10
   timeBetweenAttacks: 1.5
   affectedBySpecialMove: 0
   exitTimeAttacks: 0.1
   deadSound: {fileID: 7371097199823072159}
   spawnSound: {fileID: 1327567300809955931}
+  predictionTime: 0.1
   getEnemyCollider: {fileID: 0}
   _currentTime: 0
   IsHit: 0
@@ -11018,7 +11019,7 @@ MonoBehaviour:
   _meleeAttack: {fileID: 114260510142010921}
   campManager: {fileID: 0}
   initialPoint: {fileID: 0}
-  toFarDistance: 25
+  toFarDistance: 35
   _doubleHitAttack: {fileID: 794553940127166661}
   _doubleHitSensor: {fileID: 1764668528695265240}
 --- !u!114 &2747584467748037538

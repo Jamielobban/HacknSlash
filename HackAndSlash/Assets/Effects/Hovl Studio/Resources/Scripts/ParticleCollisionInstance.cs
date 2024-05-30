@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DamageNumbersPro;
+using MoreMountains.Tools;
 
 public class ParticleCollisionInstance : MonoBehaviour
 {
@@ -16,13 +18,25 @@ public class ParticleCollisionInstance : MonoBehaviour
     private ParticleSystem part;
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
     private ParticleSystem ps;
-
+    public DamageNumber getDamage;
+    PlayerControl _player;
     void Start()
     {
         part = GetComponent<ParticleSystem>();
+        _player = GameManager.Instance.Player;
     }
     void OnParticleCollision(GameObject other)
-    {      
+    {
+
+        IDamageable target = other.GetComponent<IDamageable>();
+        if (target != null)
+        {
+
+            float damage = _player.attackBoost * _player.multiplierCombos * 10 * _player.attackDamage + Random.Range(0.5f, 1.5f);
+
+            target.TakeDamage(damage, getDamage);
+        }
+
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);     
         for (int i = 0; i < numCollisionEvents; i++)
         {
@@ -45,4 +59,6 @@ public class ParticleCollisionInstance : MonoBehaviour
             Destroy(gameObject, DestroyTimeDelay + 0.5f);
         }
     }
+
+
 }

@@ -10,8 +10,15 @@ public class ItemData : ScriptableObject
     public Enums.RarityType rarityType;
     [Header("Information: ")]
     public string itemName;
+    public string itemType;
+    public Color typeColor;
     public Sprite itemIcon;
     [TextArea] public string itemDescription;
     [TextArea] public string itemDefaultDescription;
     public float value;
+
+    public Enums.AbilityInput ìnput; // Only For Abilities
+    public Sprite inputIcon;
+    public Sprite inputXbox;
+    public string extraInput; 
 }

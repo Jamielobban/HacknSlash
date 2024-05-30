@@ -7,6 +7,6 @@ public class EnemyHUD : MonoBehaviour
 
     public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
-        healthBar.fillAmount = Mathf.Clamp01(currentHealth / maxHealth);
+       healthBar.fillAmount = Mathf.Clamp01(currentHealth / maxHealth);
     }
 }

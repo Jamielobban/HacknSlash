@@ -30,7 +30,7 @@ public class SFXVolume : MonoBehaviour
             mixer.SetFloat("SfxVolume", Mathf.Log10(_slider.value / 27) * 20);
             AudioManager.Instance.audioFx.volume = _slider.value / 27;
             AudioManager.Instance.audioFxStopeable.volume = _slider.value / 27;
-            GameManager.Instance.volumeSFX = _slider.value / 27;
+            GameManager.Instance.volumeSFX = _slider.value;
         }
     }
     private void OnDisable()

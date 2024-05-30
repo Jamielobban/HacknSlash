@@ -5,7 +5,6 @@ using static Enums;
 
 public class ItemManager : MonoBehaviour
 {
-
     public Item[] commonItems;
     public Item[] uncommonItems;
     public Item[] rareItems;
@@ -21,29 +20,21 @@ public class ItemManager : MonoBehaviour
     public int legendaryChance = 3;
     public int itemActionChance = 2;
     public int abilityChance = 5;
+
+    public int itemsToGetAbility = 15;
+    private int currentItemsShown = 0;
     
     public Item GetRandomItem()
     {
-        if(ManagerEnemies.Instance.IsMaxScore())
-        {
-            ManagerEnemies.Instance.ResetScore();
-            if (GameManager.Instance.Player._abilityHolder.CanAddAbility())
-            {
-                Item _item = GetRandomItemGuard(abilityItems);
-
-                if (_item != null)
-                {
-                    abilityItems.Remove(_item);
-                    return _item;
-                }
-            }
-            // Si no hay abilidades Rare Item
-            return GetRandomItemInArray(rareItems);
-        }
-
         int totalChance = commonChance + uncommonChance + rareChance + legendaryChance + itemActionChance + abilityChance;
         int randomValue = Random.Range(0, totalChance);
 
+        currentItemsShown++;
+
+        if(currentItemsShown >= itemsToGetAbility)
+        {
+            randomValue = totalChance;
+        }
         if (randomValue < commonChance)
         {
             return GetRandomItemInArray(commonItems);
@@ -65,7 +56,6 @@ public class ItemManager : MonoBehaviour
             Item _item = GetRandomItemGuard(actionItems);
             if(_item != null)
             {
-                actionItems.Remove(_item);
                 return _item;
             }
             // Si no hay abilidades Legendary Item
@@ -73,9 +63,15 @@ public class ItemManager : MonoBehaviour
         }
         else
         {
-            if(GameManager.Instance.Player._abilityHolder.CanAddAbility())
+            currentItemsShown = 0;
+            if(GameManager.Instance.Player._abilityHolder.AnyAbilityEmpty())
             {
-                Item _item = GetRandomAbilityGuard(abilityItems);
+                Item _item;
+                do
+                {
+                    _item = GetRandomAbilityGuard(abilityItems);
+
+                } while(!GameManager.Instance.Player._abilityHolder.CanAddAbility(_item.data.ìnput));
 
                 if (_item != null)
                 {

@@ -26,6 +26,8 @@ public class MainMenuManager : MonoBehaviour
     Button tvUpButton;
     Button tvDownButton;
 
+    MenuInputs menuInputs;
+    
     Dictionary<string, Action> menuActions = new Dictionary<string, Action>();
     int lastIndex = -1;
     bool started = false;
@@ -37,7 +39,7 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject loadingGo;
     public Image fillLoadingGo;
-    bool rotated = false;
+    bool rotated = false, firstTime = true;
 
     
     public void MainMenuEnter() => Invoke(nameof(StartShowMenu), 0.5f);
@@ -52,36 +54,69 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.PlayMusicEffect(Enums.MusicEffects.Glitch);
         pyramidMenuTexts.ForEach(text => { Color c = text.color; text.DOColor(text.text == "GAME" ? Color.yellow : new Color(c.r, c.g, c.b, 1), 1.5f).SetEase(Ease.InExpo).OnComplete(() => { started = true; if (pyramidMenuTexts.IndexOf(text) == pyramidMenuTexts.Count - 1) spinPyramid.StartListening(); }); }); }
     void StartGame()  
-    {
-        loadingGo.SetActive(true);
-        GameManager.Instance.UpdateState(Enums.GameState.Playing);
+    {        
         GameManager.Instance.isTutorialCompleted = true;
+        loadingGo.SetActive(true);
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }
     void StartTutorial()
     {
         loadingGo.SetActive(true);
-        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_CINEMATIC, fillLoadingGo);
     }
 
     void Exitgame() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu); Application.Quit(); }
     void ShowTeam() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam"); }
+    void ShowTeamMuted()
+    {
+        bigTvCanvas.GetChild(0).gameObject.SetActive(true); bigTvCanvas.GetChild(1).gameObject.SetActive(false); Debug.Log("ShowTeam");
+    }
     void ShowEnti() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti"); }
+    void ShowEntiMuted()
+    {
+        bigTvCanvas.GetChild(0).gameObject.SetActive(false); bigTvCanvas.GetChild(1).gameObject.SetActive(true); Debug.Log("ShowEnti");
+    }
     void ShowSfx() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx"); }
+    void ShowSfxMuted()
+    {
+        bigTvCanvas.GetChild(2).gameObject.SetActive(true); bigTvCanvas.GetChild(3).gameObject.SetActive(false); Debug.Log("Sfx");
+    }
     void ShowMusic() { AudioManager.Instance.PlayFx(Enums.Effects.SelectOptionMenu);
         bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music"); }
+    void ShowMusicMuted()
+    {
+        bigTvCanvas.GetChild(2).gameObject.SetActive(false); bigTvCanvas.GetChild(3).gameObject.SetActive(true); Debug.Log("Music");
+    }
     void ResetTvs()
     {
         tvUpButton.onClick.RemoveAllListeners(); tvDownButton.onClick.RemoveAllListeners(); textTvUp.text = ""; textTvDown.text = "";
         bigTvCanvas.GetComponentsInChildren<RectTransform>(false).Where(t => t != bigTvCanvas && t.parent == bigTvCanvas).ToList().ForEach(t => t.gameObject.SetActive(false));
     }
 
+    public void ButtonHiglighted(GameObject selectedObject)
+    {
+        Debug.Log("EnterFunc");
+        TextMeshProUGUI tmpText = selectedObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (tmpText == null) return;
+
+        if (tmpText.text == "Team")
+            ShowTeam();
+        else if(tmpText.text == "SFX Volume")
+            ShowSfx();
+        else if (tmpText.text == "Organization")
+            ShowEnti();
+        else if(tmpText.text == "Music Volume")
+            ShowMusic();
+    }
+
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Instance.UpdateState(Enums.GameState.Menu);
         fadeScript = new FadeScript(blackImage);
         fadeScript.FadeIn(1);
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaMenuNuevo);
@@ -90,20 +125,17 @@ public class MainMenuManager : MonoBehaviour
         tvUpButton = textTvUp.GetComponentInParent<Button>();
         tvDownButton = textTvDown.GetComponentInParent<Button>();
         menuActions.Add("GAME", () => { textTvUp.text = "Tutorial"; tvUpButton.onClick.AddListener(StartTutorial);
-            tvDownButton.enabled = false;
-            if (GameManager.Instance.isTutorialCompleted)
-            {
                 textTvDown.text = "Start Game";
                 tvDownButton.enabled = true;
                 tvDownButton.onClick.AddListener(StartGame);
-            }
         });
-        menuActions.Add("OPTIONS", () => { textTvUp.text = "SFX Volume"; textTvDown.text = "Music Volume"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowSfx); tvDownButton.onClick.AddListener(ShowMusic); });
+        menuActions.Add("OPTIONS", () => { textTvDown.text = "SFX Volume"; textTvUp.text = "Music Volume"; tvDownButton.enabled = true; tvDownButton.onClick.AddListener(ShowSfxMuted); tvUpButton.onClick.AddListener(ShowMusicMuted); ShowMusic(); });
         menuActions.Add("EXIT", () => { textTvUp.text = "Quit Game"; tvDownButton.enabled = false; tvUpButton.onClick.AddListener(Exitgame); });
-        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeam); tvDownButton.onClick.AddListener(ShowEnti); });
+        menuActions.Add("CREDITS", () => { textTvUp.text = "Team"; textTvDown.text = "Organization"; tvDownButton.enabled = true; tvUpButton.onClick.AddListener(ShowTeamMuted); tvDownButton.onClick.AddListener(ShowEntiMuted); ShowTeam(); });
                 
         EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
-        lastSelectedObj = firstSelectedObejct;        
+        lastSelectedObj = firstSelectedObejct;      
+        lastIndex = 0;        
     }
 
     void Update()
@@ -122,7 +154,7 @@ public class MainMenuManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(firstSelectedObejct);
         }
 
-        Debug.Log(EventSystem.current.currentSelectedGameObject.gameObject.name);
+        //Debug.Log(EventSystem.current.currentSelectedGameObject.gameObject.name);
 
         if (EventSystem.current.currentSelectedGameObject.gameObject == tvUpButton.gameObject || EventSystem.current.currentSelectedGameObject.gameObject == tvDownButton.gameObject)
             bigTvSliderTexts.ToList().ForEach(tmp => tmp.color = customGrey);
@@ -149,10 +181,10 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
-        if (index != lastIndex)
+        if (index != lastIndex || firstTime)
         {
             pyramidMenuTexts[index].DOColor(Color.yellow, 0.8f).SetEase(Ease.InOutSine);
-            if (lastIndex != -1)
+            if (lastIndex != -1 && !firstTime)
                 pyramidMenuTexts[lastIndex].DOColor(Color.white, 0.8f).SetEase(Ease.InOutSine);
 
             ResetTvs();
@@ -162,11 +194,15 @@ public class MainMenuManager : MonoBehaviour
 
         lastIndex = index;
 
-        if(EventSystem.current.currentSelectedGameObject != lastSelectedObj && !rotated && EventSystem.current.currentSelectedGameObject.GetComponent<Slider>()==null)
+        if(EventSystem.current.currentSelectedGameObject != lastSelectedObj && EventSystem.current.currentSelectedGameObject.GetComponent<Slider>()==null)
         {
-            AudioManager.Instance.PlayFx(Enums.Effects.MoveUI);
+            ButtonHiglighted(EventSystem.current.currentSelectedGameObject);
+            if(!rotated)
+                AudioManager.Instance.PlayFx(Enums.Effects.MoveUI);
         }
         lastSelectedObj = EventSystem.current.currentSelectedGameObject;
         rotated = false;
+
+        firstTime = false;
     }    
 }

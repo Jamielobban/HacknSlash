@@ -27,7 +27,7 @@ public class Disparo360 : MonoBehaviour
     private void OnEnable()
     {
         // Aquí colocas el código que deseas que se ejecute cuando el objeto se activa
-        Invoke("StartMoving", 0.95f);        // Puedes hacer cualquier otra acción aquí, como cambiar propiedades, iniciar una animación, etc.
+        Invoke("StartMoving", 0.55f);        // Puedes hacer cualquier otra acción aquí, como cambiar propiedades, iniciar una animación, etc.
     }
     void StartMoving()
     {

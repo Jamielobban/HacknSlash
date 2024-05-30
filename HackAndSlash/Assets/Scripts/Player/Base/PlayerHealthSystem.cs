@@ -88,11 +88,15 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage, DamageNumber visualEffect)
     {
-        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.75f || !IsDamageable)
+        if(_player.states == PlayerControl.States.HIT || _player.states == PlayerControl.States.DASH || _player.states == PlayerControl.States.DEATH || Time.time-_player.hitTime < 0.50f || !IsDamageable)
         {
             return;
         }
-        _player.states = PlayerControl.States.HIT;
+
+        if(_player.states != PlayerControl.States.ATTACK)
+        {
+            _player.states = PlayerControl.States.HIT;
+        }
 
         visualEffect.Spawn(_player.transform.position + new Vector3(0f, 2f, 0f), (int)damage);
 
@@ -176,7 +180,7 @@ public class PlayerHealthSystem : MonoBehaviour, IDamageable
                 canvas.SetActive(false);
             }
 
-            foreach (var enemyPool in ManagerEnemies.Instance.parentObjectPools)
+            foreach (var enemyPool in LevelManager.Instance.EnemiesManager.parentObjectPools)
             {
                 enemyPool.SetActive(false);
             }

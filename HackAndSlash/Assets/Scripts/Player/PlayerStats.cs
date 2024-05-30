@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI healthRegenText;
     public TextMeshProUGUI lifeSteal;
     public TextMeshProUGUI currentLife;
+    public TextMeshProUGUI currentExtraXp;
 
     private PlayerControl playerStats;
 
@@ -31,11 +32,12 @@ public class PlayerStats : MonoBehaviour
 
     public void RefreshStats()
     {
-        critChanceText.text = "Crit chance:  " + playerStats.critChance.ToString() + "%";
-        critDamMultiText.text = "Crit Dmg:  " + playerStats.critDamageMultiplier.ToString();
-        attackDamageText.text = "Attack Dmg:  " + playerStats.attackDamage.ToString();
-        healthRegenText.text = "Regeneration:  " + playerStats.healthRegen.ToString() + "  / 5s";
-        lifeSteal.text = "Life Steal: " + playerStats.lifeStealPercent.ToString() + "%";
-        currentLife.text = "" + playerStats.healthSystem.CurrentHealth + " / " + playerStats.healthSystem.maxHealth + " HP ";
+        critChanceText.text = "Crit chance:  " + playerStats.critChance.ToString("F2") + "%";
+        critDamMultiText.text = "Crit Dmg:  " + playerStats.critDamageMultiplier.ToString("F2");
+        attackDamageText.text = "Attack Dmg:  " + playerStats.attackDamage.ToString("F2");
+        healthRegenText.text = "Regeneration:  " + playerStats.healthRegen.ToString("F2") + "  / 5s";
+        lifeSteal.text = "Life Steal: " + playerStats.lifeStealPercent.ToString("F2") + "%";
+        currentLife.text = "" + playerStats.healthSystem.CurrentHealth.ToString("F2") + " / " + playerStats.healthSystem.maxHealth.ToString("F0") + " HP ";
+        currentExtraXp.text = "XP Multiplier: " + playerStats.xpPercentageExtra.ToString("F2");
     }
 }

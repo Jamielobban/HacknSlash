@@ -21,6 +21,14 @@ public class Enums
         Dead
     }   
 
+    public enum AbilityInput
+    {
+        HoldSquare,
+        HoldTriangle,
+        L2Square,
+        L2Triangle
+    }
+
 
     public enum StateEvent
     {
@@ -133,7 +141,8 @@ public class Enums
         MusicaTutoNou,
         Defeat,
         Victory,
-        CinematicaLab
+        CinematicaLab,
+        EpicMusicBBoss
     };
 
     public enum Effects
@@ -171,6 +180,9 @@ public class Enums
         TextTutoCombat3,
         TextTutoCombat4,
         TextTutoCombo5,
+        TextTutoCombo6,
+        TextTutoCombo7,
+        TextTutoCombo8
     };
 
     public enum MusicEffects
@@ -178,9 +190,8 @@ public class Enums
         Atmosfera,
         Wind,
         IceWind,
-       Glitch
-       
-        
+       Glitch,
+       DesertWind       
     };
 
     public enum RarityType
@@ -189,6 +200,7 @@ public class Enums
         Uncommon,
         Rare,
         Legendary,
+        ActionItem,
         Ability
     }
 }

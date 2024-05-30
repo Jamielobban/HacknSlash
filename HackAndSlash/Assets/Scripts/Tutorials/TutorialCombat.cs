@@ -10,24 +10,23 @@ public class TutorialCombat : MonoBehaviour
     [SerializeField] SimpleRTVoiceExample voice;
     public GameObject loadingGo;
     public Image fillLoadingGo;
-    public GameObject eventActivable;
     public GameObject campEnemies;        
 
     private bool hasReadedItems = false;
     private bool hasReadedChest = false;
     private bool hasReadedEvents = false;
     private bool hasReadEndTutorial = false;
+    private bool hasReadCombos = false;
 
     private void Awake()
     {
-        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         campEnemies.SetActive(false);
     }
 
     void Start()
     {
+        GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
         AudioManager.Instance.PlayMusic(Enums.Music.MusicaCombbat);
-        eventActivable.SetActive(false);
         bc.Speak();
     }
 
@@ -35,32 +34,33 @@ public class TutorialCombat : MonoBehaviour
 
     void Update()
     {
-        if(ManagerEnemies.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
+        if(LevelManager.Instance.CurrentGlobalTime >= 20 && !hasReadCombos)
+        {
+            hasReadCombos = true;
+            bc.Speak();
+        }
+        else if(LevelManager.Instance.CurrentGlobalTime >= 61 && !hasReadedItems)
         {
             hasReadedItems = true;
             bc.Speak();
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
+        else if(LevelManager.Instance.CurrentGlobalTime >= 80 && !hasReadedChest)
         {
             hasReadedChest = true;
             campEnemies.SetActive(true);
             bc.Speak();
         }
-        else if(ManagerEnemies.Instance.CurrentGlobalTime >= 100 && !hasReadedEvents && campEnemies.GetComponent<CampManager>().chest.isUnlocked)
+        else if(LevelManager.Instance.CurrentGlobalTime >= 110 && !hasReadedEvents)
         {
             hasReadedEvents = true;
-            eventActivable.SetActive(true);
             Invoke(nameof(SpeakInTime), 1);
             campEnemies.SetActive(false);
         }
-        else if(eventActivable.activeSelf && !hasReadEndTutorial)
+        else if(!hasReadEndTutorial && LevelManager.Instance.CurrentGlobalTime >= 132)
         {
-            if(FindObjectOfType<EventMap>()?.CurrentEventState == Enums.EventState.FINISHED)
-            {
-                hasReadEndTutorial = true;
-                Invoke(nameof(StartEnd), 1.5f);
-                ManagerEnemies.Instance.isInEvent = true;
-            }
+            hasReadEndTutorial = true;
+            Invoke(nameof(StartEnd), 1.5f);
+            LevelManager.Instance.isInEvent = true;
         }
     }
 
@@ -79,7 +79,9 @@ public class TutorialCombat : MonoBehaviour
 
     private void NextScene()
     {
-        GameManager.Instance.UpdateState(Enums.GameState.Playing);
+        GameManager.Instance.Player.inventory.ClearInventory();
+        GameManager.Instance.UpdateState(Enums.GameState.StartPlaying);
+
         GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, fillLoadingGo);
     }   
 

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Enums;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
+using UnityEngine.InputSystem;
 
 
 public class ItemsLootBoxManager : MonoBehaviour
@@ -32,6 +35,7 @@ public class ItemsLootBoxManager : MonoBehaviour
     public GameObject slotsGrid;
     public GameObject itemPrefab;
     public GameObject levelUpEffects;
+    public GameObject[] playerCanvas;
 
     public List<Item> itemsToSpawn = new List<Item>();
     private List<GameObject> spawnedUIItems = new List<GameObject>();
@@ -39,10 +43,12 @@ public class ItemsLootBoxManager : MonoBehaviour
 
     public bool menuActive = false;
     public bool isOpen;
+    bool isPs;
     #endregion    
     
     private ItemManager _itemManager;
     private PlayerControl _player;
+    
     private void Awake()
     {
         levelUpEffects.SetActive(false);
@@ -61,6 +67,8 @@ public class ItemsLootBoxManager : MonoBehaviour
     private void Start()
     {
         isOpen = false;
+        var gamepad = Gamepad.current;
+        isPs = gamepad is DualShockGamepad;
     }
     private void Update()
     {
@@ -104,7 +112,7 @@ public class ItemsLootBoxManager : MonoBehaviour
             }
         }
         
-        ResetItemChoiceMenu();        
+        ResetItemChoiceMenu();   
 
     }
 
@@ -119,7 +127,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         spawnedUIItems.Clear();
         
         itemChoice.SetActive(false);
-        
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(true);
+        }
+
         GameManager.Instance.UnPauseMenuGame();
         Invoke("DesactivarMenu", 0.1f);
         EventSystem.current.SetSelectedGameObject(null);
@@ -132,6 +145,12 @@ public class ItemsLootBoxManager : MonoBehaviour
         {
             return;
         }
+
+        foreach (var canvas in playerCanvas)
+        {
+            canvas.SetActive(false);
+        }
+
         AudioManager.Instance.PlayFx(Effects.OpenItemsToPickEpic);
         levelUpEffects.SetActive(true);
         itemChoice.SetActive(true);
@@ -175,12 +194,26 @@ public class ItemsLootBoxManager : MonoBehaviour
             itemUIChoice.image.sprite = itemsToSpawn[i].GetSprite();
             itemUIChoice.itemName.text = itemsToSpawn[i].GetName();
             itemUIChoice.description.text = itemsToSpawn[i].GetDescription();
+            itemUIChoice.type.text = itemsToSpawn[i].data.itemType;
+            itemUIChoice.type.color = itemsToSpawn[i].data.typeColor;
 
             GameObject rarityEffect = Instantiate(itemRarityEffect[(int)itemsToSpawn[i].GetRarity()]);
             rarityEffect.transform.SetParent(go.transform.GetChild(0).transform);
             rarityEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             rarityEffect.transform.localRotation = Quaternion.identity;
             rarityEffect.transform.localPosition = Vector3.zero;
+
+            if (itemsToSpawn[i].GetRarity() == RarityType.Ability)
+            {
+                itemUIChoice.inputAbility.sprite = isPs ? itemsToSpawn[i].data.inputIcon : itemsToSpawn[i].data.inputXbox; /////////////////////////
+                if(itemsToSpawn[i].data.extraInput == "L2 +")                
+                    itemUIChoice.extraInputInfo.text = isPs ? "L2 +" : "LT +";                
+                else
+                    itemUIChoice.extraInputInfo.text = itemsToSpawn[i].data.extraInput;
+
+                itemUIChoice.inputAbility.gameObject.SetActive(true);
+                itemUIChoice.extraInputInfo.gameObject.SetActive(true);
+            }
             spawnedUIItems.Add(go);
         }
     }

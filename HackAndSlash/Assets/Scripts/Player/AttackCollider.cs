@@ -10,6 +10,7 @@ public class AttackCollider : MonoBehaviour
     public GameObject[] hitEffect;
     public GameObject critHitEffect;
     public MMFeedbacks critHitFeedback;
+    public MMFeedbacks hitFeedback;
 
     public List<GameObject> targets;
 
@@ -31,14 +32,14 @@ public class AttackCollider : MonoBehaviour
             slash.SetActive(false);
     }
 
-    (float, DamageNumber) CalculateDamage (Transform enemyPos)
+    public (float, DamageNumber) CalculateDamage (Transform enemyPos)
     {
         if(targets.Contains(enemyPos.gameObject))
         {
             return (0, _player.basicDamageHit);
         }
         bool isCrit;
-        float damage = baseDamage * _player.attackDamage + Random.Range(0.5f, 1.5f);
+        float damage = _player.attackBoost * _player.multiplierCombos * baseDamage * _player.attackDamage + Random.Range(0.5f, 1.5f);
 
         int rand = Random.Range(0, _player.stats.maxCritChance);
 
@@ -86,6 +87,8 @@ public class AttackCollider : MonoBehaviour
                 StartCoroutine(ReturnEffect(0.5f, hitEffect[i].transform.GetChild(0).gameObject, hitEffect[i]));
                 hitEffect[i].transform.GetChild(0).gameObject.SetActive(true);
                 hitEffect[i].transform.GetChild(0).parent = GameObject.FindGameObjectWithTag("Slashes").transform;
+                hitFeedback.PlayFeedbacks();
+
             }
             isCrit = false;
 
@@ -109,7 +112,9 @@ public class AttackCollider : MonoBehaviour
 
             damageable.TakeDamage(damageValue, damageNumber);
 
-            if(attack.canBurn)
+            LevelManager.Instance.ScoreManager.AddEnemyScore(1.4f);
+
+            if (attack.canBurn)
             {
                 damageable.ApplyBurn();
             }

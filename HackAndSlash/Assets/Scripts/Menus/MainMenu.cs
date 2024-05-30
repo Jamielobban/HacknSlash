@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : BaseMenu<MainMenu>
@@ -28,12 +27,10 @@ public class MainMenu : BaseMenu<MainMenu>
         AudioManager.Instance.FadeMusic(1f, 0f);
         if (GameManager.Instance.isTutorialCompleted)
         {
-            GameManager.Instance.UpdateState(Enums.GameState.Playing);
             GameManager.Instance.LoadLevel(Constants.SCENE_MAIN, loadingFillAmountInspector);
         }
         else
         {
-            GameManager.Instance.UpdateState(Enums.GameState.Tutorial);
             GameManager.Instance.LoadLevel(Constants.SCENE_TUTORIAL_CINEMATIC, loadingFillAmountInspector);
         }
     }
